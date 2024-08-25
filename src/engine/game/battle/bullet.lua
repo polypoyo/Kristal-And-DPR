@@ -98,13 +98,15 @@ end
 --- *(Override)* Called when the bullet collides with the player's soul, before invulnerability checks.
 ---@param soul Soul
 function Bullet:onCollide(soul)
-    if soul.inv_timer == 0 then
-        self:onDamage(soul)
-    end
+	if not Game.battle.superpower then
+		if soul.inv_timer == 0 then
+			self:onDamage(soul)
+		end
 
-    if self.destroy_on_hit then
-        self:remove()
-    end
+		if self.destroy_on_hit then
+			self:remove()
+		end
+	end
 end
 
 ---@param wave Wave
