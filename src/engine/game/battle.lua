@@ -138,6 +138,10 @@ function Battle:init()
     self.freeze_xp = 0
 
     self.killed = false
+
+	self.superpower = false
+
+	self.super_timer = 0
 end
 
 function Battle:createPartyBattlers()
@@ -2494,6 +2498,19 @@ function Battle:update()
     if self.state == "TRANSITIONOUT" then
         self:updateTransitionOut()
     end
+
+	if self.superpower then
+		if (self.super_timer - (DT * 30))%10 > self.super_timer%10 then
+			Game:removeTension(1)
+
+			if Game.tension <= 0 then
+				self.superpower = false
+				self.music:play(self.encounter.music)
+			end
+		end
+
+		self.super_timer = self.super_timer + DT * 30
+	end
 end
 
 function Battle:updateChildren()

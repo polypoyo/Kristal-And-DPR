@@ -16,6 +16,10 @@ function Mod:postInit(new_file)
         Game:setFlag("library_love", 1)
         Game:setFlag("library_experience", 0)
         Game:setFlag("library_kills", 0)
+		
+        if Game.save_name == "SUPER" then
+            Game.inventory:addItem("chaos_emeralds")
+        end
     end
 end
 
