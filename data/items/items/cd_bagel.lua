@@ -52,7 +52,7 @@ function item:init()
         ralsei = "How elegant!",
         noelle = "What a nice song...",
         jamm = "So what decides these songs?",
-        jamm = "I'm seeing stars.",
+        noel = "I'm seeing stars.", --I am so sorry jamm D:
     }
 
     self.sounds = {
