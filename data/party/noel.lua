@@ -115,7 +115,7 @@ function character:init()
     self.gameover_message = nil
 
     local save = Game:loadNoel()
-    if save then
+    if save and not Kristal.temp_save == true then
             self:loadEquipment(save.Equipped)
         self.health = save.Health
         self.lw_health = save.Health
@@ -138,7 +138,6 @@ end
 --function character:n()
 
 function character:save()
-
     local data = {
         id = self.id,
         title = self.title,
@@ -153,8 +152,11 @@ function character:save()
         equipped = self:saveEquipment(),
         flags = self.flags
     }
-    local num = love.math.random(1, 999999)
-    Game:setFlag("noel_SaveID", num)
+
+    if Kristal.temp_save == true then
+    else
+        local num = love.math.random(1, 999999)
+        Game:setFlag("noel_SaveID", num)
 
     local save = Game:loadNoel()
     if save then
@@ -189,6 +191,7 @@ function character:save()
             Game:saveNoel(maptable)
         end
 
+    end
     end
 
 
@@ -252,6 +255,10 @@ function character:load(data)
     end
 
     self:onLoad(data)
+
+    if Kristal.temp_save == true then
+        Kristal.temp_save = nil
+    end
 end
 
 return character

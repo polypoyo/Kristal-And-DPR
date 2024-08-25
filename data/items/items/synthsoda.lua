@@ -51,7 +51,8 @@ function item:init()
         susie = "The aftertaste packs a punch.",
         ralsei = "How elegant!",
         noelle = "Such a soothing sound...",
-		jamm = "Ooh! Spine tingling, I love it!"
+	jamm = "Ooh! Spine tingling, I love it!",
+	noel = "The Meat Factory.",
     }
 
     self.sounds = {
@@ -59,10 +60,11 @@ function item:init()
         ["susie"] = "synthsoda/susie",
         ["ralsei"] = "synthsoda/ralsei",
         ["noelle"] = "synthsoda/noelle",
-		["YOU"] = "synthsoda/you",
-		["brenda"] = "synthsoda/brenda",
-		["dess"] = "synthsoda/dess",
-		["jamm"] = "synthsoda/jamm",
+	["YOU"] = "synthsoda/you",
+	["brenda"] = "synthsoda/brenda",
+	["dess"] = "synthsoda/dess",
+	["jamm"] = "synthsoda/jamm",
+	["noel"] = "synthsoda/noel",
     }
 end
 
@@ -72,7 +74,7 @@ function item:getShopDescription()
 end
 
 function item:onWorldUse(target)
-    local sound = self.sounds[target.id] or ("cd_bagel/"..target.id)
+    local sound = self.sounds[target.id] or ("synthsoda/"..target.id)
     if Assets.getSound(sound) then
         Assets.playSound(sound)
     end
