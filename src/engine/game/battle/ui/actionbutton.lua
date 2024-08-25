@@ -151,9 +151,95 @@ function ActionButton:select()
             Game.battle:setState("MENUSELECT", "ITEM")
         end
     elseif self.type == "spare" then
-        Game.battle:setState("ENEMYSELECT", "SPARE")
+        local battle_leader = 1
+		if self.battler == Game.battle.party[battle_leader] then
+			Game.battle:clearMenuItems()
+			local sparable = false
+			for k,v in pairs(Game.battle:getActiveEnemies()) do
+				if v.mercy >= 100 then
+					sparable = true
+					break
+				end
+			end
+			Game.battle:addMenuItem({
+                ["name"] = "Spare",
+                ["unusable"] = false,
+                ["description"] = "",
+				["color"] = sparable and {1, 1, 0, 1} or {1, 1, 1, 1},
+                ["callback"] = function(menu_item)
+                    Game.battle:setState("ENEMYSELECT", "SPARE")
+                end
+            })
+			local party = {}
+			local party_up = {}
+			for k,chara in ipairs(Game.party) do
+                table.insert(party, chara.id)
+                if not Game.battle.party[k].is_down then
+                    table.insert(party_up, chara.id)
+                end
+            end
+			Game.battle:addMenuItem({
+                ["name"] = "Flee",
+                ["unusable"] = not Game.battle.encounter.flee,
+                ["description"] = Game.battle.encounter.flee and "" or "Can't\nEscape",
+				["party"] = Game.battle.encounter.flee and party or {},
+                ["callback"] = function(menu_item)
+					if (love.math.random(1,100) < Game.battle.encounter.flee_chance) then
+						Game.battle:setState("FLEE")
+					else
+						Game.battle:setState("ENEMYDIALOGUE", "FLEE")
+                        Game.battle.current_selecting = 0
+					end
+                end
+            })
+			if #Game.battle.party >= 4 then
+				Game.battle:addMenuItem({
+					["name"] = "Spare All",
+					["unusable"] = (#party_up < 4),
+					["description"] = "Spare\nEveryone",
+					["color"] = sparable and {1, 1, 0, 1} or {1, 1, 1, 1},
+					["tp"] = 16,
+					["party"] = (party),
+					["callback"] = function(menu_item)
+						Game:removeTension(16)
+                        Game.battle.current_selecting = 0
+                        for i,battler in pairs(Game.battle.party) do
+                            if not battler.is_down and i ~= battle_leader then
+                                battler:setAnimation("battle/spare")
+                            elseif i == battle_leader then
+                                    battler:setAnimation("battle/spare", function()
+                                    for _,enemy in pairs(Game.battle:getActiveEnemies()) do
+                                        if not enemy:onMercy(battler, true) then enemy:mercyFlash() end
+                                    end
+                                end)
+                            end
+                        end
+                        Game.battle:battleText("* You spared everyone!", function()
+                            Game.battle:setState("ENEMYDIALOGUE", "SPAREALL")
+                            return true
+                        end)
+					end
+				})
+			end
+			Game.battle:setState("MENUSELECT", "SPARE")
+		else
+			Game.battle:setState("ENEMYSELECT", "SPARE")
+		end
     elseif self.type == "defend" then
         Game.battle:pushAction("DEFEND", nil, {tp = -16})
+    elseif self.type == "skill" then
+        Game.battle:clearMenuItems()
+
+        for id, action in ipairs(self.battler.chara:getSkills()) do
+            Game.battle:addMenuItem({
+                ["name"] = action[1],
+                ["description"] = action[2],
+                ["color"] = action[3],
+                ["callback"] = action[4]
+            })
+        end
+
+        Game.battle:setState("MENUSELECT", "SKILL")
     end
 end
 
@@ -162,7 +248,7 @@ function ActionButton:unselect()
 end
 
 function ActionButton:hasSpecial()
-    if self.type == "magic" then
+    if self.type == "magic" or self.type == "skill" then
         if self.battler then
             local has_tired = false
             for _,enemy in ipairs(Game.battle:getActiveEnemies()) do

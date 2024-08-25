@@ -47,7 +47,8 @@ function item:init()
     self.reactions = {
         susie = "Don't throw mints at me!",
         ralsei = "It's minty!",
-        noelle = "What are you throwing?"
+        noelle = "What are you throwing?",
+        jamm = "Mints aren't my favorite, but...",
     }
 end
 

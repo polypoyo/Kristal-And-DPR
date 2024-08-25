@@ -44,23 +44,26 @@ function item:init()
 
     -- Equippable characters (default true for armors, false for weapons)
     self.can_equip = {
-        susie = false
+        susie = false,
+        dess = false
     }
 
     -- Character reactions
-    if Game.chapter == 1 then
-        self.reactions = {
-            susie = "Nope. Not in 1st grade anymore.",
-            ralsei = "Um... D-do I look cute...?",
-            noelle = "... feels familiar.",
-        }
-    else
-        self.reactions = {
-            susie = "I said NO! C'mon already!",
-            ralsei = "It's nice being dressed up...",
-            noelle = "... feels familiar.",
-        }
-    end
+    self.reactions = {
+        susie = "I said NO! C'mon already!",
+        ralsei = "It's nice being dressed up...",
+        noelle = "... feels familiar.",
+        dess = "ew i hate pink things",
+        jamm = "How adorable!",
+        noel = "More tension?",
+    }
+end
+
+function item:getReaction(user_id, reactor_id)
+    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
+		return "It looks great on you, Marcy!"
+	end
+	return super.getReaction(self, user_id, reactor_id)
 end
 
 return item

@@ -3,7 +3,7 @@ MOD_SUBCLASSES = {}
 DEFAULT_CLASS_NAME_GETTER = function(k) return _G[k] end
 CLASS_NAME_GETTER = DEFAULT_CLASS_NAME_GETTER
 
----@param o any
+---@param o table
 ---@diagnostic disable-next-line: lowercase-global
 function isClass(o)
     return type(o) == "table" and getmetatable(o) and true or false

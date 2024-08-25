@@ -1,12 +1,5 @@
 .vscode/
 
-mods/*
-!mods/_light/
-!mods/_testmod/
-!mods/example/
-!mods/previewtest/
-!mods/z/
-
 build/
 output/
 

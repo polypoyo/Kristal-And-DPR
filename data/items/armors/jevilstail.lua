@@ -43,14 +43,28 @@ function item:init()
     self.bonus_icon = nil
 
     -- Equippable characters (default true for armors, false for weapons)
-    self.can_equip = {}
+    self.can_equip = {
+	jamm = false,
+        noel = false,
+    }
+
 
     -- Character reactions
     self.reactions = {
         susie = "Figured I'd grow one someday.",
         ralsei = "I'm a good devil, OK?",
         noelle = "... (I like it...)",
+        dess = "im gonna go commit a felony now",
+        jamm = "It won't fit...!",
+        noel = "I am not a circus.",
     }
+end
+
+function item:getReaction(user_id, reactor_id)
+    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
+		return "It won't fit either of us...!"
+	end
+	return super.getReaction(self, user_id, reactor_id)
 end
 
 return item

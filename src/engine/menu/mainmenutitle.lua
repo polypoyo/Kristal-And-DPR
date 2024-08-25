@@ -19,9 +19,14 @@ function MainMenuTitle:init(menu)
     self.selected_option = 1
 end
 
+function MainMenuTitle:update()
+    super.update(self)
+end
+
 function MainMenuTitle:registerEvents()
     self:registerEvent("enter", self.onEnter)
     self:registerEvent("keypressed", self.onKeyPressed)
+    self:registerEvent("update", self.update)
     self:registerEvent("draw", self.draw)
 end
 
@@ -35,6 +40,7 @@ function MainMenuTitle:onEnter(old_state)
     if TARGET_MOD then
         self.options = {
             {"play",    self.has_target_saves and "Load game" or "Start game"},
+            {"modfolder", "Open DLC folder"},
             {"options", "Options"},
             {"credits", "Credits"},
             {"quit",    "Quit"},
@@ -42,7 +48,7 @@ function MainMenuTitle:onEnter(old_state)
     else
         self.options = {
             {"play",      "Play a mod"},
-            {"modfolder", "Open mods folder"},
+            {"modfolder", "Open DLC folder"},
             {"options",   "Options"},
             {"credits",   "Credits"},
             {"wiki",      "Open wiki"},
@@ -71,14 +77,12 @@ function MainMenuTitle:onKeyPressed(key, is_repeat)
 				if MainMenu.mod_list:getSelectedMod() and MainMenu.mod_list:getSelectedMod().soulColor then
 					MainMenu.heart.color = MainMenu.mod_list:getSelectedMod().soulColor
 				end
-            elseif self.has_target_saves then
-                self.menu:setState("FILESELECT")
             else
-                Kristal.loadMod(TARGET_MOD, 1)
+                self.menu:setState("FILESELECT")
             end
 
         elseif option == "modfolder" then
-            love.system.openURL("file://"..love.filesystem.getSaveDirectory().."/mods")
+            love.system.openURL("file://"..love.filesystem.getSource().."/mods")
 
         elseif option == "options" then
             self.menu:setState("OPTIONS")

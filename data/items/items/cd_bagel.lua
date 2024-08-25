@@ -50,14 +50,16 @@ function item:init()
     self.reactions = {
         susie = "It's got crunch.",
         ralsei = "How elegant!",
-        noelle = "What a nice song..."
+        noelle = "What a nice song...",
+        jamm = "So what decides these songs?",
     }
 
     self.sounds = {
         ["kris"] = "cd_bagel/kris",
         ["susie"] = "cd_bagel/susie",
         ["ralsei"] = "cd_bagel/ralsei",
-        ["noelle"] = "cd_bagel/noelle"
+        ["noelle"] = "cd_bagel/noelle",
+		["jamm"] = "cd_bagel/jamm",
     }
 end
 

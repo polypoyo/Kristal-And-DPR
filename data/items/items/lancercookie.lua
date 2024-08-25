@@ -60,7 +60,8 @@ function item:init()
     self.reactions = {
         susie = "Mmm... face",
         ralsei = "(uncomfortable)",
-        noelle = "Umm, what is this? It's cute..."
+        noelle = "Umm, what is this? It's cute...",
+        jamm = "(Better keep this away from Marcy...)",
     }
 end
 

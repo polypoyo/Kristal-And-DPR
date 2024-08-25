@@ -54,7 +54,8 @@ function item:init()
     self.reactions = {
         susie = "It says GUTS!",
         ralsei = "It says Fluffy...",
-        noelle = "I... I can't read these symbols..."
+        noelle = "I... I can't read these symbols...",
+        jamm = "Better than Bedrock.",
     }
 end
 

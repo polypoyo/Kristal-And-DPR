@@ -19,6 +19,7 @@ function Game:clear()
     self.stage = nil
     self.world = nil
     self.battle = nil
+    self.minigame = nil
     self.shop = nil
     self.gameover = nil
     self.legend = nil
@@ -28,6 +29,7 @@ function Game:clear()
     self.key_repeat = false
     self.started = false
     self.border = "simple"
+    self.swap_into_mod = nil
 end
 
 function Game:enter(previous_state, save_id, save_name, fade)
@@ -69,7 +71,7 @@ function Game:enter(previous_state, save_id, save_name, fade)
             details = Kristal.callEvent(KRISTAL_EVENT.getPresenceDetails),
             largeImageKey = Kristal.callEvent(KRISTAL_EVENT.getPresenceImage) or "logo",
             largeImageText = "Kristal v" .. tostring(Kristal.Version),
-            startTimestamp = math.floor(os.time() - self.playtime),
+            startTimestamp = self.playtime and math.floor(os.time() - self.playtime) or 0,
             instance = 0
         })
     end
@@ -136,6 +138,8 @@ function Game:getActiveMusic()
         return self.world.music
     elseif self.state == "BATTLE" then
         return self.battle.music
+	elseif self.state == "MINIGAME" then
+        return self.minigame.music
     elseif self.state == "SHOP" then
         return self.shop.music
     elseif self.state == "GAMEOVER" then
@@ -158,6 +162,8 @@ end
 
 function Game:save(x, y)
     local data = {
+        mod = Mod.info.id,
+
         chapter = self.chapter,
 
         name = self.save_name,
@@ -226,6 +232,10 @@ function Game:load(data, index, fade)
     data = data or {}
 
     self:clear()
+
+    if data.mod and data.mod ~= Mod.info.id then
+        print("WARNING: Loading save file from a different DLC. Hopefully you're just switching inbetween.")
+    end
 
     BORDER_ALPHA = 0
     Kristal.showBorder(1)
@@ -527,6 +537,9 @@ function Game:loadQuick(fade)
     else
         Kristal.loadGame(self.save_id)
     end
+    if save.mod ~= Mod.info.id then
+        print("(Report this)")
+    end
     self.quick_save = save
 end
 
@@ -605,6 +618,31 @@ function Game:enterShop(shop, options)
 
     self.stage:addChild(self.shop)
     self.shop:onEnter()
+end
+
+function Game:startMinigame(game)
+    if Game.minigame then
+        error("Attempt to enter minigame while already being in one")
+    end
+
+    Game.state = "MINIGAME"
+
+    Game.minigame = Registry.createMinigame(game)
+
+    Game.minigame:postInit()
+
+    Game.stage:addChild(Game.minigame)
+end
+
+function Game:setPresenceState(details)
+    self.rpc_state = details
+
+    -- talk about some half-baked support :bangbang:
+    local presence = Kristal.getPresence()
+    if presence then
+        presence.state = Kristal.callEvent("getPresenceState")
+        Kristal.setPresence(presence)
+    end
 end
 
 --- Sets the value of the flag named `flag` to `value`
@@ -879,6 +917,11 @@ function Game:getMaxTension()
     return Game.max_tension or 100
 end
 
+-- [Kristal.swapIntoMod](lua://Kristal.swapIntoMod) but it happens after update
+function Game:swapIntoMod(...)
+    self.swap_into_mod = {...}
+end
+
 function Game:update()
     if self.state == "EXIT" then
         self.fader:update()
@@ -925,6 +968,11 @@ function Game:update()
     end
 
     Kristal.callEvent(KRISTAL_EVENT.postUpdate, DT)
+
+    if self.swap_into_mod then
+        Kristal.swapIntoMod(unpack(self.swap_into_mod))
+        self.swap_into_mod = nil
+    end
 end
 
 function Game:onKeyPressed(key, is_repeat)
@@ -945,6 +993,10 @@ function Game:onKeyPressed(key, is_repeat)
     elseif self.state == "OVERWORLD" then
         if self.world then
             self.world:onKeyPressed(key)
+        end
+	elseif self.state == "MINIGAME" then
+        if self.minigame then
+            self.minigame:onKeyPressed(key)
         end
     elseif self.state == "SHOP" then
         if self.shop then
@@ -979,6 +1031,30 @@ function Game:draw()
     love.graphics.push()
     Kristal.callEvent(KRISTAL_EVENT.postDraw)
     love.graphics.pop()
+end
+
+--stuff for Noel the Noel-body
+
+local save_dir = "saves"
+local n_save = "saves/null.char"
+
+function Game:saveNoel(new_data)
+    local data = self:loadNoel() or {}
+    if new_data then
+        for k, v in pairs(new_data) do
+            data[k] = v
+        end
+    end
+
+    love.filesystem.createDirectory(save_dir)
+    love.filesystem.write(n_save, JSON.encode(data))
+end
+
+function Game:loadNoel()
+    if love.filesystem.getInfo(n_save) then
+        return JSON.decode(love.filesystem.read(n_save))
+    end
+    return nil
 end
 
 return Game

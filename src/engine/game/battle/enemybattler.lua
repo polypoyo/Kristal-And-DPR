@@ -132,6 +132,10 @@ function EnemyBattler:init(actor, use_overlay)
     self.defeated = false
 
     self.current_target = "ANY"
+
+    self.tiredness = 0
+	
+	self.service_mercy = 20
 end
 
 ---@param bool boolean
@@ -415,7 +419,6 @@ function EnemyBattler:addMercy(amount)
                 local src = Assets.playSound("mercyadd", 0.8)
                 src:setPitch(pitch)
             end
-
             self:statusMessage("mercy", amount)
         end
     end
@@ -425,12 +428,27 @@ end
 --- By default, responsible for sparing the enemy or increasing their mercy points by [`spare_points`](lua://EnemyBattler.spare_points)
 ---@param battler PartyBattler
 ---@return boolean success  Whether the mercy resulted in a spare
-function EnemyBattler:onMercy(battler)
+function EnemyBattler:onMercy(battler, spare_all)
     if self:canSpare() then
         self:spare()
         return true
     else
-        self:addMercy(self.spare_points)
+        if spare_all then
+            local alive = 0
+			for _,battler in ipairs(Game.battle.party) do
+                if not battler.is_down then
+                    alive = alive + 1
+                end
+            end
+            local mercy_points = Utils.round(self.spare_points * alive/#Game.battle:getActiveEnemies())
+            self:addMercy(math.min(mercy_points,100))
+            -- if mercy_points > 100 and self:canSpare() then
+                -- self:spare()
+            -- end
+            -- return true
+        else
+            self:addMercy(self.spare_points)
+        end
         return false
     end
 end
@@ -724,6 +742,10 @@ function EnemyBattler:onDodge(battler, attacked) end
 ---@param damage?    number
 ---@param battler?   PartyBattler
 function EnemyBattler:onDefeat(damage, battler)
+    if self.killable and Game:getFlag("can_kill") then
+        self:onDefeatFatal(damage, battler)
+        return
+    end
     if self.exit_on_defeat then
         self:onDefeatRun(damage, battler)
     else
@@ -888,7 +910,16 @@ function EnemyBattler:defeat(reason, violent)
     end
     
     Game.battle.money = Game.battle.money + self.money
-    Game.battle.xp = Game.battle.xp + self.experience
+
+    if self.done_state == "KILLED" or self.done_state == "FROZEN" then
+        Game.battle.killed = true
+        Game:addFlag("library_kills", 1)
+        if self.done_state == "FROZEN" then
+            Game.battle.freeze_xp = Game.battle.freeze_xp + self.experience
+        else
+            Game.battle.xp = Game.battle.xp + self.experience
+        end
+    end
 
     Game.battle:removeEnemy(self, true)
 end
@@ -966,6 +997,42 @@ end
 ---@return number new_value
 function EnemyBattler:addFlag(flag, amount)
     return Game:addFlag("enemy#"..self.id..":"..flag, amount)
+end
+
+function EnemyBattler:addTired(amount)
+    if self.tiredness >= 100 then
+        -- We're already at full tiredness; do nothing.
+        return
+    end
+
+    self.tiredness = self.tiredness + amount
+    if self.tiredness < 0 then
+        self.tiredness = 0
+    end
+
+    if self.tiredness >= 100 then
+        self.tiredness = 100
+		self:setTired(true)
+	else
+		self:setTired(false)
+    end
+
+    if Game:getConfig("mercyMessages") then
+        if amount > 0 then
+            local pitch = 0.8
+            if amount < 99 then pitch = 1 end
+            if amount <= 50 then pitch = 1.2 end
+            if amount <= 25 then pitch = 1.4 end
+
+            local src = Assets.playSound("mercyadd", 0.8)
+            src:setPitch(pitch)
+        end
+		self:statusMessage("tired", amount)
+    end
+end
+
+function EnemyBattler:canSleep()
+    return self.tiredness >= 100
 end
 
 return EnemyBattler

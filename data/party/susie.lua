@@ -11,8 +11,11 @@ function character:init()
     self:setLightActor("susie_lw")
     self:setDarkTransitionActor("susie_dark_transition")
 
+    self.lw_portrait = "face/susie/smile"
+
     -- Display level (saved to the save file)
-    self.level = Game.chapter
+    self.love = 1
+    self.level = self.love
     -- Default title / class (saved to the save file)
     self.title = "Dark Knight\nDoes damage using\ndark energy."
 
@@ -32,9 +35,8 @@ function character:init()
 
     -- Spells
     self:addSpell("rude_buster")
-    if Game.chapter >= 2 then
-        self:addSpell("ultimate_heal")
-    end
+    self:addSpell("ultimate_heal")
+    self:addSpell("pacify")
 
     -- Current health (saved to the save file)
     if Game.chapter == 1 then
@@ -60,15 +62,7 @@ function character:init()
         }
     end
     -- Max stats from level-ups
-    if Game.chapter == 1 then
-        self.max_stats = {
-            health = 140
-        }
-    else
-        self.max_stats = {
-            health = 190
-        }
-    end
+    self.max_stats = {}
 
     -- Weapon icon in equip menu
     self.weapon_icon = "ui/menu/equip/axe"
@@ -83,6 +77,15 @@ function character:init()
     -- Default light world equipment item IDs (saves current equipment)
     self.lw_weapon_default = "light/pencil"
     self.lw_armor_default = "light/bandage"
+
+    self.lw_health = 30
+
+    self.lw_stats = {
+        health = 30,
+        attack = 12,
+        defense = 10,
+        magic = 1
+    }
 
     -- Character color (for action box outline and hp bar)
     self.color = {1, 0, 1}
@@ -211,6 +214,22 @@ function character:drawPowerStat(index, x, y, menu)
         Draw.draw(icon, x+110, y+6, 0, 2, 2)
         return true
     end
+end
+
+function character:lightLVStats()
+    self.lw_stats = {
+        health = self:getLightLV() <= 20 and math.min(25 + self:getLightLV() * 5,99) or 25 + self:getLightLV() * 5,
+        attack = 10 + self:getLightLV() * 2 + math.floor(self:getLightLV() / 4),
+        defense = 9 + math.ceil(self:getLightLV() / 4),
+        magic = math.ceil(self:getLightLV() / 4)
+    }
+end
+
+function character:onLevelUpLVLib()
+    self:increaseStat("health", 15)
+    self:increaseStat("attack", 2)
+    self:increaseStat("magic", 1)
+    self:increaseStat("defense", 1)
 end
 
 return character

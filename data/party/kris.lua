@@ -12,7 +12,8 @@ function character:init()
     self:setDarkTransitionActor("kris_dark_transition")
 
     -- Display level (saved to the save file)
-    self.level = Game.chapter
+    self.love = 1
+    self.level = self.love
     -- Default title / class (saved to the save file)
     if Game.chapter == 1 then
         self.title = "Leader\nCommands the party\nwith various ACTs."
@@ -58,15 +59,7 @@ function character:init()
         }
     end
     -- Max stats from level-ups
-    if Game.chapter == 1 then
-        self.max_stats = {
-            health = 120
-        }
-    else
-        self.max_stats = {
-            health = 160
-        }
-    end
+    self.max_stats = {}
 
     -- Weapon icon in equip menu
     self.weapon_icon = "ui/menu/equip/sword"

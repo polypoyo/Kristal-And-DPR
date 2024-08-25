@@ -41,10 +41,14 @@ function item:init()
     self.bonus_icon = "ui/menu/icon/armor"
 
     -- Equippable characters (default true for armors, false for weapons)
-    self.can_equip = {}
+    self.can_equip = {
+        noel = false,
+    }
 
     -- Character reactions
-    self.reactions = {}
+    self.reactions = {
+        noel = "I just don't want it.",
+    }
 end
 
 return item

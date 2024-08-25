@@ -54,7 +54,8 @@ function item:init()
     self.reactions = {
         susie = "Cooked to perfection!",
         ralsei = "A bit burnt...?",
-        noelle = "I-is this real meat...?"
+        noelle = "I-is this real meat...?",
+        jamm = "Burnt food isn't all that bad.",
     }
 end
 

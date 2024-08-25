@@ -48,6 +48,9 @@ function ActorSprite:init(actor)
     self:resetSprite()
 
     self.last_flippable = actor:getFlipDirection(self)
+
+    self.run_away_2 = false
+    self.run_away_timer_2 = 0
 end
 
 --- Resets this sprite to the default animation or sprite.
@@ -354,6 +357,10 @@ function ActorSprite:update()
         self.run_away_timer = self.run_away_timer + DTMULT
     end
 
+    if self.run_away_2 then
+        self.run_away_timer_2 = self.run_away_timer_2 + DTMULT
+    end
+
     super.update(self)
 
     self.actor:onSpriteUpdate(self)
@@ -376,6 +383,16 @@ function ActorSprite:draw()
             local alph = a * 0.4
             Draw.setColor(r,g,b, ((alph - (self.run_away_timer / 8)) + (i / 200)))
             Draw.draw(self.texture, i * 2, 0)
+        end
+        return
+    end
+
+    if self.texture and self.run_away_2 then
+        local r,g,b,a = self:getDrawColor()
+        for i = 0, 80 do
+            local alph = a * 0.4
+            Draw.setColor(r,g,b, ((alph - (self.run_away_timer_2 / 8)) + (i / 200)))
+            Draw.draw(self.texture, -i * 2, 0)
         end
         return
     end

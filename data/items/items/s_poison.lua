@@ -47,7 +47,8 @@ function item:init()
     self.reactions = {
         susie = "Ugh! ...tastes good?",
         ralsei = "Ow... er, thanks, Kris!",
-        noelle = "(I'll... just pretend to drink it...)"
+        noelle = "(I'll... just pretend to drink it...)",
+        jamm = "Blech! What is this!?",
     }
 
     -- Amount the poison damages in the world

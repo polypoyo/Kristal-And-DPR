@@ -278,5 +278,6 @@ KRISTAL_EVENT = {
     onRegisterEventScripts = "onRegisterEventScripts", -- event scripts finished registering / in: Registry.initEvents() / passes: NONE / returns: NONE
     onRegisterControllers = "onRegisterControllers", -- controller scripts finished registering / in: Registry.initControllers() / passes: NONE / returns: NONE
     onRegisterShops = "onRegisterShops", -- shop scripts finished registering / in: Registry.initShops() / passes: NONE / returns: NONE
+    onRegisterMinigames = "onRegisterMinigames", -- minigame scripts finished registering / in: Registry.initMinigames() / passes: NONE / returns: NONE
     onRegistered = "onRegistered", -- all scripts finished registering / in: Registry.initialize(preload) / passes: NONE / returns: NONE
 }

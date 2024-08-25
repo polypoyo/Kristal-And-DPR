@@ -61,6 +61,8 @@ function Bullet:init(x, y, texture)
 
     -- Whether to remove this bullet when it goes offscreen (Defaults to `true`)
     self.remove_offscreen = true
+
+    self.pierce = false
 end
 
 ---@return string
@@ -80,10 +82,15 @@ end
 function Bullet:onDamage(soul)
     local damage = self:getDamage()
     if damage > 0 then
-        local battlers = Game.battle:hurt(damage, false, self:getTarget())
-        soul.inv_timer = self.inv_timer
-        soul:onDamage(self, damage)
-        return battlers
+		if not self.pierce then
+			local battlers = Game.battle:hurt(damage, false, self:getTarget())
+			soul.inv_timer = self.inv_timer
+			soul:onDamage(self, damage)
+			return battlers
+		end
+		Game.battle:pierce(damage, false, self:getTarget())
+		soul.inv_timer = self.inv_timer
+		soul:onDamage(self, damage)
     end
     return {}
 end

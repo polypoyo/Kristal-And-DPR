@@ -50,7 +50,8 @@ function item:init()
     self.reactions = {
         susie = "I'm NOT wearing it.",
         ralsei = "How sweet!",
-        noelle = "Reminds me of one of my sweaters."
+        noelle = "Reminds me of one of my sweaters.",
+        jamm = "We call this WET.",
     }
 end
 

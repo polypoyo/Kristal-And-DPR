@@ -72,8 +72,7 @@ function MainMenuModList:onLeave(new_state)
     end
 
     self.active = false
-    
-    self.menu.heart:setColor(Kristal.getSoulColor())
+
     self.menu.heart_outline.visible = false
 end
 
@@ -102,7 +101,7 @@ function MainMenuModList:onKeyPressed(key, is_repeat)
 
             elseif mod then
                 Assets.stopAndPlaySound("ui_select")
-                if (mod["useSaves"] == "has_saves" and (#love.filesystem.getDirectoryItems( "saves/"..mod.id ) > 0))
+                if (mod["useSaves"] == "has_saves" and (#love.filesystem.getDirectoryItems( "saves" ) > 0))
                 or (mod["useSaves"] ~= "has_saves" and mod["useSaves"])
                 or (mod["useSaves"] == nil and not mod["encounter"]) then
                     self.menu:setState("FILESELECT")

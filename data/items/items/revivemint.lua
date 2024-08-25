@@ -53,7 +53,8 @@ function item:init()
             susie = "(Don't look it)",
             ralsei = "Ah, I'm refreshed!"
         },
-        noelle = "Mints? I love mints!"
+        noelle = "Mints? I love mints!",
+        jamm = "And we used it here, why?",
     }
 end
 

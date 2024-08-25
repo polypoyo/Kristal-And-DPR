@@ -53,7 +53,8 @@ function item:init()
             ralsei = "Yummy!!! Marshmallows!!",
             susie = "Hey, feed ME!!!"
         },
-        noelle = "Oh, it's... sticky?"
+        noelle = "Oh, it's... sticky?",
+        jamm = "I'm not much of a sweet tooth. But...",
     }
 end
 

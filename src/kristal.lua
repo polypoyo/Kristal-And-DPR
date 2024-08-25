@@ -9,6 +9,7 @@ if not HOTSWAPPING then
         ["Loading"] = require("src.engine.loadstate"),
         ["MainMenu"] = require("src.engine.menu.mainmenu"),
         ["Game"] = require("src.engine.game.game"),
+        ["LameFadeout"] = require("src.engine.game.lamefadeout"),
         ["Testing"] = require("src.teststate"),
     }
 
@@ -23,43 +24,6 @@ if not HOTSWAPPING then
 
         message = ""
     }
-
-    Kristal.HTTPS = {
-        in_channel = nil,
-        out_channel = nil,
-        thread = nil,
-
-        next_key = 0,
-        waiting = 0,
-        end_funcs = {}
-    }
-end
-
-function Kristal.fetch(url, options)
-    options = options or {}
-
-    if not HTTPS_AVAILABLE then
-        return false
-    end
-
-    Kristal.HTTPS.waiting = Kristal.HTTPS.waiting + 1
-
-    if options.callback then
-        Kristal.HTTPS.end_funcs[Kristal.HTTPS.next_key] = options.callback
-    end
-
-    options.headers = options.headers or {}
-    options.headers["User-Agent"] = options.headers["User-Agent"] or ("Kristal/" .. tostring(Kristal.Version))
-
-    Kristal.HTTPS.in_channel:push({
-        url = url,
-        key = Kristal.HTTPS.next_key,
-        method = options.method or "get",
-        headers = options.headers,
-        data = options.data or nil
-    })
-    Kristal.HTTPS.next_key = Kristal.HTTPS.next_key + 1
-    return true
 end
 
 function love.load(args)
@@ -250,15 +214,6 @@ function love.load(args)
     Kristal.Loader.thread = love.thread.newThread("src/engine/loadthread.lua")
     Kristal.Loader.thread:start()
 
-    -- start https thread
-    Kristal.HTTPS.in_channel = love.thread.getChannel("https_in")
-    Kristal.HTTPS.out_channel = love.thread.getChannel("https_out")
-
-    if HTTPS_AVAILABLE then
-        Kristal.HTTPS.thread = love.thread.newThread("src/engine/httpsthread.lua")
-        Kristal.HTTPS.thread:start()
-    end
-
     -- TARGET_MOD being already set -> is defined by the mod developer
     -- and we wouldn't want the user to overwrite it
     if not TARGET_MOD and Kristal.Args["mod"] then
@@ -284,9 +239,6 @@ function love.quit()
     Kristal.saveConfig()
     if Kristal.Loader.thread and Kristal.Loader.thread:isRunning() then
         Kristal.Loader.in_channel:push("stop")
-    end
-    if Kristal.HTTPS.thread and Kristal.HTTPS.thread:isRunning() then
-        Kristal.HTTPS.in_channel:push("stop")
     end
 end
 
@@ -352,18 +304,6 @@ function love.update(dt)
                 elseif msg.status == "loading" then
                     Kristal.Loader.message = msg.path
                 end
-            end
-        end
-    end
-
-    if Kristal.HTTPS.waiting > 0 then
-        local msg = Kristal.HTTPS.out_channel:pop()
-        if msg then
-            Kristal.HTTPS.waiting = Kristal.HTTPS.waiting - 1
-
-            if Kristal.HTTPS.end_funcs[msg.key] then
-                Kristal.HTTPS.end_funcs[msg.key](msg.response, msg.body, msg.headers)
-                Kristal.HTTPS.end_funcs[msg.key] = nil
             end
         end
     end
@@ -994,6 +934,7 @@ function Kristal.quickReload(mode)
         save_id = Game.save_id
         encounter = Game.battle and Game.battle.encounter and Game.battle.encounter.id
         shop = Game.shop and Game.shop.id
+		minigame = Game.minigame and Game.minigame.id
     elseif mode == "save" then
         save_id = Game.save_id
     end
@@ -1020,6 +961,8 @@ function Kristal.quickReload(mode)
                         -- If we had an encounter, restart the encounter
                         if encounter then
                             Game:encounter(encounter, false)
+                        elseif minigame then -- If we were in a minigame, restart it
+                            Game:startMinigame(minigame)
                         elseif shop then -- If we were in a shop, re-enter it
                             Game:enterShop(shop)
                         end
@@ -1179,6 +1122,63 @@ function Kristal.loadModAssets(id, asset_type, asset_paths, after)
         Kristal.loadAssets(mod.libs[lib_id].path, asset_type or "all", asset_paths or "", finishLoadStep)
     end
     Kristal.loadAssets(mod.path, asset_type or "all", asset_paths or "", finishLoadStep)
+end
+
+function Kristal.startGameDPR(save_id, save_name, after)
+    local save = Kristal.getSaveFile(save_id)
+    Kristal.loadMod(save and save.mod or TARGET_MOD, save_id, save_name, after)
+end
+
+-- Loads into the provided mod with the current save slot.
+-- TODO: Allow setting spawn position.
+---@param use_lame_fadeout boolean|string? # DO NOT USE, work in progress.
+function Kristal.swapIntoMod(id, use_lame_fadeout, ...)
+    assert(id)
+    if not Kristal.Mods.getMod(id) then
+        -- TODO: Floweycheck DLC
+        print("WARNING: DLC " .. id .. " is not installed.")
+    end
+
+    local save_id = Game and Game.save_id or 1
+    local save = Game and Game:save() or Kristal.getSaveFile(save_id)
+    local map_args = {...}
+    local map = table.remove(map_args, 1)
+    local marker, x, y, facing
+    if type(map_args[1]) == "string" then
+        marker = table.remove(map_args, 1)
+    elseif type(map_args[1]) == "number" then
+        x = table.remove(map_args, 1)
+        y = table.remove(map_args, 1)
+    else
+        marker = "spawn"
+    end
+    if map_args[1] then
+        facing = table.remove(map_args, 1)
+    end
+    save.room_id = map
+    save.spawn_facing = facing
+    if marker then
+        save.spawn_marker = marker
+    else
+        save.spawn_position = {x, y}
+    end
+
+    Gamestate.switch(use_lame_fadeout and Kristal.States["LameFadeout"] or {}, use_lame_fadeout)
+    Kristal.clearModState()
+
+    Kristal.loadAssets("", "mods", "", function()
+        Kristal.loadMod(id, nil, nil, function()
+            if Kristal.preInitMod(id) then
+                Kristal.setDesiredWindowTitleAndIcon()
+                local game_params = {save, save_id}
+                if use_lame_fadeout then
+                    Kristal.States["LameFadeout"]:onLoadFinish(game_params)
+                else
+                    Gamestate.switch(Kristal.States["Game"], unpack(game_params))
+                end
+            end
+        end)
+    end)
 end
 
 local function shouldWindowUseModBranding()
@@ -1474,8 +1474,7 @@ function Kristal.saveGame(id, data)
     data = data or Game:save()
     Game.save_id = id
     Game.quick_save = nil
-    love.filesystem.createDirectory("saves/" .. Mod.info.id)
-    love.filesystem.write("saves/" .. Mod.info.id .. "/file_" .. id .. ".json", JSON.encode(data))
+    love.filesystem.write("saves" .. "/file_" .. id .. ".json", JSON.encode(data))
 end
 
 --- Loads the game from a save file.
@@ -1483,7 +1482,7 @@ end
 ---@param fade? boolean Whether the game should fade in after loading. (Defaults to `false`)
 function Kristal.loadGame(id, fade)
     id = id or Game.save_id
-    local path = "saves/" .. Mod.info.id .. "/file_" .. id .. ".json"
+    local path = "saves" .. "/file_" .. id .. ".json"
     if love.filesystem.getInfo(path) then
         local data = JSON.decode(love.filesystem.read(path))
         Game:load(data, id, fade)
@@ -1494,11 +1493,10 @@ end
 
 --- Returns the data from the specified save file.
 ---@param id?   number    The save file index to load. (Defaults to the currently loaded save index)
----@param path? string    The save folder to load from. (Defaults to the current mod's save folder)
 ---@return table|nil data The data loaded from the save file, or `nil` if the file doesn't exist.
-function Kristal.getSaveFile(id, path)
+function Kristal.getSaveFile(id)
     id = id or Game.save_id
-    local full_path = "saves/" .. (path or Mod.info.id) .. "/file_" .. id .. ".json"
+    local full_path = "saves" .. "/file_" .. id .. ".json"
     if love.filesystem.getInfo(full_path) then
         return JSON.decode(love.filesystem.read(full_path))
     end
@@ -1507,37 +1505,32 @@ end
 
 --- Returns whether the specified save file exists.
 ---@param id?   number    The save file index to check. (Defaults to the currently loaded save index)
----@param path? string    The save folder to check. (Defaults to the current mod's save folder)
 ---@return boolean exists Whether the save file exists.
-function Kristal.hasSaveFile(id, path)
+function Kristal.hasSaveFile(id)
     id = id or Game.save_id
-    local full_path = "saves/" .. (path or Mod.info.id) .. "/file_" .. id .. ".json"
+    local full_path = "saves" .. "/file_" .. id .. ".json"
     return love.filesystem.getInfo(full_path) ~= nil
 end
 
 --- Returns whether the specified save folder has any save files.
----@param path? string    The save folder to check. (Defaults to the current mod's save folder)
 ---@return boolean exists Whether the save folder has any save files.
-function Kristal.hasAnySaves(path)
-    local full_path = "saves/" .. (path or Mod.info.id)
+function Kristal.hasAnySaves()
+    local full_path = "saves"
     return love.filesystem.getInfo(full_path) and (#love.filesystem.getDirectoryItems(full_path) > 0)
 end
 
 --- Saves the given data to a file in the save folder.
 ---@param file  string The file name to save to.
 ---@param data  table  The data to save.
----@param path? string The save folder to save to. (Defaults to the current mod's save folder)
-function Kristal.saveData(file, data, path)
-    love.filesystem.createDirectory("saves/" .. (path or Mod.info.id))
-    love.filesystem.write("saves/" .. (path or Mod.info.id) .. "/" .. file .. ".json", JSON.encode(data or {}))
+function Kristal.saveData(file, data)
+    love.filesystem.write("saves/" .. file .. ".json", JSON.encode(data or {}))
 end
 
 --- Loads and returns the data from a file in the save folder.
 ---@param file  string    The file name to load.
----@param path? string    The save folder to load from. (Defaults to the current mod's save folder)
 ---@return table|nil data The data loaded from the file, or `nil` if the file doesn't exist.
-function Kristal.loadData(file, path)
-    local full_path = "saves/" .. (path or Mod.info.id) .. "/" .. file .. ".json"
+function Kristal.loadData(file)
+    local full_path = "saves/" .. file .. ".json"
     if love.filesystem.getInfo(full_path) then
         return JSON.decode(love.filesystem.read(full_path))
     end
@@ -1545,9 +1538,8 @@ end
 
 --- Erases a file from the save folder.
 ---@param file  string The file name to erase.
----@param path? string The save folder to erase from. (Defaults to the current mod's save folder)
-function Kristal.eraseData(file, path)
-    love.filesystem.remove("saves/" .. (path or Mod.info.id) .. "/" .. file .. ".json")
+function Kristal.eraseData(file)
+    love.filesystem.remove("saves/" .. file .. ".json")
 end
 
 --- Calls a function from the current `Mod`, if it exists.

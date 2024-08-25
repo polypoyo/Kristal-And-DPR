@@ -251,8 +251,17 @@ function BattleUI:drawState()
 
         local x = 0
         local y = 0
-        Draw.setColor(Game.battle.encounter:getSoulColor())
-        Draw.draw(self.heart_sprite, 5 + ((Game.battle.current_menu_x - 1) * 230), 30 + ((Game.battle.current_menu_y - (page*3)) * 30))
+		local party = Game.battle.party[Game.battle.current_selecting].chara
+		if party.soul_color then
+			Draw.setColor(party.soul_color)
+		else
+			Draw.setColor(Game.battle.encounter:getSoulColor())
+		end
+		local heart_sprite = self.heart_sprite
+		if party.heart_sprite then
+			heart_sprite = Assets.getTexture(party.heart_sprite)
+		end
+        Draw.draw(heart_sprite, 5 + ((Game.battle.current_menu_x - 1) * 230), 30 + ((Game.battle.current_menu_y - (page*3)) * 30))
 
         local font = Assets.getFont("main")
         love.graphics.setFont(font)
@@ -368,8 +377,17 @@ function BattleUI:drawState()
         local max_page = math.ceil(#enemies / 3) - 1
         local page_offset = page * 3
 
-        Draw.setColor(Game.battle.encounter:getSoulColor())
-        Draw.draw(self.heart_sprite, 55, 30 + ((Game.battle.current_menu_y - page_offset) * 30))
+        local party = Game.battle.party[Game.battle.current_selecting].chara
+        if party.soul_color then
+			Draw.setColor(party.soul_color)
+		else
+			Draw.setColor(Game.battle.encounter:getSoulColor())
+		end
+		local heart_sprite = self.heart_sprite
+		if party.heart_sprite then
+			heart_sprite = Assets.getTexture(party.heart_sprite)
+		end
+        Draw.draw(heart_sprite, 55, 30 + ((Game.battle.current_menu_y - page_offset) * 30))
 
         local font = Assets.getFont("main")
         love.graphics.setFont(font)
@@ -559,8 +577,17 @@ function BattleUI:drawState()
         local max_page = math.ceil(#Game.battle.party / 3) - 1
         local page_offset = page * 3
 
-        Draw.setColor(Game.battle.encounter:getSoulColor())
-        Draw.draw(self.heart_sprite, 55, 30 + ((Game.battle.current_menu_y - page_offset) * 30))
+		local party = Game.battle.party[Game.battle.current_selecting].chara
+        if party.soul_color then
+			Draw.setColor(party.soul_color)
+		else
+			Draw.setColor(Game.battle.encounter:getSoulColor())
+		end
+		local heart_sprite = self.heart_sprite
+		if party.heart_sprite then
+			heart_sprite = Assets.getTexture(party.heart_sprite)
+		end
+        Draw.draw(heart_sprite, 55, 30 + ((Game.battle.current_menu_y - page_offset) * 30))
 
         local font = Assets.getFont("main")
         love.graphics.setFont(font)

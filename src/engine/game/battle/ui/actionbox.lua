@@ -53,18 +53,22 @@ function ActionBox:createButtons()
 
     local btn_types = {"fight", "act", "magic", "item", "spare", "defend"}
 
-    if not self.battler.chara:hasAct() then Utils.removeFromTable(btn_types, "act") end
-    if not self.battler.chara:hasSpells() then Utils.removeFromTable(btn_types, "magic") end
+	if self.battler.chara:hasSkills() then
+		btn_types = {"fight", "skill", "item", "spare", "defend"}
+	else
+		if not self.battler.chara:hasAct() then Utils.removeFromTable(btn_types, "act") end
+		if not self.battler.chara:hasSpells() then Utils.removeFromTable(btn_types, "magic") end
+	end
 
-    for lib_id,_ in Kristal.iterLibraries() do
+    for lib_id,_ in pairs(Mod.libs) do
         btn_types = Kristal.libCall(lib_id, "getActionButtons", self.battler, btn_types) or btn_types
     end
     btn_types = Kristal.modCall("getActionButtons", self.battler, btn_types) or btn_types
 
     local start_x = (213 / 2) - ((#btn_types-1) * 35 / 2) - 1
 
-    if (#btn_types <= 5) and Game:getConfig("oldUIPositions") then
-        start_x = start_x - 5.5
+    if (#btn_types <= 6) and Game:getConfig("oldUIPositions") then
+        start_x = 30
     end
 
     for i,btn in ipairs(btn_types) do
@@ -73,7 +77,7 @@ function ActionBox:createButtons()
             button.actbox = self
             table.insert(self.buttons, button)
             self:addChild(button)
-        elseif type(btn) ~= "boolean" then -- nothing if a boolean value, used to create an empty space
+        else
             btn:setPosition(math.floor(start_x + ((i - 1) * 35)) + 0.5, 21)
             btn.battler = self.battler
             btn.actbox = self
