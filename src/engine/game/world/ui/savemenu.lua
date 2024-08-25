@@ -61,13 +61,12 @@ end
 
 function SaveMenu:updateSaveBoxSize()
     if self.state == "SAVED" then
-        self.save_list.height = 258
-        self.save_list.width = 457
+        self.save_list.height = 210
     else
         self.save_list.height = 258
-        self.save_list.width = 457
     end
 end
+
 function SaveMenu:update()
     if self.state == "MAIN" then
         if Input.pressed("cancel") then
@@ -264,7 +263,7 @@ function SaveMenu:draw()
         Draw.setColor(Game:getSoulColor())
         Draw.draw(self.heart_sprite, heart_positions_x[self.selected_x], heart_positions_y[self.selected_y])
     
-    elseif self.state == "SAVE" or self.state == "SAVED" then
+    elseif self.state == "SAVE" or self.state == "OVERWRITE" then
         self:drawSaveFile(0, Game:getSavePreview(), 74, 26, false, true)
 
         self:drawSaveFile(1, self.saves[1], 64 + 2, 138 - 4, self.selected_file == 1)
@@ -293,6 +292,20 @@ function SaveMenu:draw()
             Draw.setColor(PALETTE["world_text"])
         end
         love.graphics.print("Return", 278, 394)
+    elseif self.state == "SAVED" then
+        self:drawSaveFile(self.saved_file, self.saves[self.saved_file], 74, 26, false, true)
+
+        self:drawSaveFile(1, self.saves[1], 64 + 2, 138 - 4, self.selected_file == 1)
+
+        self:drawSaveFile(2, self.saves[2], 312 + 2, 138 - 4, self.selected_file == 2)
+
+        self:drawSaveFile(3, self.saves[3], 64 + 2, 264, self.selected_file == 3)
+
+        self:drawSaveFile(4, self.saves[4], 312 + 2, 264, self.selected_file == 4)
+
+        Draw.setColor(PALETTE["world_text"])
+        Draw.rectangle("fill", SCREEN_WIDTH/2 - 3, self.save_list.height/2 + 31, 6, 252)
+        Draw.rectangle("fill", self.save_list.x - 20, SCREEN_HEIGHT/2 + 22 - 4, 497, 6)
     end
 
     super.draw(self)
