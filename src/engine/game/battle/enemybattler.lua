@@ -601,6 +601,11 @@ function EnemyBattler:onTurnStart() end
 --- *(Override)* Called at the end of every turn in battle
 function EnemyBattler:onTurnEnd() end
 
+--- *(Override)* Called when a service spell is used
+function EnemyBattler:onService(spell) end
+--- *(Override)* Called when a service spell is used
+function EnemyBattler:canService(spell) return true end
+
 --- Retrieves the data of an act on this enemy by its `name`
 ---@param name string
 ---@return table

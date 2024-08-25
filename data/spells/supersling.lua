@@ -61,7 +61,10 @@ function spell:onCast(user, target)
 			mult = 0.5
 		end
 		target:heal(damage)
-		target:addMercy(math.ceil(target.service_mercy*1.3*mult))
+		if target:canService(self.id) then
+			target:addMercy(math.ceil(target.service_mercy*1.3*mult))
+		end
+		target:onService(self.id)
 	end)
 end
 
