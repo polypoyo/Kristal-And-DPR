@@ -930,6 +930,7 @@ function Kristal.quickReload(mode)
     -- Temporarily save game variables
     local save, save_id, encounter, shop
     if mode == "temp" then
+        Kristal.temp_save = true
         save = Game:save()
         save_id = Game.save_id
         encounter = Game.battle and Game.battle.encounter and Game.battle.encounter.id
@@ -1133,6 +1134,9 @@ end
 -- TODO: Allow setting spawn position.
 ---@param use_lame_fadeout boolean|string? # DO NOT USE, work in progress.
 function Kristal.swapIntoMod(id, use_lame_fadeout, ...)
+    --this is for noel, so they dont save their file for a possible armor dupe
+    Kristal.temp_save = true
+
     assert(id)
     if not Kristal.Mods.getMod(id) then
         -- TODO: Floweycheck DLC

@@ -1039,6 +1039,9 @@ local save_dir = "saves"
 local n_save = "saves/null.char"
 
 function Game:saveNoel(new_data)
+    if Kristal.temp_save == true then
+    else
+
     local data = self:loadNoel() or {}
     if new_data then
         for k, v in pairs(new_data) do
@@ -1048,11 +1051,16 @@ function Game:saveNoel(new_data)
 
     love.filesystem.createDirectory(save_dir)
     love.filesystem.write(n_save, JSON.encode(data))
+
+    end
 end
 
 function Game:loadNoel()
+    if Kristal.temp_save == true then
+    else
     if love.filesystem.getInfo(n_save) then
         return JSON.decode(love.filesystem.read(n_save))
+    end
     end
     return nil
 end
