@@ -204,26 +204,19 @@ end
 function LightAdvancedSaveMenu:draw()
     love.graphics.setFont(self.font)
     if self.state == "MAIN" then
-        local data      = self.saves[Game.save_id]   or {}
-        local name      = data.name                  or "EMPTY"
-        local level     = Game.party[1]:getLightLV() or 1
-        local playtime  = data.playtime              or 0
-        local room_name = data.room_name             or "--"
+        local data      = Game:getSavePreview()   or {}
+        data["level"] = Game.party[1]:getLightLV() or 1
     
-        love.graphics.print(name,             self.main_box.x + 8,        self.main_box.y - 10 + 8)
+        love.graphics.print(data.name,             self.main_box.x + 8,        self.main_box.y - 10 + 8)
     
-        if self.saves[Game.save_id] then
-            love.graphics.print("LV "..level, self.main_box.x + 210 - 42, self.main_box.y - 10 + 8)
-        else
-            love.graphics.print("LV 0",       self.main_box.x + 210 - 42, self.main_box.y - 10 + 8)
-        end
+        love.graphics.print("LV "..data.level, self.main_box.x + 210 - 42, self.main_box.y - 10 + 8)
     
-        local minutes = math.floor(playtime / 60)
-        local seconds = math.floor(playtime % 60)
+        local minutes = math.floor(data.playtime / 60)
+        local seconds = math.floor(data.playtime % 60)
         local time_text = string.format("%d:%02d", minutes, seconds)
         love.graphics.printf(time_text, self.main_box.x - 280 + 148, self.main_box.y - 10 + 8, 500, "right")
     
-        love.graphics.print(room_name, self.main_box.x + 8, self.main_box.y + 38)
+        love.graphics.print(data.room_name, self.main_box.x + 8, self.main_box.y + 38)
     
         if self.state == "MAIN" then
             love.graphics.print("Save",   self.main_box.x + 30  + 8, self.main_box.y + 98)
@@ -289,9 +282,17 @@ function LightAdvancedSaveMenu:draw()
         local function drawOverwriteSave(data, x, y)
             local w = 478
 
+            local level = 0
+
+            if data.party_data and data.party_data[Kristal.getSaveFile(index).party[1]].lw_lv then
+                level = data.party_data[Kristal.getSaveFile(index).party[1]].lw_lv
+            else
+                level = Game.party[1]:getLightLV()
+            end
+
             -- Header
             love.graphics.print(data.name, x + (w/2) - self.font:getWidth(data.name)/2, y)
-            love.graphics.print("LV "..data.level, x, y)
+            love.graphics.print("LV "..level, x, y)
 
             local minutes = math.floor(data.playtime / 60)
             local seconds = math.floor(data.playtime % 60)
@@ -357,7 +358,8 @@ function LightAdvancedSaveMenu:drawSaveFile(index, data, x, y, selected, header)
         end
     else
         if not header then
-            love.graphics.print("LV "..data.level, x + 28, y + 6)
+            local level = data.party_data[Kristal.getSaveFile(index).party[1]].lw_lv
+            love.graphics.print("LV "..level, x + 28, y + 6)
     
             love.graphics.print(data.name, x + (262 / 2) - self.font:getWidth(data.name) / 2, y + 44)
     
@@ -373,7 +375,7 @@ function LightAdvancedSaveMenu:drawSaveFile(index, data, x, y, selected, header)
                 Draw.draw(self.heart_sprite, x + 122, y + 15, 0, 2)
             end
         else
-            love.graphics.print("LV "..data.level, x + 26, y + 6)
+            love.graphics.print("LV "..Game.party[1]:getLightLV(), x + 26, y + 6)
 
             love.graphics.print(data.name, x + (493 / 2) - self.font:getWidth(data.name) / 2, y + 6)
     
