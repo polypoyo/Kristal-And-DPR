@@ -1,19 +1,19 @@
 return {
   version = "1.9",
   luaversion = "5.1",
-  tiledversion = "1.9.0",
+  tiledversion = "1.9.2",
   name = "cliffs",
   class = "",
-  tilewidth = 40,
-  tileheight = 40,
+  tilewidth = 20,
+  tileheight = 20,
   spacing = 0,
   margin = 0,
   columns = 5,
   image = "../../../assets/sprites/tilesets/cliffs.png",
-  imagewidth = 200,
-  imageheight = 680,
+  imagewidth = 100,
+  imageheight = 340,
   objectalignment = "unspecified",
-  tilerendersize = "tile",
+  tilerendersize = "grid",
   fillmode = "stretch",
   tileoffset = {
     x = 0,
@@ -21,8 +21,8 @@ return {
   },
   grid = {
     orientation = "orthogonal",
-    width = 40,
-    height = 40
+    width = 20,
+    height = 20
   },
   properties = {},
   wangsets = {},
