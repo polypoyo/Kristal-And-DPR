@@ -40,7 +40,7 @@ function MainMenuTitle:onEnter(old_state)
     if TARGET_MOD then
         self.options = {
             {"play",    self.has_target_saves and "Load game" or "Start game"},
-            {"modfolder", "Open DLC folder"},
+            {"dlc",     "Manage DLCs"},
             {"options", "Options"},
             {"credits", "Credits"},
             {"quit",    "Quit"},
@@ -48,7 +48,7 @@ function MainMenuTitle:onEnter(old_state)
     else
         self.options = {
             {"play",      "Play a mod"},
-            {"modfolder", "Open DLC folder"},
+            {"dlc",       "Manage DLCs"},
             {"options",   "Options"},
             {"credits",   "Credits"},
             {"wiki",      "Open wiki"},
@@ -81,8 +81,9 @@ function MainMenuTitle:onKeyPressed(key, is_repeat)
                 self.menu:setState("FILESELECT")
             end
 
-        elseif option == "modfolder" then
-            love.system.openURL("file://"..love.filesystem.getSource().."/mods")
+        elseif option == "dlc" then
+            self.menu:setState("DLC")
+            --love.system.openURL("file://"..love.filesystem.getSource().."/mods")
 
         elseif option == "options" then
             self.menu:setState("OPTIONS")

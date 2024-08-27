@@ -51,6 +51,7 @@ function MainMenu:enter()
     self.default_name_screen = MainMenuDefaultName(self)
     self.controls = MainMenuControls(self)
     self.deadzone_config = MainMenuDeadzone(self)
+    self.dlc_handler = MainMenuDLCHandler(self)
 
     -- Register states
     self.state = "NONE"
@@ -67,6 +68,7 @@ function MainMenu:enter()
     self.state_manager:addState("DEFAULTNAME", self.default_name_screen)
     self.state_manager:addState("CONTROLS", self.controls)
     self.state_manager:addState("DEADZONE", self.deadzone_config)
+    self.state_manager:addState("DLC", self.dlc_handler)
 
     self.fader = Fader()
     self.fader.layer = 10000
