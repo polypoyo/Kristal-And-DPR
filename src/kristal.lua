@@ -1443,7 +1443,7 @@ function Kristal.loadConfig()
         fps = 30,
         vSync = false,
         frameSkip = false,
-        debug = false,
+        debug = true,
         fullscreen = false,
         simplifyVFX = false,
         autoRun = false,
