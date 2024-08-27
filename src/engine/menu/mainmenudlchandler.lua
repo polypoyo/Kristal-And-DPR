@@ -39,7 +39,7 @@ end
 function MainMenuDLCHandler:onKeyPressed(key, is_repeat)
 	if Input.isConfirm(key) and not is_repeat then
 		Assets.stopAndPlaySound("ui_select")
-		love.system.openURL("file://"..love.filesystem.getSource().."/mods")
+		love.system.openURL("file://"..love.filesystem.getSaveDirectory().."/mods")
 	elseif Input.isCancel(key) then
 		Assets.stopAndPlaySound("ui_move")
 
