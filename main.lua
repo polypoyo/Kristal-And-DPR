@@ -71,6 +71,7 @@ MainMenuFileName = require("src.engine.menu.mainmenufilename")
 MainMenuDefaultName = require("src.engine.menu.mainmenudefaultname")
 MainMenuControls = require("src.engine.menu.mainmenucontrols")
 MainMenuDeadzone = require("src.engine.menu.mainmenudeadzone")
+MainMenuDLCHandler = require("src.engine.menu.mainmenudlchandler")
 
 ModList = require("src.engine.menu.objects.modlist")
 ModButton = require("src.engine.menu.objects.modbutton")
