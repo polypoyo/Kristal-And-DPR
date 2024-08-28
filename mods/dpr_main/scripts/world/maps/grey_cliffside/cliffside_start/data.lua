@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 7,
-  nextobjectid = 11,
+  nextobjectid = 16,
   properties = {
     ["music"] = "demonic_little_grey_cliffs"
   },
@@ -154,6 +154,45 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        },
+        {
+          id = 12,
+          name = "",
+          class = "",
+          shape = "rectangle",
+          x = 320,
+          y = -40,
+          width = 40,
+          height = 80,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 13,
+          name = "",
+          class = "",
+          shape = "rectangle",
+          x = 360,
+          y = 40,
+          width = 200,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 14,
+          name = "",
+          class = "",
+          shape = "rectangle",
+          x = 560,
+          y = -40,
+          width = 40,
+          height = 80,
+          rotation = 0,
+          visible = true,
+          properties = {}
         }
       }
     },
@@ -182,7 +221,10 @@ return {
           height = 160,
           rotation = 0,
           visible = true,
-          properties = {}
+          properties = {
+            ["map"] = "grey_cliffside/cliffside_right",
+            ["marker"] = "entry"
+          }
         },
         {
           id = 5,
@@ -207,6 +249,19 @@ return {
           x = 240,
           y = 80,
           width = 40,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 15,
+          name = "transition",
+          class = "",
+          shape = "rectangle",
+          x = 360,
+          y = -80,
+          width = 200,
           height = 40,
           rotation = 0,
           visible = true,
