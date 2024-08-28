@@ -1,5 +1,26 @@
 {
     "maps": [
+        {
+            "fileName": "maps/grey_cliffside/cliffside_right.tmx",
+            "height": 680,
+            "width": 1200,
+            "x": 1920,
+            "y": 0
+        },
+        {
+            "fileName": "maps/grey_cliffside/cliffside_start/cliffside_start.tmx",
+            "height": 480,
+            "width": 640,
+            "x": 1200,
+            "y": 0
+        },
+        {
+            "fileName": "maps/grey_cliffside/cliffside_right_2.tmx",
+            "height": 800,
+            "width": 1200,
+            "x": 2080,
+            "y": 760
+        }
     ],
     "onlyShowAdjacentMaps": false,
     "type": "world"
