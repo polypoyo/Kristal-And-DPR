@@ -1,7 +1,7 @@
 return {
   version = "1.9",
   luaversion = "5.1",
-  tiledversion = "1.9.0",
+  tiledversion = "1.9.2",
   class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
@@ -9,18 +9,35 @@ return {
   height = 12,
   tilewidth = 40,
   tileheight = 40,
-  nextlayerid = 6,
-  nextobjectid = 8,
-  properties = {},
+  nextlayerid = 7,
+  nextobjectid = 11,
+  properties = {
+    ["music"] = "demonic_little_grey_cliffs"
+  },
   tilesets = {
     {
       name = "cliffs",
       firstgid = 1,
-      filename = "../tilesets/cliffs.tsx",
-      exportfilename = "../tilesets/cliffs.lua"
+      filename = "../../../tilesets/cliffs.tsx",
+      exportfilename = "../../../tilesets/cliffs.lua"
     }
   },
   layers = {
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 6,
+      name = "objects_bg",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {}
+    },
     {
       type = "tilelayer",
       x = 0,
@@ -41,9 +58,9 @@ return {
       data = {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 13, 13, 13, 14, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 17, 18, 18, 18, 19, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 5, 23, 23, 24, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 23, 23, 23, 15, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 27, 28, 28, 28, 29, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 2, 3, 22, 5, 23, 23, 24, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 17, 18, 22, 23, 23, 23, 15, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 22, 23, 27, 28, 28, 28, 29, 0, 0,
         0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
         0, 0, 7, 8, 6, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
         0, 0, 12, 8, 8, 8, 8, 8, 8, 8, 8, 8, 11, 8, 8, 8,
@@ -75,14 +92,14 @@ return {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 21, 23, 23, 23, 24, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 36, 21, 23, 23, 23, 24, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76
+        4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        19, 0, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76
       }
     },
     {
@@ -181,6 +198,19 @@ return {
           properties = {
             ["text1"] = "* Welcome to Cliffside![wait:10]\n* Watch your step!"
           }
+        },
+        {
+          id = 10,
+          name = "footstep",
+          class = "",
+          shape = "rectangle",
+          x = 240,
+          y = 80,
+          width = 40,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {}
         }
       }
     },

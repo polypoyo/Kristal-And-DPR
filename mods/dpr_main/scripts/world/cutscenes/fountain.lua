@@ -42,6 +42,7 @@ return function(cutscene)
 
         local leader = Game.world.player
         local soul = Game.world:spawnObject(UsefountainSoul(leader.x, leader.y - leader.height + 10), "ui")
+        soul.color = Game:getPartyMember(Game.party[1].id).soul_color or {1,0,0}
         cutscene:playSound("great_shine")
         cutscene:wait(1)
 
