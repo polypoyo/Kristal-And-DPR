@@ -81,4 +81,5 @@ return {
     "human... i remember\nyou're genocides...",
     "Help! They're forcing\nme to make\nsplash texts!",
     "Knockback Bros.\nbut like not\nadvanced",
+    "We'll cross that bridge\nwhen we come to it.",
 }
