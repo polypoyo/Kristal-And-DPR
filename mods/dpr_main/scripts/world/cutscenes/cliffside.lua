@@ -55,7 +55,7 @@ return {
         end
 
         local player = Game.world.player
-        cutscene:slideTo(player, 459, 1190, 2.5, "out-cubic")
+        cutscene:slideTo(player, 459, 1300, 4, "out-cubic")
         cutscene:wait(3)
 
         local plx = player.x
