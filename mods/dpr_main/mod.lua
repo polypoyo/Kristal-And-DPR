@@ -20,6 +20,8 @@ function Mod:postInit(new_file)
         if Game.save_name == "SUPER" then
             Game.inventory:addItem("chaos_emeralds")
         end
+
+        Game.world:startCutscene("_main.introcutscene")
     end
 end
 
