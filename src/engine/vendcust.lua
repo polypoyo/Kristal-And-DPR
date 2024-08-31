@@ -9,3 +9,20 @@
 -- (The value set here overrides that)
 ---@type string
 TARGET_MOD = "dpr_main"
+
+-- From which Github organisation should Kristal fetches the DLCs from
+-- If nil, will fallback to GITHUB_REPOS
+GITHUB_ORGANISATION = nil
+
+-- Additional DLCs that aren't in the organisation above for some reason
+-- (like the organisation not existing yet)
+GITHUB_REPOS = {
+	Simbel0={
+		"Kristal-Wii-BIOS-Mod",
+		"bikini-spamton",
+		"Dark-place",
+		"lollmaoevenfuckyou",
+		"Glitchin",
+		"Temple-Of-Creativity"
+	}
+}
