@@ -11,7 +11,9 @@ return {
   tileheight = 40,
   nextlayerid = 5,
   nextobjectid = 14,
-  properties = {},
+  properties = {
+    ["border"] = "castle"
+  },
   tilesets = {
     {
       name = "main_area",
