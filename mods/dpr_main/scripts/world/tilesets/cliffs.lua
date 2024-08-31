@@ -11,7 +11,7 @@ return {
   columns = 5,
   image = "../../../assets/sprites/tilesets/cliffs.png",
   imagewidth = 100,
-  imageheight = 400,
+  imageheight = 460,
   objectalignment = "unspecified",
   tilerendersize = "grid",
   fillmode = "stretch",
@@ -26,6 +26,6 @@ return {
   },
   properties = {},
   wangsets = {},
-  tilecount = 100,
+  tilecount = 115,
   tiles = {}
 }

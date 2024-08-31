@@ -48,6 +48,11 @@ return {
             end
         end
         Assets.playSound("noise")
+
+        local slide_sound = Assets.newSound("paper_surf")
+        slide_sound:setLooping(true)
+        slide_sound:play()
+
         --cutscene:text("* Oh okay.")
         local cat = cutscene:getCharacter("cat")
         if not cat then
@@ -57,7 +62,7 @@ return {
         local player = Game.world.player
         cutscene:slideTo(player, 459, 1300, 4, "out-cubic")
         cutscene:wait(3)
-
+        slide_sound:stop()
         local plx = player.x
         local num = 1
         local mum = 2
@@ -70,9 +75,10 @@ return {
         end)
 
 
-        local time = 1
-        local plir = 0.051
-        for _ = 1, 21 do
+        local time = 0.5
+        local plir = 0.01
+        for _ = 1, 42 do
+             Game.world.player.y = Game.world.player.y -4
              Assets.playSound("wing")
              Game.world.player:shake(0, 5)
              cutscene:wait(time)
