@@ -49,10 +49,8 @@ return {
         end
         Assets.playSound("noise")
 
-        local slide_sound = Assets.newSound("paper_surf")
-        slide_sound:setLooping(true)
-        slide_sound:play()
-
+        Game.world.player:setState("SLIDE")
+        
         --cutscene:text("* Oh okay.")
         local cat = cutscene:getCharacter("cat")
         if not cat then
@@ -62,7 +60,8 @@ return {
         local player = Game.world.player
         cutscene:slideTo(player, 459, 1300, 4, "out-cubic")
         cutscene:wait(3)
-        slide_sound:stop()
+        Game.world.player.slide_in_place = true
+        Game.world.player.slide_sound:stop()
         local plx = player.x
         local num = 1
         local mum = 2
@@ -85,6 +84,7 @@ return {
              time = time - plir
         end
 
+        Game.world.player:setState("WALK")
         Assets.playSound("jump", 1, 0.5)
         cutscene:slideTo(player, 459, 260, 0.2)
         cutscene:wait(0.2)
@@ -93,8 +93,10 @@ return {
         Assets.playSound("dtrans_flip", 1, 0.5)
         Assets.playSound("impact")
         cutscene:wait(5)
+        Game.world.player:setState("SLIDE")
         cutscene:slideTo(player, 459, 320, 0.2)
         cutscene:wait(0.2)
+        Game.world.player:setState("WALK")
         Game.world.player:shake(5)
         Assets.playSound("bump")
         cutscene:wait(2)

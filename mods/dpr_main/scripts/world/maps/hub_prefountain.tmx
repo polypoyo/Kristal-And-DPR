@@ -3,6 +3,9 @@
  <editorsettings>
   <export target="hub_prefountain.lua" format="lua"/>
  </editorsettings>
+ <properties>
+  <property name="border" value="castle"/>
+ </properties>
  <tileset firstgid="1" source="../tilesets/main_area.tsx"/>
  <layer id="1" name="Tile Layer 1" width="20" height="24">
   <data encoding="csv">
