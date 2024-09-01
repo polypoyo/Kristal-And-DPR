@@ -10,8 +10,9 @@ function MainMenuDLCHandler:init(menu)
 
     self.list = nil
 
-    self.dlcs = {}
     self.images = {}
+
+    self.installed_dlcs = {}
 
     -- Networking stuff I guess??
     self.loading_dlcs = false
@@ -43,7 +44,7 @@ function MainMenuDLCHandler:onEnter()
 	self.active = true
 
 	self.menu.heart_target_x = -16
-	self.menu.heart_target_y = -16
+	--self.menu.heart_target_y = -16
 
 	if not self.list then
 		print("Build the DLC list")
@@ -199,10 +200,15 @@ function MainMenuDLCHandler:onKeyPressed(key, is_repeat)
     elseif Input.ctrl() and key == "f5" then
     	local force = Input.alt()
     	self:buildDLCList(force)
+    elseif Input.is("down", key) then
+    	self.list:selectDown(is_repeat)
+    elseif Input.is("up", key) then
+    	self.list:selectUp(is_repeat)
     end
 end
 
 function MainMenuDLCHandler:draw()
+	local shader = Kristal.Shaders["ColorGradient"]
 	Draw.setColor(COLORS.silver)
     Draw.printShadow("( DLC HANDLER )", 0, 0, 2, "center", 640)
 
@@ -211,26 +217,69 @@ function MainMenuDLCHandler:draw()
     	Draw.printShadow("Downloading data... "..Utils.round(100-(self.loading_queue_index*100/#self.loading_list)).."%", 0, (SCREEN_HEIGHT/2)-15, 2, "center", 640)
 
     	Draw.setColor(COLORS.silver)
-    	Draw.rectangle("fill", 150, (SCREEN_HEIGHT/2)+15, 250, 20)
+    	Draw.rectangle("fill", 230, (SCREEN_HEIGHT/2)+20, 250, 20)
     	Draw.setColor(COLORS.green)
-    	Draw.rectangle("fill", 150, (SCREEN_HEIGHT/2)+15, 250-(250*self.loading_queue_index/#self.loading_list), 20)
+    	Draw.rectangle("fill", 230, (SCREEN_HEIGHT/2)+20, 250-(250*self.loading_queue_index/#self.loading_list), 20)
+
+    	Draw.setColor(COLORS.white)
+    	if self.loading_queue_index > 0 then
+    		local data = self.loading_list[self.loading_queue_index]
+    		Draw.printShadow("Getting data from\n"..data.owner.."'s "..data.repo, 0, (SCREEN_HEIGHT/2)+45, 2, "center", 640)
+    	end
     	return
     end
 
-    Draw.setColor(COLORS.white)
+    -- modbutton.lua
+    local function drawCoolRectangle(x, y, w, h, color)
+	    -- Make sure the line is a single pixel wide
+	    love.graphics.setLineWidth(1)
+	    love.graphics.setLineStyle("rough")
+	    -- Set the color if set
+	    local old_color
+	    if color then
+	    	old_color = {love.graphics.getColor()}
+	    	local r, g, b, a = unpack(color)
+	    	Draw.setColor(r*0.9, g*0.9, b*1.0, a)
+	    end
+	    -- Draw the rectangles
+	    love.graphics.rectangle("line", x, y, w + 1, h + 1)
+	    -- Increase the width and height by one instead of two to produce the broken effect
+	    love.graphics.rectangle("line", x - 1, y - 1, w + 2, h + 2)
+	    love.graphics.rectangle("line", x - 2, y - 2, w + 5, h + 5)
+	    -- Here too
+	    love.graphics.rectangle("line", x - 3, y - 3, w + 6, h + 6)
+
+	    -- Reset the color to the previous one
+	    if color then
+	    	Draw.setColor(old_color)
+	    end
+	end
+
+    --[[Draw.setColor(COLORS.white)
 	Draw.printShadow("Work In Progress!", 0, 115 + 30, 2, "center", 640)
 	Draw.printShadow("Come back later!", 0, 115 + 30*2, 2, "center", 640)
 
 	Draw.printShadow("Press "..Input.getText("confirm").." to open the DLC folder.", 0, 115 + 30*4, 2, "center", 640)
-	Draw.printShadow("Press "..Input.getText("cancel").." to return", 0, 115 + 30*5, 2, "center", 640)
+	Draw.printShadow("Press "..Input.getText("cancel").." to return", 0, 115 + 30*5, 2, "center", 640)]]
 
-	local r, g, b = COLORS.silver
+	local r, g, b = unpack(COLORS.black)
 	Draw.setColor(r, g, b, 0.5)
+	Draw.pushShader(shader, {from={1, 1, 1, 1}, to={1, 1, 1, 0}, screenHeight=SCREEN_HEIGHT})
 	Draw.rectangle("fill", 20, 48, 280, SCREEN_HEIGHT-48-10)
+	drawCoolRectangle(20, 48, 280, SCREEN_HEIGHT-48-10, COLORS.white)
+	Draw.popShader()
 
 	Draw.rectangle("fill", 310, 48, 320, 240)
+	local id = self.list:getSelectedId()
+	if self.images[id] then
+		Draw.setColor(1, 1, 1, 1)
+		Draw.draw(self.images[id], 310, 48)
+		Draw.setColor(r, g, b, 0.5)
+	end
+	drawCoolRectangle(310, 48, 320, 240, COLORS.white)
 
 	Draw.rectangle("fill", 310, 240+48+10, 320, SCREEN_HEIGHT-(240+48+10)-10)
+	drawCoolRectangle(310, 240+48+10, 320, SCREEN_HEIGHT-(240+48+10)-10, COLORS.white)
 end
 
 function MainMenuDLCHandler:checkForNewDLCs()
@@ -257,6 +306,32 @@ function MainMenuDLCHandler:checkForNewDLCs()
 		end
 	end
 	return #new_dlcs>0, new_dlcs
+end
+
+function MainMenuDLCHandler:REALbuildDLCList()
+	local dlcs = {}
+	for id,mod in pairs(Kristal.Mods.dlc_data) do
+		print(mod.name or mod.id or id)
+		if not mod.id then
+			mod.id = id
+		end
+		table.insert(dlcs, mod)
+	end
+
+	table.sort(dlcs, function(a, b)
+		return (Kristal.Mods.getMod(a.id) and not Kristal.Mods.getMod(b.id))
+	end)
+
+	for i,mod in ipairs(dlcs) do
+		local button = DLCButton(mod.name or mod.id, 424, 62, mod)
+        self.list:addMod(button)
+        if mod.preview then
+        	self.images[mod.id] = love.graphics.newImage(mod.preview)
+        end
+        if Kristal.Mods.getMod(mod.id) then
+        	table.insert(self.installed_dlcs, mod.id)
+        end
+	end
 end
 
 function MainMenuDLCHandler:buildDLCList(reset_cache)
@@ -300,7 +375,10 @@ function MainMenuDLCHandler:buildDLCList(reset_cache)
     		Kristal.Mods.dlc_data = JSON.decode(love.filesystem.read("cache/dlc_data.json"))
     		-- TODO: remake that better
     		local new, list = self:checkForNewDLCs()
-    		if not new then return end
+    		if not new then
+    			self:REALbuildDLCList()
+    			return
+    		end
     		print("New DLCs found")
     		url_list = list
     	end
@@ -323,6 +401,8 @@ function MainMenuDLCHandler:buildDLCList(reset_cache)
     		self.loading_queue_index = self.loading_queue_index + 1
     	end
     end
+
+    self.loading_callback = self.REALbuildDLCList
 
     self.loading_dlcs = true
 

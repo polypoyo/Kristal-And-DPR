@@ -79,6 +79,7 @@ MainMenuWarningHandler = require("src.engine.menu.mainmenuwarninghandler")
 
 ModList = require("src.engine.menu.objects.modlist")
 ModButton = require("src.engine.menu.objects.modbutton")
+DLCButton = require("src.engine.menu.objects.DLCbutton")
 ModCreateButton = require("src.engine.menu.objects.modcreatebutton")
 FileButton = require("src.engine.menu.objects.filebutton")
 FileNamer = require("src.engine.menu.objects.filenamer")
