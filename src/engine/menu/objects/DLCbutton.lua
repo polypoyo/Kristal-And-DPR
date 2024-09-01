@@ -5,6 +5,16 @@ function DLCButton:init(name, width, height, mod)
 
 end
 
+function DLCButton:update()
+	super:update(self)
+
+	if not self.selected then
+		self.x = Utils.approach(self.x, 25, 4*DTMULT)
+	else
+		self.x = Utils.approach(self.x, 0, 4*DTMULT)
+	end
+end
+
 function DLCButton:draw()
     -- Get the position for the mod icon
     local ix, iy = self:getIconPos()
@@ -23,8 +33,8 @@ function DLCButton:draw()
     Draw.pushScissor()
     Draw.scissor(0, 0, self.width, self.height)
     -- Make name position higher if we have a subtitle
-    local name_y = math.floor((self.height/2 - self.subfont:getHeight()/2) / 2) * 2
-    love.graphics.setFont(self.subfont)
+    local name_y = math.floor((self.height/2 - self.font:getHeight()/2) / 2) * 2
+    love.graphics.setFont(self.font)
     -- Draw the name shadow
     Draw.setColor(0, 0, 0)
     love.graphics.print(self.name, 10 + 2, name_y + 2)
