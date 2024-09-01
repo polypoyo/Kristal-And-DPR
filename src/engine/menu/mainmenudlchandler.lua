@@ -11,17 +11,23 @@ function MainMenuDLCHandler:init(menu)
     self.list = nil
 
     self.dlcs = {}
+    self.images = {}
 
     -- Networking stuff I guess??
     self.loading_dlcs = false
     self.loading_list = {}
-    self.loading_type = "mod.json"
+    self.loading_callback = nil
     self.loading_queue_index = 0
     self.send_request = false
+
+    self.content_index = 1
+    self.temp_content = nil
 
     self.loading_errors = {}
 
     self.active = false
+
+    DLCHANDLER = self -- For easy access in the console
 end
 
 function MainMenuDLCHandler:registerEvents()
@@ -54,58 +60,126 @@ function MainMenuDLCHandler:onLeave()
     end
 end
 
+function MainMenuDLCHandler:handleDataFile(body)
+	print("mod.json file")
+	local data = JSON.decode(body)
+	local content = JSON.decode(Utils.decodeBase64(data.content))
+	Kristal.Mods.dlc_data[content.id] = content
+	Kristal.Mods.dlc_data[content.id].repo_data = {
+		owner=self.loading_list[self.loading_queue_index].owner,
+		repo=self.loading_list[self.loading_queue_index].repo
+	}
+	return Kristal.Mods.dlc_data[content.id]
+end
+
+function MainMenuDLCHandler:handlePreviewFile(body, data)
+	print("preview file")
+	local name = "cache/preview.png"
+	if not data then
+		Kristal.Console:warn("No data given! Was the preview downloaded before the data?")
+		local i = 1
+		while true do
+			if not love.filesystem.getInfo("cache/preview"..i..".png") then
+				name = "cache/preview"..i..".png"
+				break
+			else
+				i = i + 1
+			end
+		end
+	else
+		name = "cache/preview-"..data.id..".png"
+		Kristal.Mods.dlc_data[data.id].preview = name
+	end
+	love.filesystem.write(name, body)
+	self.images[data.id] = love.graphics.newImage(love.data.newByteData(body))
+end
+
+function MainMenuDLCHandler:handleError(owner, repo, message, response)
+	table.insert(self.loading_errors, {
+		owner=owner,
+		repo=repo,
+		response=response or "unknown",
+		message=message
+	})
+end
+
+function MainMenuDLCHandler:handleContentDownload(data, index)
+	local content = data.contents
+	local file = content[index]
+	local link = "https://api.github.com/repos/"..data.owner.."/"..data.repo.."/contents/"..file
+	print(link)
+	local headers
+	if file:find(".png") then headers = {Accept="application/vnd.github.v3.raw"} end
+	local ok = Kristal.fetch(link, {
+		headers=headers,
+		callback=function(res, body, headers)
+			if res == 200 then
+				if file == "mod.json" then
+					self.temp_content = self:handleDataFile(body)
+				elseif file == "preview.png" then
+					self:handlePreviewFile(body, self.temp_content)
+				end
+			else
+				self:handleError(data.owner, data.repo, "An error occured when downloading "..file..": "..JSON.decode(body).message, res)
+			end
+			self.send_request = false
+			self.content_index = self.content_index + 1
+		end
+	})
+	if not ok then
+		self:handleError(data.owner, data.repo, "The fetching request failed. Is HTTPS available?", nil)
+		self.content_index = self.content_index + 1
+		self.send_request = false
+	end
+end
+
 function MainMenuDLCHandler:update()
 	if self.loading_dlcs then
 		if not self.send_request then
 			if self.loading_queue_index > 0 then
 				self.send_request = true
-				print(self.loading_list[self.loading_queue_index].url, self.loading_queue_index)
-				--[[Kristal.Stage.timer:after(2, function()
-					print(200)
-					self.send_request = false
-					self.loading_queue_index = self.loading_queue_index - 1
-				end)]]
-				local ok = Kristal.fetch(self.loading_list[self.loading_queue_index].url, {
-				callback=function(res, body, headers)
-					-- Good
-					print(res)
-					if res == 200 then
-						local data = JSON.decode(body)
-						local content = JSON.decode(Utils.decodeBase64(data.content))
-						Kristal.Mods.dlc_data_cached[content.id] = content
-						Kristal.Mods.dlc_data_cached[content.id].repo_data = {
-							owner=self.loading_list[self.loading_queue_index].owner,
-							repo=self.loading_list[self.loading_queue_index].repo
-						}
-					else -- fuck | TODO: retry a few times if the response isn't 404
-						table.insert(self.loading_errors, {
-							owner=self.loading_list[self.loading_queue_index].owner,
-							repo=self.loading_list[self.loading_queue_index].repo,
-							response=res,
-							message=JSON.decode(body).message
-						})
+				local data = self.loading_list[self.loading_queue_index]
+
+				local owner = data.owner
+				local repo = data.repo
+
+				---------------
+				--- CONTENT ---
+				---------------
+				if data.contents and #data.contents>0 then
+					if self.content_index > #data.contents then
+						print("Downloading done!")
+						self.loading_queue_index = self.loading_queue_index - 1
+						self.content_index = 1
+						self.temp_content = nil
+						self.send_request = false
+						return
 					end
-					self.send_request = false
-					self.loading_queue_index = self.loading_queue_index - 1
-				end})
-				if not ok then
-					table.insert(self.loading_errors, {
-						owner=self.loading_list[self.loading_queue_index].owner,
-						repo=self.loading_list[self.loading_queue_index].repo,
-						response=nil,
-						message="HTTPS failed. Is it available?"
-					})
-					self.send_request = false
-					self.loading_queue_index = self.loading_queue_index - 1
+					print("Downloading content for "..owner.."'s repo "..repo)
+					self:handleContentDownload(data, self.content_index)
 				end
+
+				--------------
+				--- COMMIT ---
+				--------------
+				-- TODO
+
+				---------------
+				--- ZIPBALL ---
+				---------------
+				-- TODO
 			else
 				if #self.loading_errors > 0 then
     				for i,msg in ipairs(self.loading_errors) do
-	    				print("An error occured with "..msg.owner.."'s repo \""..msg.repo.."\".\nResponse code: "..msg.response.."\nMessage: "..msg.message)
+	    				Kristal.Console:warn("An error occured with "..msg.owner.."'s repo \""..msg.repo.."\".\nResponse code: "..msg.response.."\nMessage: "..msg.message)
     				end
     			end
     			self.loading_dlcs = false
-    			love.filesystem.write("dlc_data.json", JSON.encode(Kristal.Mods.dlc_data_cached))
+    			love.filesystem.write("cache/dlc_data.json", JSON.encode(Kristal.Mods.dlc_data))
+    			if self.loading_callback then
+    				self.loading_callback()
+    				self.loading_callback = nil
+    			end
 			end
 		end
 	end
@@ -174,7 +248,7 @@ function MainMenuDLCHandler:checkForNewDLCs()
 
 	local new_dlcs = {}
 
-	for id,data in pairs(Kristal.Mods.dlc_data_cached) do
+	for id,data in pairs(Kristal.Mods.dlc_data) do
 		if not inGitList(data.repo_data.owner, data.repo_data.repo) then
 			if not new_dlcs[data.repo_data.owner] then
 				new_dlcs[data.repo_data.owner] = {}
@@ -187,7 +261,6 @@ end
 
 function MainMenuDLCHandler:buildDLCList(reset_cache)
 	self.loading_list = {}
-	self.loading_type = "mod.json"
 
 	local url_list = GITHUB_REPOS
 
@@ -203,18 +276,39 @@ function MainMenuDLCHandler:buildDLCList(reset_cache)
 
     if reset_cache then
     	print("Reset cache")
-    	love.filesystem.remove("dlc_data.json")
-    	Kristal.Mods.dlc_data_cached = {}
+    	local function recursivelyDelete(item)
+	        if love.filesystem.getInfo( item , "directory" ) then
+	            for _, child in ipairs( love.filesystem.getDirectoryItems( item )) do
+	                recursivelyDelete( item .. '/' .. child )
+	                love.filesystem.remove( item .. '/' .. child )
+	            end
+	        elseif love.filesystem.getInfo( item ) then
+	            love.filesystem.remove( item )
+	        end
+	        --love.filesystem.remove( item )
+	    end
+    	recursivelyDelete('cache')
+    	Kristal.Mods.dlc_data = {}
     else
     	print("Try to load cache")
-    	if love.filesystem.getInfo("dlc_data.json") then
+    	if not love.filesystem.getInfo("cache", "directory") then
+    		print("Creating cache folder")
+    		love.filesystem.createDirectory("cache")
+    	end
+    	if love.filesystem.getInfo("cache/dlc_data.json") then
     		print("Cache found, loading...")
-    		Kristal.Mods.dlc_data_cached = JSON.decode(love.filesystem.read("dlc_data.json"))
+    		Kristal.Mods.dlc_data = JSON.decode(love.filesystem.read("cache/dlc_data.json"))
+    		-- TODO: remake that better
     		local new, list = self:checkForNewDLCs()
     		if not new then return end
     		print("New DLCs found")
     		url_list = list
     	end
+    end
+
+    if not HTTPS_AVAILABLE then
+    	Kristal.Console:warn("HTTPS is not available but files need to be downloaded!")
+    	return
     end
 
     -- Put all the repos we're gonna get data from in a list for update
@@ -224,7 +318,7 @@ function MainMenuDLCHandler:buildDLCList(reset_cache)
     		table.insert(self.loading_list, {
     			owner=owner,
     			repo=repo,
-    			url="https://api.github.com/repos/"..owner.."/"..repo.."/contents/mod.json"
+    			contents={"mod.json", "preview.png"}
     		})
     		self.loading_queue_index = self.loading_queue_index + 1
     	end

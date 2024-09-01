@@ -18,7 +18,7 @@ function Mods.clear()
     self.named = {}
     self.failed_mods = {}
 
-    self.dlc_data_cached = {}
+    self.dlc_data = {}
 end
 
 ---@param data table

@@ -21,8 +21,6 @@ GITHUB_REPOS = {
 		"Kristal-Wii-BIOS-Mod",
 		"bikini-spamton",
 		"Dark-place",
-		"lollmaoevenfuckyou",
-		"Glitchin",
 		"Temple-Of-Creativity"
 	}
 }
