@@ -67,6 +67,7 @@ function actor:init()
         -- Cutscene animations
         ["jump_fall"]           = {"fall", 1/5, true},
         ["jump_ball"]           = {"ball", 1/15, true},
+        ["wall_slam"]           = {"wall_slam", 1/10, false},
     }
 
     if Game.chapter == 1 then
@@ -135,6 +136,8 @@ function actor:init()
         ["sit"] = {-3, 0},
 
         ["t_pose"] = {-4, 0},
+
+        ["wall_slam"] = {-1, 0},
     }
 end
 

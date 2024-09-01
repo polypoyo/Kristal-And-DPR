@@ -61,28 +61,31 @@ return {
         cutscene:slideTo(player, 459, 1300, 4, "out-cubic")
         cutscene:wait(3)
         Game.world.player.slide_in_place = true
-        Game.world.player.slide_sound:stop()
         local plx = player.x
         local num = 1
         local mum = 2
-        local sam = "start"
+        local sam = "sdtart"
         cutscene:during(function()
             if sam == "start" then
                 local oh = plx + love.math.random(-num * mum, num * mum)
                 player.x = oh
             end
         end)
+        cutscene:wait(1)
+        sam = "start"
+        cutscene:slideTo(player, 459, 1100, 9, "out-cubic")
+        cutscene:wait(1)
 
-
-        local time = 0.5
+        local time = 0.25
         local plir = 0.01
-        for _ = 1, 42 do
-             Game.world.player.y = Game.world.player.y -4
+        for _ = 1, 25 do
+             Game.world.player.y = Game.world.player.y -10
              Assets.playSound("wing")
              Game.world.player:shake(0, 5)
              cutscene:wait(time)
              time = time - plir
         end
+        Game.world.player.slide_sound:stop()
 
         Game.world.player:setState("WALK")
         Assets.playSound("jump", 1, 0.5)
@@ -92,6 +95,7 @@ return {
         sam = "stop"
         Assets.playSound("dtrans_flip", 1, 0.5)
         Assets.playSound("impact")
+        Game.world.player:setAnimation("wall_slam")
         cutscene:wait(5)
         Game.world.player:setState("SLIDE")
         cutscene:slideTo(player, 459, 320, 0.2)
