@@ -116,14 +116,8 @@ Shaders["Mask"] = love.graphics.newShader[[
     vec4 effect(vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords)
     {
         float y = screen_coords.y / screenHeight;
-        ivec2 texsize = textureSize(tex,0);
 
-        vec4 froma = from.rgba * texture_coords.y;
-        vec4 toa = to.rgba * (texsize.y-texture_coords.y);
-
-        vec4 outputcolor = froma + toa;
-
-        return mix(from, to, y);
+        return mix(from, to, y)*Texel(tex, texture_coords).a;
     }
  ]]
 

@@ -28,6 +28,19 @@ function MainMenuDLCHandler:init(menu)
 
     self.active = false
 
+    -- Something something UI Box
+    self.left_frame   = 0
+    self.top_frame    = 0
+    self.corner_frame = 0
+
+    self.left   = Assets.getFramesOrTexture("ui/box/paddingless/left")
+    self.top    = Assets.getFramesOrTexture("ui/box/paddingless/top")
+    self.corner = Assets.getFramesOrTexture("ui/box/paddingless/corner")
+
+    self.corners = {{0, 0}, {1, 0}, {1, 1}, {0, 1}}
+
+    self.box_mode = Kristal.Config["dlchandler_box_style"] or "menu" -- menu, ui
+
     DLCHANDLER = self -- For easy access in the console
 end
 
@@ -49,6 +62,9 @@ function MainMenuDLCHandler:onEnter()
 	if not self.list then
 		print("Build the DLC list")
 		self:buildDLCList()
+	else
+		self.list.active = true
+		self.list.visible = true
 	end
 end
 
@@ -58,6 +74,11 @@ function MainMenuDLCHandler:onLeave()
 	if self.list then
         self.list.active = false
         self.list.visible = false
+    end
+
+    if self.box_mode ~= Kristal.Config["dlchandler_box_style"] then
+    	Kristal.Config["dlchandler_box_style"] = self.box_mode
+    	Kristal.saveConfig()
     end
 end
 
@@ -200,6 +221,9 @@ function MainMenuDLCHandler:onKeyPressed(key, is_repeat)
     elseif Input.ctrl() and key == "f5" then
     	local force = Input.alt()
     	self:buildDLCList(force)
+    elseif Input.ctrl() and key == "u" then
+    	Assets.stopAndPlaySound("ui_select")
+    	self.box_mode = self.box_mode == "menu" and "ui" or "menu"
     elseif Input.is("down", key) then
     	self.list:selectDown(is_repeat)
     elseif Input.is("up", key) then
@@ -255,6 +279,51 @@ function MainMenuDLCHandler:draw()
 	    end
 	end
 
+	local function getBorder()
+    	return self.left[1]:getWidth()*2, self.top[1]:getHeight()*2
+	end
+
+	local function drawUIBorders(x, y, width, height)
+		local speed = 10
+
+		self.left_frame   = ((self.left_frame   + (DTMULT / speed)) - 1) % #self.left   + 1
+    	self.top_frame    = ((self.top_frame    + (DTMULT / speed)) - 1) % #self.top    + 1
+    	self.corner_frame = ((self.corner_frame + (DTMULT / speed)) - 1) % #self.corner + 1
+
+    	local left_width  = self.left[1]:getWidth()
+    	local left_height = self.left[1]:getHeight()
+    	local top_width   = self.top[1]:getWidth()
+    	local top_height  = self.top[1]:getHeight()
+
+    	local o_color = {love.graphics.getColor()}
+    	local r, g, b, a = unpack(COLORS.white)
+	    Draw.setColor(r*0.9, g*0.9, b*1.0, a)
+
+    	Draw.draw(self.left[math.floor(self.left_frame)], x, y, 0, 2, height / left_height, left_width, 0)
+	    Draw.draw(self.left[math.floor(self.left_frame)], x+width, y, math.pi, 2, height / left_height, left_width, left_height)
+
+    	Draw.draw(self.top[math.floor(self.top_frame)], x, y, 0, width / top_width, 2, 0, top_height)
+    	Draw.draw(self.top[math.floor(self.top_frame)], x, y+height, math.pi, width / top_width, 2, top_width, top_height)
+
+    	for i = 1, 4 do
+	        local cx, cy = self.corners[i][1] * width, self.corners[i][2] * height
+	        local sprite = self.corner[math.floor(self.corner_frame)]
+	        local width  = 2 * ((self.corners[i][1] * 2) - 1) * -1
+	        local height = 2 * ((self.corners[i][2] * 2) - 1) * -1
+	        local offset_x, offset_y = 18*(self.corners[i][1]==0 and 1 or -1), 18*(self.corners[i][2]==0 and 1 or -1)
+	        Draw.draw(sprite, x+cx+offset_x, y+cy+offset_y, 0, width, height, sprite:getWidth(), sprite:getHeight())
+	    end
+
+	    Draw.setColor(o_color)
+	end
+
+	local drawBox = function() end
+	if self.box_mode == "menu" then
+		drawBox = drawCoolRectangle
+	elseif self.box_mode == "ui" then
+		drawBox = drawUIBorders
+	end
+
     --[[Draw.setColor(COLORS.white)
 	Draw.printShadow("Work In Progress!", 0, 115 + 30, 2, "center", 640)
 	Draw.printShadow("Come back later!", 0, 115 + 30*2, 2, "center", 640)
@@ -265,9 +334,10 @@ function MainMenuDLCHandler:draw()
 	local r, g, b = unpack(COLORS.black)
 	Draw.setColor(r, g, b, 0.5)
 	Draw.pushShader(shader, {from={1, 1, 1, 1}, to={1, 1, 1, 0}, screenHeight=SCREEN_HEIGHT})
-	Draw.rectangle("fill", 20, 48, 280, SCREEN_HEIGHT-48-10)
-	drawCoolRectangle(20, 48, 280, SCREEN_HEIGHT-48-10, COLORS.white)
+	Draw.rectangle("fill", 10, 48, 280, SCREEN_HEIGHT-48-10)
 	Draw.popShader()
+	drawBox(10, 48, 280, SCREEN_HEIGHT-48-10, COLORS.white)
+	--drawUIBorders(10, 48, 280, SCREEN_HEIGHT-48-10)
 
 	Draw.rectangle("fill", 310, 48, 320, 240)
 	local id = self.list:getSelectedId()
@@ -276,10 +346,12 @@ function MainMenuDLCHandler:draw()
 		Draw.draw(self.images[id], 310, 48)
 		Draw.setColor(r, g, b, 0.5)
 	end
-	drawCoolRectangle(310, 48, 320, 240, COLORS.white)
+	drawBox(310, 48, 320, 240, COLORS.white)
+	--drawUIBorders(310, 48, 320, 240)
 
 	Draw.rectangle("fill", 310, 240+48+10, 320, SCREEN_HEIGHT-(240+48+10)-10)
-	drawCoolRectangle(310, 240+48+10, 320, SCREEN_HEIGHT-(240+48+10)-10, COLORS.white)
+	drawBox(310, 240+48+10, 320, SCREEN_HEIGHT-(240+48+10)-10, COLORS.white)
+	--drawUIBorders(310, 240+48+10, 320, SCREEN_HEIGHT-(240+48+10)-10)
 end
 
 function MainMenuDLCHandler:checkForNewDLCs()
@@ -341,7 +413,7 @@ function MainMenuDLCHandler:buildDLCList(reset_cache)
 
 	if not self.list then
 		print("Creating List")
-		self.list = ModList(20, 48, 280, SCREEN_HEIGHT-48-10)
+		self.list = ModList(10, 48+4, 280, SCREEN_HEIGHT-(48-4)-10)
 		self.list.layer = 50
     	self.menu.stage:addChild(self.list)
     else
