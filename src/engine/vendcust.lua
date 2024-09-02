@@ -16,11 +16,4 @@ GITHUB_ORGANISATION = nil
 
 -- Additional DLCs that aren't in the organisation above for some reason
 -- (like the organisation not existing yet)
-GITHUB_REPOS = {
-	Simbel0={
-		"Kristal-Wii-BIOS-Mod",
-		"bikini-spamton",
-		"Dark-place",
-		"Temple-Of-Creativity"
-	}
-}
+GITHUB_REPOS = {}
