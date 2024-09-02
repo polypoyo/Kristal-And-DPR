@@ -3,6 +3,9 @@ local DLCButton, super = Class(ModButton, nil, "DLCButton")
 function DLCButton:init(name, width, height, mod)
 	super:init(self, name, width, height, mod)
 
+    if mod.button then
+        self.button_texture = love.graphics.newImage(mod.button)
+    end
 end
 
 function DLCButton:update()
@@ -15,49 +18,57 @@ function DLCButton:update()
 	end
 end
 
+function DLCButton:getDrawColor()
+    local r, g, b, a = super.super.getDrawColor(self)
+    local color = self.mod.color
+    if color then
+        if type(color) == "string" then
+            r, g, b = unpack(Utils.hexToRgb(color))
+        elseif type(color) == "table" then
+            r, g, b = unpack(color)
+        end
+    end
+    if not self.selected then
+        return r*0.6, g*0.6, b*0.7, a
+    else
+        return r, g, b, a
+    end
+end
+
 function DLCButton:draw()
-    -- Get the position for the mod icon
-    local ix, iy = self:getIconPos()
+    if not self.button_texture then
+        -- Draw the transparent backgrounds
+        Draw.setColor(0, 0, 0, 0.5)
+        love.graphics.rectangle("fill", 0, 0, self.width, self.height)
 
-    -- Draw the transparent backgrounds
-    Draw.setColor(0, 0, 0, 0.5)
-    love.graphics.rectangle("fill", 0, 0, self.width, self.height)
-    -- Draw the icon background
-    love.graphics.rectangle("fill", ix, iy, self.height, self.height)
-
-    -- Draw the rectangle outlines
-    self:drawCoolRectangle(0, 0, self.width, self.height)
-    self:drawCoolRectangle(ix, iy, self.height, self.height)
+        -- Draw the rectangle outlines
+        self:drawCoolRectangle(0, 0, self.width, self.height)
+    else
+        if self.selected then
+            Draw.setColor(1, 1, 1, 1)
+        else
+            Draw.setColor(0.6, 0.6, 0.7, 1)
+        end
+        Draw.draw(self.button_texture)
+    end
 
     -- Draw text inside the button rectangle
     Draw.pushScissor()
     Draw.scissor(0, 0, self.width, self.height)
-    -- Make name position higher if we have a subtitle
-    local name_y = math.floor((self.height/2 - self.font:getHeight()/2) / 2) * 2
-    love.graphics.setFont(self.font)
-    -- Draw the name shadow
-    Draw.setColor(0, 0, 0)
-    love.graphics.print(self.name, 10 + 2, name_y + 2)
-    -- Draw the name
-    Draw.setColor(self:getDrawColor())
-    love.graphics.print(self.name, 10, name_y)
 
-    -- Set the font to the small font
-    love.graphics.setFont(self.subfont)
+    if not self.mod.hide_name then
+        -- Make name position higher if we have a subtitle
+        local name_y = math.floor((self.height/2 - self.font:getHeight()/2) / 2) * 2
+        love.graphics.setFont(self.font)
+        -- Draw the name shadow
+        Draw.setColor(0, 0, 0)
+        love.graphics.print(self.name, 10 + 2, name_y + 2)
+        -- Draw the name
+        Draw.setColor(self:getDrawColor())
+        love.graphics.print(self.name, 10, name_y)
+    end
 
     Draw.popScissor()
-
-    -- Draw icon
-    local icon = self.icon[math.floor(self.icon_frame)]
-    if icon then
-        local x, y = ix + self.height/2 - icon:getWidth(), iy + self.height/2 - icon:getHeight()
-        -- Draw the icon shadow
-        Draw.setColor(0, 0, 0)
-        Draw.draw(icon, x + 2, y + 2, 0, 2, 2)
-        -- Draw the icon
-        Draw.setColor(self:getDrawColor())
-        Draw.draw(icon, x, y, 0, 2, 2)
-    end
 end
 
 return DLCButton
