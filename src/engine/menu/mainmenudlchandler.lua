@@ -41,6 +41,8 @@ function MainMenuDLCHandler:init(menu)
 
     self.box_mode = Kristal.Config["dlchandler_box_style"] or "menu" -- menu, ui
 
+    self.font = Assets.getFont("main", 16)
+
     DLCHANDLER = self -- For easy access in the console
 end
 
@@ -53,7 +55,6 @@ function MainMenuDLCHandler:registerEvents()
 end
 
 function MainMenuDLCHandler:onEnter()
-	print("onEnter")
 	self.active = true
 
 	self.menu.heart_target_x = -16
@@ -210,14 +211,16 @@ end
 function MainMenuDLCHandler:onKeyPressed(key, is_repeat)
 	if self.loading_dlcs then return end
 	if Input.isConfirm(key) and not is_repeat then
-		Assets.stopAndPlaySound("ui_select")
-		love.system.openURL("file://"..love.filesystem.getSaveDirectory().."/mods")
+		
 	elseif Input.isCancel(key) then
 		Assets.stopAndPlaySound("ui_move")
 
         self.menu:setState("TITLE")
         self.menu.title_screen:selectOption("dlc")
         return true
+    elseif Input.isMenu(key) and not is_repeat then
+    	Assets.stopAndPlaySound("ui_select")
+		love.system.openURL("file://"..love.filesystem.getSaveDirectory().."/mods")
     elseif Input.ctrl() and key == "f5" then
     	local force = Input.alt()
     	self:reloadMods(function()
@@ -339,7 +342,6 @@ function MainMenuDLCHandler:draw()
 	Draw.rectangle("fill", 10, 48, 280, SCREEN_HEIGHT-48-10)
 	Draw.popShader()
 	drawBox(10, 48, 280, SCREEN_HEIGHT-48-10, COLORS.white)
-	--drawUIBorders(10, 48, 280, SCREEN_HEIGHT-48-10)
 
 	Draw.rectangle("fill", 310, 48, 320, 240)
 	local id = self.list:getSelectedId()
@@ -349,11 +351,41 @@ function MainMenuDLCHandler:draw()
 		Draw.setColor(r, g, b, 0.5)
 	end
 	drawBox(310, 48, 320, 240, COLORS.white)
-	--drawUIBorders(310, 48, 320, 240)
 
 	Draw.rectangle("fill", 310, 240+48+10, 320, SCREEN_HEIGHT-(240+48+10)-10)
+
+	love.graphics.setFont(self.font)
+	Draw.setColor(COLORS.white)
+
+	local mod = self.list:getSelectedMod()
+	local top_rect_y = 240+48+10
+	love.graphics.print(mod.name.. " "..mod.version, 315, top_rect_y+5)
+	love.graphics.print("Creator: "..(mod.creator or (mod.repo_data and mod.repo_data.owner and mod.repo_data.owner or "Unknown") or "Unknown"), 315, top_rect_y+16+5)
+
+	local desc = mod.description or mod.subtitle or ""
+	love.graphics.printf(
+		"Description: "..desc,
+		315,
+		top_rect_y+40,
+		320-5
+	)
+
+	local bottom_rect_y = 310+SCREEN_HEIGHT-(240+48+10)-10
+	local d_text = Input.getText("confirm").." "
+	if Kristal.Mods.getMod(id) then
+		d_text = d_text.."Delete"
+	elseif mod.repo_data then
+		d_text = d_text.."Download"
+	else
+		d_text = ""
+	end
+	love.graphics.print(d_text, 315, bottom_rect_y-32)
+
+	local f_text = Input.getText("menu").." Open DLC Folder"
+	local width = self.font:getWidth(f_text)+5
+	love.graphics.print(f_text, 310+320-width, bottom_rect_y-32)
+
 	drawBox(310, 240+48+10, 320, SCREEN_HEIGHT-(240+48+10)-10, COLORS.white)
-	--drawUIBorders(310, 240+48+10, 320, SCREEN_HEIGHT-(240+48+10)-10)
 end
 
 function MainMenuDLCHandler:checkForNewDLCs()
