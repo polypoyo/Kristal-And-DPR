@@ -218,7 +218,7 @@ function MainMenuDLCHandler:onKeyPressed(key, is_repeat)
         self.menu:setState("TITLE")
         self.menu.title_screen:selectOption("dlc")
         return true
-    elseif Input.isMenu(key) and not is_repeat then
+    elseif (Input.isMenu(key) and not Input.ctrl()) and not is_repeat then
     	Assets.stopAndPlaySound("ui_select")
 		love.system.openURL("file://"..love.filesystem.getSaveDirectory().."/mods")
     elseif Input.ctrl() and key == "f5" then
