@@ -220,7 +220,9 @@ function MainMenuDLCHandler:onKeyPressed(key, is_repeat)
         return true
     elseif Input.ctrl() and key == "f5" then
     	local force = Input.alt()
-    	self:buildDLCList(force)
+    	self:reloadMods(function()
+    		self:buildDLCList(force)
+    	end)
     elseif Input.ctrl() and key == "u" then
     	Assets.stopAndPlaySound("ui_select")
     	self.box_mode = self.box_mode == "menu" and "ui" or "menu"
@@ -370,7 +372,7 @@ function MainMenuDLCHandler:checkForNewDLCs()
 	local new_dlcs = {}
 
 	for id,data in pairs(Kristal.Mods.dlc_data) do
-		if not inGitList(data.repo_data.owner, data.repo_data.repo) then
+		if not data["local"] and not inGitList(data.repo_data.owner, data.repo_data.repo) then
 			if not new_dlcs[data.repo_data.owner] then
 				new_dlcs[data.repo_data.owner] = {}
 			end
@@ -391,7 +393,13 @@ function MainMenuDLCHandler:REALbuildDLCList()
 	end
 
 	table.sort(dlcs, function(a, b)
-		return (Kristal.Mods.getMod(a.id) and not Kristal.Mods.getMod(b.id))
+		local a_mod = Kristal.Mods.getMod(a.id)
+		local b_mod = Kristal.Mods.getMod(b.id)
+		print(a.name, b.name, a.name > b.name)
+		return (
+			(a_mod and not b_mod)
+			or (a_mod == b_mod and a.name < b.name)
+		)
 	end)
 
 	for i,mod in ipairs(dlcs) do
@@ -404,6 +412,27 @@ function MainMenuDLCHandler:REALbuildDLCList()
         	table.insert(self.installed_dlcs, mod.id)
         end
 	end
+end
+
+function MainMenuDLCHandler:reloadMods(callback)
+    if MOD_LOADING then return end
+    MOD_LOADING = true
+
+    Kristal.Mods.clear()
+    Kristal.loadAssets("", "mods", "", function()
+        --[[if #Kristal.Mods.failed_mods > 0 then
+            self.menu:setState("MODERROR")
+        end
+
+        self.loading_mods = false
+
+        Kristal.setDesiredWindowTitleAndIcon()
+        self:buildModList()]]
+        MOD_LOADING = false
+        if callback then
+        	callback()
+        end
+    end)
 end
 
 function MainMenuDLCHandler:buildDLCList(reset_cache)
@@ -444,7 +473,20 @@ function MainMenuDLCHandler:buildDLCList(reset_cache)
     	end
     	if love.filesystem.getInfo("cache/dlc_data.json") then
     		print("Cache found, loading...")
-    		Kristal.Mods.dlc_data = JSON.decode(love.filesystem.read("cache/dlc_data.json"))
+    		for i,mod in ipairs(Kristal.Mods.getMods()) do
+    			if not Utils.containsValue({"dpr_main", "dpr_light"}, mod.id) then
+    				Kristal.Mods.dlc_data[mod.id] = mod
+    				Kristal.Mods.dlc_data[mod.id]['local'] = true
+    			end
+    		end
+    		local data = JSON.decode(love.filesystem.read("cache/dlc_data.json"))
+    		for i,mod in pairs(data) do
+    			print(mod.id)
+    			if not Kristal.Mods.dlc_data[mod.id] then
+    				Kristal.Mods.dlc_data[mod.id] = mod
+    			end
+    		end
+
     		-- TODO: remake that better
     		local new, list = self:checkForNewDLCs()
     		if not new then
