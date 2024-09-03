@@ -445,6 +445,7 @@ return {
         if enter == 1 then
             -- TODO: fix DarkTransition so it can be used here.
 
+            DTRANS = true -- Yeah, yeah, using global flags. Sue me.
             local sound = Game.world:getEvents("sheltersound")[1]
             sound:remove()
             Game.world.music:fade(0, 80/30)
