@@ -22,15 +22,6 @@
     // The party. The first character is the player.
     "party": ["hero"],
 
-	// Just to test, must be removed after test
-	"keybinds": [
-        {
-            "name": "Test2",
-            "id": "test2",
-            "keys": ["m"]
-        }
-	],
-
     // The inventory. Contains three darkburgers, a cell phone and a shadow crystal by default.
     "inventory": {
         "items": ["glowshard", "darkburger", "darkburger", "darkburger"],
@@ -139,8 +130,7 @@
     // These config values can control chapter-specific features as well.
     "config": {
 			"kristal": {
-				"growStronger": false,
-				"cancelToExit": true
+				"growStronger": false
 			}
     }
 }

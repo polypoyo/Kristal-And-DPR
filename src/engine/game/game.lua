@@ -160,7 +160,7 @@ function Game:getConfig(key, merge, deep_merge)
     for index, config in pairs(Kristal.ExtraConfigs) do
        default_config[index] = config
     end
-    
+
     if not Mod then return default_config[key] end
 
     local mod_result = Kristal.callEvent(KRISTAL_EVENT.getConfig, key)
