@@ -98,6 +98,7 @@ function love.load(args)
     Kristal.ChapterConfigs = {}
     Kristal.ChapterConfigs[1] = JSON.decode(love.filesystem.read("configs/chapter1.json"))
     Kristal.ChapterConfigs[2] = JSON.decode(love.filesystem.read("configs/chapter2.json"))
+    Kristal.ExtraConfigs = JSON.decode(love.filesystem.read("configs/extra.json"))
 
     -- register gamestate calls
     Gamestate.registerEvents()

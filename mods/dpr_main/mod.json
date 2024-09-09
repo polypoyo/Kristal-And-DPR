@@ -139,7 +139,8 @@
     // These config values can control chapter-specific features as well.
     "config": {
 			"kristal": {
-				"growStronger": false
+				"growStronger": false,
+				"cancelToExit": true
 			}
     }
 }

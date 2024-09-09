@@ -226,6 +226,11 @@ function MainMenuModConfig:registerOptions()
     self:registerOption("keepTensionAfterBattle", "Keep Tension After Battle", "Whether TP should be kept after battle instead of reset",                            "selection", {nil, true, false})
     self:registerOption("overworldSpells",        "Overworld Spells",          "Whether spells should be usable in the overworld",                                   "selection", {nil, true, false})
     self:registerOption("damageUnderflowFix",     "Damage Underflow Fix",      "If disabled, negative enemy damage heals the enemy",                                 "selection", {nil, true, false})
+    self.registerOption("saveAfterModification",  "Save After Modification",   "Save keybind after modification",                                                    "selection", {nil, true, false})
+    self.registerOption("cancelToExit",           "Cancel To Exit",            "Allow you to press the cancel key to get out of the binding menu.",                  "selection", {nil, true, false})
+    self.registerOption("hideIfNoExtra",          "Hide If No Extra",          "Hide the page counter and the arrows when there is no extra keybind.",               "selection", {nil, true, false})
+    self.registerOption("showArrow",              "Show Arrow",                "Show arrows next to the page counter if conditions are met.",                        "selection", {nil, true, false})
+    self.registerOption("bannedKeys",              "Banned Keys",               "Require manual config. Default to Debug Keys",                                      "selection", {nil})
 end
 
 function MainMenuModConfig:registerOption(id, name, description, type, options)

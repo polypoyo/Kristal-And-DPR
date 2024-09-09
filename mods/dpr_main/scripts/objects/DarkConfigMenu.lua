@@ -15,6 +15,7 @@ function DarkConfigMenu:init()
 
     self.heart_sprite = Assets.getTexture("player/heart")
     self.arrow_sprite = Assets.getTexture("ui/page_arrow_down")
+    self.flat_arrow_sprite = Assets.getTexture("ui/flat_arrow_right")
 
     self.tp_sprite = Assets.getTexture("ui/menu/caption_tp")
 
@@ -34,16 +35,19 @@ function DarkConfigMenu:init()
 
     local num_key = 0
     local num_pad = 0
-    for index, other in pairs(Input.key_bindings) do
+    for _, _ in pairs(Input.key_bindings) do
         num_key = num_key + 1
-        print("index :", index, "keybinds :", other)
+        --print("index :", index, "keybinds :", other)
     end
-    for index, other in pairs(Input.gamepad_bindings) do
+    for _, _ in pairs(Input.gamepad_bindings) do
         num_pad = num_pad + 1
-        print("index :", index, "gamebinds :", other)
+        --print("index :", index, "gamebinds :", other)
     end
 
-    print("Keybinds : "..num_key, "\nGamebinds : "..num_pad)
+    --print("Keybinds : "..num_key, "\nGamebinds : "..num_pad)
+
+    self.current_page = 1
+    self.max_pages = Utils.ceil((num_key > num_pad and num_key) or (num_pad > num_key and num_pad) or num_key/7)
 end
 
 function DarkConfigMenu:getBindNumberFromIndex(current_index)
@@ -79,6 +83,8 @@ function DarkConfigMenu:onKeyPressed(key)
             if worked then
                 self.ui_select:stop()
                 self.ui_select:play()
+
+                if Game:getConfig("saveAfterModification") then Input.saveBinds() end
             else
                 self.ui_cant_select:stop()
                 self.ui_cant_select:play()
@@ -130,6 +136,21 @@ function DarkConfigMenu:onKeyPressed(key)
         self.currently_selected = Utils.clamp(self.currently_selected, 1, 9)
 
         if old_selected ~= self.currently_selected then
+            self.ui_move:stop()
+            self.ui_move:play()
+        end
+
+        local old_page = self.current_page
+        if Input.pressed("left") then
+            self.current_page = self.current_page - 1
+        end
+        if Input.pressed("right") then
+            self.current_page = self.current_page + 1
+        end
+
+        self.current_page = Utils.clamp(self.current_page, 1, self.max_pages)
+
+        if old_page ~= self.current_page then
             self.ui_move:stop()
             self.ui_move:play()
         end
@@ -210,6 +231,15 @@ function DarkConfigMenu:update()
         if (not Input.down("right")) and (not Input.down("left")) then
             self.noise_timer = 3
         end
+    elseif self.state == "CONTROLS" then
+        if not self.rebinding then
+            if Input.pressed("cancel") and Game:getConfig("cancelToExit") then
+                self.reset_flash_timer = 0
+                self.state = "MAIN"
+                self.currently_selected = 2
+                Input.clear("confirm", true)
+            end
+        end
     end
 
     self.reset_flash_timer = math.max(self.reset_flash_timer - DTMULT, 0)
@@ -252,6 +282,30 @@ function DarkConfigMenu:draw()
         Draw.setColor(Game:getSoulColor())
         Draw.draw(self.heart_sprite, 63, 48 + ((self.currently_selected - 1) * 32))
     else
+
+        local page_offset = ((self.max_pages >= 10 and self.current_page >= 10) and 14) or ((self.max_pages >= 10 and self.current_page < 10) and 6) or 0
+
+        if Game:getConfig("hideIfNoExtra") and self.max_pages > 1 then
+            love.graphics.print(self.current_page.."/"..self.max_pages, 418 - page_offset, -4 + (28 * 9) + 4)
+        end
+
+    --  Code for the arrow sprite
+        local sine_off
+        if sine_off == nil then
+            sine_off = 0
+        end
+
+        sine_off = math.sin((Kristal.getTime()*30)/16) * 3
+
+        if Game:getConfig("showArrow") and Game:getConfig("hideIfNoExtra") and self.max_pages > 1 then
+            if self.current_page ~= 1 then -- Gauche
+                Draw.draw(self.flat_arrow_sprite, 410 - page_offset + sine_off, 264, 0, -1, 1)
+            end
+            if self.current_page ~= self.max_pages then -- Droite
+                Draw.draw(self.flat_arrow_sprite, 466 + page_offset - sine_off, 264)
+            end
+        end
+
         -- NOTE: This is forced to true if using a PlayStation in DELTARUNE... Kristal doesn't have a PlayStation port though.
         local dualshock = Input.getControllerType() == "ps4"
 
