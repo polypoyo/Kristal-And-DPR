@@ -714,6 +714,7 @@ function PartyMember:loadSpells(data)
     end
 end
 
+---@return PartyMemberSaveData
 function PartyMember:save()
     local data = {
         id = self.id,
@@ -733,6 +734,7 @@ function PartyMember:save()
     return data
 end
 
+---@param data PartyMemberSaveData
 function PartyMember:load(data)
     self.title = data.title or self.title
     self.level = data.level or self.level
