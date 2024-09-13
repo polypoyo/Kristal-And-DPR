@@ -157,6 +157,9 @@ end
 ---@return any
 function Game:getConfig(key, merge, deep_merge)
     local default_config = Kristal.ChapterConfigs[Utils.clamp(self.chapter, 1, #Kristal.ChapterConfigs)]
+    for index, config in pairs(Kristal.ExtraConfigs) do
+       default_config[index] = config
+    end
 
     if not Mod then return default_config[key] end
 
