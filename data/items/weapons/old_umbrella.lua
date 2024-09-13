@@ -39,8 +39,9 @@ function item:init()
         attack = 0,
     }
     -- Bonus name and icon (displayed in equip menu)
-    --self.bonus_name = "Defense:    X10"
-    self.bonus_icon = nil
+
+        self.bonus_name = "  "
+        --self.bonus_icon = "ui/missing_texture"
 
     -- Equippable characters (default true for armors, false for weapons)
     self.can_equip = {
