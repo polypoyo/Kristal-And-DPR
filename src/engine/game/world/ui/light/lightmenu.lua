@@ -41,7 +41,11 @@ function LightMenu:init()
     self:addChild(self.info_box)
     self:realign()
 
-    self.choice_box = UIBox(56, 192, 94, 100)
+    if Game:getFlag("has_cell_phone") then
+        self.choice_box = UIBox(56, 192, 94, 126)
+    else
+        self.choice_box = UIBox(56, 192, 94, 100)
+    end
     self:addChild(self.choice_box)
 
     self.storage = "items"
@@ -76,7 +80,10 @@ function LightMenu:onKeyPressed(key)
         local old_selected = self.current_selecting
         if Input.is("up", key)    then self.current_selecting = self.current_selecting - 1 end
         if Input.is("down", key) then self.current_selecting = self.current_selecting + 1 end
-        local max_selecting = Game:getFlag("has_cell_phone", false) and 3 or 2
+        local max_selecting = 3
+        if Game:getFlag("has_cell_phone") then
+            max_selecting = 4
+        end
         self.current_selecting = Utils.clamp(self.current_selecting, 1, max_selecting)
         if old_selected ~= self.current_selecting then
             self.ui_move:stop()
@@ -110,16 +117,38 @@ function LightMenu:onButtonSelect(button)
         self.ui_select:stop()
         self.ui_select:play()
     elseif button == 3 then
-        if #Game.world.calls > 0 then
+        if Game:getFlag("has_cell_phone") then
+            if #Game.world.calls > 0 then
+                Input.clear("confirm")
+                self.state = "CELLMENU"
+                self.box = LightCellMenu()
+                self.box.layer = 1
+                self:addChild(self.box)
+
+                self.ui_select:stop()
+                self.ui_select:play()
+            end
+        else
             Input.clear("confirm")
-            self.state = "CELLMENU"
-            self.box = LightCellMenu()
-            self.box.layer = 1
-            self:addChild(self.box)
+            Game.world:closeMenu()
 
             self.ui_select:stop()
             self.ui_select:play()
+
+            Game.world:startCutscene("world_dialogue")
+
+            return
         end
+    elseif button == 4 then
+        Input.clear("confirm")
+        Game.world:closeMenu()
+
+        self.ui_select:stop()
+        self.ui_select:play()
+
+        Game.world:startCutscene("world_dialogue")
+
+        return
     end
 end
 
@@ -130,7 +159,7 @@ end
 
 function LightMenu:realign()
     local _, player_y = Game.world.player:localToScreenPos()
-    self.top = player_y > 260
+    self.top = false --player_y > 260
 
     local offset = 0
     if self.top then
@@ -167,13 +196,18 @@ function LightMenu:draw()
     love.graphics.print("ITEM", 84, 188 + (36 * 0))
     Draw.setColor(PALETTE["world_text"])
     love.graphics.print("STAT", 84, 188 + (36 * 1))
-    if Game:getFlag("has_cell_phone", false) then
+    if Game:getFlag("has_cell_phone") then
         if #Game.world.calls > 0 then
             Draw.setColor(PALETTE["world_text"])
         else
             Draw.setColor(PALETTE["world_gray"])
         end
         love.graphics.print("CELL", 84, 188 + (36 * 2))
+        Draw.setColor(PALETTE["world_text"])
+        love.graphics.print("TALK", 84, 188 + (36 * 3))
+    else
+        Draw.setColor(PALETTE["world_text"])
+        love.graphics.print("TALK", 84, 188 + (36 * 2))
     end
 
     if self.state == "MAIN" then

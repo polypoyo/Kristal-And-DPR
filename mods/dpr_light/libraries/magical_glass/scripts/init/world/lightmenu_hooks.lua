@@ -8,9 +8,9 @@ Utils.hook(LightMenu, "onKeyPressed", function(orig, self, key)
         local old = self.current_selecting
         if Input.is("up", key)   then self.current_selecting = self.current_selecting - 1 end
         if Input.is("down", key) then self.current_selecting = self.current_selecting + 1 end
-        local menu_items = 3
+        local menu_items = 4
         if MagicalGlass:getConfig("lightMenuHideCell") and not Game:getFlag("has_cell_phone") then
-            menu_items = 2
+            menu_items = 3
         end
         self.current_selecting = Utils.clamp(self.current_selecting, 1, menu_items)
         if old ~= self.current_selecting then
@@ -43,6 +43,8 @@ Utils.hook(LightMenu, "draw", function(orig, self)
             Draw.setColor(PALETTE["world_gray"])
         end
         love.graphics.print("CELL", 84, 188 + (36 * 2))
+        Draw.setColor(PALETTE["world_text"])
+        love.graphics.print("TALK", 84, 188 + (36 * 3))
     else
         if Game:getFlag("has_cell_phone") then
             if #Game.world.calls > 0 then
@@ -51,6 +53,11 @@ Utils.hook(LightMenu, "draw", function(orig, self)
                 Draw.setColor(PALETTE["world_gray"])
             end
             love.graphics.print("CELL", 84, 188 + (36 * 2))
+            Draw.setColor(PALETTE["world_text"])
+            love.graphics.print("TALK", 84, 188 + (36 * 3))
+        else
+            Draw.setColor(PALETTE["world_text"])
+            love.graphics.print("TALK", 84, 188 + (36 * 2))
         end
     end
     
