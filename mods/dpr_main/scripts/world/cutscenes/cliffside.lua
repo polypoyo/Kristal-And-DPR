@@ -96,7 +96,7 @@ return {
         Assets.playSound("dtrans_flip", 1, 0.5)
         Assets.playSound("impact")
         Game.world.player:setAnimation("wall_slam")
-        cutscene:wait(5)
+        cutscene:wait(1)
         Game.world.player:setState("SLIDE")
         cutscene:slideTo(player, 459, 320, 0.2)
         cutscene:wait(0.2)

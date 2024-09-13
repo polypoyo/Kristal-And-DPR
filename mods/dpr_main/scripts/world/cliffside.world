@@ -9,10 +9,10 @@
         },
         {
             "fileName": "maps/grey_cliffside/cliffside_start/cliffside_start.tmx",
-            "height": 480,
+            "height": 960,
             "width": 640,
             "x": 1200,
-            "y": 0
+            "y": -480
         },
         {
             "fileName": "maps/grey_cliffside/cliffside_right_2.tmx",
