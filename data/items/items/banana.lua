@@ -55,8 +55,16 @@ function item:init()
         susie = "Ew, what the hell is this?!",
         ralsei = "A nice healthy snack to start the day!",
         noelle = "U-uh, sure..?",
-	noel = "AHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHHAHAHAHAHAHAHAHAHAHAHAHAHA",
+		noel = "AHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHHAHAHAHAHAHAHAHAHAHAHAHAHA",
+		jamm = "Gotta cut it up so I don't look gay...",
     }
+end
+
+function item:getReaction(user_id, reactor_id)
+    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
+		return "It's good for you, Marcy!"
+	end
+	return super.getReaction(self, user_id, reactor_id)
 end
 
 return item

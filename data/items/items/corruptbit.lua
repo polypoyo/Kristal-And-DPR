@@ -53,6 +53,7 @@ function item:init()
         ralsei = "I can't taste anything.",
         noelle = "(Is this even edible?)",
         dess = "lmao it hurts",
+		jamm = "What exactly is this...?",
     }
 end
 

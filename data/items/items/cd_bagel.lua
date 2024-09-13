@@ -52,7 +52,7 @@ function item:init()
         ralsei = "How elegant!",
         noelle = "What a nice song...",
         jamm = "So what decides these songs?",
-        noel = "I'm seeing stars.", --I am so sorry jamm D:
+        noel = "I'm seeing stars.",
     }
 
     self.sounds = {
@@ -60,8 +60,8 @@ function item:init()
         ["susie"] = "cd_bagel/susie",
         ["ralsei"] = "cd_bagel/ralsei",
         ["noelle"] = "cd_bagel/noelle",
-	["jamm"] = "cd_bagel/jamm",
-	["noel"] = "cd_bagel/noel",
+		["jamm"] = "cd_bagel/jamm",
+		["noel"] = "cd_bagel/noel",
     }
 end
 

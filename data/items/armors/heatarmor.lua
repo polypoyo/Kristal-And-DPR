@@ -47,10 +47,10 @@ function item:init()
     self.reactions = {
 		jamm = "Toasty...",
 		mario = {
-				mario = "But I can just use a fire flower.",
-                                noel = "do it bitch.",
-				jamm = "Eh."
-			},
+			mario = "But I can just use a fire flower.",
+            noel = "do it bitch.",
+			jamm = "Eh."
+		},
         noel = "A heated blanket would do a better job.",
         dess = "i remember you're firegraves"
     }

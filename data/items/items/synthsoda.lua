@@ -51,8 +51,8 @@ function item:init()
         susie = "The aftertaste packs a punch.",
         ralsei = "How elegant!",
         noelle = "Such a soothing sound...",
-	jamm = "Ooh! Spine tingling, I love it!",
-	noel = "The Meat Factory.",
+		jamm = "Ooh! Spine tingling, I love it!",
+		noel = "The Meat Factory.",
     }
 
     self.sounds = {
@@ -60,11 +60,11 @@ function item:init()
         ["susie"] = "synthsoda/susie",
         ["ralsei"] = "synthsoda/ralsei",
         ["noelle"] = "synthsoda/noelle",
-	["YOU"] = "synthsoda/you",
-	["brenda"] = "synthsoda/brenda",
-	["dess"] = "synthsoda/dess",
-	["jamm"] = "synthsoda/jamm",
-	["noel"] = "synthsoda/noel",
+		["YOU"] = "synthsoda/you",
+		["brenda"] = "synthsoda/brenda",
+		["dess"] = "synthsoda/dess",
+		["jamm"] = "synthsoda/jamm",
+		["noel"] = "synthsoda/noel",
     }
 end
 

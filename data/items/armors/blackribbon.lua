@@ -41,6 +41,7 @@ function item:init()
         dess = "i am goth now",
         brenda = "Black isn't really my style.",
         noel = "Uwa~ True Emo~",
+		jamm = "Gotta support goth culture.",
     }
 end
 

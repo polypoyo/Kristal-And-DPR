@@ -1,27 +1,28 @@
-local item, super = Class(Item, "mousetoken")
+local item, super = Class(Item, "programmer_weapon")
 
 function item:init()
     super.init(self)
 
     -- Display name
-    self.name = "MouseToken"
+    self.name = "Prog Weapon"
 
     -- Item type (item, key, weapon, armor)
-    self.type = "armor"
+    self.type = "weapon"
     -- Item icon (for equipment)
-    self.icon = "ui/menu/icon/armor"
+    self.icon = ""
 
     -- Battle description
     self.effect = ""
     -- Shop description
-    self.shop = ""
+    self.shop = "It says to\nreturn"
     -- Menu description
-    self.description = "A golden coin with a once-powerful mousewizard engraved on it."
+    self.description = "Only those who know how to program can hold this."
 
     -- Default shop price (sell price is halved)
-    self.price = 120
+    self.price = 110
     -- Whether the item can be sold
     self.can_sell = true
+    self.sell_price = 101
 
     -- Consumable target mode (ally, party, enemy, enemies, or none)
     self.target = "none"
@@ -34,31 +35,28 @@ function item:init()
 
     -- Equip bonuses (for weapons and armor)
     self.bonuses = {
-        magic = 2,
+        attack = 6,
+		defense = 4,
+		magic = 4
     }
     -- Bonus name and icon (displayed in equip menu)
-    self.bonus_name = nil
+    self.bonus_name = "Basic"
     self.bonus_icon = nil
 
     -- Equippable characters (default true for armors, false for weapons)
-    self.can_equip = {}
+	-- This weapon is DEV CHARACTER SPECIFIC
+    self.can_equip = {
+        brenda = true,
+        jamm = true,
+    }
 
     -- Character reactions
     self.reactions = {
-        susie = "This guy's... familiar?",
-        ralsei = "Chu! Healing power UP!",
-        noelle = "... from the family entertainment center?",
-        dess = "ermmm possible chuck-e-cheese reference?",
-        jamm = "This brings back memories.",
-        noel = "Is this from a resturant?",
+        susie = "It's too confusing...",
+        ralsei = "I can't wrap my head around it...",
+        noelle = "Print??? Return??? What is this saying???",
+		jamm = "Oh, yeah. This is easy to read."
     }
-end
-
-function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return "Marcy wants to go there! // Maybe soon, Marcy."
-	end
-	return super.getReaction(self, user_id, reactor_id)
 end
 
 return item

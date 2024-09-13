@@ -52,11 +52,18 @@ function item:init()
         susie = "Damn, I feel energized!",
         ralsei = "Tastes sweet!",
         noelle = "Wow, it's very fizzy.",
-	dess = "big soda fan",
+		dess = "big soda fan",
         brenda = "*burp* Oh, excuse me.",
-	jamm = "Gotta save some for Marcy. She'd love this.",
+		jamm = "Gotta save some for Marcy. She'd love this.",
         noel = "What flavor is this?",
     }
+end
+
+function item:getReaction(user_id, reactor_id)
+    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
+		return "Here, Marcy! I knew you'd like it!"
+	end
+	return super.getReaction(self, user_id, reactor_id)
 end
 
 return item

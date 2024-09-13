@@ -52,11 +52,18 @@ function item:init()
         susie = "Who knew vegetables could taste so good!",
         ralsei = "I feel great!",
         noelle = "Wow, did that fully heal?",
-	dess = "One, Two, Ooaatmeaaal",
+		dess = "One, Two, Ooaatmeaaal",
         brenda = "Wow, that tasted good!",
-	jamm = "Overheal. I like it!",
-	noel = "Woah.",
+		jamm = "Overheal. I like it!",
+		noel = "Woah.",
     }
+end
+
+function item:getReaction(user_id, reactor_id)
+    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
+		return "It's good for you, Marcy!"
+	end
+	return super.getReaction(self, user_id, reactor_id)
 end
 
 return item

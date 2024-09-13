@@ -71,6 +71,13 @@ function item:init()
     }
 end
 
+function item:getReaction(user_id, reactor_id)
+    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
+		return "Prepare for a sugar rush, guys...!"
+	end
+	return super.getReaction(self, user_id, reactor_id)
+end
+
 function item:onWorldUse(target)
     -- Noelle shares with Kris if they're in the party
     if target.id == "noelle" and Game:hasPartyMember("kris") then

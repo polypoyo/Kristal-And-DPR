@@ -58,6 +58,13 @@ function item:init()
     }
 end
 
+function item:getReaction(user_id, reactor_id)
+    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
+		return "You want this, Marcy? Eh, sure..."
+	end
+	return super.getReaction(self, user_id, reactor_id)
+end
+
 function item:getShopDescription()
     -- Don't automatically add item type
     return self.shop

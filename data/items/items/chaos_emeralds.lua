@@ -48,7 +48,9 @@ function item:init()
     self.can_equip = {}
 
     -- Character reactions (key = party member id)
-    self.reactions = {}
+    self.reactions = {
+		jamm = "Woah! Felt a bit of energy for a second..."
+	}
 end
 
 function item:getBattleText(user, target)
