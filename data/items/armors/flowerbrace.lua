@@ -66,7 +66,7 @@ function item:init()
 		mario = {
 			mario = "Blech! That tastes like shit!",
 			jamm = "Did you try to eat it!?",
-                        noel = "Sharing is caring.",
+            noel = "Sharing is caring.",
 		},
         dess = "ew im alergic to flowers AND love",
     }

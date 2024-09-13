@@ -30,7 +30,7 @@ function item:init()
         YOU = 10,
         dess = 15,
         brenda = 5,
-	jamm = 0,
+		jamm = 0,
         noel = 128,
     }
 
@@ -62,11 +62,18 @@ function item:init()
         susie = "Better than nothing...",
         ralsei = "This tastes... not good...",
         noelle = "Wh-why did you make me eat this?!",
-	dess = "yeah this is still good",
+		dess = "yeah this is still good",
         brenda = "...Ew.",
-	jamm = "Yeah... No way am I eating that...",
-	noel = "Don't waste food.",
+		jamm = "Yeah... No way am I eating that...",
+		noel = "Don't waste food.",
     }
+end
+
+function item:getReaction(user_id, reactor_id)
+    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
+		return "...But we don't eat this part, Marcy."
+	end
+	return super.getReaction(self, user_id, reactor_id)
 end
 
 return item

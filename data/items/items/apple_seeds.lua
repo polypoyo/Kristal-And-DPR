@@ -52,10 +52,10 @@ function item:init()
         susie = "These taste... not bad?",
         ralsei = "I don't feel so well...",
         noelle = "(I feel like I'm gonna puke...)",
-	dess= "yummy cyanide",
+		dess= "yummy cyanide",
         brenda = "Why did I eat that?",
-	jamm = "I could've used those for my sling...",
-	noel = "Why not?",
+		jamm = "I could've used those for my sling...",
+		noel = "Why not?",
     }
 end
 

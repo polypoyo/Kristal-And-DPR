@@ -55,6 +55,7 @@ function item:init()
         dess = "wouldn't it be funny if i conquered the universe with these?",
         brenda = "Thankfully the crown isn't included.",
         noel = "Cool anime shit.",
+		jamm = "So is this like an elytra, or...?"
     }
 end
 

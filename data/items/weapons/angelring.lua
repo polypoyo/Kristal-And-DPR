@@ -58,7 +58,7 @@ function item:init()
             susie = "DON'T EAT THAT!!",
             noelle = "DON'T EAT THAT!!",
             berdly = "DON'T EAT THAT!!",
-            jamm = "DON'T EAT THAT!!",
+            jamm = "IT'S NOT FOOD!!",
             brenda = "DON'T EAT THAT!!",
             kangel = "DON'T EAT THAT!!",
             noel = "WHY IS EVERYONE YELLING?!",
@@ -67,7 +67,8 @@ function item:init()
         brenda = "A ring... for a ring?",
         noel = "Angel... no thanks...",
         noelle = "It's beautiful...!",
-        kangel = "It goes with my outfit!"
+        kangel = "It goes with my outfit!",
+		jamm = "I'm... Already taken...",
     }
 end
 

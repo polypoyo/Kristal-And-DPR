@@ -52,11 +52,18 @@ function item:init()
         susie = "An apple a day keeps the doctor away.",
         ralsei = "It's really sweet!",
         noelle = "It's really crunchy!",
-	dess = "sweet",
+		dess = "sweet",
         brenda = "I love apples!",
-	jamm = "A doctor a day keeps the apple away. Wait...",
-	noel = "Nom!",
+		jamm = "A doctor a day keeps the apple away. Wait...",
+		noel = "Nom!",
     }
+end
+
+function item:getReaction(user_id, reactor_id)
+    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
+		return "It's good for you, Marcy!"
+	end
+	return super.getReaction(self, user_id, reactor_id)
 end
 
 return item

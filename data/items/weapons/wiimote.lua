@@ -65,7 +65,7 @@ function item:init()
 			jamm = "The wrist strap! Use the wrist strap!",
 			noel = "It's not like it's a weapon or anything."
 		},
-	        noel = "... It's like the ads now...",
+	    noel = "... It's like the ads now...",
 	}
 end
 

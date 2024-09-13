@@ -53,8 +53,8 @@ function item:init()
         noelle = "Did we get scammed?",
         dess = "fucking microtransactions",
         brenda = "The hell am I supposed to do with this?!",
-	jamm = "Why don't we just cut our losses and sell it next time?",
-	noel = "Keep it ... Trust me ...",
+		jamm = "Why don't we just cut our losses and sell it next time?",
+		noel = "Keep it ... Trust me ...",
     }
 end
 

@@ -44,6 +44,7 @@ function item:init()
     self.can_equip = {
         dess = false,
         noel = false,
+		jamm = false,
     }
 
     -- Character reactions
@@ -54,8 +55,15 @@ function item:init()
 		dess = "I'm allergic to love",
         brenda = "Thank you Celesy...",
 		jamm = "No use for me.",
-	noel = "Lame.",
+		noel = "Lame.",
     }
+end
+
+function item:getReaction(user_id, reactor_id)
+    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
+		return "Marcy, this isn't for you."
+	end
+	return super.getReaction(self, user_id, reactor_id)
 end
 
 function item:onEquip(character, replacement)

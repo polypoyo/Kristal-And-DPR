@@ -30,9 +30,9 @@ function item:init()
         ["susie"] = 50,
         ["ralsei"] = 100,
         ["noelle"] = 80,
-	["dess"] = 20,
+		["dess"] = 20,
         ["brenda"] = 40,
-	["jamm"] = 0,
+		["jamm"] = 0,
         ["noel"] = 999999999999999999999999999999, --fucking send him
 	}
 

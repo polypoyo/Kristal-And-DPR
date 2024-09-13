@@ -50,12 +50,12 @@ function item:init()
     self.reactions = {
         kris = {
             susie = "Heh, looking good Kris.",
-	    noel = "(Did kris get taller?)",
+			noel = "(Did kris get taller?)",
         },
         susie = {
             susie = "Let's crush everything!",
             noelle = "Your dream came true!",
-	    noel = "I feel threatend!",
+			noel = "I feel threatend!",
         },
         ralsei = "Big hugs for everyone!",
         noelle = "(Will Susie like me more?)",
@@ -63,11 +63,11 @@ function item:init()
         dess = "Fuck yea!",
         YOU = {
             susie = "Heh, looking good YOU.",
-	    noel = "(Did you get taller?)",
+			noel = "(Did you get taller?)",
         },
-	jamm = "if I was an Italian plumber whose girlfriend was constantly being imprisoned in castles by an evil fire breathing lizard I would simply not take part in recreational go-kart races with aforementioned lizard",
-	mario = "Imma feel lightheaded! Wheeee!",
-	noel = "I'm big now?",
+		jamm = "if I was an Italian plumber whose girlfriend was constantly being imprisoned in castles by an evil fire breathing lizard I would simply not take part in recreational go-kart races with aforementioned lizard",
+		mario = "Imma feel lightheaded! Wheeee!",
+		noel = "I'm big now?",
     }
 end
 

@@ -29,7 +29,7 @@ function item:init()
         ["YOU"] = 30,
         ["dess"] = 25,
         ["brenda"] = 30,
-	["jamm"] = nil,
+		["jamm"] = nil,
         ["noel"] = 300,
 	}
 
@@ -52,11 +52,18 @@ function item:init()
         susie = "The sauce tastes like blood!",
         ralsei = "Isn't this just plastic?",
         noelle = "Not the best, but it's fine.",
-	dess = "ew fnaf",
+		dess = "ew fnaf",
         brenda = "WAS THAT THE BITE OF 87?!",
-	jamm = "Hold on. There are mushrooms.",
-	noel = "So, THIS is a PIZZA!",
+		jamm = "Hold on. There are mushrooms.",
+		noel = "So, THIS is a PIZZA!",
 	}
+end
+
+function item:getReaction(user_id, reactor_id)
+    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
+		return "You're a picky eater too, huh, Marcy?"
+	end
+	return super.getReaction(self, user_id, reactor_id)
 end
 
 -- Function overrides go here
