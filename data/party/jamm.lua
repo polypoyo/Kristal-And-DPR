@@ -150,4 +150,20 @@ function character:drawPowerStat(index, x, y, menu)
     end
 end
 
+function PartyMember:getFleeText()
+	if Game:getFlag("marcy_joined") then
+		if Game:getFlag("marcy_pirate") then
+			return {
+				"[voice:jamm][facec:jamm/nervous]Nope! I'm out!",
+				"[voice:marcy][facec:marcy/frown_open_patch]Marcy thinks we should go!"
+			}
+		end
+		return {
+			"[voice:jamm][facec:jamm/nervous]Nope! I'm out!",
+			"[voice:marcy][facec:marcy/frown_open]Marcy thinks we should go!"
+		}
+	end
+	return self.flee_text
+end
+
 return character
