@@ -232,6 +232,8 @@ function Player:handleMovement()
             speed = speed + 2
         end
     end
+	
+	if self.disable_running then speed = self.walk_speed end
 
     self:move(walk_x, walk_y, speed * DTMULT)
 
