@@ -582,6 +582,14 @@ function DebugSystem:registerSubMenus()
         end)
     end
 
+    self:registerMenu("minigame_select", "Minigame Select", "search")
+    for id,_ in pairs(Registry.minigames) do
+        self:registerOption("minigame_select", id, "Start this minigame.", function()
+            Game:startMinigame(id)
+            self:closeMenu()
+        end, in_overworld)
+    end
+
     self:registerMenu("cutscene_select", "Cutscene Select", "search")
     -- loop through registry and add menu options for all cutscenes
     for group, cutscene in pairs(Registry.world_cutscenes) do
@@ -689,6 +697,7 @@ function DebugSystem:registerDefaults()
     local in_battle = function () return in_game() and Game.state == "BATTLE" end
     local in_overworld = function () return in_game() and Game.state == "OVERWORLD" end
     local in_legend = function() return in_game() and Game.state == "LEGEND" end
+    local in_minigame = function() return in_game() and Game.state == "MINIGAME" end
 
     -- Global
     self:registerConfigOption("main", "Object Selection Pausing",
@@ -764,6 +773,9 @@ function DebugSystem:registerDefaults()
     self:registerOption("main", "Enter Shop", "Enter a shop.", function ()
                             self:enterMenu("select_shop", 0)
                         end, in_overworld)
+    self:registerOption("main", "Start Minigame", "Start a minigame.", function ()
+                            self:enterMenu("minigame_select", 0)
+                        end, in_overworld)
 
     self:registerOption("main", "Play Cutscene", "Play a cutscene.", function ()
                             self:enterMenu("cutscene_select", 0)
@@ -781,6 +793,12 @@ function DebugSystem:registerDefaults()
     self:registerOption("main", "End Battle", "Instantly complete a battle.", function ()
                             Game.battle:setState("VICTORY")
                         end, in_battle)
+
+    -- Minigame specific
+    self:registerOption("main", "End Minigame", "End the current minigame.", function()
+                            Game.minigame:endMinigame()
+                            self:closeMenu()
+                        end, in_minigame)
 end
 
 function DebugSystem:getValidOptions()
