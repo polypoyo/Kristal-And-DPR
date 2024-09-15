@@ -780,7 +780,7 @@ function Battle:onStateChange(old,new)
 		}
 		
         for _,battler in pairs(Game.battle.party) do
-            for _,text in pairs(battler.chara.flee_text) do
+            for _,text in pairs(battler.chara:getFleeText()) do
                 table.insert(flee_list, text)
             end
         end

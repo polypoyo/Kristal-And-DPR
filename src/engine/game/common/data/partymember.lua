@@ -306,6 +306,8 @@ function PartyMember:getMenuIconOffset() return unpack(self.menu_icon_offset or 
 
 function PartyMember:getGameOverMessage() return self.gameover_message end
 
+function PartyMember:getFleeText() return self.flee_text end
+
 -- Functions / Getters & Setters
 
 function PartyMember:heal(amount, playsound)

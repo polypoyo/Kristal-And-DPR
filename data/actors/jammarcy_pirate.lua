@@ -38,7 +38,6 @@ function actor:init()
 
         -- Battle animations
         ["battle/idle"]         = {"battle_pirate/idle", 0.2, true},
-        ["battle/low_health"]   = {"battle_pirate/low_hp", 0.2, true},
 
         ["battle/attack"]       = {"battle_pirate/attack", 1/15, false},
         ["battle/act"]          = {"battle_pirate/act", 1/15, false},
