@@ -86,6 +86,10 @@ function character:init()
     self.menu_icon_offset = nil
 
     self.gameover_message = nil
+	
+	self.flee_text = {
+		"[voice:jamm][facec:jamm/nervous]Nope! I'm out!"
+	}
 end
 
 function character:getActor(light)
