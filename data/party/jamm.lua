@@ -150,7 +150,7 @@ function character:drawPowerStat(index, x, y, menu)
     end
 end
 
-function PartyMember:getFleeText()
+function character:getFleeText()
 	if Game:getFlag("marcy_joined") then
 		if Game:getFlag("marcy_pirate") then
 			return {
