@@ -77,7 +77,6 @@ function actor:init()
 
         -- Battle offsets
         ["battle/idle"] = {-5, -1},
-        ["battle/low_health"] = {-5, -1},
 
         ["battle/attack"] = {-5, -1},
         ["battle/attackready"] = {-5, -1},
