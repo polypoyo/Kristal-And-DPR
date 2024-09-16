@@ -485,4 +485,71 @@ return {
             cutscene:hideNametag()
         end
     end,
+
+    wah = function(cutscene, event)
+        if event.interact_count == 1 then
+            -- The 1st WAH!
+            cutscene:showNametag("Takodachi")
+            cutscene:text("* Pray to the 1st WAH![wait:10]\n* We Are Here!")
+            cutscene:hideNametag()
+        elseif event.interact_count == 2 then
+            -- The 2nd WAH!
+            cutscene:showNametag("Takodachi")
+            cutscene:text("* Pray to the 2nd WAH![wait:10]\n* We Are Happy!")
+            cutscene:hideNametag()
+        elseif event.interact_count == 3 then
+            -- The 3rd WAH!
+            cutscene:showNametag("Takodachi")
+            cutscene:text("* Pray to the 3rd WAH![wait:10]\n* We Are Hungry!")
+            cutscene:hideNametag()
+        elseif event.interact_count == 4 then
+            -- The 4th... wah..?
+            local wah4_sprite_list = {
+                YOU = "date",
+                susie = "shock",
+                ralsei = "surprised_down",
+                noelle = "shocked"
+            }
+
+            cutscene:showNametag("Takodachi")
+            cutscene:text(
+            "[noskip]* Pray to the 4th WAH![wait:10]\n[func:oshit]* We Are[wait:25][func:thicc][instant] H O R N Y![stopinstant][wait:15]",
+            nil, nil, {
+                functions = {
+                    oshit = function()
+                        Assets.stopAndPlaySound("the4thWah")
+                    end,
+                    thicc = function()
+                        cutscene:showNametag("Takolyshit")
+                        Game.fader:fadeIn(nil, { speed = 0.8, color = { 1, 1, 1 }, alpha = 1 })
+                        event:setSprite("takolyshit")
+                        -- Credits to Dobby233Liu for making this not awful code
+                        for member, sprite in pairs(wah4_sprite_list) do
+                            local char = cutscene:getCharacter(member)
+                            if char ~= nil then
+                                char:setSprite(sprite)
+                            end
+                        end
+                        Game.world.map.ina:pause()
+                    end
+                }
+            })
+            cutscene:hideNametag()
+
+            event:setSprite("idle")
+            for member, _ in pairs(wah4_sprite_list) do
+                local char = cutscene:getCharacter(member)
+                if char ~= nil then
+                    char:resetSprite()
+                end
+            end
+            Game.world.map.ina:resume()
+
+            --Kristal.callEvent("completeAchievement", "takodownbad")
+        else
+            cutscene:showNametag("Takodachi")
+            cutscene:text("* Pray to the priestess,[wait:2] Ina!")
+            cutscene:hideNametag()
+        end
+    end,
 }

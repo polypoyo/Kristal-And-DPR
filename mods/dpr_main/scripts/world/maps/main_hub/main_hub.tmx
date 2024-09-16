@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="23" height="27" tilewidth="40" tileheight="40" infinite="0" nextlayerid="10" nextobjectid="67">
+<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="23" height="27" tilewidth="40" tileheight="40" infinite="0" nextlayerid="11" nextobjectid="69">
  <editorsettings>
   <export target="data.lua" format="lua"/>
  </editorsettings>
@@ -91,10 +91,41 @@
 0,0,0,0,0,0,0,0,21,22,23,24,25,26,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,34,35,36,37,38,39,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,47,48,49,50,51,52,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,60,61,62,0,0,65,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,60,61,0,0,0,65,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,63,64,65,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,76,77,78,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,89,90,91,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="10" name="flyers" width="23" height="27" offsetx="0" offsety="-20">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,62,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,75,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -142,7 +173,12 @@
   <object id="65" name="elevatordoor" x="400" y="80" width="120" height="40"/>
  </objectgroup>
  <objectgroup color="#ff00ff" id="3" name="objects">
-  <object id="27" name="transition" x="400" y="1080" width="120" height="40"/>
+  <object id="27" name="transition" x="400" y="1080" width="120" height="40">
+   <properties>
+    <property name="map" value="main_hub_south"/>
+    <property name="marker" value="north"/>
+   </properties>
+  </object>
   <object id="28" name="transition" x="920" y="920" width="40" height="80">
    <properties>
     <property name="map" value="spamgolor_meeting"/>
@@ -203,6 +239,19 @@ no-good wall slammers.</property>
     <property name="cutscene" value="hub.sans"/>
    </properties>
    <point/>
+  </object>
+  <object id="68" name="interactable" x="240" y="80" width="40" height="40">
+   <properties>
+    <property name="text1">* HOW TO USE THE WARP BIN
+* A two-step guide to all your dumpster-traveling needs.</property>
+    <property name="text2">* STEP 1:
+Enter a valid code on the keypad beneath the bin's lid.</property>
+    <property name="text3">* STEP 2:
+Happy traveling!</property>
+    <property name="text4" value="* (NOTICE: If you ever get lost or run out of codes to input, type FLOORONE get back here.)"/>
+    <property name="text5" value="* (Management is also not responsible for any beer-like odors emitting from the bin.)"/>
+    <property name="text6" value="* (This is due to a certain public menace throwing cans of Mug Root Beer into it.)"/>
+   </properties>
   </object>
  </objectgroup>
  <objectgroup color="#7f00ff" id="4" name="markers">
