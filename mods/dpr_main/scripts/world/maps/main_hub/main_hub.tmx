@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+eake<?xml version="1.0" encoding="UTF-8"?>
 <map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="23" height="27" tilewidth="40" tileheight="40" infinite="0" nextlayerid="11" nextobjectid="69">
  <editorsettings>
   <export target="data.lua" format="lua"/>
@@ -249,7 +249,7 @@ Enter a valid code on the keypad beneath the bin's lid.</property>
     <property name="text3">* STEP 2:
 Happy traveling!</property>
     <property name="text4" value="* (NOTICE: If you ever get lost or run out of codes to input, type FLOORONE get back here.)"/>
-    <property name="text5" value="* (Management is also not responsible for any beer-like odors emitting from the bin.)"/>
+    <property name="text5" value="* (Management is also not responsible for any odors emitting from the bin.)"/>
     <property name="text6" value="* (This is due to a certain public menace throwing cans of Mug Root Beer into it.)"/>
    </properties>
   </object>

@@ -817,7 +817,7 @@ return {
             ["text2"] = "* STEP 1:\nEnter a valid code on the keypad beneath the bin's lid.",
             ["text3"] = "* STEP 2:\nHappy traveling!",
             ["text4"] = "* (NOTICE: If you ever get lost or run out of codes to input, type FLOORONE get back here.)",
-            ["text5"] = "* (Management is also not responsible for any beer-like odors emitting from the bin.)",
+            ["text5"] = "* (Management is also not responsible for any odors emitting from the bin.)",
             ["text6"] = "* (This is due to a certain public menace throwing cans of Mug Root Beer into it.)"
           }
         }
