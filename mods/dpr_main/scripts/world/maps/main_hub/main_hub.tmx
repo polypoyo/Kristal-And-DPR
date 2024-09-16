@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="23" height="27" tilewidth="40" tileheight="40" infinite="0" nextlayerid="9" nextobjectid="64">
+<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="23" height="27" tilewidth="40" tileheight="40" infinite="0" nextlayerid="10" nextobjectid="67">
  <editorsettings>
-  <export target="main_hub.lua" format="lua"/>
+  <export target="../main_hub.lua" format="lua"/>
  </editorsettings>
  <properties>
   <property name="border" value="castle"/>
@@ -10,9 +10,9 @@
  <objectgroup color="#ffaaff" id="8" name="objects_bg"/>
  <layer id="1" name="Tile Layer 1" width="23" height="27">
   <data encoding="csv">
-0,0,0,0,0,134,67,67,67,67,67,67,67,67,67,67,67,131,0,0,0,0,0,
-0,0,0,0,0,147,80,80,80,80,80,80,80,80,80,80,80,144,53,0,0,0,0,
-0,0,0,0,0,160,93,93,93,93,93,93,93,93,93,93,93,157,66,67,67,67,67,
+0,0,0,0,0,0,80,80,80,80,80,80,80,80,80,80,80,0,53,0,0,0,0,
+0,0,0,0,0,0,80,80,80,80,80,80,80,80,80,80,80,0,53,0,0,0,0,
+0,0,0,0,0,0,93,93,93,93,93,93,93,93,93,93,93,0,66,67,67,67,67,
 0,0,0,0,0,6,2,2,2,2,2,2,2,2,2,2,2,7,79,80,80,80,80,
 0,0,0,0,0,14,15,15,15,15,15,15,15,15,15,15,15,16,92,93,93,93,93,
 0,0,0,0,0,14,15,15,15,15,15,15,15,15,15,15,15,15,2,2,2,2,2,
@@ -41,8 +41,8 @@
  </layer>
  <layer id="7" name="Tile Layer 3" width="23" height="27">
   <data encoding="csv">
-0,0,0,0,0,134,0,0,0,0,0,0,0,0,0,0,0,131,0,0,0,0,0,
 0,0,0,0,0,147,0,0,0,0,0,0,0,0,0,0,0,144,0,0,0,0,0,
+0,0,0,0,0,160,0,0,0,0,0,0,0,0,0,0,0,157,0,0,0,0,0,
 0,0,0,0,0,173,0,0,0,0,0,0,0,0,0,0,0,170,0,0,0,0,0,
 0,0,0,0,0,186,0,0,0,0,0,0,0,0,0,0,0,183,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -102,7 +102,7 @@
 </data>
  </layer>
  <objectgroup color="#0000ff" id="2" name="collision">
-  <object id="1" x="240" y="80" width="440" height="40"/>
+  <object id="1" x="240" y="80" width="180" height="40"/>
   <object id="4" x="680" y="360" width="40" height="120"/>
   <object id="5" x="360" y="400" width="200" height="120"/>
   <object id="11" x="200" y="360" width="40" height="120"/>
@@ -136,6 +136,10 @@
   <object id="56" x="720" y="160" width="200" height="40"/>
   <object id="57" x="0" y="160" width="200" height="40"/>
   <object id="58" x="0" y="280" width="200" height="320"/>
+  <object id="66" x="500" y="80" width="180" height="40"/>
+ </objectgroup>
+ <objectgroup color="#ffff00" id="9" name="objects_elevator">
+  <object id="65" name="elevatordoor" x="400" y="80" width="120" height="40"/>
  </objectgroup>
  <objectgroup color="#ff00ff" id="3" name="objects">
   <object id="27" name="transition" x="400" y="1080" width="120" height="40"/>
@@ -176,7 +180,7 @@
     <property name="once" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="48" name="savepoint" x="440" y="600" width="40" height="40"/>
+  <object id="48" name="savepoint" x="440" y="280" width="40" height="40"/>
   <object id="59" name="interactable" x="800" y="880" width="80" height="40"/>
   <object id="62" name="npc" x="460" y="560">
    <properties>
@@ -188,7 +192,7 @@ no-good wall slammers.</property>
    </properties>
    <point/>
   </object>
-  <object id="63" name="npc" x="560" y="160">
+  <object id="63" name="npc" x="460" y="160">
    <properties>
     <property name="actor" value="sans"/>
     <property name="cutscene" value="hub.sans"/>
@@ -218,7 +222,7 @@ no-good wall slammers.</property>
   <object id="43" name="east3" x="880" y="240">
    <point/>
   </object>
-  <object id="44" name="spawn" x="460" y="680">
+  <object id="44" name="spawn" x="460" y="251">
    <point/>
   </object>
  </objectgroup>

@@ -56,6 +56,18 @@ function MainMenuOptions:init(menu)
     self.page_scroll_timer = 0
 
     self.noise_timer = 0
+	
+    self.clouds1_x = 0
+    self.clouds2_x = 0
+    self.scroll_speed = 2
+    self.scroll_speed2 = 1
+	
+    self.dog_balloon_siner = 0
+	
+    self.clouds_1 = Assets.getTexture("kristal/options_clouds1")
+    self.clouds_2 = Assets.getTexture("kristal/options_clouds2")
+    self.moon = Assets.getTexture("kristal/options_moon")
+    self.dog = Assets.getTexture("kristal/dog_balloon")
 end
 
 function MainMenuOptions:registerEvents()
@@ -91,6 +103,11 @@ function MainMenuOptions:update()
     local page = self.pages[self.selected_page]
     local options = self.options[page].options
     local max_option = #options + 1
+	
+    self.clouds1_x = self.clouds1_x + self.scroll_speed * DTMULT
+    self.clouds2_x = self.clouds2_x + self.scroll_speed2 * DTMULT
+	
+    self.dog_balloon_siner = self.dog_balloon_siner + DTMULT
 
     if self.selected_option < max_option then
         local y_off = (self.selected_option - 1) * 32
@@ -119,6 +136,17 @@ function MainMenuOptions:update()
 end
 
 function MainMenuOptions:draw()
+    local offset = math.sin(self.dog_balloon_siner * 0.25) * 15
+
+    Draw.setColor(COLORS.black)
+    Draw.rectangle("fill", 0, 0, 640, 480)
+
+    Draw.setColor(COLORS.white)
+    Draw.draw(self.moon, 484, 38, 0, 1, 1)
+    Draw.drawWrapped(self.clouds_2, true, false, (self.clouds2_x - 640), 270, 0, 1, 1)
+    Draw.draw(self.dog, 536, 296 + offset, 0, 2, 2)
+    Draw.drawWrapped(self.clouds_1, true, false, (self.clouds1_x - 640), 380, 0, 1, 1)
+
     local menu_font = Assets.getFont("main")
 
     local page = self.pages[self.selected_page]
@@ -163,7 +191,7 @@ function MainMenuOptions:draw()
         Draw.setColor(COLORS.white)
     end
 
-    local menu_x = 185 - 14
+    local menu_x = 62 - 14
     local menu_y = 110
 
     local width = 360
@@ -203,7 +231,7 @@ function MainMenuOptions:draw()
         Draw.popScissor()
     end
 
-    Draw.printShadow("Back", 0, 454 - 8, 2, "center", 640)
+    Draw.printShadow("Back", menu_x, 408 - 8, 2, "left", 640)
 
     self.state_manager:draw()
 end
@@ -461,12 +489,12 @@ function MainMenuOptions:getHeartPos()
     local x, y = 152, 129
 
     if self.selected_option < max_option then
-        x = 152
+        x = 27
         y = 129 + (self.selected_option - 1) * 32 + self.scroll_target_y
     else
         -- "Back" button
-        x = 320 - 32 - 16 + 1
-        y = 480 - 16 + 1
+        x = 27
+        y = 480 - 64 + 3
     end
 
     return x + self.heart_x, y
