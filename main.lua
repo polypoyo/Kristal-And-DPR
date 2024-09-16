@@ -151,6 +151,14 @@ Nametag = require("src.engine.game.world.nametag")
 InputMenu = require("src.engine.game.world.inputmenu")
 
 MinigameHandler = require("src.engine.game.minigames.minigamehandler")
+
+AngryBirds = require("src.engine.game.minigames.angrybirds.angrybirds")
+AngryBirdsButton = require("src.engine.game.minigames.angrybirds.angrybirdsbutton")
+AngryBirdsCredits = require("src.engine.game.minigames.angrybirds.angrybirdscredits")
+AngryBirdsMainMenu = require("src.engine.game.minigames.angrybirds.angrybirdsmainmenu")
+AngryBirdsPopup = require("src.engine.game.minigames.angrybirds.angrybirdspopup")
+AngryBirdsUIBox = require("src.engine.game.minigames.angrybirds.angrybirdsuibox")
+
 BallJump = require("src.engine.game.minigames.balljump.balljump")
 BallJumpEntity = require("src.engine.game.minigames.balljump.balljumpentity")
 BallJumpBackChuck = require("src.engine.game.minigames.balljump.balljumpbackchuck")
