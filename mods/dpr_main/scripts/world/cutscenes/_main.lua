@@ -114,6 +114,53 @@ return {
         Assets.playSound("wing")
         gonerText("SHIT-")
         Assets.playSound("closet_fall")
+
+
+        for i = 1, 8 do
+            local head = Sprite("world/cutscenes/intro/vessel/IMAGE_GONERHEAD_"..i, 320, -50)
+            head.layer = soul.layer - 1
+            head:setScale(3)
+            head:setParallax(0, 0)
+            head:setOrigin(0.5, 0.5)
+            head.physics.speed_x = Utils.random(-4, 4)
+            head.physics.speed_y = Utils.random(-8, -4)
+            head.physics.gravity = Utils.random(0.5, 1)
+            head.graphics.spin = Utils.random(0.1, 0.25)
+            Game.world:addChild(head)
+        end
+
+        cutscene:wait(0.2)	
+
+        for i = 1, 6 do
+            local body = Sprite("world/cutscenes/intro/vessel/IMAGE_GONERBODY_"..i, 320, -50)
+            body.layer = soul.layer - 2
+            body:setScale(3)
+            body:setParallax(0, 0)
+            body:setOrigin(0.5, 0.5)
+            body.physics.speed_x = Utils.random(-4, 4)
+            body.physics.speed_y = Utils.random(-8, -4)
+            body.physics.gravity = Utils.random(0.5, 1)
+            body.graphics.spin = Utils.random(0.1, 0.25)
+            Game.world:addChild(body)
+        end
+
+        cutscene:wait(0.2)	
+
+        for i = 1, 5 do
+            local legs = Sprite("world/cutscenes/intro/vessel/IMAGE_GONERLEGS_"..i, 320, -50)
+            legs.layer = soul.layer - 3
+            legs:setScale(3)
+            legs:setParallax(0, 0)
+            legs:setOrigin(0.5, 0.5)
+            legs.physics.speed_x = Utils.random(-4, 4)
+            legs.physics.speed_y = Utils.random(-8, -4)
+            legs.physics.gravity = Utils.random(0.5, 1)
+            legs.graphics.spin = Utils.random(0.1, 0.25)
+            Game.world:addChild(legs)
+        end
+
+
+
         cutscene:wait(5)
         Assets.playSound("badexplosion")
         cutscene:wait(0.5)
@@ -212,7 +259,7 @@ return {
 
         gonerText("ANYWAYS.[wait:20]")
         cutscene:wait(0.5)
-        gonerText("THE PURPOUS[wait:40]\nOF THIS MEETING.[wait:20]")
+        gonerText("THE PURPOSE[wait:40]\nOF THIS MEETING.[wait:20]")
         cutscene:wait(0.5)
         gonerText("THE FABRIC OF REALITY[wait:40]\nIS AT STAKE.[wait:20]")
         cutscene:wait(0.5)
