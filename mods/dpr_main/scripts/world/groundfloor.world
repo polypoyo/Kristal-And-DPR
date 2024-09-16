@@ -1,7 +1,7 @@
 {
     "maps": [
         {
-            "fileName": "maps/main_hub.tmx",
+            "fileName": "maps/main_hub/main_hub.tmx",
             "height": 1080,
             "width": 920,
             "x": 0,
@@ -17,8 +17,8 @@
         {
             "fileName": "maps/hub_marketplace.tmx",
             "height": 640,
-            "width": 720,
-            "x": -800,
+            "width": 840,
+            "x": -920,
             "y": 240
         },
         {

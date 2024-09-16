@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="23" height="27" tilewidth="40" tileheight="40" infinite="0" nextlayerid="10" nextobjectid="67">
  <editorsettings>
-  <export target="../main_hub.lua" format="lua"/>
+  <export target="data.lua" format="lua"/>
  </editorsettings>
  <properties>
   <property name="border" value="castle"/>
@@ -181,7 +181,12 @@
    </properties>
   </object>
   <object id="48" name="savepoint" x="440" y="280" width="40" height="40"/>
-  <object id="59" name="interactable" x="800" y="880" width="80" height="40"/>
+  <object id="59" name="interactable" x="800" y="880" width="80" height="40">
+   <properties>
+    <property name="text1" value="* (A room between...)"/>
+    <property name="text2" value="* (There is a room between...)"/>
+   </properties>
+  </object>
   <object id="62" name="npc" x="460" y="560">
    <properties>
     <property name="actor" value="wall"/>

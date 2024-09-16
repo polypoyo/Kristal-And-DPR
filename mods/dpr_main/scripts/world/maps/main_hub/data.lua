@@ -713,7 +713,10 @@ return {
           height = 40,
           rotation = 0,
           visible = true,
-          properties = {}
+          properties = {
+            ["text1"] = "* (A room between...)",
+            ["text2"] = "* (There is a room between...)"
+          }
         },
         {
           id = 62,

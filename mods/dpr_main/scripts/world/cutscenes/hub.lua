@@ -15,8 +15,10 @@ return {
             cutscene:detachFollowers()
 
             -- All text from now is spoken by Susie
+            cutscene:showNametag("Susie")
             cutscene:setSpeaker(susie)
             cutscene:text("* Hey,[wait:5] think I can break\nthis wall?", "smile")
+            cutscene:hideNametag()
 
             -- Get the bottom-center of the broken wall
             local x = event.x + event.width/2
@@ -56,7 +58,9 @@ return {
             Assets.playSound("wing")
 
             cutscene:wait(1)
+            cutscene:showNametag("Susie")
             cutscene:text("* Guess not.", "nervous")
+            cutscene:hideNametag()
 
             -- Reset Susie's sprite
             susie:resetSprite()
@@ -475,6 +479,10 @@ return {
                 end
                 cutscene:hideNametag()
             end
+        elseif choice == 4 then
+            cutscene:showNametag("sans.", {font = "sans"})
+            cutscene:text("[font:sans]* see ya.", "wink", "sans")
+            cutscene:hideNametag()
         end
     end,
 }
