@@ -328,7 +328,7 @@ return {
 
             cutscene:showNametag("sans.", {font = "sans"})
             cutscene:text("[font:sans]* oh, that's just the door for it.", "look_left", "sans")
-            cutscene:text("[font:sans]* the actual elevator hasn't been installed yet.", "normal", "sans")
+            cutscene:text("[font:sans]* the actual elevator hasn't been installed yet.", "neutral", "sans")
             cutscene:text("[font:sans]* give it some time,[wait:5] it'll come eventually.", "wink", "sans")
 
             cutscene:showNametag("Susie")
