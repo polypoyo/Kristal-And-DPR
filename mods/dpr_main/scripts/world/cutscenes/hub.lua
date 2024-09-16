@@ -308,34 +308,34 @@ return {
             cutscene:showNametag("Susie")
             cutscene:text("* YOU!?", "teeth_b", "susie")
 
-            cutscene:showNametag("Sans", {font = "sans"})
+            cutscene:showNametag("sans.", {font = "sans"})
             cutscene:text("[font:sans]* 'sup.", "neutral", "sans")
 
             cutscene:showNametag("Susie")
             cutscene:text("* What the hell are you doing here???", "teeth", "susie")
 
-            cutscene:showNametag("Sans", {font = "sans"})
+            cutscene:showNametag("sans.", {font = "sans"})
             cutscene:text("[font:sans]* i'm keeping people away from the elevator.", "neutral", "sans")
 
             cutscene:showNametag("Susie")
-            cutscene:text("* ...[wait:3]uhhh, what elevator?", "suspicious", "susie")
+            cutscene:text("* Why?! We got places to be here, dude!!", "angry_b", "susie")
 
-            cutscene:showNametag("Sans", {font = "sans"})
-            cutscene:text("[font:sans]* oh, this one right next me.", "look_left", "sans")
-
-            cutscene:showNametag("Susie")
-            cutscene:text("* ...", "suspicious", "susie")
-            cutscene:text("* BUT THERE'S NOTHING THERE!!", "teeth", "susie")
-
-            cutscene:showNametag("Sans", {font = "sans"})
-            cutscene:text("[font:sans]* yeah, that's because it's not finished yet.", "joking", "sans")
-            cutscene:text("[font:sans]* give it some time. it'll pop up eventually.", "wink", "sans")
+            cutscene:showNametag("sans.", {font = "sans"})
+            cutscene:text("[font:sans]* well,[wait:5] i would let you pass if the elevator wasn't finished.", "joking", "sans")
 
             cutscene:showNametag("Susie")
-            cutscene:text("* Oh...", "sus_nervous", "susie")
+            cutscene:text("* ...it looks finished to me.", "suspicious", "susie")
+
+            cutscene:showNametag("sans.", {font = "sans"})
+            cutscene:text("[font:sans]* oh, that's just the door for it.", "look_left", "sans")
+            cutscene:text("[font:sans]* the actual elevator hasn't been installed yet.", "normal", "sans")
+            cutscene:text("[font:sans]* give it some time,[wait:5] it'll come eventually.", "wink", "sans")
+
+            cutscene:showNametag("Susie")
+            cutscene:text("* Right...", "sus_nervous", "susie")
 			
 
-            cutscene:showNametag("Sans", {font = "sans"})
+            cutscene:showNametag("sans.", {font = "sans"})
             cutscene:text("[font:sans]* anyways, what's up?", "neutral", "sans")
             cutscene:hideNametag()
             Game:setFlag("susieHasMetSans", true)
@@ -422,7 +422,7 @@ return {
                 cutscene:hideNametag()
             end]]
         else
-            cutscene:showNametag("Sans", {font = "sans"})
+            cutscene:showNametag("sans.", {font = "sans"})
             cutscene:text("[font:sans]* 'sup?", "neutral", "sans")
             cutscene:hideNametag()			
         end
@@ -431,7 +431,7 @@ return {
 				
         if choice == 1 then
             local kid = #Game.party > 1 and "kids" or "kid"
-            cutscene:showNametag("Sans", {font = "sans"})
+            cutscene:showNametag("sans.", {font = "sans"})
             cutscene:text(string.format("[font:sans]* sorry %s,[wait:5] but you can't access the elevator yet.", kid), "eyes_closed", "sans")
             cutscene:text("[font:sans]* it's kinda...[wait:5] not finished.", "look_left", "sans")
             cutscene:text("[font:sans]* so come back later,[wait:2] 'k?", "wink", "sans")
@@ -441,29 +441,29 @@ return {
                 cutscene:showNametag("Susie")
                 cutscene:text("* How are you here by the way?", "neutral", "susie")
 
-                cutscene:showNametag("Sans", {font = "sans"})
+                cutscene:showNametag("sans.", {font = "sans"})
                 cutscene:text("[font:sans]* i don't know. i'm just here for the work.", "neutral", "sans")
 
                 cutscene:showNametag("Susie")
                 cutscene:text("* Do you even know something?", "annoyed", "susie")
 
-                cutscene:showNametag("Sans", {font = "sans"})
+                cutscene:showNametag("sans.", {font = "sans"})
                 cutscene:text("[font:sans]* hey, if you have a complaint[wait:1] you can tell my manager.", "joking", "sans")
 
                 cutscene:showNametag("Susie")
                 cutscene:text("* And who would that be?", "neutral_side", "susie")
 
-                cutscene:showNametag("Sans", {font = "sans"})
+                cutscene:showNametag("sans.", {font = "sans"})
                 cutscene:text("[font:sans]* me.", "neutral", "sans")
 
                 cutscene:showNametag("Susie")
                 cutscene:text("* Aren't you already the cashier at Hometown??", "angry", "susie")
 
-                cutscene:showNametag("Sans", {font = "sans"})
+                cutscene:showNametag("sans.", {font = "sans"})
                 cutscene:text("[font:sans]* nah, i'm the janitor.", "wink", "sans")
                 cutscene:hideNametag()
             else
-                cutscene:showNametag("Sans", {font = "sans"})
+                cutscene:showNametag("sans.", {font = "sans"})
                 cutscene:text("[font:sans]* well, best answer i can give is that i'm just here for the work.", "look_left", "sans")
                 cutscene:text("[font:sans]* which is basically just loitering and guarding this elevator.", "wink", "sans")
                 if Game.world.player.actor.id == "hero" then
