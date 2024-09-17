@@ -1,5 +1,5 @@
-eake<?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="23" height="27" tilewidth="40" tileheight="40" infinite="0" nextlayerid="11" nextobjectid="69">
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="23" height="27" tilewidth="40" tileheight="40" infinite="0" nextlayerid="11" nextobjectid="72">
  <editorsettings>
   <export target="data.lua" format="lua"/>
  </editorsettings>
@@ -253,6 +253,7 @@ Happy traveling!</property>
     <property name="text6" value="* (This is due to a certain public menace throwing cans of Mug Root Beer into it.)"/>
    </properties>
   </object>
+  <object id="70" name="warpbin" x="280" y="120" width="120" height="40"/>
  </objectgroup>
  <objectgroup color="#7f00ff" id="4" name="markers">
   <object id="35" name="south" x="460" y="1040">
