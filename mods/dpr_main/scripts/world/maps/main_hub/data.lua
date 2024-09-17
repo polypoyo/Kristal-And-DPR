@@ -1,7 +1,7 @@
 return {
   version = "1.9",
   luaversion = "5.1",
-  tiledversion = "1.9.0",
+  tiledversion = "1.9.2",
   class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 11,
-  nextobjectid = 69,
+  nextobjectid = 72,
   properties = {
     ["border"] = "castle"
   },
@@ -820,6 +820,19 @@ return {
             ["text5"] = "* (Management is also not responsible for any odors emitting from the bin.)",
             ["text6"] = "* (This is due to a certain public menace throwing cans of Mug Root Beer into it.)"
           }
+        },
+        {
+          id = 70,
+          name = "warpbin",
+          class = "",
+          shape = "rectangle",
+          x = 280,
+          y = 120,
+          width = 120,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {}
         }
       }
     },

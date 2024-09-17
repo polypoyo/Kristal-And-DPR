@@ -48,6 +48,13 @@
             "width": 640,
             "x": 1140,
             "y": -1120
+        },
+        {
+            "fileName": "maps/main_hub_south/main_hub_south.tmx",
+            "height": 1000,
+            "width": 1000,
+            "x": 120,
+            "y": 1160
         }
     ],
     "onlyShowAdjacentMaps": false,
