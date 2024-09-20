@@ -119,6 +119,20 @@ function DarkMenu:addButtons()
         end
     })
 
+    -- TALK
+    self:addButton({
+        ["state"]          = "",
+        ["sprite"]         = Assets.getTexture("ui/menu/btn/config"),
+        ["hovered_sprite"] = Assets.getTexture("ui/menu/btn/config_h"),
+        ["desc_sprite"]    = Assets.getTexture("ui/menu/desc/config"),
+        ["callback"]       = function()
+            Game.world:startCutscene("_talk", "main", Game.world.map.id, Game.party[1].id)
+    
+            self.ui_select:stop()
+            self.ui_select:play()
+        end
+    })
+
     -- CONFIG
     self:addButton({
         ["state"]          = "CONFIGMENU",
