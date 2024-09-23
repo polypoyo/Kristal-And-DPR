@@ -122,9 +122,9 @@ function DarkMenu:addButtons()
     -- TALK
     self:addButton({
         ["state"]          = "",
-        ["sprite"]         = Assets.getTexture("ui/menu/btn/config"),
-        ["hovered_sprite"] = Assets.getTexture("ui/menu/btn/config_h"),
-        ["desc_sprite"]    = Assets.getTexture("ui/menu/desc/config"),
+        ["sprite"]         = Assets.getTexture("ui/menu/btn/talk"),
+        ["hovered_sprite"] = Assets.getTexture("ui/menu/btn/talk_h"),
+        ["desc_sprite"]    = Assets.getTexture("ui/menu/desc/talk"),
         ["callback"]       = function()
             Game.world:startCutscene("_talk", "main", Game.world.map.id, Game.party[1].id)
     
