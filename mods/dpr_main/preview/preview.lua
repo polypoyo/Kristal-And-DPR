@@ -44,9 +44,29 @@ function preview:init(mod, button, menu)
     self.splash = Utils.pick(self.splash_list)
 
     self.splash_timer = 0
+
+    self.music_once = 0
 end
 
 function preview:update()
+
+    if MainMenu.state == "OPTIONS" and self.music_once == 0 then
+
+        self.music_settings = Music("options_starry")
+
+        self.music_once = 1
+
+        MainMenu.music:pause()
+
+    elseif MainMenu.state ~= "OPTIONS" and self.music_once == 1 then
+        self.music_once = 0
+
+        self.music_settings:remove()
+
+        MainMenu.music:play()
+        
+    end
+
     self.bg_gradient_siner = self.bg_gradient_siner + 0.2 * DTMULT
 
     local particle_to_remove = {}
