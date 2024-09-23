@@ -50,7 +50,8 @@ end
 
 function preview:update()
 
-    if MainMenu.state == "OPTIONS" and self.music_once == 0 then
+    local is_options = (MainMenu.state == "OPTIONS") or (MainMenu.state == "DEFAULTNAME")
+    if is_options and self.music_once == 0 then
 
         self.music_settings = Music("options_starry")
 
@@ -58,7 +59,7 @@ function preview:update()
 
         MainMenu.music:pause()
 
-    elseif MainMenu.state ~= "OPTIONS" and self.music_once == 1 then
+    elseif not is_options and self.music_once == 1 then
         self.music_once = 0
 
         self.music_settings:remove()
