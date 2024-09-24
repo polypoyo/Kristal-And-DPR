@@ -61,6 +61,10 @@ return {
                 else
                 end
             end
+        elseif map == "field" then
+            cutscene:text("* (You give a moment of silence for those in need...)")
+            cutscene:text("[speed:0.1]* (...)\n[wait:10](...)\n[wait:10](...)")
+            cutscene:text("* (There will always be hope.)")
         else
             cutscene:text("* (But your voice echoed aimlessly.)")
         end
