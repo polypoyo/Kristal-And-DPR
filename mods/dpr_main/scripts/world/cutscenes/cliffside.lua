@@ -104,8 +104,70 @@ return {
         Game.world.player:shake(5)
         Assets.playSound("bump")
         cutscene:wait(2)
-        gonerText("\nCareful.[wait:10]\nYou can't go down\nthose cliffs.", false)
-        cutscene:wait(5)
-        gonerTextFade()
+        --gonerText("\nCareful.[wait:10]\nYou can't go down\nthose cliffs.", false)
+
+        cutscene:showNametag("???")
+        cutscene:text("* Careful.[wait:10]\nYou can't go down those cliffs.", nil, "cat")
+        cutscene:hideNametag()
+
+        local wat = 0.5
+        Game.world.player:setFacing("left")
+        cutscene:wait(wat)
+        Game.world.player:setFacing("right")
+        cutscene:wait(wat)
+        Game.world.player:setFacing("left")
+        cutscene:wait(wat)
+        Game.world.player:setFacing("right")
+        cutscene:wait(wat)
+
+       --[[local choicer = cutscene:choicer({"Hello?", "Who's there?", "Thanks for the heads up.",  "No shit."})
+       if choicer == 1 then
+           cutscene:showNametag("???")
+           cutscene:text("* Hello there.[wait:5]\n* Up here.", nil, "cat")
+       elseif choicer == 2 then
+           cutscene:showNametag("???")
+           cutscene:text("* Up here.", nil, "cat")
+           Game.world.player:setFacing("up")
+           cutscene:wait(1)
+           cutscene:showNametag("Cat?")
+           cutscene:text("* Hello there.", nil, "cat")
+       elseif choicer == 3 then
+       elseif choicer == 4 then
+       end]]
+
+       cutscene:showNametag("Hero")
+       cutscene:text("* Who's there?", nil, "hero")
+
+       cutscene:showNametag("???")
+       cutscene:text("* Me.[wait:10]\nI'm there.\n[wait:10]Up here.", nil, "cat")
+        cutscene:hideNametag()
+       Game.world.player:setFacing("up")
+       cutscene:wait(1)
+       cutscene:showNametag("Cat?")
+       cutscene:text("* Hello there.", "neutral", "cat")
+        cutscene:hideNametag()
+       cutscene:showNametag("Cat?")
+       local choicer = cutscene:choicer({"Hello?", "Is that a\ntalking cat?!"})
+       if choicer == 1 then
+          cutscene:text("* Yes,[wait:10] hello.", "neutral", "cat")
+          cutscene:text("*  Allow me to proceed with the introductions.", "neutral", "cat")
+       elseif choicer == 2 then
+           cutscene:text("* Yes,[wait:5] I am a cat[wait:5] and I can talk.", "neutral", "cat")
+           cutscene:text("* How very observant you are for someone with [color:red]their[color:white] eyes closed.", "neutral", "cat")
+           --cutscene:text("* You seem to already know me.", "neutral", "cat")
+       end
+       cutscene:showNametag("Cat")
+       cutscene:text("* My name is cat.", "neutral", "cat")
+       cutscene:text("* Say... You don't look like you're from around here.", "neutral", "cat")
+       --cutscene:text("* The both of you...", "neutral", "cat")
+       cutscene:text("* Has fate brought you here?\n[wait:10]* Perchance Lady Luck?", "neutral", "cat")
+
+       --cat walking
+
+       cutscene:text("* Follow me...", "neutral", "cat")
+
+       --cat keep walking
+
+        cutscene:hideNametag()
     end,
 }

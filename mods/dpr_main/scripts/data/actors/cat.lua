@@ -20,16 +20,16 @@ function actor:init()
     self.flip = nil
 
     -- Path to this actor's sprites (defaults to "")
-    self.path = "world/npcs/cat/cat"
+    self.path = "world/npcs/cat"
     -- This actor's default sprite or animation, relative to the path (defaults to "")
-    self.default = ""
+    self.default = "idle"
 
     -- Sound to play when this actor speaks (optional)
     self.voice = nil
     -- Path to this actor's portrait for dialogue (optional)
-    self.portrait_path = nil
+    self.portrait_path = "face/cat"
     -- Offset position for this actor's portrait (optional)
-    self.portrait_offset = nil
+    self.portrait_offset = {-10, 0}
 
     -- Whether this actor as a follower will blush when close to the player
     self.can_blush = false
@@ -38,7 +38,9 @@ function actor:init()
     self.talk_sprites = {}
 
     -- Table of sprite animations
-    self.animations = {}
+    self.animations = {
+        ["idle"] = {"idle", 1/4, true},
+    }
 
     -- Table of sprite offsets (indexed by sprite name)
     self.offsets = {}
