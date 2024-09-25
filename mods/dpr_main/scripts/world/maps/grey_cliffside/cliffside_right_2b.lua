@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 7,
-  nextobjectid = 55,
+  nextobjectid = 62,
   properties = {},
   tilesets = {
     {
@@ -326,9 +326,9 @@ return {
           name = "script",
           type = "",
           shape = "rectangle",
-          x = 258,
-          y = 280,
-          width = 80,
+          x = 240,
+          y = 320,
+          width = 120,
           height = 40,
           rotation = 0,
           visible = true,
@@ -422,19 +422,6 @@ return {
           properties = {}
         },
         {
-          id = 4,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 200,
-          y = 320,
-          width = 200,
-          height = 40,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
           id = 5,
           name = "",
           type = "",
@@ -443,6 +430,45 @@ return {
           y = 280,
           width = 240,
           height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 58,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 240,
+          y = 640,
+          width = 120,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 60,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 360,
+          y = 320,
+          width = 40,
+          height = 320,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 61,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 200,
+          y = 320,
+          width = 40,
+          height = 320,
           rotation = 0,
           visible = true,
           properties = {}
