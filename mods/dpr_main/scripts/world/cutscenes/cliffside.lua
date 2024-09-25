@@ -150,24 +150,66 @@ return {
        local choicer = cutscene:choicer({"Hello?", "Is that a\ntalking cat?!"})
        if choicer == 1 then
           cutscene:text("* Yes,[wait:10] hello.", "neutral", "cat")
-          cutscene:text("*  Allow me to proceed with the introductions.", "neutral", "cat")
+          cutscene:text("* Hm...[wait:10]\n* You seem to be confused...", "neutral", "cat")
        elseif choicer == 2 then
            cutscene:text("* Yes,[wait:5] I am a cat[wait:5] and I can talk.", "neutral", "cat")
            cutscene:text("* How very observant you are for someone with [color:red]their[color:white] eyes closed.", "neutral", "cat")
+           cutscene:text("* You seem to already know me.", "neutral", "cat")
+
            --cutscene:text("* You seem to already know me.", "neutral", "cat")
        end
-       cutscene:showNametag("Cat")
-       cutscene:text("* My name is cat.", "neutral", "cat")
-       cutscene:text("* Say... You don't look like you're from around here.", "neutral", "cat")
+
+       Kristal.callEvent("createQuest", "Cliffside's Cat", "tutorial", "Placeholder.")
+       cutscene:text("* quest created", "neutral", "cat")
+
+
+       --cutscene:showNametag("Cat")
+       --cutscene:text("* My name is cat.", "neutral", "cat")
+      -- cutscene:text("* Say... You don't look like you're from around here.", "neutral", "cat")
        --cutscene:text("* The both of you...", "neutral", "cat")
-       cutscene:text("* Has fate brought you here?\n[wait:10]* Perchance Lady Luck?", "neutral", "cat")
+       --cutscene:text("* Has fate brought you here?\n[wait:10]* Perchance Lady Luck?", "neutral", "cat")
 
        --cat walking
 
-       cutscene:text("* Follow me...", "neutral", "cat")
+       --cutscene:text("* Follow me...", "neutral", "cat")
 
        --cat keep walking
 
         cutscene:hideNametag()
+    end,
+    reverse_cliff_2 = function(cutscene, event)
+        local player = Game.world.player
+
+        local p_y = player.y
+
+        local tiles = 12
+
+        local length = tiles*40
+        
+        local reverse_spot = p_y + length/2
+
+        print(reverse_spot)
+
+        Assets.playSound("noise")
+
+        Game.world.player:setState("SLIDE")
+
+        reversed = false
+        reversed_1 = false
+
+        cutscene:during(function ()
+            if Game.world.player.y < p_y - 40 then
+                reversed = true
+            end 
+
+            if Game.world.player.y > reverse_spot and reversed_1 == false then
+                reversed_1 = true
+                Assets.playSound("jump", 1, 0.5)
+                Game.world.player.walk_speed = -12
+            end 
+        end)
+        cutscene:wait(function()
+            return reversed
+        end)
     end,
 }
