@@ -5,25 +5,36 @@ function WarpBin:init(data)
 
     self.solid = true
 
-    local properties = data.properties or {}
+    self.properties = data.properties or {}
+
+    if self.properties["skin"] then
+        self.sprite_b = Sprite("world/events/warpbin/".. self.properties["skin"])
+    else
+        self.sprite_b = Sprite("world/events/warpbin/cyber_city")
+    end
+
+    self.sprite_b:setScale(2)
+    self.sprite_b.debug_select = false
+
+    self.sprite_b.y = -50
+    self:addChild(self.sprite_b)
+
 
     --TO-DO: find a way to make these sprites customizable.
-    self.sprite_a = Sprite("world/events/warpbin/warp_bin", 1/5)
-    
-    --self.sprite_a:setSprite("world/events/warpbin/warp_bin", 1/5)
+
+    self.sprite_a = Sprite("world/events/warpbin/warp_bin")
+    self.sprite_a:setScale(2)
     self.sprite_a.debug_select = false
 
-    self.sprite_a:setScale(2)
+    self.sprite_a:play(1/6, true)
 
     --self.sprite_a.x = -1
     self.sprite_a.y = -50
     self:addChild(self.sprite_a)
-
-    
 end
 
 function WarpBin:onInteract()
-    Game.world:startCutscene("warp_bin")
+    Game.world:startCutscene("warp_bin", self)
 end
 
 
