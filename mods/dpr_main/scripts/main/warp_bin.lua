@@ -40,7 +40,8 @@ Mod.warp_bin_codes = {
         result = function(cutscene)
             cutscene:text("* test uwu.")
         end,
-    }
+    },
+    ["FLOORONE"] = { result = "main_hub" },
 }
 local gray_area_info = {
     result = function(cutscene)

@@ -1,7 +1,7 @@
 return {
-  version = "1.9",
+  version = "1.11",
   luaversion = "5.1",
-  tiledversion = "1.9.2",
+  tiledversion = "1.11.0",
   class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 8,
-  nextobjectid = 25,
+  nextobjectid = 27,
   properties = {
     ["music"] = "demonic_little_grey_cliffs"
   },
@@ -40,7 +40,7 @@ return {
         {
           id = 16,
           name = "cameratarget",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 80,
           y = 520,
@@ -58,7 +58,7 @@ return {
         {
           id = 19,
           name = "cameratarget",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 80,
           y = 100,
@@ -180,7 +180,7 @@ return {
         {
           id = 1,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 80,
           y = 840,
@@ -193,7 +193,7 @@ return {
         {
           id = 2,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 40,
           y = 680,
@@ -206,7 +206,7 @@ return {
         {
           id = 12,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 320,
           y = 440,
@@ -219,7 +219,7 @@ return {
         {
           id = 14,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 560,
           y = 440,
@@ -232,7 +232,7 @@ return {
         {
           id = 22,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 560,
           y = 640,
@@ -245,11 +245,37 @@ return {
         {
           id = 23,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 80,
           y = 640,
           width = 280,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 25,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 360,
+          y = 520,
+          width = 200,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 26,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 360,
+          y = 640,
+          width = 200,
           height = 40,
           rotation = 0,
           visible = true,
@@ -274,7 +300,7 @@ return {
         {
           id = 4,
           name = "transition",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 640,
           y = 680,
@@ -290,7 +316,7 @@ return {
         {
           id = 5,
           name = "interactable",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 440,
           y = 640,
@@ -305,25 +331,12 @@ return {
         {
           id = 10,
           name = "footstep",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 240,
           y = 560,
           width = 40,
           height = 40,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 24,
-          name = "slidearea",
-          class = "",
-          shape = "rectangle",
-          x = 360,
-          y = 520,
-          width = 200,
-          height = 160,
           rotation = 0,
           visible = true,
           properties = {}
@@ -347,7 +360,7 @@ return {
         {
           id = 6,
           name = "spawn",
-          class = "",
+          type = "",
           shape = "point",
           x = 160,
           y = 760,
@@ -360,7 +373,7 @@ return {
         {
           id = 7,
           name = "entry",
-          class = "",
+          type = "",
           shape = "point",
           x = 600,
           y = 760,
@@ -373,7 +386,7 @@ return {
         {
           id = 17,
           name = "camtargy",
-          class = "",
+          type = "",
           shape = "point",
           x = 320,
           y = 800,
@@ -386,7 +399,7 @@ return {
         {
           id = 20,
           name = "camtargb",
-          class = "",
+          type = "",
           shape = "point",
           x = 320,
           y = 280,
