@@ -10,8 +10,10 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 7,
-  nextobjectid = 62,
-  properties = {},
+  nextobjectid = 75,
+  properties = {
+    ["music"] = "demonic_little_grey_cliffs"
+  },
   tilesets = {
     {
       name = "cliffs",
@@ -360,6 +362,19 @@ return {
           shape = "point",
           x = 600,
           y = 240,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 62,
+          name = "spawn",
+          type = "",
+          shape = "point",
+          x = 280,
+          y = 200,
           width = 0,
           height = 0,
           rotation = 0,
