@@ -50,7 +50,9 @@ end
 
 function preview:update()
 
-    local is_options = (MainMenu.state == "OPTIONS") or (MainMenu.state == "DEFAULTNAME")
+    local is_options = (MainMenu.state == "OPTIONS")
+        or (MainMenu.state == "DEFAULTNAME")
+        or (MainMenu.state == "CONTROLS")
     if is_options and self.music_once == 0 then
 
         self.music_settings = Music("options_starry")
@@ -147,7 +149,7 @@ function preview:update()
     elseif self.naming_video then
         self.naming_video_fade_phase = 1
     end
-    local mod_music_table = self.menu.mod_list and self.menu.mod_list.music
+    local mod_music_table = self.menu.mod_list and self.menu.mod_list.music 
     if not mod_music_table then mod_music_table = self.menu.mod_music end
     if self.naming_video then
         if self.naming_video_fade_phase == 0 then
