@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 8,
-  nextobjectid = 27,
+  nextobjectid = 36,
   properties = {
     ["music"] = "demonic_little_grey_cliffs"
   },
@@ -43,33 +43,15 @@ return {
           type = "",
           shape = "rectangle",
           x = 80,
-          y = 520,
+          y = 480,
           width = 560,
-          height = 320,
+          height = 376,
           rotation = 0,
           visible = true,
           properties = {
             ["lockx"] = true,
             ["locky"] = true,
             ["marker"] = "camtargy",
-            ["time"] = 0.25
-          }
-        },
-        {
-          id = 19,
-          name = "cameratarget",
-          type = "",
-          shape = "rectangle",
-          x = 80,
-          y = 100,
-          width = 560,
-          height = 420,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["lockx"] = true,
-            ["locky"] = true,
-            ["marker"] = "camtargb",
             ["time"] = 0.25
           }
         }
@@ -93,17 +75,17 @@ return {
       properties = {},
       encoding = "lua",
       data = {
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 4, 0, 0,
-        0, 0, 0, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 9, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 13, 13, 13, 13, 13, 9, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 18, 7, 13, 13, 13, 14, 0, 0,
+        0, 0, 7, 8, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 7, 8, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 7, 8, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 7, 8, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 7, 8, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 7, 8, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 7, 8, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 7, 8, 8, 3, 3, 3, 3, 3, 3, 3, 3, 4, 0, 0,
+        0, 0, 7, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 9, 0, 0,
+        0, 0, 1610612738, 1073741827, 1073741827, 1073741827, 1073741827, 1073741827, 1073741827, 13, 13, 13, 13, 9, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 13, 13, 13, 14, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 13, 13, 13, 14, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 13, 13, 13, 14, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 17, 18, 18, 18, 19, 0, 0,
@@ -204,32 +186,6 @@ return {
           properties = {}
         },
         {
-          id = 12,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 320,
-          y = 440,
-          width = 40,
-          height = 80,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 14,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 560,
-          y = 440,
-          width = 40,
-          height = 80,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
           id = 22,
           name = "",
           type = "",
@@ -256,7 +212,59 @@ return {
           properties = {}
         },
         {
-          id = 25,
+          id = 26,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 360,
+          y = 640,
+          width = 200,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 27,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 40,
+          y = 0,
+          width = 40,
+          height = 400,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 28,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 80,
+          y = 400,
+          width = 280,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 29,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 320,
+          y = 440,
+          width = 40,
+          height = 80,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 30,
           name = "",
           type = "",
           shape = "rectangle",
@@ -269,14 +277,40 @@ return {
           properties = {}
         },
         {
-          id = 26,
+          id = 31,
           name = "",
           type = "",
           shape = "rectangle",
-          x = 360,
-          y = 640,
-          width = 200,
+          x = 560,
+          y = 280,
+          width = 40,
+          height = 240,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 32,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 200,
+          y = 240,
+          width = 360,
           height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 33,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 200,
+          y = 0,
+          width = 40,
+          height = 240,
           rotation = 0,
           visible = true,
           properties = {}
@@ -340,6 +374,22 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        },
+        {
+          id = 35,
+          name = "transition",
+          type = "",
+          shape = "rectangle",
+          x = 80,
+          y = -34,
+          width = 122,
+          height = 34,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["map"] = "grey_cliffside/dead_room1",
+            ["marker"] = "entry"
+          }
         }
       }
     },
@@ -403,6 +453,19 @@ return {
           shape = "point",
           x = 320,
           y = 280,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 34,
+          name = "entry2",
+          type = "",
+          shape = "point",
+          x = 140,
+          y = 60,
           width = 0,
           height = 0,
           rotation = 0,

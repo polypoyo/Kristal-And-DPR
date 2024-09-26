@@ -178,38 +178,109 @@ return {
         cutscene:hideNametag()
     end,
     reverse_cliff_2 = function(cutscene, event)
-        local player = Game.world.player
 
-        local p_y = player.y
-
+        local end_y = 80
+        local p_y = Game.world.player.y
         local tiles = 12
-
         local length = tiles*40
-        
         local reverse_spot = p_y + length/2
-
-        print(reverse_spot)
 
         Assets.playSound("noise")
 
         Game.world.player:setState("SLIDE")
 
-        reversed = false
-        reversed_1 = false
-
-        cutscene:during(function ()
-            if Game.world.player.y < p_y - 40 then
-                reversed = true
-            end 
-
-            if Game.world.player.y > reverse_spot and reversed_1 == false then
-                reversed_1 = true
-                Assets.playSound("jump", 1, 0.5)
-                Game.world.player.walk_speed = -12
-            end 
-        end)
         cutscene:wait(function()
-            return reversed
+            if Game.world.player.walk_speed < -8 then
+                Assets.playSound("jump", 1, 0.5)
+                Game.world.player.physics.speed_y = -10
+                Game.world.player.physics.friction = -1.5
+                Game.world.player.walk_speed = -8
+
+                return true
+            else
+                Game.world.player.walk_speed = Game.world.player.walk_speed - DT*8
+                return false
+            end
         end)
+
+        cutscene:wait(function()
+            if Game.world.player.y < p_y then
+                Game.world.player:setState("WALK")
+                Game.world.player:setSprite("walk/down_1")
+                Game.world.player.noclip = true
+
+                return true
+            else
+                return false
+            end
+        end)
+
+        cutscene:wait(function()
+            if Game.world.player.y < -20 then
+
+                local x = Game.world.player.x - 240 + 400
+                phys_speed = Game.world.player.physics.speed_y
+                Game.world:mapTransition("grey_cliffside/cliffside_start", x, 1040)
+
+                return true
+            else
+                return false
+            end
+        end)
+
+        cutscene:wait(function()
+            if Game.world.map.id == "grey_cliffside/cliffside_start" then
+
+                Game.world.player:setSprite("walk/down_1")
+                Game.world.player.noclip = true
+
+                Game.world.player.physics.speed_y = phys_speed 
+                Game.world.player.physics.friction = -1.5
+
+                return true
+            else
+                return false
+            end
+        end)
+
+        cutscene:wait(function()
+            if Game.world.player.y < 520 then
+                Game.world.player.physics.friction = 4
+
+                return true
+            else
+                return false
+            end
+        end)
+
+        cutscene:wait(function()
+            if Game.world.player.physics.speed_y == 0 then
+                Game.world.player.physics.friction = -1
+
+                Game.world.player.physics.speed_y = 1
+
+                return true
+            else
+                return false
+            end
+        end)
+
+        cutscene:wait(function()
+            if Game.world.player.y > 420 then
+
+                return true
+            else
+                return false
+            end
+        end)
+
+        Game.world.player.noclip = false
+        Game.world.player.physics.friction = 0
+        Game.world.player.physics.speed_y = 0
+        Game.world.player:setFacing("down")
+        Game.world.player:resetSprite()
+        Game.world.player:shake(5)
+        Assets.playSound("dtrans_flip")
+        Game.world.player.walk_speed = 4
     end,
 }
