@@ -159,7 +159,7 @@ return {
            --cutscene:text("* You seem to already know me.", "neutral", "cat")
        end
 
-       Kristal.callEvent("createQuest", "Cliffside's Cat", "tutorial", "Placeholder.")
+       Kristal.callEvent("createQuest", "Cliffside's Cat", "Cliffside's Cat", "Placeholder.")
        cutscene:text("* quest created", "neutral", "cat")
 
 

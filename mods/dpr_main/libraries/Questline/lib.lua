@@ -7,12 +7,15 @@ function Lib:init()
 end
 
 function Lib:onKeyPressed(key)
-    if Game.world and Game.world.state == "GAMEPLAY" and key == "q" then
+    if Game.world and Game.world.state == "GAMEPLAY" and Input.is("quest", key) and not Game.battle and not Game.shop then
 		Game.world:openMenu(QuestMenu())
 	end
 end
 
 function Lib:postInit(new_file)
+	if Game:getFlag("quest_menu_ever_opened") == nil then
+		Game:setFlag("quest_menu_ever_opened", false)
+	end
 	if not Game:getFlag("quest_name") then
 		Game:setFlag("quest_name", {Mod.info.name})
 		Game:setFlag("quest_id", {"mainline"})
