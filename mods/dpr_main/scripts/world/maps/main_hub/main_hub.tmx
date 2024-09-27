@@ -226,10 +226,8 @@
   <object id="62" name="npc" x="460" y="560">
    <properties>
     <property name="actor" value="wall"/>
+    <property name="cutscene" value="hub.wall_guardian"/>
     <property name="flagcheck" value="wall_hit"/>
-    <property name="text1">* I Am the Wall Guardian.[wait:5]
-* This Wall is Off Limits for you
-no-good wall slammers.</property>
    </properties>
    <point/>
   </object>

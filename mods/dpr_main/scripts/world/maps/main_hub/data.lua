@@ -781,8 +781,8 @@ return {
           visible = true,
           properties = {
             ["actor"] = "wall",
-            ["flagcheck"] = "wall_hit",
-            ["text1"] = "* I Am the Wall Guardian.[wait:5]\n* This Wall is Off Limits for you\nno-good wall slammers."
+            ["cutscene"] = "hub.wall_guardian",
+            ["flagcheck"] = "wall_hit"
           }
         },
         {

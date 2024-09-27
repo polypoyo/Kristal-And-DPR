@@ -24,42 +24,73 @@ return {
             local x = event.x + event.width/2
             local y = event.y + event.height/2
 
-            -- Move Susie up to the wall over 0.75 seconds
-            cutscene:walkTo(susie, x, y + 40, 0.75, "up")
-            -- Move other party members behind Susie
-            cutscene:walkTo(Game.world.player, x, y + 100, 0.75, "up")
-            if cutscene:getCharacter("ralsei") then
-                cutscene:walkTo("ralsei", x + 60, y + 100, 0.75, "up")
+            if Game:getFlag("wall_hit", false) then
+                cutscene:walkTo(Game.world.player, x, y + 100, 0.75, "up")
+                cutscene:walkTo(susie, x, y + 60, 0.75, "up")
+                if cutscene:getCharacter("ralsei") then
+                    cutscene:walkTo("ralsei", x, y + 100, 0.75, "up")
+                end
+                if cutscene:getCharacter("noelle") then
+                    cutscene:walkTo("noelle", x, y + 100, 0.75, "up")
+                end
+                cutscene:wait(1)
+
+                -- wall guardian appearing
+                local wall = Game.world:spawnObject(NPC("wall", x, 0, {cutscene = "hub.wall_guardian"}))
+
+                Assets.playSound("drive")
+                cutscene:slideTo(wall, wall.x, y + 60, 0.5)
+                cutscene:wait(0.25)
+                cutscene:slideTo(susie, x - 60, y + 120, 0.25, "linear")
+                cutscene:slideTo(Game.world.player, x + 60, y + 120, 0.25, "linear")
+                susie:setSprite("shock_right")
+                cutscene:wait(0.25)
+                Assets.playSound("impact")
+                cutscene:wait(1)
+                cutscene:showNametag("Susie")
+                cutscene:text("* Guess not!", "surprise_frown")
+                susie:setAnimation({"away_scratch", 0.25, true})
+                susie:shake(4)
+            else
+                
+                -- Move Susie up to the wall over 0.75 seconds
+                cutscene:walkTo(susie, x, y + 40, 0.75, "up")
+                -- Move other party members behind Susie
+                cutscene:walkTo(Game.world.player, x, y + 100, 0.75, "up")
+                if cutscene:getCharacter("ralsei") then
+                    cutscene:walkTo("ralsei", x + 60, y + 100, 0.75, "up")
+                end
+                if cutscene:getCharacter("noelle") then
+                    cutscene:walkTo("noelle", x - 60, y + 100, 0.75, "up")
+                end
+                
+                -- Wait 1.5 seconds
+                cutscene:wait(1.5)
+                
+                -- Walk back,
+                cutscene:wait(cutscene:walkTo(susie, x, y + 60, 0.5, "up", true))
+                -- and run forward!
+                cutscene:wait(cutscene:walkTo(susie, x, y + 20, 0.2))
+                
+                -- Slam!!
+                Assets.playSound("impact")
+                susie:shake(4)
+                susie:setSprite("shock_up")
+                
+                -- Slide back a bit
+                cutscene:slideTo(susie, x, y + 40, 0.1)
+                cutscene:wait(1.5)
+                
+                -- owie
+                susie:setAnimation({"away_scratch", 0.25, true})
+                susie:shake(4)
+                Assets.playSound("wing")
+                
+                cutscene:wait(1)
+
+                cutscene:showNametag("Susie")
+                cutscene:text("* Guess not.", "nervous")
             end
-            if cutscene:getCharacter("noelle") then
-                cutscene:walkTo("noelle", x - 60, y + 100, 0.75, "up")
-            end
-
-            -- Wait 1.5 seconds
-            cutscene:wait(1.5)
-
-            -- Walk back,
-            cutscene:wait(cutscene:walkTo(susie, x, y + 60, 0.5, "up", true))
-            -- and run forward!
-            cutscene:wait(cutscene:walkTo(susie, x, y + 20, 0.2))
-
-            -- Slam!!
-            Assets.playSound("impact")
-            susie:shake(4)
-            susie:setSprite("shock_up")
-
-            -- Slide back a bit
-            cutscene:slideTo(susie, x, y + 40, 0.1)
-            cutscene:wait(1.5)
-
-            -- owie
-            susie:setAnimation({"away_scratch", 0.25, true})
-            susie:shake(4)
-            Assets.playSound("wing")
-
-            cutscene:wait(1)
-            cutscene:showNametag("Susie")
-            cutscene:text("* Guess not.", "nervous")
             cutscene:hideNametag()
 
             -- Reset Susie's sprite
@@ -74,6 +105,12 @@ return {
             cutscene:attachFollowers()
             Game:setFlag("wall_hit", true)
         end
+    end,
+
+    wall_guardian = function(cutscene)
+        local wallnpc = cutscene:getCharacter('wall')
+        cutscene:setSpeaker(wallnpc)
+        cutscene:text("* I Am the Wall Guardian.[wait:5]\n* This Wall is Off Limits for you\nno-good wall slammers.")
     end,
 	
     nokia_dog = function(cutscene, event)
