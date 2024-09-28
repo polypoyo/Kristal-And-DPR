@@ -48,6 +48,7 @@ return function(cutscene, event)
 
     local result = action.result or action[1]
     local marker = action.marker or action[2]
+    local mod = action.mod or action[3]
     local silence_system_messages = action.silence_system_messages
     if silence_system_messages == nil then
         silence_system_messages = false
@@ -73,30 +74,58 @@ return function(cutscene, event)
 
     local dest_map
     pcall(function() dest_map = Registry.createMap(result, Game.world) end)
-    if not dest_map then
+    if not dest_map and not mod then
         if not silence_system_messages then
             cutscene:text("* Where are you warping to?")
         end
         return
     end
-    if Game.world.map.id == dest_map.id then
+    if not mod and Game.world.map.id == dest_map.id  then
         if not silence_system_messages then
             cutscene:text("* But you're already there.")
         end
         return
     end
 
-    cutscene:wait(0.2)
+    if mod then
+        local has_dess = cutscene:getCharacter("dess") ~= nil
 
-    Game.world.music:stop()
-    -- Hell naw is this the only way to stop all sounds?
-    for key,_ in pairs(Assets.sound_instances) do
-        Assets.stopSound(key, true)
+        cutscene:text("* Your "
+            .. (has_dess and "desstination" or "destination ")
+            .." is "
+            ..(has_dess and "in another castle" or "infinitely far away")
+            ..".\n* Leave this "
+            .. (has_dess and "Dark " or "")
+            .."Place?")
+        local enter = cutscene:choicer({"Yes", "No"})
+
+        if enter == 1 then
+            cutscene:after(function()
+                Game:swapIntoMod(mod, false, result)
+            end)
+            cutscene:wait(0.2)
+            Game.world.music:fade(0, 80/30)
+            cutscene:wait(cutscene:fadeOut(0, {color = {0, 0, 0}}))
+            for i = 0,5 do
+                cutscene:playSound("impact", (1 - (i/10)) ^ (4) )
+                cutscene:wait(0.2)
+            end
+            cutscene:wait(1/4)
+        else
+            cutscene:text("* You bin't.")
+        end
+    else
+        cutscene:wait(0.2)
+        Game.world.music:stop()
+        -- Hell naw is this the only way to stop all sounds?
+        for key,_ in pairs(Assets.sound_instances) do
+            Assets.stopSound(key, true)
+        end
+        cutscene:fadeOut(0)
+        cutscene:playSound("impact")
+
+        cutscene:wait(1)
+        cutscene:loadMap(dest_map, marker, "down")
+        cutscene:fadeIn(0.25)
     end
-    cutscene:fadeOut(0)
-    cutscene:playSound("impact")
-
-    cutscene:wait(1)
-    cutscene:loadMap(dest_map, marker, "down")
-    cutscene:fadeIn(0.25)
 end
