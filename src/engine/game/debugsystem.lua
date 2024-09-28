@@ -509,26 +509,12 @@ function DebugSystem:registerSubMenus()
                         function ()
                             Kristal.Config["fps"] = 0; FRAMERATE = 0
                         end)
-    self:registerOption("engine_option_fps", "30", "Set the target FPS to 30.",
-                        function ()
-                            Kristal.Config["fps"] = 30; FRAMERATE = 30
-                        end)
-    self:registerOption("engine_option_fps", "60", "Set the target FPS to 60.",
-                        function ()
-                            Kristal.Config["fps"] = 60; FRAMERATE = 60
-                        end)
-    self:registerOption("engine_option_fps", "120", "Set the target FPS to 120.",
-                        function ()
-                            Kristal.Config["fps"] = 120; FRAMERATE = 120
-                        end)
-    self:registerOption("engine_option_fps", "144", "Set the target FPS to 144.",
-                        function ()
-                            Kristal.Config["fps"] = 144; FRAMERATE = 144
-                        end)
-    self:registerOption("engine_option_fps", "240", "Set the target FPS to 240.",
-                        function ()
-                            Kristal.Config["fps"] = 240; FRAMERATE = 240
-                        end)
+    for _,fps in ipairs({30, 60, 120, 144, 165, 240}) do
+        self:registerOption("engine_option_fps", fps, "Set the target FPS to "..fps..".",
+                            function ()
+                                Kristal.Config["fps"] = fps; FRAMERATE = fps
+                            end)
+    end
     self:registerOption("engine_option_fps", "Custom", "Set the target FPS to a custom value.", function ()
         self.window = DebugWindow("Enter FPS", "Enter the target FPS youd like.", "input", function (text)
             local fps = tonumber(text)
@@ -541,6 +527,18 @@ function DebugSystem:registerSubMenus()
         self:addChild(self.window)
     end)
     self:registerOption("engine_option_fps", "Back", "Go back to the previous menu.", function () self:returnMenu() end)
+    
+    self:registerMenu("fast_forward", "Fast Forward")
+    self:registerOption("fast_forward", "[Toggle]", 
+                        function () return self:appendBool("Speed up the engine.", FAST_FORWARD) end,
+                        function () FAST_FORWARD = not FAST_FORWARD end)
+    for _,speed in ipairs({0.05, 0.1, 0.2, 0.5, 1.5, 2, 5, 10}) do
+        self:registerOption("fast_forward", "x"..speed, "Set the fast forward speed to x"..speed.." multiplier.",
+                            function ()
+                                FAST_FORWARD_SPEED = speed
+                            end)
+    end
+    self:registerOption("fast_forward", "Back", "Go back to the previous menu.", function () self:returnMenu() end)
 
     self:registerMenu("give_item", "Give Item", "search")
 
@@ -682,13 +680,27 @@ function DebugSystem:registerSubMenus()
             else
                 Game:addPartyMember(id)
                 if Game.world.player then
-                    Game.world:spawnFollower(Game.party_data[id]:getActor())
+                    Game.world:spawnFollower(Game.party_data[id]:getActor(), {party = id})
                 else
                     local x, y = Game.world.camera:getPosition()
-                    Game.world:spawnPlayer(x, y, Game.party_data[id]:getActor())
+                    Game.world:spawnPlayer(x, y, Game.party_data[id]:getActor(), id)
                 end
             end
         end)
+    end
+    
+    self:registerMenu("border_menu", "Border Test", "search")
+    
+    local borders = Utils.getFilesRecursive("assets/sprites/borders", ".png")
+    if Mod then
+        Utils.merge(borders, Utils.getFilesRecursive(Mod.info.path.."/assets/sprites/borders", ".png"))
+        for _,mod_lib in pairs(Mod.libs) do
+            Utils.merge(borders, Utils.getFilesRecursive(mod_lib.info.path.."/assets/sprites/borders", ".png"))
+        end
+    end
+
+    for _,border in ipairs(Utils.removeDuplicates(borders)) do
+        self:registerOption("border_menu", border, "Switch to the border \"" .. border .. "\".", function() Game:setBorder(border) end)
     end
 end
 
@@ -755,6 +767,10 @@ function DebugSystem:registerDefaults()
     self:registerOption("main", "Change Party", "Enter the party change menu.", function ()
                             self:enterMenu("change_party", 0)
                         end, in_game)
+                        
+    self:registerOption("main", "Border Test", "Enter the border test menu.", function() 
+                            self:enterMenu("border_menu", 0)
+                        end, function() return in_game() and Kristal.Config["borders"] == "dynamic" end)
 
     self:registerOption("main", "Replenish Party", "Replenishes health.", 
                         replenish, 

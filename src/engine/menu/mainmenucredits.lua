@@ -55,8 +55,8 @@ function MainMenuCredits:init(menu)
                 "sjl057",
                 "skarph",
                 "WIL-TZY",
-                "",
-                "",
+                "TFLTV",
+                "J.A.R.U.",
                 "",
                 "",
                 ""

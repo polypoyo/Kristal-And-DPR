@@ -1,4 +1,13 @@
+--- The inventory is where all of the player's ITEMs are held. In gameplay, the currently active inventory is stored in [`Game.inventory`](lua://Game.inventory). \
+--- In practice, the inventory will be either a [`LightInventory`](lua://LightInventory.init) or [`DarkInventory`](lua://DarkInventory.init), both inheriting from this class.
+--- 
 ---@class Inventory : Class
+---
+---@field storage_for_type  table<string, string>
+---@field storage_enabled   boolean                 Whether the `storage` storage (overflow accessed in the SAVE menu) is enabled
+---@field storages          table<string, table>    A table containing all the storage tables available for this inventory
+---@field stored_items      table
+---
 ---@overload fun(...) : Inventory
 local Inventory, super = Class()
 
@@ -11,11 +20,16 @@ function Inventory:init()
     self.storage_for_type["badge"] = "badges"
 end
 
+--- Completely empties the inventory and removes all its storages
 function Inventory:clear()
     self.storages = {}
     self.stored_items = {}
 end
 
+--- Adds an item to this inventory, sending it to it's [default storage](lua://Inventory.getDefaultStorage)
+---@param item              Item|string
+---@param ignore_convert?   boolean
+---@return Item|nil
 function Inventory:addItem(item, ignore_convert)
     if type(item) == "string" then
         item = Registry.createItem(item)
@@ -23,7 +37,15 @@ function Inventory:addItem(item, ignore_convert)
     return self:addItemTo(self:getDefaultStorage(item, ignore_convert), item)
 end
 
+--- Adds an item to this inventory
+---@overload fun(self: Inventory, item: any, allow_fallback: any)
+---@param storage           string|table
+---@param index?            integer
+---@param item              Item|string
+---@param allow_fallback?   boolean
+---@return Item|nil
 function Inventory:addItemTo(storage, index, item, allow_fallback)
+    ---@diagnostic disable param-type-mismatch
     if type(index) ~= "number" then
         allow_fallback = item
         item = index
@@ -75,8 +97,15 @@ function Inventory:addItemTo(storage, index, item, allow_fallback)
             end
         end
     end
+    ---@diagnostic enable param-type-mismatch
 end
 
+--- Gets the next open index for an item in the given storage
+---@param storage           string|table
+---@param index?            integer         The minimum index to check
+---@param allow_fallback?   boolean         Whether the fallback storage will be checked if the current target storage is full
+---@return string|nil   id      The id of the storage with an open slot
+---@return integer|nil  index   The index of the open slot
 function Inventory:getNextIndex(storage, index, allow_fallback)
     allow_fallback = (allow_fallback == nil and self.storage_enabled) or allow_fallback
     if type(storage) == "string" then
@@ -94,6 +123,9 @@ function Inventory:getNextIndex(storage, index, allow_fallback)
     end
 end
 
+--- Removes an item from this inventory
+---@param item string|Item
+---@return Item|nil
 function Inventory:removeItem(item)
     local stored = self.stored_items[item]
     if type(item) == "string" then
@@ -107,6 +139,10 @@ function Inventory:removeItem(item)
     return self:removeItemFrom(stored.storage, stored.index)
 end
 
+--- Removes the item at `index` of a specific storage in this inventory
+---@param storage string|table
+---@param index? integer
+---@return Item|nil
 function Inventory:removeItemFrom(storage, index)
     if type(storage) == "string" then
         storage = self:getStorage(storage)
@@ -127,6 +163,11 @@ function Inventory:removeItemFrom(storage, index)
     end
 end
 
+--- Sets the item stored at `index` of a particular storage
+---@param storage   string|table
+---@param index     integer
+---@param item      string|Item
+---@return Item|nil
 function Inventory:setItem(storage, index, item)
     if type(storage) == "string" then
         storage = self:getStorage(storage)
@@ -155,6 +196,8 @@ function Inventory:setItem(storage, index, item)
     end
 end
 
+--- Updates the [`stored_items`](lua://Inventory.stored_items) table
+---@param storage? table
 function Inventory:updateStoredItems(storage)
     if not storage then
         for k,v in pairs(self.storages) do
@@ -174,6 +217,10 @@ function Inventory:updateStoredItems(storage)
     end
 end
 
+--- Gets the storage and index an item is stored at in this inventory, if it exists
+---@param item string|Item
+---@return table|nil storage
+---@return integer|nil index
 function Inventory:getItemIndex(item)
     if type(item) == "string" then
         for k,v in pairs(self.stored_items) do
@@ -189,6 +236,10 @@ function Inventory:getItemIndex(item)
     end
 end
 
+--- Replaces one item in the inventory with another
+---@param item string|Item
+---@param new string|Item
+---@return Item|nil
 function Inventory:replaceItem(item, new)
     local storage, index = self:getItemIndex(item)
     if storage and new then
@@ -196,6 +247,11 @@ function Inventory:replaceItem(item, new)
     end
 end
 
+--- Swaps the position of two items in the inventory
+---@param storage1 string|table
+---@param index1 integer
+---@param storage2 string|table
+---@param index2 integer
 function Inventory:swapItems(storage1, index1, storage2, index2)
     if type(storage1) == "string" then
         storage1 = self:getStorage(storage1)
@@ -241,6 +297,10 @@ function Inventory:swapItems(storage1, index1, storage2, index2)
     end
 end
 
+--- Gets an item from the inventory, if it exists
+---@param storage string|table
+---@param index integer
+---@return Item|nil
 function Inventory:getItem(storage, index)
     if type(storage) == "string" then
         storage = self:getStorage(storage)
@@ -250,6 +310,10 @@ function Inventory:getItem(storage, index)
     end
 end
 
+--- Gets whether an item is in this inventory, in any storage
+---@param item string|Item
+---@return boolean has_item
+---@return Item|nil item
 function Inventory:hasItem(item)
     if type(item) == "string" then
         for k,v in pairs(self.stored_items) do
@@ -263,6 +327,9 @@ function Inventory:hasItem(item)
     end
 end
 
+--- Gets an item in the inventory by its id, if it exists
+---@param item string
+---@return Item|nil
 function Inventory:getItemByID(item)
     for k,v in pairs(self.stored_items) do
         if k.id == item then
@@ -271,6 +338,10 @@ function Inventory:getItemByID(item)
     end
 end
 
+--- Gets whether a particular storage in this inventory is full
+---@param storage           string|table
+---@param allow_fallback?   boolean         Whether the fallback storage should also be checked for space before declaring this storage full
+---@return boolean full
 function Inventory:isFull(storage, allow_fallback)
     allow_fallback = (allow_fallback == nil and self.storage_enabled) or allow_fallback
     if type(storage) == "string" then
@@ -297,6 +368,10 @@ function Inventory:isFull(storage, allow_fallback)
     end
 end
 
+--- Gets the number of items contained in the specified storage
+---@param storage string|table
+---@param allow_fallback? boolean Whether the fallback storage should also be included in the item count
+---@return integer
 function Inventory:getItemCount(storage, allow_fallback)
     allow_fallback = (allow_fallback == nil and self.storage_enabled) or allow_fallback
     if type(storage) == "string" then
@@ -322,6 +397,10 @@ function Inventory:getItemCount(storage, allow_fallback)
     end
 end
 
+--- Gets the amount of free space in the specified storage
+---@param storage string|table
+---@param allow_fallback? boolean
+---@return integer
 function Inventory:getFreeSpace(storage, allow_fallback)
     allow_fallback = (allow_fallback == nil and self.storage_enabled) or allow_fallback
     if type(storage) == "string" then
@@ -347,6 +426,11 @@ function Inventory:getFreeSpace(storage, allow_fallback)
     return 0
 end
 
+--- Tries to give an item to the player, and returns an appropriate text to display depending on success
+---@param item              string|Item
+---@param ignore_convert    boolean
+---@return boolean success      Whether the item was successfully picked up
+---@return string result_text   The text that should be displayed
 function Inventory:tryGiveItem(item, ignore_convert)
     if type(item) == "string" then
         item = Registry.createItem(item)
@@ -361,6 +445,10 @@ function Inventory:tryGiveItem(item, ignore_convert)
     end
 end
 
+--- Gets the default storaged used to store items of type `item_type`
+---@param item_type Item|string     An item type or an Item instance to get the type from
+---@param ignore_convert? boolean
+---@return table storage
 function Inventory:getDefaultStorage(item_type, ignore_convert)
     if isClass(item_type) then -- Passing in an item
         item_type = item_type.type
@@ -368,10 +456,14 @@ function Inventory:getDefaultStorage(item_type, ignore_convert)
     return self:getStorage(self.storage_for_type[item_type])
 end
 
+--- Gets one of this inventory's storages
+---@param type string The name of the storage
+---@return table storage
 function Inventory:getStorage(type)
     return self.storages[type]
 end
 
+---@param data table
 function Inventory:load(data)
     self:clear()
 
@@ -386,6 +478,7 @@ function Inventory:load(data)
     self:updateStoredItems()
 end
 
+---@return table
 function Inventory:save()
     local data = {
         storage_enabled = self.storage_enabled,
@@ -399,6 +492,8 @@ function Inventory:save()
     return data
 end
 
+---@param storage table
+---@param data table
 function Inventory:loadStorage(storage, data)
     storage.max = data.max
     for i = 1, storage.max do
@@ -414,6 +509,8 @@ function Inventory:loadStorage(storage, data)
     end
 end
 
+---@param storage table
+---@return table
 function Inventory:saveStorage(storage)
     local saved = {
         max = storage.max,
