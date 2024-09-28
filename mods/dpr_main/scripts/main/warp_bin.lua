@@ -17,6 +17,7 @@
 ---@field flagvalue? any the value that the flag in flagcheck should be equal to
 ---@field on_fail? fun(cutscene: WorldCutscene) called when the condition is not satifised
 ---@field silence_system_messages? boolean
+---@field mod? string the mod ID of a mod to swap into.
 
 ---@class WarpBinCodeInfoMini
 ---@field result string map id
