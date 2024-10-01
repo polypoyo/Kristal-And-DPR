@@ -142,6 +142,22 @@ function Battle:init()
 	self.superpower = false
 
 	self.super_timer = 0
+
+    self.month = tonumber(os.date("%m"))
+    self.day = tonumber(os.date("%d"))
+
+    if self.month == 10 and self.day == 31 then
+        local skeledance = Sprite("battle/skeledance/skeledance", SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        skeledance:setOrigin(0.5)
+        skeledance:setColor(self.color)
+	    skeledance:play(1/15, true)
+	    skeledance:setScale(5, 2)
+        skeledance.alpha = 7/255
+        skeledance.debug_select = false
+	    self:addChild(skeledance)
+
+	    skeledance.layer = BATTLE_LAYERS["bottom"]
+    end
 end
 
 function Battle:createPartyBattlers()
