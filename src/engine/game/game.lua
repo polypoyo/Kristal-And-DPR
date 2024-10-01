@@ -620,12 +620,10 @@ end
 function Game:loadQuick(fade)
     local save = self.quick_save
     if save then
+        assert(save.mod == Mod.info.id, "Loading quick save created in another DLC ("..save.mod..") is UNIMPLEMENTED!")
         self:load(save, self.save_id, fade)
     else
         Kristal.loadGame(self.save_id)
-    end
-    if save.mod ~= Mod.info.id then
-        print("(Report this)")
     end
     self.quick_save = save
 end
@@ -1081,16 +1079,18 @@ function Game:update()
     self.playtime = self.playtime + DT
 
     self.stage:update()
-    
-    if not self.shop and not self.battle and not (self.world and self.world.map and self.world.map.id) then
-        if self.nothing_warn then Kristal.Console:warn("No map, shop nor encounter were loaded") end
-        if Kristal.getModOption("hardReset") then
-            love.event.quit("restart")
+
+    if Gamestate.current() == self then -- HACK
+        if not self.shop and not self.battle and not (self.world and self.world.map and self.world.map.id) then
+            if self.nothing_warn then Kristal.Console:warn("No map, shop nor encounter were loaded") end
+            if Kristal.getModOption("hardReset") then
+                love.event.quit("restart")
+            else
+                Kristal.returnToMenu()
+            end
         else
-            Kristal.returnToMenu()
+            self.nothing_warn = false
         end
-    else
-        self.nothing_warn = false
     end
 
     Kristal.callEvent(KRISTAL_EVENT.postUpdate, DT)
