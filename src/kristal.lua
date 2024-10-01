@@ -952,7 +952,7 @@ end
 ---| "none" # Fully reloads the mod from the start of the game.
 function Kristal.quickReload(mode)
     -- Temporarily save game variables
-    local save, save_id, encounter, shop
+    local save, save_id, encounter, shop, minigame
     if mode == "temp" then
         Kristal.temp_save = true
         save = Game:save()
@@ -1155,7 +1155,6 @@ function Kristal.startGameDPR(save_id, save_name, after)
 end
 
 -- Loads into the provided mod with the current save slot.
--- TODO: Allow setting spawn position.
 ---@param use_lame_fadeout boolean|string? # DO NOT USE, work in progress.
 function Kristal.swapIntoMod(id, use_lame_fadeout, ...)
     --this is for noel, so they dont save their file for a possible armor dupe
@@ -1167,8 +1166,8 @@ function Kristal.swapIntoMod(id, use_lame_fadeout, ...)
         print("WARNING: DLC " .. id .. " is not installed.")
     end
 
-    local save_id = Game and Game.save_id or 1
-    local save = Game and Game:save() or Kristal.getSaveFile(save_id)
+    local save_id = Game.started and Game.save_id or 1
+    local save = Game.started and Game:save() or Kristal.getSaveFile(save_id)
     local map_args = {...}
     local map = table.remove(map_args, 1)
     local marker, x, y, facing
@@ -1510,10 +1509,18 @@ end
 ---@param fade? boolean Whether the game should fade in after loading. (Defaults to `false`)
 function Kristal.loadGame(id, fade)
     id = id or Game.save_id
-    local path = "saves" .. "/file_" .. id .. ".json"
-    if love.filesystem.getInfo(path) then
-        local data = JSON.decode(love.filesystem.read(path))
-        Game:load(data, id, fade)
+    local data = Kristal.getSaveFile(id)
+    if data then
+        assert(Mod)
+        if data.mod == Mod.info.id then
+            Game:load(data, id, fade)
+        else
+            Gamestate.switch({})
+            Kristal.clearModState()
+            Kristal.loadAssets("", "mods", "", function()
+                Kristal.startGameDPR(id, data.name)
+            end)
+        end
     else
         Game:load(nil, id, fade)
     end
