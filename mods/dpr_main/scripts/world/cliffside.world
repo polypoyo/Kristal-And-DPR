@@ -20,6 +20,13 @@
             "width": 1200,
             "x": 2080,
             "y": 760
+        },
+        {
+            "fileName": "maps/grey_cliffside/dead_room1.tmx",
+            "height": 960,
+            "width": 800,
+            "x": 1040,
+            "y": -1520
         }
     ],
     "onlyShowAdjacentMaps": false,

@@ -9,7 +9,7 @@ return {
   height = 24,
   tilewidth = 40,
   tileheight = 40,
-  nextlayerid = 8,
+  nextlayerid = 9,
   nextobjectid = 36,
   properties = {
     ["music"] = "demonic_little_grey_cliffs"

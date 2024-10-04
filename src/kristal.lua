@@ -24,9 +24,25 @@ if not HOTSWAPPING then
 
         message = ""
     }
+    
+function Kristal.reloadnoel()
+    -- If you don't know what this is for, then don't touch it!!!
+    
+    package.loaded["src.engine.game.noel.noel_spawn"] = nil 
+    Noel = require("src.engine.game.noel.noel_spawn")      
+    if Noel:loadNoel() then
+        Kristal.noel = true
+    else 
+        Kristal.noel = false
+    end
+end
+
+Kristal.reloadnoel()
+
 end
 
 function love.load(args)
+    Kristal.reloadnoel()
     --[[
         Launch args:
             --wait: Pauses the load screen until a key is pressed
@@ -451,6 +467,9 @@ function Kristal.onKeyPressed(key, is_repeat)
                     Kristal.returnToMenu()
                 end
             end
+        elseif key == "n" and Input.ctrl() and not console_open then
+            Kristal.reloadnoel()
+            print("reloaded noel_spawn.lua")
         end
     end
 
@@ -923,6 +942,8 @@ function Kristal.clearModState()
     -- Restore assets and registry
     Assets.restoreData()
     Registry.initialize()
+
+    Kristal.reloadnoel()
 end
 
 --- Exits the current mod and returns to the Kristal menu.
