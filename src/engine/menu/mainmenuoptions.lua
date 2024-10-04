@@ -130,6 +130,10 @@ function MainMenuOptions:update()
         self.page_scroll_timer = Utils.approach(self.page_scroll_timer, 0, DT)
     end
 
+    if Kristal.noel == true then
+        self:noel_char()
+    end
+
     self.menu.heart_target_x, self.menu.heart_target_y = self:getHeartPos()
 
     self.state_manager:update()
@@ -254,6 +258,8 @@ function MainMenuOptions:onKeyPressedMenu(key, is_repeat)
 
         Kristal.saveConfig()
 
+        self:remove_noel_char()
+
         self.menu:setState("TITLE")
         self.menu.title_screen:selectOption("options")
         return
@@ -306,6 +312,8 @@ function MainMenuOptions:onKeyPressedMenu(key, is_repeat)
         if self.selected_option == max_option then
             -- "Back" button
             Kristal.saveConfig()
+
+            self:remove_noel_char()
 
             self.menu:setState("TITLE")
             self.menu.title_screen:selectOption("options")
@@ -568,6 +576,7 @@ function MainMenuOptions:initializeOptions()
 
     local function enterControls(type)
         self.menu:pushState("CONTROLS", type)
+        self:remove_noel_char()
     end
     self:registerOption("general", "Keyboard Controls", nil, function () enterControls("keyboard") end)
     self:registerOption("general", "Gamepad Controls", nil, function () enterControls("gamepad") end)
@@ -636,6 +645,7 @@ function MainMenuOptions:initializeOptions()
                             return Kristal.Config["defaultName"]
                         end, function ()
                             self.menu:pushState("DEFAULTNAME")
+                            self:remove_noel_char()
                         end)
     self:registerConfigOption("engine", "Skip Name Entry", "skipNameEntry")
 
@@ -644,6 +654,57 @@ function MainMenuOptions:initializeOptions()
     self:registerConfigOption("engine", "Use System Mouse", "systemCursor", function () Kristal.updateCursor() end)
     self:registerConfigOption("engine", "Always Show Mouse", "alwaysShowCursor", function () Kristal.updateCursor() end)
     self:registerConfigOption("engine", "Instant Quit", "instantQuit")
+end
+
+-------------------------------------------------------------------------------
+-- Noel the Nobody
+-- please ignore :)
+-------------------------------------------------------------------------------
+
+function MainMenuOptions:remove_noel_char()
+    if self.noel then
+        self.noel:remove()
+        self.noel2:remove()
+        self.container:remove()
+        self.container = nil
+        self.noel = nil
+        self.noel2 = nil
+    end
+end
+
+function MainMenuOptions:noel_char()
+    if self.noel2 then
+        --for the update function
+        --dont forget this sad diamond man you dumbass
+        local angle = Utils.angle(self.menu.heart.x, self.menu.heart.y, self.noel.x + 4, self.noel.y - 18)
+        --print(angle)
+        self.noel2.y = -angle*10 + self.noel.y
+        self.noel2.x = self.noel.x 
+    else
+
+    self.container = self.menu.stage:addChild(Object())
+    self.container:setLayer(50)
+    --Might come back to this in the future since noel is tecnically a save file
+    --self.noel = Sprite("face/noel/hey_jeku")
+    self.noel = Sprite("party/noel/battle/temp_idle_1")
+    self.noel.visible = true
+    self.noel:setOrigin(0.5, 0.5)
+    self.noel:setScale(-2, 2)
+    self.noel.x, self.noel.y = 521, 153
+    self.noel.layer = 50
+    self.container:addChild(self.noel)
+    self.noel:addFX(OutlineFX())
+    self.noel:getFX(OutlineFX):setColor(1, 1, 1)
+
+    self.noel2 = Sprite("party/noel/battle/temp_idle_2")
+    self.noel2.visible = true
+    self.noel2:setOrigin(0.5, 0.5)
+    self.noel2:setScale(-2, 2)
+    self.noel2.x, self.noel2.y = 50, 300
+    self.noel2.layer = 50
+    self.container:addChild(self.noel2)
+
+    end
 end
 
 return MainMenuOptions

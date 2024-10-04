@@ -130,8 +130,8 @@ function character:getGameOverMessage(main)
     local save = Game:loadNoel()
     assert(save)
     return {
-        "...[wait:5] odd...",
-        save.Player_Name.."...?\n[wait:5]Is it over?"
+        "oh...[wait:5]\nYou died...",
+        save.Player_Name.."...\n[wait:10]It's your call."
     }
 end
 
@@ -158,8 +158,8 @@ function character:save()
         local num = love.math.random(1, 999999)
         Game:setFlag("noel_SaveID", num)
 
-    local save = Game:loadNoel()
-    if save then
+    local save = Noel:loadNoel()
+    --if save then
         local newData = {
             Attack = self.stats.attack,
             Magic = self.stats.magic,
@@ -171,27 +171,17 @@ function character:save()
             Level = self.level
         }    
 
-        Game:saveNoel(newData)
+        Noel:saveNoel(newData)
 
         local left_behind = Game:getFlag("noel_at")
 
-        if left_behind ~= "null" then
-            local maptable ={
-                SaveID = num,
-                Map = left_behind
-            }
-            --Game:setFlag("remember_noel", "true")
-            Game:saveNoel(maptable)
-            Game:setFlag("noel_at", "null")
-        elseif Game:hasPartyMember("noel") then
             local maptable ={
                 SaveID = num,
                 Map = Game.world.map.id
             }
-            Game:saveNoel(maptable)
-        end
 
-    end
+            Noel:saveNoel(maptable)
+
     end
 
 
