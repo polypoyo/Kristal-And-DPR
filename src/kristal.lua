@@ -467,7 +467,7 @@ function Kristal.onKeyPressed(key, is_repeat)
                     Kristal.returnToMenu()
                 end
             end
-        elseif key == "n" and Input.ctrl() and not console_open then
+        elseif key == "m" and Input.ctrl() and not console_open then
             Kristal.reloadnoel()
             print("reloaded noel_spawn.lua")
         end

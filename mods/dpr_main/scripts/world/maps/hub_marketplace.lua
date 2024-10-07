@@ -1,7 +1,7 @@
 return {
-  version = "1.9",
+  version = "1.11",
   luaversion = "5.1",
-  tiledversion = "1.9.0",
+  tiledversion = "1.11.0",
   class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 6,
-  nextobjectid = 26,
+  nextobjectid = 28,
   properties = {},
   tilesets = {
     {
@@ -110,7 +110,7 @@ return {
         {
           id = 1,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 680,
           y = 440,
@@ -123,7 +123,7 @@ return {
         {
           id = 2,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 680,
           y = 240,
@@ -136,7 +136,7 @@ return {
         {
           id = 4,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 240,
           y = 120,
@@ -149,7 +149,7 @@ return {
         {
           id = 6,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 0,
           y = 440,
@@ -162,7 +162,7 @@ return {
         {
           id = 17,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 240,
           y = 600,
@@ -175,7 +175,7 @@ return {
         {
           id = 18,
           name = "",
-          class = "",
+          type = "",
           shape = "polygon",
           x = 600,
           y = 600,
@@ -193,7 +193,7 @@ return {
         {
           id = 19,
           name = "",
-          class = "",
+          type = "",
           shape = "polygon",
           x = 240,
           y = 600,
@@ -211,7 +211,7 @@ return {
         {
           id = 21,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 0,
           y = 240,
@@ -224,7 +224,7 @@ return {
         {
           id = 23,
           name = "",
-          class = "",
+          type = "",
           shape = "polygon",
           x = 600,
           y = 160,
@@ -242,7 +242,7 @@ return {
         {
           id = 25,
           name = "",
-          class = "",
+          type = "",
           shape = "polygon",
           x = 240,
           y = 160,
@@ -276,7 +276,7 @@ return {
         {
           id = 14,
           name = "transition",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 840,
           y = 360,
@@ -287,6 +287,22 @@ return {
           properties = {
             ["map"] = "main_hub",
             ["marker"] = "west2"
+          }
+        },
+        {
+          id = 26,
+          name = "transition",
+          type = "",
+          shape = "rectangle",
+          x = -20,
+          y = 320,
+          width = 40,
+          height = 120,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["marker"] = "exit_shop",
+            ["shop"] = "mousehole"
           }
         }
       }
@@ -308,7 +324,7 @@ return {
         {
           id = 15,
           name = "entry",
-          class = "",
+          type = "",
           shape = "point",
           x = 800,
           y = 400,
@@ -321,9 +337,22 @@ return {
         {
           id = 16,
           name = "spawn",
-          class = "",
+          type = "",
           shape = "point",
           x = 420,
+          y = 400,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 27,
+          name = "exit_shop",
+          type = "",
+          shape = "point",
+          x = 60,
           y = 400,
           width = 0,
           height = 0,

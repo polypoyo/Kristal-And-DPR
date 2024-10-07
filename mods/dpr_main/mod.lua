@@ -60,3 +60,10 @@ function Mod:createQuest(name, id, desc, progress_max, silent)
         Game.stage:addChild(QuestCreatedPopup(name))
     end
 end
+
+function Mod:onTextSound(sound, node)
+    if sound == "noel" then
+        Assets.playSound("voice/noel/"..string.lower(node.character), 1, 1)
+        return true
+    end
+end

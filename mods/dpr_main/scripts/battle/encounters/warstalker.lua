@@ -7,17 +7,19 @@ function Warstalker:init()
     self.text = "[instant]Error: src/engine/registry.lua:273: Attempt to create non existent enemy \"starwalker\"\nstack traceback:\n[C]: in function 'pcall'\nmain.lua:438: in function <main.lua:436>\n[C]: in function 'error'"
 
     -- Battle music ("battle" is rude buster)
-    self.music = "battle"
+    self.music = "battle2ut"
     -- Enables the purple grid battle background
     self.background = true
 
     -- Add the dummy enemy to the encounter
-    self:addEnemy("warstalker")
+    self.warstalker = self:addEnemy("warstalker")
 
     --- Uncomment this line to add another!
     --self:addEnemy("dummy")
 
+    self.timer = 0
 
+    self.ticker = 0
 end
 
 function Warstalker:onReturnToWorld(events)
@@ -32,6 +34,41 @@ function Warstalker:onReturnToWorld(events)
             end
         end
     end
+end
+
+function Warstalker:update()
+    super.update(self)
+    
+    --[[local time = math.floor(Game.battle.music:tell()) % 10
+    if time == 0 or time == 2 or time == 4 or time == 6 or time == 8 then
+        Game.battle.music.pitch = 1 + math.random(-0.1, 0.1)/10
+    --elseif time == 2 then
+      --  Game.battle.music.pitch = 1 + math.random(-0.1, 0.1)/10
+    end]]
+
+    local time = math.floor(Game.battle.music:tell()) % 10
+    local swap = math.floor(self.ticker) % 10
+    if time == swap then
+        self.ticker = self.ticker + 1
+        print("ticked   "..self.ticker)
+        Game.battle.music.pitch = 1 + math.random(-1, 1)/math.random(5, 10)
+    --elseif time == 2 then
+      --  Game.battle.music.pitch = 1 + math.random(-0.1, 0.1)/10
+    end
+
+    self.timer = self.timer + (1 * DTMULT)
+    print(self.warstalker.health)
+    if self.warstalker.health < 1500/2 then
+         self.warstalker.rotation = (math.sin(self.timer * math.random(1, 2)))/8 --for low hp
+    end
+    if Game.battle.enemies[1]:canSpare() then
+    if math.random(1, 2) == 1 then
+         self.warstalker:setScale((math.sin(self.timer * math.random(0.1, 0.5))) * 2, 2)
+    else
+         self.warstalker:setScale(2, (math.sin(self.timer * math.random(0.1, 0.5))) * 2)
+    end
+    end
+    --self.warstalker:setScale(math.sin(self.timer * 0.1)) * 2, 2)
 end
 
 return Warstalker

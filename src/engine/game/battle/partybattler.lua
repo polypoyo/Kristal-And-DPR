@@ -161,7 +161,11 @@ function PartyBattler:hurt(amount, exact, color, options)
             amount = math.ceil((amount * self:getElementReduction(element)))
         end
 
-        self:removeHealth(amount)
+        if self.chara.id == "noel" then
+            self:noel_damage(amount)
+        else
+            self:removeHealth(amount)
+        end
     else
         -- We're targeting everyone.
         if not exact then
@@ -174,14 +178,22 @@ function PartyBattler:hurt(amount, exact, color, options)
                 amount = math.ceil((3 * amount) / 4) -- Slightly different than the above
             end
         end
-        
-        self:removeHealthBroken(amount) -- Use a separate function for cleanliness
+
+        if self.chara.id == "noel" then
+            self:noel_damage(amount) -- Use a seprate function for a secret character that nobody will ever find on a regular playthrough.
+        else
+            self:removeHealthBroken(amount) -- Use a separate function for cleanliness
+        end
     end
 
     if (self.chara:getHealth() <= 0) then
         self:statusMessage("msg", "down", color, true)
     else
-        self:statusMessage("damage", amount, color, true)
+        if self.chara.id == "noel" then
+        -- Logic is done in noel's damage function         
+        else
+            self:statusMessage("damage", amount, color, true)
+        end
     end
 
     self.hurt_timer = 0
@@ -619,6 +631,39 @@ function PartyBattler:pierce(amount, exact, color, options)
 			end
 		end
 	end
+end
+
+function PartyBattler:noel_damage(amount) -- DO NOT QUESTION MY CHOICES
+    local meth = love.math.random(1, 3) --random number for hit chance
+    if meth == 1 then -- haha, funny noel/null damage joke thingy
+        Assets.playSound("awkward")
+        Assets.playSound("voice/noel-#")
+        self:removeHealth(0)
+        self:statusMessage("msg", "null", {0.9,0.9,0.9}, true)
+    else-- haha, 10 times the pain and funny noise
+        Assets.playSound("voice/noel-#")
+        self:removeHealth(amount * 10)
+        self:statusMessage("damage", amount * 10, color, true)
+    end
+    if self.noel_hit_counter and self.noel_hit_counter > 5 then -- for if noel decides you fucking suck a dodging
+        self:setAnimation("stop")
+        Assets.playSound("voice/stop_getting_hit")
+        Assets.playSound("grab")
+        Assets.playSound("alert")
+        Assets.playSound("impact")
+        Assets.playSound("jump")
+        Assets.playSound("locker")
+        Assets.playSound("petrify")
+        Assets.playSound("ominous")
+        Assets.playSound("rudebuster_hit")
+        Assets.playSound("rudebuster_swing")
+        love.window.setTitle("STOP GETTING HIT")
+        self.noel_hit_counter = -1
+    elseif self.noel_hit_counter then
+        self.noel_hit_counter = self.noel_hit_counter + 1
+    else 
+        self.noel_hit_counter = 1
+    end
 end
 
 return PartyBattler

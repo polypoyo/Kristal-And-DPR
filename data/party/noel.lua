@@ -2,7 +2,7 @@ local character, super = Class(PartyMember, "noel")
 
 function character:init()
     super.init(self)
-
+    self.set_buttons = {"magic", "item", "spare", "tension"}
     -- Display name
     self.name = "Noel"
 

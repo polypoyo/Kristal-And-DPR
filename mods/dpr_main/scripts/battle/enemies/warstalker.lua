@@ -49,7 +49,7 @@ function Warstalker:init()
         "* Smells[wait:60][speed:0.5]ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
     }
     -- Text displayed at the bottom of the screen when the enemy has low health
-    self.low_health_text = "* The Warstalker looks like it's\nabout to fall over."
+    self.low_health_text = "* Warstalker is about\n    s     &    )321gs\n            cat."
 
     -- Register act called "Smile"
     self:registerAct("Piss-off")
@@ -59,31 +59,11 @@ function Warstalker:init()
 end
 
 function Warstalker:onAct(battler, name)
-    if name == "Smile" then
-        -- Give the enemy 100% mercy
-        self:addMercy(100)
-        -- Change this enemy's dialogue for 1 turn
-        self.dialogue_override = "... ^^"
-        -- Act text (since it's a list, multiple textboxes)
-        return {
-            "* You smile.[wait:5]\n* The Warstalker smiles back.",
-            "* It seems the Warstalker just wanted\nto see you happy."
-        }
-
-    elseif name == "Tell Story" then
-        -- Loop through all enemies
-        for _, enemy in ipairs(Game.battle.enemies) do
-            -- Make the enemy tired
-            enemy:setTired(true)
-        end
-        return "* You and Ralsei told the Warstalker\na bedtime story.\n* The enemies became [color:blue]TIRED[color:reset]..."
-
-    elseif name == "Standard" then --X-Action
+    if name == "Piss-off" then --X-Action
         -- Give the enemy 50% mercy
-        self:addMercy(50)
-        if battler.chara.id == "ralsei" then
-            -- R-Action text
-            return "* Ralsei bowed politely.\n* The Warstalker spiritually bowed\nin return."
+        if battler.chara.id == "hero" then
+            self.rage = 1
+            return "* Hero tried mimicking the Warstalker's movements.[wait:10]\n* It seems displeased."
         elseif battler.chara.id == "susie" then
             -- S-Action: start a cutscene (see scripts/battle/cutscenes/Warstalker.lua)
             Game.battle:startActCutscene("Warstalker", "susie_punch")

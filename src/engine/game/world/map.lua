@@ -98,6 +98,7 @@ end
 
 function Map:onEnter()
     local noelsave = Noel:loadNoel()
+
     if Game:hasPartyMember("noel") == false and noelsave then
         Noel:NoelEnter(noelsave)
     end
