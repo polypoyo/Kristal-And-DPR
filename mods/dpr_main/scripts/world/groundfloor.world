@@ -55,6 +55,13 @@
             "width": 1000,
             "x": 120,
             "y": 1160
+        },
+        {
+            "fileName": "maps/hub_traininggrounds.tmx",
+            "height": 520,
+            "width": 800,
+            "x": 2000,
+            "y": 640
         }
     ],
     "onlyShowAdjacentMaps": false,

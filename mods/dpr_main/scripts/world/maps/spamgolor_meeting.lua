@@ -1,7 +1,7 @@
 return {
-  version = "1.9",
+  version = "1.11",
   luaversion = "5.1",
-  tiledversion = "1.9.0",
+  tiledversion = "1.11.0",
   class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 5,
-  nextobjectid = 15,
+  nextobjectid = 16,
   properties = {},
   tilesets = {
     {
@@ -70,7 +70,7 @@ return {
         {
           id = 1,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 0,
           y = 240,
@@ -83,7 +83,7 @@ return {
         {
           id = 2,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 240,
           y = 160,
@@ -96,7 +96,7 @@ return {
         {
           id = 3,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 160,
           y = 400,
@@ -109,7 +109,7 @@ return {
         {
           id = 4,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 760,
           y = 240,
@@ -122,7 +122,7 @@ return {
         {
           id = 5,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 0,
           y = 120,
@@ -151,7 +151,7 @@ return {
         {
           id = 6,
           name = "transition",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = -40,
           y = 160,
@@ -165,9 +165,9 @@ return {
           }
         },
         {
-          id = 7,
+          id = 15,
           name = "transition",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 920,
           y = 160,
@@ -175,7 +175,10 @@ return {
           height = 80,
           rotation = 0,
           visible = true,
-          properties = {}
+          properties = {
+            ["map"] = "hub_traininggrounds",
+            ["marker"] = "entry"
+          }
         }
       }
     },
@@ -196,7 +199,7 @@ return {
         {
           id = 8,
           name = "west",
-          class = "",
+          type = "",
           shape = "point",
           x = 40,
           y = 200,
@@ -209,7 +212,7 @@ return {
         {
           id = 9,
           name = "spawn",
-          class = "",
+          type = "",
           shape = "point",
           x = 200,
           y = 200,
@@ -222,7 +225,7 @@ return {
         {
           id = 10,
           name = "east",
-          class = "",
+          type = "",
           shape = "point",
           x = 880,
           y = 200,
