@@ -173,7 +173,7 @@ function Bullet:update()
 	
     if self.mhp_glow_red == true then
         self.mhp_red_siner = self.mhp_red_siner + DTMULT
-        self:setColor(Utils.mergeColor({232/255, 0/255, 0/255}, COLORS.red, (0.25 + math.sin(self.mhp_red_siner / 3)) * 0.25))
+        self:setColor(Utils.mergeColor({232/255, 45/255, 0/255}, COLORS.red, (0.25 + math.sin(self.mhp_red_siner / 3)) * 0.25))
     end
 
     if self.remove_offscreen then

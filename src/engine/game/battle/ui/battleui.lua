@@ -601,6 +601,9 @@ function BattleUI:drawState()
                 Draw.setColor(1, 0, 0, 1)
                 love.graphics.print("(Fallen)", 400, 50 + ((index - page_offset - 1) * 30))
             else
+                Draw.setColor(COLORS.dkgray)
+                love.graphics.rectangle("fill", 400, 55 + ((index - page_offset - 1) * 30), 101, 16)
+
                 Draw.setColor(PALETTE["action_health_bg"])
                 love.graphics.rectangle("fill", 400, 55 + ((index - page_offset - 1) * 30), math.ceil(mhp_perc * 101), 16)
 
