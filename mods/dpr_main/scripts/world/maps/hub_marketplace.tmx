@@ -71,7 +71,7 @@
     <property name="marker" value="west2"/>
    </properties>
   </object>
-  <object id="26" name="transition" x="-20" y="320" width="40" height="120">
+  <object id="26" name="transition" x="-40" y="360" width="40" height="80">
    <properties>
     <property name="marker" value="exit_shop"/>
     <property name="shop" value="mousehole"/>
@@ -85,7 +85,7 @@
   <object id="16" name="spawn" x="420" y="400">
    <point/>
   </object>
-  <object id="27" name="exit_shop" x="60" y="400">
+  <object id="27" name="exit_shop" x="40" y="400">
    <point/>
   </object>
  </objectgroup>

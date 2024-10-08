@@ -37,7 +37,10 @@ function MouseHole:init()
     self.shopkeeper.sprite:setPosition(0, 8)
     self.shopkeeper.slide = true
 
-    self:registerItem("tensionbit")
+    self:registerItem("cheeseslice")
+    self:registerItem("cheesepuffs")
+    self:registerItem("mousetoken")
+    self:registerItem("swissblade")
 
     self:registerTalk("About Yourself")
     self:registerTalk("About Wall Guardian")

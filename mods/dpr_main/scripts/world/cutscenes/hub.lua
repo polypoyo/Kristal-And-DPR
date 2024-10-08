@@ -590,4 +590,12 @@ return {
             cutscene:hideNametag()
         end
     end,
+
+    transition = function(cutscene, event)
+        if love.math.random(1, 100) <= 5 then
+            Game.world:mapTransition("spamgolor_meeting", "west")
+        else
+            Game.world:mapTransition("hub_traininggrounds", "entry")
+        end
+    end,
 }

@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 6,
-  nextobjectid = 13,
+  nextobjectid = 14,
   properties = {},
   tilesets = {
     {
@@ -121,6 +121,22 @@ return {
           properties = {
             ["map"] = "main_hub",
             ["marker"] = "east1"
+          }
+        },
+        {
+          id = 13,
+          name = "enemy",
+          type = "",
+          shape = "point",
+          x = 680,
+          y = 360,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["actor"] = "dummy",
+            ["encounter"] = "dummy"
           }
         }
       }

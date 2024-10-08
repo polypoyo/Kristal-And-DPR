@@ -49,7 +49,7 @@ function character:init()
 
     self.menu_icon = "party/hero/head"
     self.head_icons = "party/kris/icon" -- Placeholder
-    self.name_sprite = "party/kris/name" -- Placeholder
+    self.name_sprite = "party/hero/name"
 
     self.attack_sprite = "effects/attack/cut"
     self.attack_sound = "laz_c"

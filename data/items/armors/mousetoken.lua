@@ -14,7 +14,7 @@ function item:init()
     -- Battle description
     self.effect = ""
     -- Shop description
-    self.shop = ""
+    self.shop = "Magic up. It\nlooks cool!"
     -- Menu description
     self.description = "A golden coin with a once-powerful mousewizard engraved on it."
 

@@ -632,7 +632,7 @@ return {
         },
         {
           id = 28,
-          name = "transition",
+          name = "script",
           type = "",
           shape = "rectangle",
           x = 920,
@@ -642,8 +642,8 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["map"] = "spamgolor_meeting",
-            ["marker"] = "west"
+            ["cutscene"] = "hub.transition",
+            ["once"] = false
           }
         },
         {

@@ -49,6 +49,8 @@ function Item:init()
     self.bonus_name = nil
     self.bonus_icon = nil
 
+    self.turn_heal = 0
+
     -- The color of the bonus icon, always orange in DELTARUNE
     self.bonus_color = PALETTE["world_ability_icon"]
 

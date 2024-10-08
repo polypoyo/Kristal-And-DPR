@@ -266,7 +266,17 @@ function PartyMember:onAttackHit(enemy, damage) end
 
 --- *(Override)* Called whenever this party member's turn starts in battle
 ---@param battler PartyBattler The party member's associated battler
-function PartyMember:onTurnStart(battler) end
+function PartyMember:onTurnStart(battler)
+    -- Turn start healing
+    local turnHealing = 0
+    turnHealing = turnHealing + self.equipped.weapon.turn_heal
+    for i, v in ipairs(self.equipped.armor) do
+        turnHealing = turnHealing + v.turn_heal
+    end
+    if turnHealing > 0 and Game.battle.turn_count > 1 then
+        battler:heal(turnHealing)
+    end
+end
 --- *(Override)* Called whenever this party member's action select turn starts
 ---@param battler PartyBattler The party member's associated battler
 ---@param undo    boolean      Whether their previous action was just undone
