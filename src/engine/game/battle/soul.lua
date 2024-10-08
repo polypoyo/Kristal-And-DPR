@@ -402,7 +402,7 @@ end
 --- *(Override)* Called when the soul takes damage
 ---@param bullet Bullet
 ---@param amount integer
-function Soul:onDamage(bullet, amount)
+function Soul:onDamage(bullet, amount, mhp)
     -- Can be overridden, called when the soul actually takes damage from a bullet
 end
 

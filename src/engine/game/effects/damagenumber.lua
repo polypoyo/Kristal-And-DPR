@@ -47,6 +47,9 @@ function DamageNumber:init(type, arg, x, y, color)
             else
                 self.text = "+"..self.amount.."%"
             end
+        elseif self.type == "deadly" then
+            self.text = tostring(self.amount)
+            self.font = Assets.getFont("deadlynumbers")
         else
             self.text = tostring(self.amount)
             self.font = Assets.getFont("bignumbers")

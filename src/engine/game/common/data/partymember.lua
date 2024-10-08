@@ -119,7 +119,8 @@ function PartyMember:init()
         health = 100,
         attack = 10,
         defense = 2,
-        magic = 0
+        magic = 0,
+        health_def = 100 -- placeholder for true MHP, do not use
     }
     -- Max stats from level-ups
     self.max_stats = {}
@@ -255,6 +256,9 @@ function PartyMember:init()
 
     self.opinions = {}
     self.default_opinion = 50
+    
+    -- this fucking sucks but i don't care lol
+    self.mhp_damage = 0
 end
 
 -- Callbacks
@@ -346,6 +350,7 @@ function PartyMember:getXActName() return self.xact_name end
 function PartyMember:getWeaponIcon() return self.weapon_icon end
 
 function PartyMember:getHealth() return Game:isLight() and self.lw_health or self.health end
+function PartyMember:getSavedMHP() return self.saved_mhp end
 ---@param light? boolean
 function PartyMember:getBaseStats(light)
     if light or (light == nil and Game:isLight()) then
@@ -444,6 +449,27 @@ function PartyMember:setHealth(health)
         self.lw_health = health
     else
         self.health = health
+    end
+end
+
+function PartyMember:dealMaxHealthDamage(health)
+    self.mhp_damage = math.min(self:getStat("health_def"), self.mhp_damage + health)
+    self:setHealth(math.min(self:getStat("health"), self:getHealth()))
+end
+
+function PartyMember:setMaxHealthDamage(health)
+    self.mhp_damage = math.min(self:getStat("health_def"), health)
+    self:setHealth(math.min(self:getStat("health"), self:getHealth()))
+end
+
+function PartyMember:getMaxHealthDamage()
+    return self.mhp_damage
+end
+
+function PartyMember:restoreMaxHealth()
+    self.mhp_damage = 0
+    if self:getHealth() <= 0 then
+        self:setHealth(1)
     end
 end
 
@@ -680,6 +706,9 @@ function PartyMember:canEquip(item, slot_type, slot_index)
 end
 
 function PartyMember:canAutoHeal()
+    if self:getMaxHealthDamage() >= self:getStat("health_def") then
+        return false
+    end
     return true
 end
 
@@ -721,6 +750,11 @@ end
 ---@param default?  number
 ---@param light?    boolean
 function PartyMember:getStat(name, default, light)
+    if name == "health" and self.mhp_damage > 0 then
+        return (self:getBaseStats(light)[name] or (default or 0)) + self:getEquipmentBonus(name) + self:getStatBuff(name) - self.mhp_damage
+    elseif name == "health_def" then -- this is probably a bad way to do it but whatever
+        return (self:getBaseStats(light)["health"] or (default or 0)) + self:getEquipmentBonus("health") + self:getStatBuff("health")
+    end
     return (self:getBaseStats(light)[name] or (default or 0)) + self:getEquipmentBonus(name) + self:getStatBuff(name)
 end
 
