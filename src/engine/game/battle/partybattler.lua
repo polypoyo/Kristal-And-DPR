@@ -421,6 +421,18 @@ function PartyBattler:revive()
     self:toggleOverlay(false)
 end
 
+function PartyBattler:restoreMaxHealth(health)
+    Assets.stopAndPlaySound("power")
+
+    self.chara:restoreMaxHealth(health)
+    self:checkHealth()
+    self:flash()
+
+    self:statusMessage("msg", "revive")
+
+    self:sparkle(unpack(sparkle_color or {}))
+end
+
 --- Makes the battler flash once.
 ---@param sprite    Sprite? An optional sprite to use for the flash instead of the battler's default sprite.
 ---@param offset_x? number

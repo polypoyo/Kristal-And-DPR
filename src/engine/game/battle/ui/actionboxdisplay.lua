@@ -31,7 +31,10 @@ function ActionBoxDisplay:draw()
     
     local mhp_perc = (self.actbox.battler.chara:getStat("health") / self.actbox.battler.chara:getStat("health_def")) or 1
     local health = (self.actbox.battler.chara:getHealth() / self.actbox.battler.chara:getStat("health")) * (mhp_perc * 76)
-    
+   
+    Draw.setColor(COLORS.dkgray)
+    love.graphics.rectangle("fill", 128, 22 - self.actbox.data_offset, 76, 9)
+ 
     if mhp_perc > 0 then
         Draw.setColor(self.actbox.battler.chara.health_bg_color or PALETTE["action_health_bg"])
         love.graphics.rectangle("fill", 128, 22 - self.actbox.data_offset, math.ceil(mhp_perc * 76), 9)
@@ -61,8 +64,9 @@ function ActionBoxDisplay:draw()
     Draw.setColor(color)
     love.graphics.setFont(self.font)
     if mhp_perc <= 0 then
+        health_offset = 6 * 8
         Draw.setColor(PALETTE["action_health_text_down"])
-        love.graphics.print("faLLEn", 161 - health_offset, 22 - self.actbox.data_offset)
+        love.graphics.print("faLLEn", 205 - health_offset, 9 - self.actbox.data_offset)
     else
         love.graphics.print(self.actbox.battler.chara:getHealth(), 152 - health_offset, 9 - self.actbox.data_offset)
         Draw.setColor(PALETTE["action_health_text"])

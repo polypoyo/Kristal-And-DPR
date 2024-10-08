@@ -466,10 +466,10 @@ function PartyMember:getMaxHealthDamage()
     return self.mhp_damage
 end
 
-function PartyMember:restoreMaxHealth()
+function PartyMember:restoreMaxHealth(health)
     self.mhp_damage = 0
     if self:getHealth() <= 0 then
-        self:setHealth(1)
+        self:setHealth(math.min(self:getStat("health"), health or 1))
     end
 end
 

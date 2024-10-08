@@ -64,7 +64,9 @@ function item:onWorldUse(target)
 end
 
 function item:onBattleUse(user, target)
-    if target.chara:getHealth() <= 0 then
+    if target.chara:getStat("health") <= 0 then
+        target:restoreMaxHealth(math.abs(target.chara:getHealth()) + target.chara:getStat("health_def"))
+    elseif target.chara:getHealth() <= 0 or target.chara:getStat("health") <= 0 then
         target:heal(math.abs(target.chara:getHealth()) + target.chara:getStat("health"))
     else
         target:heal(math.ceil(target.chara:getStat("health") / 2))
