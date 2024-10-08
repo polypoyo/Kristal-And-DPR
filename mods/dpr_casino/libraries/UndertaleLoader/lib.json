@@ -1,0 +1,19 @@
+{
+    "id": "undertale-loader",
+    "authors": [
+        "Sylvi          - Original library (Deltarune Save Loader)",
+        "Bor            - this",
+        "jesus christ   - Who reads this anyways?"
+    ],
+    "version": "v1.0.0",
+    "engineVer": "v0.9.0-dev",
+    
+    "config": {
+        ///// Load UNDERTALE stats to which party member(s)?
+        // If you use UndertaleSave:load(), which party member's stats should be overwritten? Can choose multiple.
+        /////
+        "partymemberimport": ["kris"],
+    },
+    
+    "optionalDependencies": ["magical-glass"]
+}
