@@ -65,7 +65,7 @@ function Bullet:init(x, y, texture)
     self.pierce = false
     
     -- Max HP damage given to the player when hit by this bullet (Defaults to 0, meaning it won't deal any MHP damage.)
-    self.mhp_damage = nil
+    self.mhp_damage = 0
     -- If this bullet deals MHP damage, should it have a glowing red appearance? (Defaults to `true`)
     self.mhp_glow_red = true
   
@@ -171,7 +171,7 @@ end
 function Bullet:update()
     super.update(self)
 	
-    if self.mhp_glow_red == true then
+    if self.mhp_glow_red == true and self.mhp_damage > 0 then
         self.mhp_red_siner = self.mhp_red_siner + DTMULT
         self:setColor(Utils.mergeColor({232/255, 45/255, 0/255}, COLORS.red, (0.25 + math.sin(self.mhp_red_siner / 3)) * 0.25))
     end
