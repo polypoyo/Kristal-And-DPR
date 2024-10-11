@@ -57,9 +57,9 @@ self.talktext = ({
   self.sell_options_text["armors"]  = "[emote:talk]* I am gonna buy.[emote:idle]"
   self.sell_options_text["storage"] = "[emote:talk]* I am gonna buy.[emote:idle]"
 
-  --self:registerItem("tension_storage", {stock = 1})
- -- self:registerItem("tension_plus", {stock = 4})
- -- self:registerItem("friend_buster", {stock = 1})
+  self:registerItem("tension_storage", {stock = 1})
+  self:registerItem("tension_plus", {stock = 4})
+  self:registerItem("friend_buster", {stock = 1})
   
   self:registerTalk("Yourself")
   --self:registerTalk("...")

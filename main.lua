@@ -242,6 +242,8 @@ GrazeSprite = require("src.engine.game.battle.grazesprite")
 ArenaSprite = require("src.engine.game.battle.arenasprite")
 ArenaMask = require("src.engine.game.battle.arenamask")
 SnowGraveSpell = require("src.engine.game.battle.snowgravespell")
+Quicktime = require("src.engine.game.battle.quicktime")
+Slapper = require("src.engine.game.battle.slapper")
 Combo = require("src.engine.game.battle.combo")
 
 BattleUI = require("src.engine.game.battle.ui.battleui")

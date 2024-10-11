@@ -65,5 +65,9 @@ function Mod:onTextSound(sound, node)
     if sound == "noel" then
         Assets.playSound("voice/noel/"..string.lower(node.character), 1, 1)
         return true
+    elseif sound == "hero" then
+            Assets.playSound("voice/default", 1, 1)
+            Assets.playSound("voice/battle", 1, 1)
+        return true
     end
 end
