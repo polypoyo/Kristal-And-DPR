@@ -236,6 +236,8 @@ function Item:getTypeName()
         return "WEAPON"
     elseif self.type == "armor" then
         return "ARMOR"
+    elseif self.type == "badge" then
+        return "BADGE"
     end
     return "UNKNOWN"
 end

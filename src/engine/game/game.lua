@@ -71,6 +71,7 @@ function Game:clear()
     self.started = false
     self.border = "simple"
     self.swap_into_mod = nil
+    self.total_bp = nil
 end
 
 ---@overload fun(self: Game, previous_state: string, save_data: SaveData, save_id: number)
@@ -251,7 +252,9 @@ function Game:save(x, y)
 
         temp_followers = self.temp_followers,
 
-        flags = self.flags
+        flags = self.flags,
+
+        total_bp = self.total_bp
     }
 
     if x then
@@ -390,6 +393,8 @@ function Game:load(data, index, fade)
 
     self.tension = data.tension or 0
     self.max_tension = data.max_tension or 100
+
+    self.total_bp = data.total_bp or 3
 
     self.lw_money = data.lw_money or 2
 
@@ -1095,6 +1100,10 @@ function Game:update()
 
     Kristal.callEvent(KRISTAL_EVENT.postUpdate, DT)
 
+    for _, badge in ipairs(self:getBadgeStorage()) do
+        badge:update(badge.equipped)
+    end
+
     if self.swap_into_mod then
         Kristal.swapIntoMod(unpack(self.swap_into_mod))
         self.swap_into_mod = nil
@@ -1162,6 +1171,38 @@ function Game:draw()
     love.graphics.push()
     Kristal.callEvent(KRISTAL_EVENT.postDraw)
     love.graphics.pop()
+end
+
+---@param ignore_light? boolean -- if you still want some stats etc. despite being in LW
+function Game:getBadgeStorage(ignore_light)
+    if Game:isLight() and not ignore_light then return {} end
+    local inventory ---@type DarkInventory
+    if not Game:isLight() then
+        inventory = Game.inventory
+    else
+        inventory = Game.inventory:getItemByID("light/ball_of_junk").inventory
+    end
+    return inventory:getStorage("badges")
+end
+
+function Game:getUsedBadgePoints(ignore_light)
+    local total_bp = 0
+    for _, badge in ipairs(Game:getBadgeStorage(ignore_light)) do
+        if badge.equipped then
+            total_bp = total_bp + badge:getBadgePoints()
+        end
+    end
+    return total_bp
+end
+
+function Game:getBadgeEquipped(badge, ignore_light)
+    local total_count = 0
+    for _, b in ipairs(Game:getBadgeStorage(ignore_light)) do
+        if b.equipped and b.id == badge then
+            total_count = total_count + 1
+        end
+    end
+    return total_count
 end
 
 --stuff for Noel the Noel-body

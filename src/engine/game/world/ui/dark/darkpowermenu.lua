@@ -250,13 +250,6 @@ function DarkPowerMenu:selectParty(target_type, spell)
     end)
 end
 
-function DarkPowerMenu:canCast(spell)
-    if not Game:getConfig("overworldSpells") then return false end
-    if Game:getTension() < spell:getTPCost(self.party:getSelected()) then return false end
-
-    return (spell:hasWorldUsage(self.party:getSelected()))
-end
-
 function DarkPowerMenu:draw()
     love.graphics.setFont(self.font)
 

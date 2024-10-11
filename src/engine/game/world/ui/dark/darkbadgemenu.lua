@@ -128,7 +128,7 @@ function DarkBadgeMenu:update()
                         self.selected_option = #self:getBadges()
                     end
                 end
-            elseif (BadgesLib.total_bp - BadgesLib:getUsedBadgePoints()) >= item:getBadgePoints() then
+            elseif ( Game.total_bp -  Game:getUsedBadgePoints()) >= item:getBadgePoints() then
                 item:setEquipped(true)
                 self.ui_select:stop()
                 self.ui_select:play()
@@ -184,7 +184,7 @@ function DarkBadgeMenu:draw()
             local name = badge:getWorldMenuName() .. " - " .. badge:getBadgePoints() .. " BP"
             love.graphics.print(name, 180 + 54 + (item_x * 210) + 2 - 8, 6 + (item_y * 30) + 2)
             Draw.setColor(1, 1, 1, 1)
-            if (BadgesLib.total_bp - BadgesLib:getUsedBadgePoints()) < badge:getBadgePoints() then Draw.setColor(PALETTE["world_gray"]) end
+            if ( Game.total_bp -  Game:getUsedBadgePoints()) < badge:getBadgePoints() then Draw.setColor(PALETTE["world_gray"]) end
             if (badge.equipped) then Draw.setColor(PALETTE["world_header_selected"]) end
             love.graphics.print(name, 180 + 54 + (item_x * 210) - 8, 6 + (item_y * 30))
             item_y = item_y + 1
@@ -201,11 +201,11 @@ function DarkBadgeMenu:draw()
 
     local x = 0
     local y = 0
-    for i = 1, BadgesLib.total_bp do
+    for i = 1, Game.total_bp do
         Draw.setColor(1, 1, 1, 1)
         Draw.draw(
             Assets.getTexture(
-                "ui/menu/badge_point_" .. ((i <= BadgesLib:getUsedBadgePoints()) and "filled" or "empty" )
+                "ui/menu/badge_point_" .. ((i <= Game:getUsedBadgePoints()) and "filled" or "empty" )
             ),
             0 + x * 18,
             120 + 16 + y * 18
