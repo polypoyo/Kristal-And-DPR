@@ -137,7 +137,7 @@ end
 
               hero:setSprite("walk/down")
 
-              cutscene:text("* But, I know you're there though.[wait:10]\n* I overheard you talking to [color:yellow]him[color:white].", nil, "hero")
+              cutscene:text("* But,[wait:5] I know you're there though.[wait:10]\n* I overheard you talking to [color:yellow]him[color:white].", nil, "hero")
               cutscene:hideNametag()
 
               cutscene:wait(0.5)
@@ -145,7 +145,7 @@ end
               cutscene:wait(0.5)
 
               cutscene:showNametag("Hero")
-              cutscene:text("* Unless he was talking to himself agian...", nil, "hero")
+              cutscene:text("* Unless he was talking to himself again...", nil, "hero")
               cutscene:text("* Wouldn't be the first time.[wait:10]\n* I guess...", nil, "hero")
               cutscene:hideNametag()
 
