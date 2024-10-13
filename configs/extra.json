@@ -11,5 +11,8 @@
         "Debug Menu": "debug_menu",
         "Object Selector": "object_selector",
         "Fast Forward": "fast_forward"
-    }
+    },
+
+    // Menu Scroller
+    "darkMenuScroller": "middle"               //Wether the scroller is centered based around the center or two points (string: middle||side)
 }
