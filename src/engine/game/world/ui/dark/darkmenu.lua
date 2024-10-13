@@ -68,6 +68,14 @@ function DarkMenu:getButtonSpacing()
     end
 end
 
+function DarkMenu:getDotSpacing()
+    if #self.buttons <= 8 then
+        return 50
+    else
+        return 50 - Utils.round((#self.buttons/3*#self.buttons/3))
+    end
+end
+
 function DarkMenu:addButton(button, index)
     table.insert(self.buttons, index or #self.buttons + 1, button)
 end
@@ -400,9 +408,17 @@ function DarkMenu:drawButton(index, x, y)
 
     if #self.buttons > 5 then
         Draw.setColor(1, 1, 1)
-        Draw.rectangle("fill", 129 + (self.selected_submenu - 1) * ((472-132)/(#self.buttons-1)), 65, 10, 10)
-        for i = 1, #self.buttons do
-            Draw.rectangle("fill", 132 + (i - 1) * ((472-132)/(#self.buttons-1)), 68, 4, 4)
+        if Game:getConfig("darkMenuScroller") == "side" then
+            Draw.rectangle("fill", 129 + (self.selected_submenu - 1) * ((472-132)/(#self.buttons-1)), 65, 10, 10)
+            for index = 1, #self.buttons do
+                Draw.rectangle("fill", 132 + (index - 1) * ((472-132)/(#self.buttons-1)), 68, 4, 4)
+            end
+        else
+            Draw.setColor(1, 1, 1)
+            Draw.rectangle("fill", (SCREEN_WIDTH/2 + 3) - ((#self.buttons/2 - (self.selected_submenu - 1)) * self:getDotSpacing()), 65, 10, 10)
+            for index = 1, #self.buttons do
+                Draw.rectangle("fill", (SCREEN_WIDTH/2 + 6) - ((#self.buttons/2 - (index - 1)) * self:getDotSpacing()), 68, 4, 4)
+            end
         end
     end
 end
