@@ -81,6 +81,8 @@ function DarkMenu:addButton(button, index)
 end
 
 function DarkMenu:addButtons()
+
+if not Game.tutorial then
     -- ITEM
     self:addButton({
         ["state"]          = "ITEMMENU",
@@ -129,6 +131,24 @@ function DarkMenu:addButtons()
         end
     })
 
+    if Game.inventory:getDarkInventory().storages.badges[1] then
+    -- BADGE
+    self:addButton({
+        ["state"]          = "BADGEMENU",
+        ["sprite"]         = Assets.getTexture("ui/menu/btn/badge"),
+        ["hovered_sprite"] = Assets.getTexture("ui/menu/btn/badge_h"),
+        ["desc_sprite"]    = Assets.getTexture("ui/menu/desc/badge"),
+        ["callback"]       = function()
+            self.box = DarkBadgeMenu()
+            self.box.layer = 1
+            self:addChild(self.box)
+    
+            self.ui_select:stop()
+            self.ui_select:play()
+        end
+    })
+    end
+
     -- TALK
     self:addButton({
         ["state"]          = "",
@@ -158,6 +178,23 @@ function DarkMenu:addButtons()
             self.ui_select:play()
         end
     })
+else
+
+    -- TALK
+    self:addButton({
+        ["state"]          = "",
+        ["sprite"]         = Assets.getTexture("ui/menu/btn/talk"),
+        ["hovered_sprite"] = Assets.getTexture("ui/menu/btn/talk_h"),
+        ["desc_sprite"]    = Assets.getTexture("ui/menu/desc/talk"),
+        ["callback"]       = function()
+            Game.world:startCutscene("_talk", "main", Game.world.map.id, Game.party[1].id)
+    
+            self.ui_select:stop()
+            self.ui_select:play()
+        end
+    })
+
+end
 end
 
 function DarkMenu:getButton(id)

@@ -55,7 +55,7 @@ function item:onWorldUse(target)
         Assets.playSound("badgeget_64")
         cs:text("* (Your max BP went up by 3!)")
     end)
-    BadgesLib.total_bp = BadgesLib.total_bp + 3
+    Game.total_bp = Game.total_bp + 3
     return true
 end
 

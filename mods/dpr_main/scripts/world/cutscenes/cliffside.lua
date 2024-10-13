@@ -1,5 +1,194 @@
 return {
     ---@param cutscene WorldCutscene
+    intro = function(cutscene, event)
+        
+        cutscene:wait(function()
+            if Game.world.map.id == [[grey_cliffside/cliffside_start]] then
+                return true
+            else
+                return false
+            end
+        end)
+        Game.world.music:stop()
+        local darknessoverlay = DarknessOverlay()
+        darknessoverlay.layer = 1
+        Game.world:addChild(darknessoverlay)
+        local lightsource = LightSource(15, 28, 60)
+        lightsource.alpha = 0.25
+        Game.world.player:addChild(lightsource)
+
+        local textobj = shakytextobject(115, 810, "Press C to open your menu.")
+        textobj.layer = 2
+        Game.world:addChild(textobj)
+        
+
+        local hero = cutscene:getCharacter("hero")
+        hero:setSprite("fell")
+
+local function openMenulol(menu, layer)
+    local self = Game.world
+    if self.menu then
+        self.menu:remove()
+        self.menu = nil
+    end
+
+    if not menu then
+        menu = self:createMenu()
+    end
+
+    self.menu = menu
+    if self.menu then
+        self.menu.layer = layer and self:parseLayer(layer) or WORLD_LAYERS["ui"]
+
+        if self.menu:includes(AbstractMenuComponent) then
+            self.menu.close_callback = function()
+                self:afterMenuClosed()
+            end
+        elseif self.menu:includes(Component) then
+            -- Sigh... traverse the children to find the menu component
+            for _,child in ipairs(self.menu:getComponents()) do
+                if child:includes(AbstractMenuComponent) then
+                    child.close_callback = function()
+                        self:afterMenuClosed()
+                    end
+                    break
+                end
+            end
+        end
+
+        self:addChild(self.menu)
+        self:setState("MENU")
+    end
+    return self.menu
+end
+        Game.tutorial = true
+
+
+        --cutscene:text("* press c")
+
+        cutscene:wait(function()
+            return Input.pressed("menu")
+        end)
+        openMenulol()
+        --Game.world.menu:addChild()
+
+        textobj.text = "Press Z to select the TALK option."
+        textobj.x, textobj.y = 10, 560
+
+
+        cutscene:wait(function()
+            return Input.pressed("confirm")
+        end)
+        Assets.playSound("ui_select")
+        textobj.text = ""
+       
+        Game.world:closeMenu()
+
+       local choicer = cutscene:choicer({"* Hero..."})
+       if choicer == 1 then
+          cutscene:wait(0.5)
+          Game.stage.timer:tween(1, lightsource, {alpha = 0.50})
+          local wing = Assets.playSound("wing")
+          Game.world.player:shake()
+          cutscene:wait(1.5)
+          wing:play()
+          Game.world.player:shake()
+          cutscene:wait(0.5)
+          wing:stop()
+          wing:play()
+          Game.world.player:shake()
+          lightsource.y = 25
+          hero:setSprite("walk/right")
+          cutscene:wait(2)
+          cutscene:showNametag("Hero")
+          cutscene:text("* Hello?", nil, "hero")
+          cutscene:hideNametag()
+          local stime = 0.30
+          cutscene:wait(stime)
+          hero:setSprite("walk/up")
+          cutscene:wait(stime)
+          hero:setSprite("walk/left")
+          cutscene:wait(stime)
+          hero:setSprite("walk/down")
+          cutscene:wait(stime)
+          hero:setSprite("walk/right")
+          cutscene:wait(0.75)
+
+          cutscene:showNametag("Hero")
+          cutscene:text("* Is someone there?", nil, "hero")
+          cutscene:hideNametag()
+
+          textobj.text = "What will you do?"
+          textobj.x, textobj.y = 200, 560
+
+          local choicer = cutscene:choicer({"Speak", "Do not"})
+          textobj.text = ""
+          if choicer == 1 then
+          elseif choicer == 2 then
+              cutscene:wait(2)
+              cutscene:showNametag("Hero")
+              cutscene:text("* Hello?", nil, "hero")
+              cutscene:hideNametag()
+
+              cutscene:wait(4)
+
+              cutscene:showNametag("Hero")
+              cutscene:text("* Wow...[wait:30]\n* It's sad how I'm waiting a reply...", nil, "hero")
+
+              hero:setSprite("walk/down")
+
+              cutscene:text("* But,[wait:5] I know you're there though.[wait:10]\n* I overheard you talking to [color:yellow]him[color:white].", nil, "hero")
+              cutscene:hideNametag()
+
+              cutscene:wait(0.5)
+              hero:setSprite("walk/left")
+              cutscene:wait(0.5)
+
+              cutscene:showNametag("Hero")
+              cutscene:text("* Unless he was talking to himself again...", nil, "hero")
+              cutscene:text("* Wouldn't be the first time.[wait:10]\n* I guess...", nil, "hero")
+              cutscene:hideNametag()
+
+              cutscene:wait(0.5)
+              hero:setSprite("walk/right")
+              cutscene:wait(0.5)
+
+              cutscene:showNametag("Hero")
+              cutscene:text("* But I could've sworn I heard someone call out to me.", nil, "hero")
+              cutscene:hideNametag()
+
+              cutscene:wait(0.5)
+              hero:setFacing("up")
+              hero:resetSprite()
+              cutscene:wait(0.5)
+
+              cutscene:showNametag("Hero")
+              cutscene:text("* Actually,[wait:5] where even IS[wait:5] me?", nil, "hero") --haha grammer
+              cutscene:hideNametag()
+          end
+          hero:resetSprite()
+          Game.stage.timer:tween(1, lightsource, {radius = 600})
+          Game.stage.timer:tween(1, lightsource, {alpha = 1})
+          cutscene:wait(0.75)
+          Game.world.music:play()
+
+       elseif choicer == 2 then
+
+       end
+
+
+
+
+
+        cutscene:wait(function()
+            if lightsource.alpha >= 1 then
+            return true
+            else
+            return false
+            end
+        end)
+        darknessoverlay:remove()
+    end,
     welcome = function(cutscene, event)
         cutscene:text("* Welcome to Cliffside![wait:10]\n* Watch your step!")
     end,
@@ -154,7 +343,6 @@ return {
        elseif choicer == 2 then
            cutscene:text("* Yes,[wait:5] I am a cat[wait:5] and I can talk.", "neutral", "cat")
            cutscene:text("* How very observant you are for someone with [color:red]their[color:white] eyes closed.", "neutral", "cat")
-           cutscene:text("* You seem to already know me.", "neutral", "cat")
 
            --cutscene:text("* You seem to already know me.", "neutral", "cat")
        end
