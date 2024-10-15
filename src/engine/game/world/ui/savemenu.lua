@@ -168,6 +168,8 @@ function SaveMenu:update()
                 self.main_box.visible = true
                 self.save_box.visible = false
             elseif self.selected_file ~= Game.save_id and self.saves[self.selected_file] then
+                self.selected_x = 1
+
                 self.state = "OVERWRITE"
 
                 self.overwrite_box.visible = true
@@ -191,7 +193,7 @@ function SaveMenu:update()
         if Input.pressed("cancel") then
             self.state = "SAVE"
 
-            self.selected_x = 1
+            self.selected_x = (self.selected_file%2 == 0 and 2) or 1
             self.overwrite_box.visible = false
         end
         if Input.pressed("left") or Input.pressed("right") then
@@ -207,13 +209,13 @@ function SaveMenu:update()
 
                 Assets.playSound("save")
 
-                self.selected_x = 1
+                self.selected_x = (self.selected_file%2 == 0 and 2) or 1
                 self.overwrite_box.visible = false
                 self:updateSaveBoxSize()
             else
                 self.state = "SAVE"
 
-                self.selected_x = 1
+                self.selected_x = (self.selected_file%2 == 0 and 2) or 1
                 self.overwrite_box.visible = false
             end
         end
