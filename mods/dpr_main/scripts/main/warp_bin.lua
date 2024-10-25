@@ -32,11 +32,7 @@
 ---@type table<WarpBinCode, WarpBinCodeInfo>
 Mod.warp_bin_codes = {
     ["TESTROOM"] = { result = "room1" },
-    ["BINCODE"] = {
-        result = function(cutscene)
-            cutscene:text("* test owo.")
-        end,
-    },
+    ["00000000"] = { result = "warp_hub/hub" },
     ["RDMCODE"] = {
         result = function(cutscene)
             cutscene:text("* test uwu.")

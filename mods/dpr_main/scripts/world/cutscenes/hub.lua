@@ -314,7 +314,8 @@ return {
             {"* We are reborn...", "* Despite never being born..."},
             {"* Have you seen my friend...", "* His name is [color:yellow]Wocter Ding Dings[color:reset]..."},
             {"* Don't mess with reality...", "* This is a [color:red]threat[color:reset]..."},
-            {"* The discovery channel would never lie to you...", "* It would lie to everyone..."}
+            {"* The discovery channel would never lie to you...", "* It would lie to everyone..."},
+            {"* There is no fridge...", "* I lied..."}
         }
 
         cutscene:text("[speed:0.5]" .. Utils.pick(dialogue_pairs)[1])

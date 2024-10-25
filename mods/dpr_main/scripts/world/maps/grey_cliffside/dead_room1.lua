@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 9,
-  nextobjectid = 40,
+  nextobjectid = 42,
   properties = {
     ["music"] = "demonic_little_grey_cliffs"
   },
@@ -273,6 +273,19 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        },
+        {
+          id = 41,
+          name = "entry_2",
+          type = "",
+          shape = "point",
+          x = 40,
+          y = 820,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
         }
       }
     },
@@ -304,22 +317,6 @@ return {
           properties = {}
         },
         {
-          id = 36,
-          name = "npc",
-          type = "",
-          shape = "rectangle",
-          x = 160,
-          y = 840,
-          width = 40,
-          height = 40,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["actor"] = "warstalker",
-            ["text1"] = "[wait:30][color:yellow]*[color:white][wait:10][speed:0.25]     \n\n     [color:yellow]isn't[color:white] pissing me off[color:yellow]."
-          }
-        },
-        {
           id = 38,
           name = "transition",
           type = "",
@@ -333,6 +330,22 @@ return {
           properties = {
             ["map"] = "grey_cliffside/cliffside_start",
             ["marker"] = "entry2"
+          }
+        },
+        {
+          id = 40,
+          name = "transition",
+          type = "",
+          shape = "rectangle",
+          x = -40,
+          y = 720,
+          width = 40,
+          height = 200,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["map"] = "grey_cliffside/the_end",
+            ["marker"] = "entry"
           }
         }
       }

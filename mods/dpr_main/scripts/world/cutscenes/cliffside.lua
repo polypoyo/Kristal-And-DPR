@@ -167,7 +167,7 @@ end
               cutscene:hideNametag()
           end
           hero:resetSprite()
-          Game.stage.timer:tween(1, lightsource, {radius = 600})
+          Game.stage.timer:tween(1, lightsource, {radius = 900})
           Game.stage.timer:tween(1, lightsource, {alpha = 1})
           cutscene:wait(0.75)
           Game.world.music:play()
@@ -187,6 +187,7 @@ end
             return false
             end
         end)
+        Game.tutorial = nil
         darknessoverlay:remove()
     end,
     welcome = function(cutscene, event)
@@ -470,6 +471,9 @@ end
         Game.world.player:shake(5)
         Assets.playSound("dtrans_flip")
         Game.world.player.walk_speed = 4
+    end,
+    warp_bin = function(cutscene, event)
+        Game.world:mapTransition("main_hub")
     end,
     video = function(cutscene, event)
 

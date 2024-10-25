@@ -71,7 +71,7 @@ return {
                             Game.world:startCutscene("_main.snowgraveskip")
                         end)
                     else]]
-
+                        Game.tutorial = true
                         Game.world:loadMap("grey_cliffside/cliffside_start", nil, "down")
                         Game.world:startCutscene("cliffside.intro")
                     --end
@@ -346,6 +346,7 @@ return {
         cutscene:wait(1.5)
 
         cutscene:after(function()
+            Game.tutorial = true
             Game.world:mapTransition("grey_cliffside/cliffside_start", nil, "down")
             Game.world:startCutscene("cliffside.intro")
         end)
