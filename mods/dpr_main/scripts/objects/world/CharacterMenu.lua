@@ -44,8 +44,7 @@ function CharacterMenu:init()
 		sprite.x = x
 		sprite.y = y
 
-		sprite.soul_color = party.soul_color
-		sprite.chr_color = party.actor.color
+		sprite.party = party
 
 		self.sprites[i] = sprite
 	
@@ -55,21 +54,29 @@ function CharacterMenu:init()
 			sprite:setSprite(party.actor.path .. "/" .. party.actor.menu_anim)
 		end
 	end
+
+	self.text = Text("")
+	self:addChild(self.text)
+	self.text.x = 90
+	self.text.y = 310
 	
 
 	self.characters = {
 		"Hero", "Susie", "Dess" 
 	}
 	self:addChild(self.heart_sprite)
-	self.heart_sprite.y = self.bg.y + 160
+	self.heart_sprite.y = self.bg.y + 170
+	self.heart_sprite.x = self.bg.x + (self.selected) * 100
+	self.target_x = self.bg.x + (self.selected) * 100
 	self:selection(0)
 end
 
 function CharacterMenu:selection(num)
-
-
 	local chr = self.sprites[self.selected]
-	chr:removeFX(OutlineFX)
+
+	if chr then
+	    chr:removeFX(OutlineFX)
+	end
 
 	self.selected = self.selected + num
 
@@ -85,28 +92,41 @@ function CharacterMenu:selection(num)
 
 	local chr = self.sprites[self.selected]
 
-	chr:addFX(OutlineFX())
-	local color = chr.chr_color or {1, 1, 1}
-	chr:getFX(OutlineFX):setColor(unpack(color))	
+	if chr then 
+		chr:addFX(OutlineFX())
 
-	self.heart_sprite:setColor(chr.soul_color)
+		local color = chr.party.color or {1, 1, 1}
+		chr:getFX(OutlineFX):setColor(unpack(color))
 
-	self.heart_sprite.x = self.bg.x + (self.selected) * 100
+		local soul_color = chr.party.soul_color or {1, 0, 0}
+		self.heart_sprite:setColor(soul_color)
+
+		local text = chr.party.title_extended or chr.party.title or "* Placeholder~"
+		self.text:setText(text)
+	else
+		self.text:setText("Empty")
+		self.heart_sprite:setColor({1, 0, 0})
+	end
+
+	self.target_x = self.bg.x + (self.selected) * 100
 end
 
 function CharacterMenu:update()
 	super.update(self)
+
+    self.heart_sprite.x = self.heart_sprite.x + (self.target_x - self.heart_sprite.x) * 20 * DT
+
 	
 	if Input.pressed("left", true) then
-		--self.selected = self.selected - 1
-
 		self:selection(-1)
 
 	elseif Input.pressed("right", true) then
-		--self.selected = self.selected + 1
-
 		self:selection(1)
 
+	elseif Input.pressed("cancel") then
+		Game.world:closeMenu()
+		self:remove()
+		
 	end
 end
 
