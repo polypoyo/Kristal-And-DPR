@@ -1241,4 +1241,18 @@ function Game:getUISkin()
     return Game:isLight() and "light" or "dark"
 end
 
+function Game:unlockPartyMember(member)
+    local currentUnlockedParty = Game:getFlag("_unlockedPartyMembers")
+    if Game:getPartyMember(member) then
+        table.insert(currentUnlockedParty, member)
+        Game:setFlag("_unlockedPartyMembers", currentUnlockedParty)
+    else
+        error("Could not find any existing party member with id \""..member.."\".")
+    end
+end
+
+function Game:getUnlockedPartyMembers()
+    return Game:getFlag("_unlockedPartyMembers")
+end
+
 return Game

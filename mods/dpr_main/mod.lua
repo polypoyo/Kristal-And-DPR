@@ -24,6 +24,10 @@ function Mod:postInit(new_file)
             Game.inventory:addItem("chaos_emeralds")
         end
 
+        local baseParty = {}
+        table.insert(baseParty, "hero") -- should be just Hero for now
+        Game:setFlag("_unlockedPartyMembers", baseParty)
+
         Game.world:startCutscene("_main.introcutscene")
     end
 end
