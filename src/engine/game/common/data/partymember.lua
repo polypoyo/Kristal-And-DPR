@@ -224,6 +224,7 @@ function PartyMember:init()
     self.love = 1
     self.exp = 0
     self.max_exp = 99999
+    self.kills = 0
 
     -- Party member specific EXP requirements
     -- The size of this table is the max LV

@@ -11,6 +11,8 @@ function CharacterMenu:init(selected)
     self.ui_move = Assets.newSound("ui_move")
     self.ui_select = Assets.newSound("ui_select")
     self.ui_cant_select = Assets.newSound("ui_cant_select")
+	self.ui_cancel = Assets.newSound("ui_cancel")
+	self.ui_cancel_small = Assets.newSound("ui_cancel_small")
 
     self.heart_sprite = Sprite("player/heart")
 	self.heart_sprite:setOrigin(0.5, 0.5)
@@ -46,12 +48,15 @@ function CharacterMenu:init(selected)
 end
 
 function CharacterMenu:removeParty()
-	if #Game.party == 1 then
+	if self.selected == 1 or self.selected > #Game.party then
 		self.ui_cant_select:stop()
 		self.ui_cant_select:play()
 		self.heart_sprite:shake(0, 5)
 	else
 		Game:removePartyMember(self.sprites[self.selected].party.id)
+		if Game.world.followers[self.selected - 1] then
+			Game.world.followers[self.selected - 1]:remove()
+		end
 		self:partySprites()
 		self:selection(0)
 	end
@@ -143,6 +148,8 @@ function CharacterMenu:update()
 
 	elseif Input.pressed("cancel") then
 		if self.ready then
+			self.ui_cancel:stop()
+			self.ui_cancel:play()
 			Game.world:closeMenu()
 			self:remove()
 		else
@@ -150,7 +157,12 @@ function CharacterMenu:update()
 		end
 
 	elseif Input.pressed("confirm") then
-		if self.ready then
+		if (self.selected == 3 and #Game.party == 1) then
+			self.ui_cant_select:stop()
+			self.ui_cant_select:play()
+			self.heart_sprite:shake(0, 5)
+		elseif self.ready then
+			self.ui_select:stop()
 			self.ui_select:play()
 			Game.world:openMenu(PartySelectMenu(self.selected))
 		else
@@ -168,15 +180,34 @@ function CharacterMenu:draw()
 	love.graphics.setLineWidth(6)
 	local y = 300
 	love.graphics.line(80, y, 560, y)
-    local x = 380
+    local x = 320
 	love.graphics.line(x, 300, x, 420)
 
 	love.graphics.setColor(0, 0, 0)
+
+	if Game.party[self.selected] then
+		self:drawStats()
+	end
 
     local x, y = 320, 100
 
 	--love.graphics.rectangle("fill", 250, 60, 140, 40)
 
+end
+
+function CharacterMenu:drawStats()
+	local party = Game:getPartyMember(Game.party[self.selected].id)
+	love.graphics.setColor(1, 1, 1)
+	local x = 330
+	love.graphics.print("ATK "..party.stats["attack"], x, 310)
+	love.graphics.print("DEF "..party.stats["defense"], x, 342)
+	love.graphics.print("MAG "..party.stats["magic"], x, 374)
+
+	x = 420
+
+	love.graphics.print("HP "..party.health.."/"..party.stats["health"], x, 310)
+	love.graphics.print("LOVE "..party.love, x, 342)
+	love.graphics.print("KILLS "..party.kills, x, 374)
 end
 
 return CharacterMenu
