@@ -136,6 +136,8 @@ function actor:init()
 
         ["t_pose"] = {-4, 0},
     }
+
+    self.menu_anim = "pose"
 end
 
 return actor
