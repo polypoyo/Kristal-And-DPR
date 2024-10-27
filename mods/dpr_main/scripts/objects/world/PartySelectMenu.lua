@@ -101,9 +101,9 @@ function PartySelectMenu:selection(num)
 		for k in pairs(self.character_menus) do
 			table.insert(menus, k)
 		end
-
+		local noeltitle = "[shake:1]"..(" "):rep(26)
 		if Game:loadNoel() then --SECRET MENU!
-			table.insert(menus, "[shake:1]")
+			table.insert(menus, noeltitle)
 		end
 		
 		local max = #menus
@@ -120,7 +120,7 @@ function PartySelectMenu:selection(num)
 
 		local table
 		
-		if menu_name == "[shake:1]" then
+		if menu_name == noeltitle then
 			table = {"noel"} --SECRET TABLE DO NOT POST IN #SPAMROOM
 		else
 			table = self.character_menus[menu_name] 
