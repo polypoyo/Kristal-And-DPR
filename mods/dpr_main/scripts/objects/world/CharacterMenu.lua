@@ -20,7 +20,7 @@ function CharacterMenu:init(selected)
     self.up = Assets.getTexture("ui/page_arrow_up")
     self.down = Assets.getTexture("ui/page_arrow_down")
 
-    self.bg = UIBox(100, 100, 440, 300)
+    self.bg = UIBox(80, 100, 480, 300)
     self.bg.layer = -1
 
     self:addChild(self.bg)
@@ -37,7 +37,8 @@ function CharacterMenu:init(selected)
 
 	self.text = Text("")
 	self:addChild(self.text)
-	self.text.x = 90
+	--self.text:setScale(0.8)
+	self.text.x = 70
 	self.text.y = 310
 	
 	self:addChild(self.heart_sprite)
@@ -48,7 +49,7 @@ function CharacterMenu:init(selected)
 end
 
 function CharacterMenu:removeParty()
-	if self.selected == 1 or self.selected > #Game.party then
+	if self.selected == 1 and #Game.party == 1 or self.selected == 1 and Game.party[2].id == "noel" then
 		self.ui_cant_select:stop()
 		self.ui_cant_select:play()
 		self.heart_sprite:shake(0, 5)
@@ -91,6 +92,12 @@ function CharacterMenu:partySprites()
         if party.actor.menu_anim then
 			sprite:setSprite(party.actor.path .. "/" .. party.actor.menu_anim)
 		end
+
+		if party.id == "noel" then
+			sprite:addFX(OutlineFX(), "line")
+			sprite:getFX("line"):setColor(1, 1, 1)
+		end
+
 	end
 end
 
@@ -98,7 +105,7 @@ function CharacterMenu:selection(num)
 	local chr = self.sprites[self.selected]
 
 	if chr then
-	    chr:removeFX(OutlineFX)
+	    chr:removeFX("outline")
 	end
 
 	self.selected = self.selected + num
@@ -117,10 +124,10 @@ function CharacterMenu:selection(num)
 	local chr = self.sprites[self.selected]
 
 	if chr then 
-		chr:addFX(OutlineFX())
+		chr:addFX(OutlineFX(), "outline")
 
 		local color = chr.party.color or {1, 1, 1}
-		chr:getFX(OutlineFX):setColor(unpack(color))
+		chr:getFX("outline"):setColor(unpack(color))
 
 		local soul_color = chr.party.soul_color or {1, 0, 0}
 		self.heart_sprite:setColor(soul_color)
@@ -190,24 +197,26 @@ function CharacterMenu:draw()
 	end
 
     local x, y = 320, 100
-
-	--love.graphics.rectangle("fill", 250, 60, 140, 40)
-
 end
 
 function CharacterMenu:drawStats()
 	local party = Game:getPartyMember(Game.party[self.selected].id)
 	love.graphics.setColor(1, 1, 1)
-	local x = 330
-	love.graphics.print("ATK "..party.stats["attack"], x, 310)
-	love.graphics.print("DEF "..party.stats["defense"], x, 342)
-	love.graphics.print("MAG "..party.stats["magic"], x, 374)
 
-	x = 420
+	if party.cm_draw then
+		party:CharacterMenuDraw()
+	else
+		local x = 330
+		love.graphics.print("ATK "..party.stats["attack"], x, 310)
+		love.graphics.print("DEF "..party.stats["defense"], x, 342)
+		love.graphics.print("MAG "..party.stats["magic"], x, 374)
 
-	love.graphics.print("HP "..party.health.."/"..party.stats["health"], x, 310)
-	love.graphics.print("LOVE "..party.love, x, 342)
-	love.graphics.print("KILLS "..party.kills, x, 374)
+		x = 420
+
+		love.graphics.print("HP "..party.health.."/"..party.stats["health"], x, 310)
+		love.graphics.print("LOVE "..party.love, x, 342)
+		love.graphics.print("KILLS "..party.kills, x, 374)
+	end
 end
 
 return CharacterMenu

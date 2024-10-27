@@ -9,45 +9,45 @@ return {
 		if cutscene:getCharacter("brenda") then
 			cutscene:showNametag("Brenda")
 			cutscene:text("* (Oh god...[wait:5] it's HER.)", "miffed", "brenda")     
-                        if noel_here then
+            if noel_here then
 			    noel_here = self.noel_here + 1
 			    cutscene:showNametag("Noel")
 			    cutscene:text("* (Who?)", "huh", "noel")
 			    cutscene:text("* (Why do you seem so [face:oh]darn upset?)", "bruh", "noel")
-                        end
+            end
 		end
 
 		if cutscene:getCharacter("dumbie") then
 			cutscene:showNametag("Dumbie")
 			cutscene:text("* NO WAY DESS DELTARUNE", "pog", "dumbie")
-                        if noel_here then
-                            if noel_here == 2 then
+            if noel_here then
+                if noel_here == 2 then
 			        noel_here = noel_here + 1
 			        cutscene:showNametag("Noel")
 			        cutscene:text("* Dess?\n[face:...]* Is she one of the baddies?", "bruh", "noel")
-                            else
+                else
 			        noel_here = noel_here + 1
 			        cutscene:showNametag("Noel")
 			        cutscene:text("* (Deltarune?)", "...", "noel")
-                                cutscene:text("* (... interisting.)", "huh", "noel")
-                            end
-                        end
+                    cutscene:text("* (... interisting.)", "huh", "noel")
+                end
+            end
 		end
 		
 		if cutscene:getCharacter("jamm") then
 			cutscene:showNametag("Jamm")
             cutscene:text("* (Did we really have to do this one?)", "nervous", "jamm")
-                        if noel_here then
-                            if noel_here == 3 then
+            if noel_here then
+                if noel_here == 3 then
 			        cutscene:text("* OKAY, WHY THE [face:oh]FRICK[face:madloud] IS EVERYONE REACING IN THIS MANNER?!", "madloud", "noel")
-                            elseif noel_here == 2 then
+                elseif noel_here == 2 then
 			        cutscene:showNametag("Noel")
 			        cutscene:text("* Is somthing wrong?", "bruh", "noel")
-                            else
+                else
 			        cutscene:showNametag("Noel")
 			        cutscene:text("* (Do what?)", "...", "noel")
-                            end
-                        end
+                end
+            end
 		end
 
 		cutscene:showNametag("Dess Holiday?")
@@ -130,7 +130,7 @@ return {
 		cutscene:slideTo(leader, leader.x - 700, leader.y - 50, 1)
 		cutscene:wait(1.5)
 
-		if #Game.party >= Game:getFlag("party_max") then
+		if #Game.party >= 3 then
 			local prev_leader_pm = Game.party[1]
 			Game:setFlag("dessRemovedLeader", prev_leader_pm.id)
 			Game:removePartyMember(prev_leader_pm)
@@ -157,7 +157,7 @@ return {
 		cutscene:wait(0.5)
 
 		Game:setFlag("gotDess", true)
-		Mod:unlockPartyMember("dess")
+		Game:unlockPartyMember("dess")
 
 		local susie_party = Game:getPartyMember("susie")
         if cutscene:getCharacter("susie") then

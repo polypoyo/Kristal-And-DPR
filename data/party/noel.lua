@@ -6,6 +6,8 @@ function character:init()
     -- Display name
     self.name = "Noel"
 
+    self.cm_draw = true
+
     -- Actor (handles sprites)
     self:setActor("noel")
     local lever = "-1"
@@ -123,6 +125,10 @@ function character:init()
         self:setWeapon("old_umbrella")
     end
 
+    self.kills = 0
+
+    self.opinions = {}
+    self.default_opinion = 0
 
 end
 
@@ -150,7 +156,8 @@ function character:save()
         lw_stats = self.lw_stats,
         spells = self:saveSpells(),
         equipped = self:saveEquipment(),
-        flags = self.flags
+        flags = self.flags, 
+        kills = self.kills,
     }
 
     if Kristal.temp_save == true then
@@ -168,7 +175,8 @@ function character:save()
             Defense = self.stats.defense,
             Equipped = self:saveEquipment(),
             Spells = self:saveSpells(),
-            Level = self.level
+            Level = self.level,
+            Kills = self.kills
         }    
 
         Noel:saveNoel(newData)
@@ -218,7 +226,8 @@ function character:load(data)
             self:loadSpells(save.Spells)
         end
 
-        --local noel2 = Game:getPartyMember("noel")
+        self.kills = save.Kills or self.kills
+
         self:loadEquipment(save.Equipped)
 
         self.level = save.Level or data.level or self.level
@@ -249,6 +258,21 @@ function character:load(data)
     if Kristal.temp_save == true then
         Kristal.temp_save = nil
     end
+end
+
+function character:CharacterMenuDraw()
+
+    local party = self
+	local x = 330
+	love.graphics.print("ATK "..party.stats["attack"], x, 310)
+	love.graphics.print("PAIN x10", x, 342)
+	love.graphics.print("MAG "..party.stats["magic"], x, 374)
+
+	x = 420
+
+	love.graphics.print("HP "..party.health.."/"..party.stats["health"], x, 310)
+	love.graphics.print("   LOVE -1", x, 342)
+	love.graphics.print("KILLS "..party.kills, x, 374)
 end
 
 return character

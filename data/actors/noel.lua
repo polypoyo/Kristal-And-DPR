@@ -47,6 +47,9 @@ function actor:init()
 
     self.voice = "noel"
 
+
+    self.menu_anim = "brella"
+
     self.portrait_path = "face/noel"
 
     self.portrait_offset = {-22, -30}

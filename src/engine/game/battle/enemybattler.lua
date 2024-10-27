@@ -925,7 +925,9 @@ function EnemyBattler:defeat(reason, violent)
 
     if self.done_state == "KILLED" or self.done_state == "FROZEN" then
         Game.battle.killed = true
-        Game:addFlag("library_kills", 1)
+        for i, party in ipairs(Game.party) do
+            party.kills = party.kills + 1
+        end
         if self.done_state == "FROZEN" then
             Game.battle.freeze_xp = Game.battle.freeze_xp + self.experience
         else
