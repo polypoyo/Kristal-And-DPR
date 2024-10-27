@@ -90,6 +90,11 @@ return function(cutscene, event)
     if mod then
         local has_dess = cutscene:getCharacter("dess") ~= nil
 
+        if Kristal.Mods.data[mod] == nil then
+            cutscene:text("* But no connection could be formed.")
+            cutscene:text(string.format("* (Are you missing the %q DLC?)", mod))
+            return
+        end
         cutscene:text("* Your "
             .. (has_dess and "desstination" or "destination ")
             .." is "
