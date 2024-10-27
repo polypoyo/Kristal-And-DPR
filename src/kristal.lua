@@ -1,3 +1,4 @@
+---@class Kristal
 local Kristal = {}
 
 if not HOTSWAPPING then
@@ -353,6 +354,7 @@ function love.mousepressed(win_x, win_y, button, istouch, presses)
     if Kristal.DebugSystem then
         Kristal.DebugSystem:onMousePressed(x, y, button, istouch, presses)
     end
+    Input.onMousePressed(x, y, button, istouch, presses)
     Kristal.callEvent(KRISTAL_EVENT.onMousePressed, x, y, button, istouch, presses)
 end
 
@@ -367,6 +369,7 @@ function love.mousereleased(x, y, button, istouch, presses)
     if Kristal.DebugSystem then
         Kristal.DebugSystem:onMouseReleased(x, y, button, istouch, presses)
     end
+    Input.onMouseReleased(x, y, button, istouch, presses)
     Kristal.callEvent(KRISTAL_EVENT.onMouseReleased, x, y, button, istouch, presses)
 end
 

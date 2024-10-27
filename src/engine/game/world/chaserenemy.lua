@@ -33,7 +33,7 @@
 ---
 ---@field aura          boolean Whether this enemy will have an aura around it as seen with enemies in Deltarune Chapter 2. Overrides the mod-wide config for enemy auras.
 ---
----@overload fun(...) : ChaserEnemy
+---@overload fun(actor: string|Actor, x?: number, y?: number, properties?: table) : ChaserEnemy
 local ChaserEnemy, super = Class(Character, "enemy")
 
 function ChaserEnemy:init(actor, x, y, properties)

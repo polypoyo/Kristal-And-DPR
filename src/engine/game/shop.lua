@@ -308,7 +308,10 @@ function Shop:postInit()
         self:onEmote(node.arguments[1])
     end
 
-    self.dialogue_text = DialogueText(nil, 30, 270, 372, 226)
+    self.dialogue_text = DialogueText(nil, 30, 270, 372, 226, {
+        font = self:getFont(),
+        indent_string = self:getIndentString()
+    })
 
     self.dialogue_text:registerCommand("emote", emoteCommand)
 
@@ -316,7 +319,10 @@ function Shop:postInit()
     self:addChild(self.dialogue_text)
     self:setDialogueText(self.encounter_text)
 
-    self.right_text = DialogueText("", 30 + 420, 260, 176, 206)
+    self.right_text = DialogueText("", 30 + 420, 260, 176, 206, {
+        font = self:getFont(),
+        indent_string = self:getIndentString()
+    })
 
     self.right_text:registerCommand("emote", emoteCommand)
 
@@ -352,7 +358,8 @@ end
 
 ---@return string
 function Shop:getVoice()
-    return self.voice
+    local actor = self.shopkeeper:getActor()
+    return self.voice or (actor and actor:getVoice())
 end
 
 --- Adds the [`voice`](lua://Shop.voice) of the Shop to a set of dialogue texts.
@@ -372,6 +379,26 @@ function Shop:getVoicedText(text)
     else
         return "[voice:"..voice.."]"..text
     end
+end
+
+---@return string?
+function Shop:getFont()
+    local actor = self.shopkeeper:getActor()
+    if actor then
+        return actor:getFont()
+    end
+
+    return nil
+end
+
+---@return string?
+function Shop:getIndentString()
+    local actor = self.shopkeeper:getActor()
+    if actor then
+        return actor:getIndentString()
+    end
+
+    return nil
 end
 
 ---@param text string[]|string
@@ -1272,7 +1299,7 @@ function Shop:buyItem(current_item)
             -- Visual/auditorial feedback (did I spell that right?)
             Assets.playSound("locker")
             self:setRightText(self.buy_text)
-            
+
             -- PURCHASE THE ITEM
             -- Remove the money
             self:removeMoney(current_item.options["price"] or 0)
