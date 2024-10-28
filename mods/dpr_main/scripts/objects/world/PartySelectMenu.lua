@@ -217,33 +217,47 @@ function PartySelectMenu:update()
 			self.ui_cancel_small:stop()
 			self.ui_cancel_small:play()
 		elseif Input.pressed("confirm") then
-
-			self.ui_select:stop()
-			self.ui_select:play()
-			local party = self.selected.char.id
-			local party_member = Game:getPartyMember(party)
-			if Game.party[self.slot_selected] then
-				Game.party[self.slot_selected] = party_member
-				if self.slot_selected > 1 then
-					Game.world.followers[self.slot_selected - 1]:setActor(Game.party[self.slot_selected]:getActor())
-				else
-					Game.world.player:setActor(Game.party[1]:getActor())
-				end
-			else
-				Game:addPartyMember(party)
-				if self.slot_selected > 1 then
-					if Game.world.followers[self.slot_selected - 1] then
-						Game.world.followers[self.slot_selected - 1]:setActor(Game.party[self.slot_selected]:getActor())
-					else
-						local follower = Game.world:spawnFollower(party)
-						follower:setActor(Game.party[self.slot_selected]:getActor())
-						follower:setFacing("down")
+			local selectable = true
+			if self.selected.char then
+				for i, v in ipairs(Game.party) do
+					if v.id == self.selected.char.id then
+						selectable = false
 					end
 				end
+			else
+				selectable = false
 			end
 
-			Game.world:openMenu(CharacterMenu(self.slot_selected))
-
+			if selectable then
+				self.ui_select:stop()
+				self.ui_select:play()
+				local party = self.selected.char.id
+				local party_member = Game:getPartyMember(party)
+				if Game.party[self.slot_selected] then
+					Game.party[self.slot_selected] = party_member
+					if self.slot_selected > 1 then
+						Game.world.followers[self.slot_selected - 1]:setActor(Game.party[self.slot_selected]:getActor())
+					else
+						Game.world.player:setActor(Game.party[1]:getActor())
+					end
+				else
+					Game:addPartyMember(party)
+					if self.slot_selected > 1 then
+						if Game.world.followers[self.slot_selected - 1] then
+							Game.world.followers[self.slot_selected - 1]:setActor(Game.party[self.slot_selected]:getActor())
+						else
+							local follower = Game.world:spawnFollower(party)
+							follower:setActor(Game.party[self.slot_selected]:getActor())
+							follower:setFacing("down")
+						end
+					end
+				end
+	
+				Game.world:openMenu(CharacterMenu(self.slot_selected))
+			else
+				self.ui_cant_select:stop()
+				self.ui_cant_select:play()
+			end
 		end
 	end
 end
