@@ -106,4 +106,9 @@ function actor:init()
 
 end
 
+function actor:onTextSound(node)
+    Assets.playSound("voice/noel/"..string.lower(node.character), 1, 1)
+    return true
+end
+
 return actor
