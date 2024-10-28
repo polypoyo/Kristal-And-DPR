@@ -49,7 +49,7 @@ function CharacterMenu:init(selected)
 end
 
 function CharacterMenu:removeParty()
-	if self.selected == 1 and #Game.party == 1 or self.selected == 1 and Game.party[2].id == "noel" then
+	if (self.selected == 1 and #Game.party == 1) or (self.selected == 1 and Game.party[2].id == "noel") or #Game.party == 1 then
 		self.ui_cant_select:stop()
 		self.ui_cant_select:play()
 		self.heart_sprite:shake(0, 5)
