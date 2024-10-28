@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 6,
-  nextobjectid = 14,
+  nextobjectid = 16,
   properties = {},
   tilesets = {
     {
@@ -137,6 +137,22 @@ return {
           properties = {
             ["actor"] = "dummy",
             ["encounter"] = "dummy"
+          }
+        },
+        {
+          id = 15,
+          name = "enemy",
+          type = "",
+          shape = "point",
+          x = 760,
+          y = 520,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["actor"] = "poseur",
+            ["encounter"] = "poseur"
           }
         }
       }

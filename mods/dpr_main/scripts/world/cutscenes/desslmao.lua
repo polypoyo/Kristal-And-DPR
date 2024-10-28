@@ -39,7 +39,7 @@ return {
             cutscene:text("* (Did we really have to do this one?)", "nervous", "jamm")
             if noel_here then
                 if noel_here == 3 then
-			        cutscene:text("* OKAY, WHY THE [face:oh]FRICK[face:madloud] IS EVERYONE REACING IN THIS MANNER?!", "madloud", "noel")
+			        cutscene:text("* OKAY, WHY THE [face:oh]FRICK[face:madloud] IS EVERYONE REACING IN THIS MANNER?![auto:true]", "madloud", "noel")
                 elseif noel_here == 2 then
 			        cutscene:showNametag("Noel")
 			        cutscene:text("* Is somthing wrong?", "bruh", "noel")
@@ -304,27 +304,28 @@ return {
 		cutscene:wait(1)
         cutscene:showNametag("???")
         if susie then
-            cutscene:text("* YOU![wait:10] Well,[wait:5] just you.[wait:10] Not YOU.")
+            cutscene:text("[face:susie_bangs/smile_b][voice:susie]* I'm you!")
 
             cutscene:showNametag("Susie")
             cutscene:text("* Wha-?![wait:10] What the hell??", "surprise_frown", "susie")
         else
-            cutscene:text("* LOOK at me![wait:10] I'm the Angry Dino Girl!")
+            cutscene:text("[face:susie_bangs/smile_b][voice:susie]* LOOK at me![wait:10] I'm the Angry Dino Girl!")
         end
 
 		cutscene:hideNametag()
 
 		boss:fadeTo(0.2, 0.05)
 		cutscene:wait(1)
-		boss:setActor("YOU")
+		boss:setActor("kris")
 		cutscene:look(boss, "up")
 		boss:fadeTo(1, 0.05)
 		cutscene:wait(1)
 		cutscene:showNametag("???")
+
         if susie then
-            cutscene:text("* Oh well,[wait:5] NOW I'm YOU!")
+            cutscene:text("* SUSIE LOOK![wait:5]\n* IT'S ME[wait:5] [color:yellow]KRIS[color:reset]!")
         else
-            cutscene:text("* AND NOW I'm YOU!")
+            cutscene:text("* AND NOW I'm the blue one!")
         end
 		cutscene:text("* Uheeheehee!")
 		cutscene:hideNametag()
