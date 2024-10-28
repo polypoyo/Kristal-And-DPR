@@ -3,6 +3,7 @@ modRequire("scripts/main/utils_general")
 
 function Mod:init()
     print("Loaded "..self.info.name.."!")
+    self:registerShaders()
 end
 
 function Mod:postInit(new_file)
@@ -73,5 +74,13 @@ function Mod:onTextSound(sound, node)
             Assets.playSound("voice/default", 1, 1)
             Assets.playSound("voice/battle", 1, 1)
         return true
+    end
+end
+
+function Mod:registerShaders()
+    self.shaders = {}
+    for _,path,shader in Registry.iterScripts("shaders/") do
+        assert(shader ~= nil, '"shaders/'..path..'.lua" does not return value')
+        self.shaders[path] = shader
     end
 end
