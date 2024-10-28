@@ -310,7 +310,6 @@ function Shop:postInit()
 
     self.dialogue_text = DialogueText(nil, 30, 270, 372, 226, {
         font = self:getFont(),
-        actor = self.shopkeeper:getActor(),
         indent_string = self:getIndentString()
     })
 
@@ -322,7 +321,6 @@ function Shop:postInit()
 
     self.right_text = DialogueText("", 30 + 420, 260, 176, 206, {
         font = self:getFont(),
-        actor = self.shopkeeper:getActor(),
         indent_string = self:getIndentString()
     })
 
