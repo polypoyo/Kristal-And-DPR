@@ -141,10 +141,10 @@ function actor:init()
     }
 end
 
-function actor:onTextSound(node)
+
+function actor:onTextSound()
     Assets.playSound("voice/default", 1, 1)
     Assets.playSound("voice/battle", 1, 1)
-    return true
 end
 
 return actor

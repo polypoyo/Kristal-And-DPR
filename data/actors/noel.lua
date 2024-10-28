@@ -5,11 +5,6 @@ function actor:onSpriteInit(sprite)
     sprite:getFX(OutlineFX):setColor(1, 1, 1)
 end
 
-function actor:onTextSound(node)
-    Assets.playSound("voice/noel/"..string.lower(node.character), 1, 1)
-    return true
-end
-
 --Up and down didnt look nice enough
 --[[
 --print(Game.world.player.sprite.sprite_options[1])
@@ -109,6 +104,11 @@ function actor:init()
         ["walk/right"] = "walk/right",
     }
 
+end
+
+function actor:onTextSound(node)
+    Assets.playSound("voice/noel/"..string.lower(node.character), 1, 1)
+    return true
 end
 
 return actor
