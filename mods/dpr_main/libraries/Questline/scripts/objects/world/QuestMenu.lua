@@ -28,7 +28,19 @@ function QuestMenu:init()
     self.selected_item = 1
 	
 	self.page = 1
-	self.pages = math.ceil(#Game:getFlag("quest_name")/11)
+	self.quests = self:getVisibleQuests()
+	self.pages = math.ceil(#self.quests/11)
+end
+
+---@return Quest[]
+function QuestMenu:getVisibleQuests()
+	local quests = {}
+	for key, value in pairs(Game.quests_data) do
+		if value:isVisible() then
+			table.insert(quests, value)
+		end
+	end
+	return quests
 end
 
 function QuestMenu:onAdd()
@@ -38,7 +50,8 @@ end
 
 function QuestMenu:update()
     super.update(self)
-	self.pages = math.ceil(#Game:getFlag("quest_name")/11)
+	self.quests = self:getVisibleQuests()
+	self.pages = math.ceil(#self.quests/11)
 end
 
 function QuestMenu:onKeyPressed(key)
@@ -56,7 +69,7 @@ function QuestMenu:onKeyPressed(key)
 		self.selected_item = self.selected_item + 1
 	end
 	if self.selected_item < 1 then self.selected_item = 1 end
-	if self.selected_item > #Game:getFlag("quest_id") then self.selected_item = #Game:getFlag("quest_id") end
+	if self.selected_item > #self.quests then self.selected_item = #self.quests end
 	if self.selected_item ~= old then
 		self.ui_move:stop()
 		self.ui_move:play()
@@ -77,7 +90,8 @@ function QuestMenu:draw()
 	love.graphics.line(160, 32, 160, 260)
 	
     love.graphics.setFont(self.font_small)
-	for k,v in pairs(Game:getFlag("quest_name")) do
+	for k,quest in pairs(self.quests) do
+		local v = quest:getName()
 		if (k >= 1 + 11 * (self.page - 1)) and (k <= 11 * (self.page)) then
 			if k == self.selected_item then
 				love.graphics.setColor(1, 1, 0, 1)
@@ -85,53 +99,51 @@ function QuestMenu:draw()
 				love.graphics.setColor(1, 1, 1, 1)
 			end
 			love.graphics.print(v, -6, 42 + (16 * (k-1-11*(self.page-1))))
-			if Game:getFlag("quest_completed")[k] then
+			if quest:isCompleted() then
 				love.graphics.setColor(0, 1, 0, 1)
 				love.graphics.printf("DONE", 100, 42 + (16 * (k-1)), 50, "right")
 				love.graphics.setColor(1, 1, 1, 1)
-			elseif Game:getFlag("quest_progress_max")[k] > 0 then
-				love.graphics.printf(Game:getFlag("quest_progress")[k] .. "/" .. Game:getFlag("quest_progress_max")[k], 100, 42 + (16 * (k-1)), 50, "right")
+			elseif quest:getProgressMax() > 0 then
+				love.graphics.printf(quest:getProgress() .. "/" .. quest:getProgressMax(), 100, 42 + (16 * (k-1)), 50, "right")
 			end
 		end
 	end
 	
 	love.graphics.setColor(1, 1, 1, 1)
 	love.graphics.setFont(self.font)
-	love.graphics.printf(Game:getFlag("quest_name")[self.selected_item], 160, 42, 320, "center")
+	love.graphics.printf(self.quests[self.selected_item]:getName(), 160, 42, 320, "center")
 	love.graphics.setFont(self.font_small)
-	if Game:getFlag("quest_completed")[self.selected_item] then
+	if self.quests[self.selected_item]:isCompleted() then
 		love.graphics.setColor(0, 1, 0, 1)
 		love.graphics.printf("COMPLETED", 160, 74, 320, "center")
 		love.graphics.setColor(1, 1, 1, 1)
-	elseif Game:getFlag("quest_progress_max")[self.selected_item] > 0 then
-		love.graphics.printf(Game:getFlag("quest_progress")[self.selected_item] .. "/" .. Game:getFlag("quest_progress_max")[self.selected_item], 160, 74, 320, "center")
+	elseif self.quests[self.selected_item]:getProgressMax() > 0 then
+		love.graphics.printf(self.quests[self.selected_item]:getProgress() .. "/" .. self.quests[self.selected_item]:getProgressMax(), 160, 74, 320, "center")
 	end
-	love.graphics.printf(Game:getFlag("quest_desc")[self.selected_item], 168, 90, 304)
+	love.graphics.printf(self.quests[self.selected_item]:getDescription(), 168, 90, 304)
 	
 	local total_steps = 0
-	if Game:getFlag("quest_total_steps") and Game:getFlag("quest_total_steps") > 0 then
-		total_steps = Game:getFlag("quest_total_steps")
-	else
-		for k,v in pairs(Game:getFlag("quest_progress_max")) do
-			local new_steps
-			if v <= 0 then
-				new_steps = 1
-			else
-				new_steps = v
-			end
-			total_steps = total_steps + new_steps
+	for k,quest in pairs(self.quests) do
+		local v = quest:getProgressMax()
+		local new_steps
+		if v <= 0 then
+			new_steps = 1
+		else
+			new_steps = v
 		end
+		total_steps = total_steps + new_steps
 	end
 	
 	local comp_steps = 0
-	for k,v in pairs(Game:getFlag("quest_progress")) do
-		if Game:getFlag("quest_progress_max")[k] <= 0 then
+	for k,quest in pairs(self.quests) do
+		local v = quest:getProgress()
+		if self.quests[k]:getProgressMax() <= 0 then
 			if Game:getFlag("quest_completed")[k] then
 				comp_steps = comp_steps + 1
 			end
 		else
-			if v >= Game:getFlag("quest_progress_max")[k] then
-				comp_steps = comp_steps + Game:getFlag("quest_progress_max")[k]
+			if v >= self.quests[k]:getProgressMax() then
+				comp_steps = comp_steps + self.quests[k]:getProgressMax()
 			else
 				comp_steps = comp_steps + v
 			end

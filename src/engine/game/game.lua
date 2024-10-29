@@ -36,6 +36,7 @@
 ---@field party             PartyMember[]
 ---@field party_data        PartyMember[]
 ---@field recruits_data     Recruit[]
+---@field quests_data       Quest[]
 ---
 ---@field fader             Fader
 ---@field max_followers     integer
