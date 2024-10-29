@@ -386,6 +386,8 @@ function Game:load(data, index, fade)
         for k,v in pairs(data.quests_data) do
             if self.quests_data[k] then
                 self.quests_data[k]:load(v)
+            else
+                self.quests_data[k] = FallbackQuest(v)
             end
         end
     end

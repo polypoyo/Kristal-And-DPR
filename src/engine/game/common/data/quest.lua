@@ -1,8 +1,8 @@
 ---@class Quest : Class
 local Quest = Class()
 function Quest:init()
-    self.name = "Known Objective " .. self.id
-    self.description = "It is known."
+    self.name = "Untitled Quest " .. (data.id or "???")
+    self.description = "No description."
     self.progress = 0
     self.progress_max = 1
 end
@@ -29,7 +29,6 @@ function Quest:save()
 end
 
 function Quest:load(data)
-    assert(self.id == data.id, "Loading the wrong quest! "..self.id.." ~= "..data.id)
     self.progress = data.progress
 end
 
