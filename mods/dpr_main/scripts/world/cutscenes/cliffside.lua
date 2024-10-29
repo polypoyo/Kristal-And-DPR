@@ -348,7 +348,7 @@ end
            --cutscene:text("* You seem to already know me.", "neutral", "cat")
        end
 
-       Kristal.callEvent("createQuest", "Cliffside's Cat", "Cliffside's Cat", "Placeholder.")
+       Game:getQuest("cliffsides_cat"):unlock()
        cutscene:text("* quest created", "neutral", "cat")
 
 
