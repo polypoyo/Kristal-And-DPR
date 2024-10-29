@@ -7,6 +7,7 @@ function FallbackQuest:init(data)
     self.progress = 0
     self.progress_max = 1000
     self.hidden = true
+    self.id = data.id
     self:load(data)
 end
 
