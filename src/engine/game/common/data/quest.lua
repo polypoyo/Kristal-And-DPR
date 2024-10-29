@@ -1,10 +1,11 @@
 ---@class Quest : Class
 local Quest = Class()
 function Quest:init()
-    self.name = "Untitled Quest " .. (data.id or "???")
+    self.name = "Untitled Quest " .. (self.id or "???")
     self.description = "No description."
     self.progress = 0
     self.progress_max = 1
+    self.hidden = false
 end
 
 function Quest:setProgress(v) self.progress = v end
