@@ -3,7 +3,7 @@ local Quest = Class()
 function Quest:init()
     self.name = "Untitled Quest " .. (self.id or "???")
     self.description = "No description."
-    self.progress = 0
+    self.progress = -1
     self.progress_max = 1
 end
 
