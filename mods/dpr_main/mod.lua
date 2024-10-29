@@ -60,9 +60,9 @@ function Mod:getGlobalNextLv()
     return Utils.clamp(Kristal.callEvent("getGlobalNextLvRequiredEXP") - Game:getFlag("library_experience"), 0, 99999)
 end
 
-function Mod:createQuest(name, id, desc, progress_max, silent)
+function Mod:unlockQuest(quest, silent)
     if not silent and Game.stage then
-        Game.stage:addChild(QuestCreatedPopup(name))
+        Game.stage:addChild(QuestCreatedPopup(quest))
     end
 end
 

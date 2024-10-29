@@ -7,9 +7,9 @@ function Quest:init()
     self.progress_max = 1
 end
 
-function Quest:unlock()
+function Quest:unlock(...)
     self.progress = math.max(self.progress, 0)
-    Kristal.callEvent("unlockQuest", self)
+    Kristal.callEvent("unlockQuest", self, ...)
 end
 
 function Quest:isUnlocked()
