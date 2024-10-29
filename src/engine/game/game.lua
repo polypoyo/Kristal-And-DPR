@@ -1278,4 +1278,8 @@ function Game:getUnlockedPartyMembers()
     return Game:getFlag("_unlockedPartyMembers")
 end
 
+function Game:getQuest(id)
+    return self.quests_data[id]
+end
+
 return Game
