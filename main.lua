@@ -115,6 +115,7 @@ TeaItem = require("src.engine.game.common.data.teaitem")
 TensionItem = require("src.engine.game.common.data.tensionitem")
 LightEquipItem = require("src.engine.game.common.data.lightequipitem")
 Recruit = require("src.engine.game.common.data.recruit")
+Quest = require("src.engine.game.common.data.quest")
 
 ActorSprite = require("src.engine.game.common.actorsprite")
 Inventory = require("src.engine.game.common.inventory")
