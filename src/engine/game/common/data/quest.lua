@@ -5,7 +5,19 @@ function Quest:init()
     self.description = "No description."
     self.progress = 0
     self.progress_max = 1
-    self.hidden = false
+end
+
+function Quest:unlock()
+    self.progress = math.max(self.progress, 0)
+    Kristal.callEvent("unlockQuest", self)
+end
+
+function Quest:isUnlocked()
+    return (self.progress >= 0)
+end
+
+function Quest:isVisible()
+    return self:isUnlocked()
 end
 
 function Quest:setProgress(v) self.progress = v end

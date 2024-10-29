@@ -6,9 +6,12 @@ function FallbackQuest:init(data)
     self.description = "It is known."
     self.progress = 0
     self.progress_max = 1000
-    self.hidden = true
     self.id = data.id
     self:load(data)
+end
+
+function FallbackQuest:isVisible()
+    return false
 end
 
 return FallbackQuest
