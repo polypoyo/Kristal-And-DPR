@@ -288,6 +288,11 @@ function Game:save(x, y)
         data.recruits_data[k] = v:save()
     end
 
+    data.quests_data = {}
+    for k,v in pairs(self.quests_data) do
+        data.quests_data[k] = v:save()
+    end
+
     Kristal.callEvent(KRISTAL_EVENT.save, data)
 
     return data
@@ -373,6 +378,14 @@ function Game:load(data, index, fade)
         for k,v in pairs(data.recruits_data) do
             if self.recruits_data[k] then
                 self.recruits_data[k]:load(v)
+            end
+        end
+    end
+    self:initQuests()
+    if data.quests_data then
+        for k,v in pairs(data.quests_data) do
+            if self.quests_data[k] then
+                self.quests_data[k]:load(v)
             end
         end
     end
@@ -784,6 +797,13 @@ function Game:initRecruits()
         else
             error("Attempted to create non-existent recruit \"" .. id .. "\"")
         end
+    end
+end
+
+function Game:initQuests()
+    self.quests_data = {}
+    for id,_ in pairs(Registry.quests) do
+        self.quests_data[id] = Registry.createQuest(id)
     end
 end
 

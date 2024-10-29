@@ -496,6 +496,14 @@ function Registry.createCombo(id, ...)
     end
 end
 
+function Registry.createQuest(id, ...)
+    if self.quests[id] then
+        return self.quests[id](...)
+    else
+        error("Attempt to create non existent quest \"" .. tostring(id) .. "\"")
+    end
+end
+
 -- Register Functions --
 
 ---@param id string
