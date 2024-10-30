@@ -2,16 +2,13 @@
 ---@overload fun(...) : QuestCreatedPopup
 local QuestCreatedPopup, super = Class("Object")
 
-function QuestCreatedPopup:init(id)
+---@param quest Quest
+function QuestCreatedPopup:init(quest)
     super.init(self, SCREEN_WIDTH, 0, 280, SCREEN_HEIGHT)
 
     self.quest_menu_present_initially = #Game.stage:getObjects(QuestMenu) > 0
 
-    local quest_id_what = Kristal.callEvent("getQuest", id)
-    if not quest_id_what then
-        error("Quest " + '"' + id + '"' + " does not exist.")
-    end
-    local quest_name = Game:getFlag("quest_name")[quest_id_what]
+    local quest_name = quest:getName()
 
     self.box = self:addChild(BoxComponent(FixedSizing(self.width), FitSizing()))
     self.box:setLayout(VerticalLayout({ gap = 4, align = "start" }))

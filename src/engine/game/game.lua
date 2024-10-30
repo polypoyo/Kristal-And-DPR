@@ -36,6 +36,7 @@
 ---@field party             PartyMember[]
 ---@field party_data        PartyMember[]
 ---@field recruits_data     Recruit[]
+---@field quests_data       Quest[]
 ---
 ---@field fader             Fader
 ---@field max_followers     integer
@@ -288,6 +289,11 @@ function Game:save(x, y)
         data.recruits_data[k] = v:save()
     end
 
+    data.quests_data = {}
+    for k,v in pairs(self.quests_data) do
+        data.quests_data[k] = v:save()
+    end
+
     Kristal.callEvent(KRISTAL_EVENT.save, data)
 
     return data
@@ -373,6 +379,16 @@ function Game:load(data, index, fade)
         for k,v in pairs(data.recruits_data) do
             if self.recruits_data[k] then
                 self.recruits_data[k]:load(v)
+            end
+        end
+    end
+    self:initQuests()
+    if data.quests_data then
+        for k,v in pairs(data.quests_data) do
+            if self.quests_data[k] then
+                self.quests_data[k]:load(v)
+            else
+                self.quests_data[k] = FallbackQuest(v)
             end
         end
     end
@@ -784,6 +800,13 @@ function Game:initRecruits()
         else
             error("Attempted to create non-existent recruit \"" .. id .. "\"")
         end
+    end
+end
+
+function Game:initQuests()
+    self.quests_data = {}
+    for id,_ in pairs(Registry.quests) do
+        self.quests_data[id] = Registry.createQuest(id)
     end
 end
 
@@ -1253,6 +1276,10 @@ end
 
 function Game:getUnlockedPartyMembers()
     return Game:getFlag("_unlockedPartyMembers")
+end
+
+function Game:getQuest(id)
+    return self.quests_data[id]
 end
 
 return Game
