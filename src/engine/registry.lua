@@ -80,6 +80,16 @@ function Registry.initialize(preload)
             self.base_scripts["data/"..path] = chunk
         end
 
+        for _,path in ipairs(Utils.getFilesRecursive("minigames", ".lua")) do
+            local chunk = love.filesystem.load("minigames/"..path..".lua")
+            self.base_scripts["minigames/"..path] = chunk
+        end
+
+        for _,path in ipairs(Utils.getFilesRecursive("battle", ".lua")) do
+            local chunk = love.filesystem.load("battle/"..path..".lua")
+            self.base_scripts["battle/"..path] = chunk
+        end
+
         Registry.initActors()
     end
     if not preload then
