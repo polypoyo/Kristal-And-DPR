@@ -22,6 +22,7 @@ function Quest:isVisible()
 end
 
 function Quest:setProgress(v) self.progress = v end
+function Quest:addProgress(v) self:setProgress(self:getProgress() + v) end
 
 function Quest:getName() return self.name end
 function Quest:getDescription() return self.description end
