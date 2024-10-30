@@ -44,7 +44,7 @@ function QuestMenu:getVisibleQuests()
 end
 
 function QuestMenu:onAdd()
-	Assets.playSound("dimbox")
+	Assets.playSound("dimbox", 0.7)
 	Game:setFlag("quest_menu_ever_opened", true)
 end
 
