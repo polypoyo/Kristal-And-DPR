@@ -185,6 +185,8 @@ HealthBar = require("src.engine.game.world.ui.healthbar")
 OverworldActionBox = require("src.engine.game.world.ui.overworldactionbox")
 Shopbox = require("src.engine.game.world.ui.shopbox")
 RecruitMenu = require("src.engine.game.world.ui.recruitmenu")
+QuestMenu = require("src.engine.game.world.ui.questmenu")
+QuestCreatedPopup = require("src.engine.game.world.ui.questcreatedpopup")
 
 DarkMenu = require("src.engine.game.world.ui.dark.darkmenu")
 DarkItemMenu = require("src.engine.game.world.ui.dark.darkitemmenu")
