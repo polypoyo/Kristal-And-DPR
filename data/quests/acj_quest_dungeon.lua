@@ -9,6 +9,10 @@ function AcJQuest:init()
     self.progress_max = 0
 end
 
+function AcJQuest:isVisible()
+    return Game:getFlag("acj_quest_dungeon_prog", nil) ~= nil
+end
+
 function AcJQuest:getDescription()
 	if Game:getFlag("acj_quest_dungeon_prog", 0) == 1 then
 		return "As Jamm and Dess walked into the dungeon, the door locked behind them. The two must progress through the dungeon, all while Jamm tries not to be annoyed to death by Dess."

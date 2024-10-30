@@ -9,6 +9,10 @@ function MarcyQuest:init()
     self.progress_max = 0
 end
 
+function MarcyQuest:isVisible()
+    return Game:getFlag("marcyquest_prog", nil) ~= nil
+end
+
 function MarcyQuest:getDescription()
 	if Game:getFlag("marcyquest_prog", 0) == 1 then
 		return "Marcy talked to the captain and, as it turns out, she was able to join the crew for now. She decided it would be best if she took her time to explore for now."

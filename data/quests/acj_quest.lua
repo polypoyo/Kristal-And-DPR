@@ -9,6 +9,10 @@ function AcJQuest:init()
     self.progress_max = 0
 end
 
+function AcJQuest:isVisible()
+    return Game:getFlag("acj_quest_prog", nil) ~= nil
+end
+
 function AcJQuest:getDescription()
 	if Game:getFlag("acj_quest_prog", 0) == 1 then
 		return "You found AcousticJamm in the forest. However, something seems off about him. Not only that, but the forest seems different than when you entered. Try to find your way out!"
