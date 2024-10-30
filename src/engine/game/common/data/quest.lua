@@ -1,4 +1,5 @@
 ---@class Quest : Class
+---@overload fun(): Class
 local Quest = Class()
 function Quest:init()
     self.name = "Untitled Quest " .. (self.id or "???")

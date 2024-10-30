@@ -1,4 +1,5 @@
 ---@class FallbackQuest : Quest
+---@overload fun(data: table)
 local FallbackQuest, super = Class(Quest)
 function FallbackQuest:init(data)
     super.init(self)
