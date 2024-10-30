@@ -45,6 +45,8 @@ end
 
 function Quest:load(data)
     self.progress = data.progress
+
+    self:onLoad(data)
 end
 
 function Quest:onSave(data) end
