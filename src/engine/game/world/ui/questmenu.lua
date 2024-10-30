@@ -138,7 +138,7 @@ function QuestMenu:draw()
 	for k,quest in pairs(self.quests) do
 		local v = quest:getProgress()
 		if self.quests[k]:getProgressMax() <= 0 then
-			if Game:getFlag("quest_completed")[k] then
+			if self.quests[k]:isCompleted() then
 				comp_steps = comp_steps + 1
 			end
 		else
