@@ -9,12 +9,12 @@ function Quest:init()
 end
 
 function Quest:unlock(...)
-    self.progress = math.max(self.progress, 0)
+    self:setProgress(math.max(self:getProgress(), 0))
     Kristal.callEvent("unlockQuest", self, ...)
 end
 
 function Quest:isUnlocked()
-    return (self.progress >= 0)
+    return (self:getProgress() >= 0)
 end
 
 function Quest:isVisible()
