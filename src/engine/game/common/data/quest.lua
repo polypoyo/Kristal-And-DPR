@@ -6,6 +6,18 @@ function Quest:init()
     self.description = "No description."
     self.progress = -1
     self.progress_max = 1
+    self.flags = {}
+end
+
+function Quest:setFlag(flag, value)
+    self.flags[flag] = value
+end
+function Quest:getFlag(flag, default)
+    if self.flags[flag] == nil then
+        return default
+    else
+        return self.flags[flag]
+    end
 end
 
 function Quest:unlock(...)
@@ -38,6 +50,7 @@ function Quest:save()
     local data = {
         id = self.id,
         progress = self:getProgress(),
+        flags = self.flags
     }
     self:onSave(data)
     return data
@@ -45,7 +58,7 @@ end
 
 function Quest:load(data)
     self.progress = data.progress
-
+    self.flags = data.flags or {}
     self:onLoad(data)
 end
 
