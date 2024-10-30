@@ -19,6 +19,9 @@ function Quest:getFlag(flag, default)
         return self.flags[flag]
     end
 end
+function Quest:addFlag(flag, value)
+    self:setFlag(flag, self:getFlag(flag, 0) + value)
+end
 
 function Quest:unlock(...)
     self:setProgress(math.max(self:getProgress(), 0))
