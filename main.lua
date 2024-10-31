@@ -283,6 +283,7 @@ GameOver = require("src.engine.game.gameover")
 Legend = require("src.engine.game.legend")
 
 DarkTransition = require("src.engine.game.darktransition.darktransition")
+LoadingDarkTransition = require("src.engine.game.darktransition.loadingdarktransition")
 
 EasingSoul = require("src.engine.objects.easingsoul")
 

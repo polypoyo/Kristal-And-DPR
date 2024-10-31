@@ -5,36 +5,45 @@ return function(cutscene)
     -- Landing positions based on party size. Hardcoded because screw me ig
     local landing = {
         {
-            {460, 680}
+            {0, 36}
         },
         {
-            {500, 680},
-            {420, 680}
+            {40, 36},
+            {-40, 36}
         },
         {
-            {460, 680},
-            {420, 720},
-            {500, 720}
+            {0, 36},
+            {-40, 76},
+            {40, 76}
         },
         { -- Juuuust in case we end up using MoreParty.
-            {500, 680},
-            {420, 680},
-            {380, 720},
-            {540, 720}
+            {40, 36},
+            {-40, 36},
+            {-80, 76},
+            {80, 76}
         },
     }
 
-
+    for i = 1, #landing do
+        local landing_sub = landing[i]
+        for i = 1, #landing_sub do
+            local pair = landing_sub[i]
+            local x,y = Game.world.map:getMarker("landing")
+            pair[1] = pair[1] + x
+            pair[2] = pair[2] + y
+        end
+    end
 
     -- Black background
     local blackbg = Sprite("kristal/doorblack")
-    blackbg.x, blackbg.y = Game.world.map:getMarker("spawn")
+    blackbg.x, blackbg.y = Game.world.map:getMarker("landing")
     blackbg:setOrigin(0.5)
     blackbg:setScale(10)
     blackbg.layer = 0.5
     Game.world:addChild(blackbg)
 
     cutscene:detachCamera()
+    Game.world.camera:setPosition(Game.world.map:getMarker("landing"))
     cutscene:detachFollowers()
 
     -- Get every party member and move them up offscreen
@@ -76,13 +85,5 @@ return function(cutscene)
     cutscene:interpolateFollowers()
     cutscene:attachFollowers()
     DTRANS = false
-
-
-
-
-
-
-
-
 
 end
