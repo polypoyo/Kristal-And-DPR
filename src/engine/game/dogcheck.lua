@@ -30,6 +30,11 @@ function DogCheck:init(variant)
 
     self.chicken_anim_siner = 0
 	
+    self.pumpkin_x = 0
+    self.pumpkin_goal_x = 0
+    self.pumpkin_frame = 1
+    self.bg_pumpkin_x = 0
+
     love.window.setTitle("Dog Place: REBIRTH")
 end
 
@@ -84,6 +89,7 @@ function DogCheck:start()
 
     if not self.variant then
         local month = os.date("*t").month
+        local day = os.date("*t").day
         local variant_choices = {"dance", "sleep", "maracas", "piano", "banned", "chapter2", "montypython", "house"}
         if month >= 3 and month <= 5 then
             table.insert(variant_choices, "spring")
@@ -91,8 +97,11 @@ function DogCheck:start()
             table.insert(variant_choices, "summer")
         elseif month >= 9 and month <= 11 then
             table.insert(variant_choices, "autumn")
-        elseif month == 12 and month <= 2 then
+        elseif month == 12 or month <= 2 then
             table.insert(variant_choices, "winter")
+        end
+        if month == 10 and day == 31 then
+            table.insert(variant_choices, "halloween")
         end
         self.variant = Utils.pick(variant_choices)
     end
@@ -144,6 +153,9 @@ function DogCheck:start()
         playSong(song_path.."intermission")
     elseif self.variant == "house" then
         playSong(song_path.."house")
+    elseif self.variant == "halloween" then
+        playSong(song_path.."halloween")
+        self.timer:script(function(...) self:pumpkinDudeScript(...) end)
     end
 end
 
@@ -185,6 +197,14 @@ function DogCheck:update()
     if self.variant == "montypython" then
         self.color_siner = self.color_siner + 0.5 * DTMULT
     end
+    if self.variant == "halloween" then
+        self.pumpkin_x = Utils.ease(self.pumpkin_x, self.pumpkin_goal_x, DTMULT/10, "out-quad")
+        self.bg_pumpkin_x = self.bg_pumpkin_x + 2*DTMULT
+        -- This will probably look bad after a while but fuck it
+        if self.bg_pumpkin_x >= 640*68 then
+            self.bg_pumpkin_x = self.bg_pumpkin_x - 640*68
+        end
+    end
 end
 
 function DogCheck:getDebugInfo()
@@ -204,6 +224,7 @@ function DogCheck:draw()
 
     local cust_sprites_base = "kristal/dogcheck"
 
+    if self.state == "" then return end
     --check it out, i'm house
     if self.variant == "house" then
         self.chicken_anim_siner = self.chicken_anim_siner + DTMULT
@@ -215,6 +236,32 @@ function DogCheck:draw()
 
         Draw.draw(house, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0, 1, 1, 105/2 + 0.5, 86/2)
         Draw.draw(chicken[chicken_frame], 285, 241, 0, 1, 1)
+    end
+
+    if self.variant == "halloween" then
+        self.chicken_anim_siner = self.chicken_anim_siner + DTMULT
+
+		local chicken      = Assets.getFrames(cust_sprites_base.."/chicken")
+		local pumpkin_dude = Assets.getFrames(cust_sprites_base.."/pumpkin_dude")
+        local bg_pumpkin   = Assets.getTexture(cust_sprites_base.."/pumpkin")
+
+		local chicken_frame = math.floor(self.chicken_anim_siner/12) % #chicken + 1
+
+        -- If anyone knows how to do this better feel free to change it (and maybe let me know too i guess???)
+        for i = 0, 720 do
+            local alpha_base = i % 2 == 0 and math.sin((self.chicken_anim_siner+i)/8) or math.cos((self.chicken_anim_siner+i)/8),0,1
+            local alpha = Utils.clampMap(alpha_base, -0.9, 0.9, 0.1, 1)
+            Draw.setColor(1,1,1,alpha)
+            Draw.draw(bg_pumpkin, SCREEN_WIDTH-23+self.bg_pumpkin_x-i*68, 50+math.sin((self.chicken_anim_siner+i*4)/8)*6, 0, 2, 2)
+            local alpha_base = i % 2 == 1 and math.sin((self.chicken_anim_siner+i)/8) or math.cos((self.chicken_anim_siner+i)/8),0,1
+            local alpha = Utils.clampMap(alpha_base, -0.9, 0.9, 0.1, 1)
+            Draw.setColor(1,1,1,alpha)
+            Draw.draw(bg_pumpkin, 23-self.bg_pumpkin_x+i*68, SCREEN_HEIGHT-50-44+math.cos((self.chicken_anim_siner+i*4)/8)*6, 0, 2, 2)
+        end
+        Draw.setColor(1,1,1,1)
+        Draw.draw(chicken[chicken_frame], (SCREEN_WIDTH/2)+self.pumpkin_x-15*2, SCREEN_HEIGHT/2-21*2, 0, 4, 4)
+        Draw.draw(pumpkin_dude[self.pumpkin_frame], (SCREEN_WIDTH/2)+self.pumpkin_x-160-23*2, SCREEN_HEIGHT/2-35*2, 0, 4, 4)
+        Draw.draw(pumpkin_dude[self.pumpkin_frame], (SCREEN_WIDTH/2)+self.pumpkin_x+160-23*2, SCREEN_HEIGHT/2-35*2, 0, 4, 4)
     end
 
     if self.variant == "montypython" then
@@ -296,6 +343,41 @@ function DogCheck:chapter2Script(wait)
 
         animateMainDog(8)
         wait(1.03)
+    end
+end
+
+function DogCheck:pumpkinDudeScript(wait)
+    local function pumpkinGoLeft(x)
+        self.pumpkin_frame = 7
+        wait(2/30)
+        self.pumpkin_frame = 8
+        self.pumpkin_goal_x = x
+        wait(5/30)
+        self.pumpkin_frame = 9
+        wait(3/30)
+        self.pumpkin_frame = 10
+        wait(1/30)
+        self.pumpkin_frame = 6
+        wait(5/30)
+    end
+    local function pumpkinGoRight(x)
+        self.pumpkin_frame = 2
+        wait(2/30)
+        self.pumpkin_frame = 3
+        self.pumpkin_goal_x = x
+        wait(5/30)
+        self.pumpkin_frame = 4
+        wait(3/30)
+        self.pumpkin_frame = 5
+        wait(1/30)
+        self.pumpkin_frame = 1
+        wait(5/30)
+    end
+    while true do
+        pumpkinGoLeft(-15*4)
+        pumpkinGoRight(0)
+        pumpkinGoRight(15*4)
+        pumpkinGoLeft(0)
     end
 end
 
