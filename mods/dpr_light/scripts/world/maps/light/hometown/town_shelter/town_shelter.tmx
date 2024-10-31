@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="16" height="62" tilewidth="40" tileheight="40" infinite="0" nextlayerid="13" nextobjectid="44">
+<map version="1.11" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="16" height="62" tilewidth="40" tileheight="40" infinite="0" nextlayerid="13" nextobjectid="44">
  <editorsettings>
   <export target="data.lua" format="lua"/>
  </editorsettings>
@@ -279,7 +279,7 @@
   </object>
   <object id="42" name="interactable" x="240" y="2280" width="160" height="40">
    <properties>
-    <property name="cutscene" value="hometown.shelter"/>
+    <property name="cutscene" value="enterdark.shelter"/>
    </properties>
   </object>
  </objectgroup>

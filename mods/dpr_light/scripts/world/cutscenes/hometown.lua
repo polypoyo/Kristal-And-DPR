@@ -436,24 +436,4 @@ return {
         end
         cutscene:hideNametag()
     end,
-
-    shelter = function(cutscene, event)
-        cutscene:text("* (Enter the Dark World?)")
-
-        local enter = cutscene:choicer({"Yes", "No"})
-
-        if enter == 1 then
-            -- TODO: fix DarkTransition so it can be used here.
-
-            DTRANS = true -- Yeah, yeah, using global flags. Sue me.
-            local sound = Game.world:getEvents("sheltersound")[1]
-            sound:remove()
-            Game.world.music:fade(0, 80/30)
-            cutscene:wait(cutscene:fadeOut(100/30, {color = {0, 0, 0}}))
-            Game:swapIntoMod("dpr_main", false, "main_hub")
-
-        end
-
-    end
-
 }
