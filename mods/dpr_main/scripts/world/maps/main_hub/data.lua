@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 11,
-  nextobjectid = 73,
+  nextobjectid = 74,
   properties = {
     ["border"] = "castle"
   },
@@ -950,6 +950,19 @@ return {
           shape = "point",
           x = 460,
           y = 251,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 73,
+          name = "landing",
+          type = "",
+          shape = "point",
+          x = 460,
+          y = 644,
           width = 0,
           height = 0,
           rotation = 0,

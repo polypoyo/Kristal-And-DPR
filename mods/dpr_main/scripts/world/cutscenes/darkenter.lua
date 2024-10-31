@@ -28,13 +28,14 @@ return function(cutscene)
 
     -- Black background
     local blackbg = Sprite("kristal/doorblack")
-    blackbg.x, blackbg.y = Game.world.map:getMarker("spawn")
+    blackbg.x, blackbg.y = Game.world.map:getMarker("landing")
     blackbg:setOrigin(0.5)
     blackbg:setScale(10)
     blackbg.layer = 0.5
     Game.world:addChild(blackbg)
 
     cutscene:detachCamera()
+    Game.world.camera:setPosition(Game.world.map:getMarker("landing"))
     cutscene:detachFollowers()
 
     -- Get every party member and move them up offscreen
