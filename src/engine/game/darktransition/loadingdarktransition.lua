@@ -1,6 +1,7 @@
 ---@class LoadingDarkTransition : Object
 ---@overload fun(...) : LoadingDarkTransition
 local LoadingDarkTransition, super = Class(Object)
+
 function LoadingDarkTransition:init(final_y, options)
     super.init(self)
 
@@ -13,7 +14,7 @@ function LoadingDarkTransition:init(final_y, options)
 
     self.loading_callback = function() error("Expected a loading callback to be defined") end
 
-    -- Kristal.hideBorder(1)
+    Kristal.hideBorder(1)
 
     self.con = 8
     self.timer = 0
