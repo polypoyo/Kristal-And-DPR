@@ -1,6 +1,7 @@
 ---@class LoadingDarkTransition : Object
 ---@overload fun(...) : LoadingDarkTransition
 local LoadingDarkTransition, super = Class(Object)
+
 function LoadingDarkTransition:init(final_y, options)
     super.init(self)
 
@@ -13,7 +14,7 @@ function LoadingDarkTransition:init(final_y, options)
 
     self.loading_callback = function() error("Expected a loading callback to be defined") end
 
-    -- Kristal.hideBorder(1)
+    Kristal.hideBorder(1)
 
     self.con = 8
     self.timer = 0
@@ -719,7 +720,7 @@ function LoadingDarkTransition:draw()
             self.do_once4 = true
             self.linecon = false
         end
-        if (math.floor(self.timer) >= 38) and not self.do_once5 then
+        if (math.floor(self.timer) >= 48) and not self.do_once5 then
             self.do_once5 = true
             for i, data in ipairs(self.character_data) do
                 data.y = -170
@@ -728,7 +729,7 @@ function LoadingDarkTransition:draw()
             --self.susie_y = -20
             --self.kris_y = -14
         end
-        if (self.timer > 38) then
+        if (self.timer > 48) then
             -- Goodbye accuracy :(
             -- Because we have a configurable self.final_y, we should play the sound when they reach that
 
