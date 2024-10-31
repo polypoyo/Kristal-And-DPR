@@ -134,7 +134,6 @@ ignorefiles = [
     ".github",
     ".git",
     ".vscode",
-    "mods",
     "docs",
     "lib",
     "build"
