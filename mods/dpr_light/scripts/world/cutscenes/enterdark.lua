@@ -13,14 +13,17 @@ function enterdark.shelter(cutscene)
     cutscene:detachCamera()
     cutscene:detachFollowers()
 
-    cutscene:slideTo(player,  320 - 30, 2396, 0.25)
+    local party = {Game.world.player}
+    for _, follower in ipairs(Game.world.followers) do
+        table.insert(party,follower)
+    end
+    for index, value in ipairs(party) do
+        cutscene:slideTo(value,  320 + (60 * (index-(#party/2)) - 30) , 2396, 0.25)
+    end
     -- cutscene:slideTo(susie, 620 + 30, 280, 0.25)
     cutscene:panTo(620, 2240, 0.25)
     cutscene:wait(0.25)
-
-    player.visible = false
-    -- susie.visible = false
-
+    
     local transition = LoadingDarkTransition(-500)
     transition.loading_callback = function() 
         -- Game.world:loadMap("light/hometown/apartments")
@@ -39,7 +42,9 @@ function enterdark.shelter(cutscene)
     transition.layer = 99999
 
     Game.world:addChild(transition)
-
+    for _, value in ipairs(party) do
+        value.visible = false
+    end
     local waiting = true
     local endData = nil
     transition.end_callback = function(transition, data)
