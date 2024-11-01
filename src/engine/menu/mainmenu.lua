@@ -52,6 +52,7 @@ function MainMenu:enter()
     self.controls = MainMenuControls(self)
     self.deadzone_config = MainMenuDeadzone(self)
     self.dlc_handler = MainMenuDLCHandler(self)
+    self.warning_handler = MainMenuWarningHandler(self)
 
     -- Register states
     self.state = "NONE"
@@ -69,6 +70,7 @@ function MainMenu:enter()
     self.state_manager:addState("CONTROLS", self.controls)
     self.state_manager:addState("DEADZONE", self.deadzone_config)
     self.state_manager:addState("DLC", self.dlc_handler)
+    self.state_manager:addState("WARNING", self.warning_handler)
 
     self.fader = Fader()
     self.fader.layer = 10000
@@ -117,7 +119,7 @@ function MainMenu:enter()
     if #Kristal.Mods.failed_mods > 0 then
         self:setState("MODERROR")
     else
-        self:setState("TITLE")
+        self:setState("WARNING")
     end
 
     Kristal.setPresence({
