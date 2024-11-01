@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.11" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="24" tilewidth="40" tileheight="40" infinite="0" nextlayerid="9" nextobjectid="42">
+<map version="1.11" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="24" tilewidth="40" tileheight="40" infinite="0" nextlayerid="9" nextobjectid="45">
  <editorsettings>
   <export target="dead_room1.lua" format="lua"/>
  </editorsettings>
@@ -97,6 +97,20 @@
    <properties>
     <property name="map" value="grey_cliffside/the_end"/>
     <property name="marker" value="entry"/>
+   </properties>
+  </object>
+  <object id="42" name="npc" x="120" y="820">
+   <properties>
+    <property name="actor" value="susie"/>
+    <property name="facing" value="left"/>
+    <property name="flagcheck" value="!cliffside_susie"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="43" name="script" x="240" y="880" width="120" height="80">
+   <properties>
+    <property name="cutscene" value="cliffside.susie"/>
+    <property name="once" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>

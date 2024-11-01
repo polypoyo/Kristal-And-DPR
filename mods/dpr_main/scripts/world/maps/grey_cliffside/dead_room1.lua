@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 9,
-  nextobjectid = 42,
+  nextobjectid = 45,
   properties = {
     ["music"] = "demonic_little_grey_cliffs"
   },
@@ -346,6 +346,39 @@ return {
           properties = {
             ["map"] = "grey_cliffside/the_end",
             ["marker"] = "entry"
+          }
+        },
+        {
+          id = 42,
+          name = "npc",
+          type = "",
+          shape = "point",
+          x = 120,
+          y = 820,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["actor"] = "susie",
+            ["facing"] = "left",
+            ["flagcheck"] = "!cliffside_susie"
+          }
+        },
+        {
+          id = 43,
+          name = "script",
+          type = "",
+          shape = "rectangle",
+          x = 240,
+          y = 880,
+          width = 120,
+          height = 80,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["cutscene"] = "cliffside.susie",
+            ["once"] = true
           }
         }
       }
