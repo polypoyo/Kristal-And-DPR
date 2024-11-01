@@ -46,6 +46,7 @@ return {
                 susie:setSprite("shock_right")
                 cutscene:wait(0.25)
                 Assets.playSound("impact")
+                cutscene:shakeCamera(0,16,1)
                 cutscene:wait(1)
                 cutscene:showNametag("Susie")
                 cutscene:text("* Guess not!", "surprise_frown")
