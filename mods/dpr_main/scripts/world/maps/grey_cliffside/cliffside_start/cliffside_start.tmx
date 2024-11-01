@@ -4,6 +4,7 @@
   <export target="data.lua" format="lua"/>
  </editorsettings>
  <properties>
+  <property name="border" value="cliffside"/>
   <property name="music" value="demonic_little_grey_cliffs"/>
  </properties>
  <tileset firstgid="1" source="../../../tilesets/cliffs.tsx"/>

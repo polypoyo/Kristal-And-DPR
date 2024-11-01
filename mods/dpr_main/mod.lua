@@ -73,3 +73,15 @@ function Mod:registerShaders()
         self.shaders[path] = shader
     end
 end
+
+function Mod:onBorderDraw(border_sprite)
+    if border_sprite == "cliffside" then
+
+        if math.random(10) == 1 then 
+            love.graphics.setShader(Mod.shaders["glitch"])
+            love.graphics.draw(Assets.getTexture("borders/cliffside"), 0, 0, 0, BORDER_SCALE)
+        end
+
+        love.graphics.setShader() 
+    end
+end

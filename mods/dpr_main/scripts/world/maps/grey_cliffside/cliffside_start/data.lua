@@ -12,6 +12,7 @@ return {
   nextlayerid = 9,
   nextobjectid = 36,
   properties = {
+    ["border"] = "cliffside",
     ["music"] = "demonic_little_grey_cliffs"
   },
   tilesets = {
