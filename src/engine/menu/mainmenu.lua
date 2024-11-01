@@ -118,6 +118,8 @@ function MainMenu:enter()
 
     if #Kristal.Mods.failed_mods > 0 then
         self:setState("MODERROR")
+    elseif Kristal.Config["seenLegitWarning"] and Kristal.Config["skipIntro"] then
+        self:setState("TITLE")
     else
         self:setState("WARNING")
     end
