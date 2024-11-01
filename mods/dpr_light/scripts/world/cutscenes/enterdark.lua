@@ -24,7 +24,14 @@ function enterdark.shelter(cutscene)
     cutscene:panTo(620, 2240, 0.25)
     cutscene:wait(0.25)
     
-    local transition = LoadingDarkTransition(-500)
+    local transition = LoadingDarkTransition(-500, {
+        movement_table = ({
+            {  0.00 },
+            {  0.50, -0.50 },
+            {  0.50, -0.50,  0.00 },
+            {  1.00,  0.00, -1.00,  0.00 }
+        })[#party]
+    })
     transition.loading_callback = function() 
         -- Game.world:loadMap("light/hometown/apartments")
         DTRANS = true
