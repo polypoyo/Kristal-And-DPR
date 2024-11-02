@@ -48,6 +48,10 @@ function LoadingDarkTransition:init(final_y, options)
         y = y / 2
         local movement = (options["movement_table"] or {1, -1})[i] or 0
         local sprite_holder = self:addChild(Object(x, y))
+        local actor = character.actor
+        if options["resuming"] then
+            actor = character:getPartyMember().dark_transition_actor
+        end
         local data = {
             x = resume_prop(x, "x"),
             y = resume_prop(y, "y"),
@@ -57,9 +61,9 @@ function LoadingDarkTransition:init(final_y, options)
             character = character,
             party = character:getPartyMember(),
             sprite_holder = sprite_holder,
-            sprite_1 = sprite_holder:addChild(ActorSprite(character.actor)),
-            sprite_2 = sprite_holder:addChild(ActorSprite(character.actor)),
-            sprite_3 = sprite_holder:addChild(ActorSprite(character.actor))
+            sprite_1 = sprite_holder:addChild(ActorSprite(actor)),
+            sprite_2 = sprite_holder:addChild(ActorSprite(actor)),
+            sprite_3 = sprite_holder:addChild(ActorSprite(actor))
         }
         data.sprite_1.visible = false
         data.sprite_2.visible = false
@@ -147,9 +151,9 @@ function LoadingDarkTransition:init(final_y, options)
         for i, data in ipairs(self.character_data) do
             data.x = DTRANS[i].x
             data.y = DTRANS[i].y - 230
-            data.sprite_1:set("jump_ball")
-            data.sprite_2:set("jump_ball")
-            data.sprite_3:set("jump_ball")
+            data.sprite_1:set("ball") -- or data.sprite_1:set("jump_ball")
+            data.sprite_2:set("ball") -- or data.sprite_2:set("jump_ball")
+            data.sprite_3:set("ball") -- or data.sprite_3:set("jump_ball")
 
             data.sprite_1.visible = true
             data.sprite_2.visible = true
