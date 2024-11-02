@@ -1,5 +1,4 @@
 ---@class LoadingDarkTransition : Object
----@field loading_callback fun(transition: LoadingDarkTransition)
 ---@overload fun(...) : LoadingDarkTransition
 local LoadingDarkTransition, super = Class(Object)
 
@@ -13,7 +12,10 @@ function LoadingDarkTransition:init(final_y, options)
     self:setScale(2, 2)
     self:setParallax(0, 0)
 
-    self.loading_callback = function() error("Expected a loading callback to be defined") end
+    self.loading_callback = nil
+    self.land_callback = nil
+    self.end_callback = nil
+    self.dronesfx = Assets.newSound("dtrans_drone")
 
     Kristal.hideBorder(1)
 
@@ -69,10 +71,10 @@ function LoadingDarkTransition:init(final_y, options)
     self.rect_draw = 0
     self.fake_screenshake = 0
     self.fake_shakeamount = 0
-    self.rx1 = 240/2
-    self.ry1 = 214/2
-    self.rx2 = 398/2
-    self.ry2 = 330/2
+    self.rx1 = 138
+    self.ry1 = 64
+    self.rx2 = 182
+    self.ry2 = 118
     self.soundtimer = 0
     self.soundcon = 0
     self.linesfxtimer = 0
@@ -124,6 +126,107 @@ function LoadingDarkTransition:init(final_y, options)
     self.do_once12 = false
     self.do_once13 = false
 
+    -- i loathe this just as much as you do, trust me
+    if options["resuming"] then
+        self.resuming = true
+        self.active=true
+        self.alpha=1
+        self.black_fade=1
+        self.camera_origin_exact=false
+        self.camera_origin_x=0.5
+        self.camera_origin_y=0.5
+        self.collidable=true
+        self.con=33
+        self.debug_select=true
+        self._dont_draw_children=false
+        self.do_once10=false
+        self.do_once11=false
+        self.do_once12=false
+        self.do_once13=true
+        self.do_once2=true
+        self.do_once3=true
+        self.do_once4=true
+        self.do_once5=false
+        self.do_once6=false
+        self.do_once7=false
+        self.do_once8=false
+        self.do_once9=false
+        self.do_once=true
+        self.doorblack=1
+        self.draw_fx={}
+        self.draw_rect=0
+        self.drone_get_louder=false
+        self.dronepitch=1
+        self.dronesfx_volume=-6.9735883734268e-16
+        self.dronetimer=80
+        self.fake_screenshake=0
+        self.fake_shakeamount=0
+        self.final_y=300
+        self.friction=0
+        self.has_head_object=false
+        self.height=0
+        self.index=388.90277777778
+        self.init_x=0
+        self.init_y=0
+        self.kris_index=0
+        self.last_x=0
+        self.last_y=0
+        self.layer=1000
+        self.linecon=false
+        self.linesfxtimer=1
+        self.linetimer=0
+        self.megablack=true
+        self.parallax_x=0
+        self.parallax_y=0
+        self.particle_timer=0.65277777777777
+        self.persistent=true
+        self.quick_mode=false
+        self.radius=60
+        self.rect_amount=6
+        self.rect_draw=0
+        self.rectsound=6
+        self.rh=0.54
+        self.rotation=0
+        self.rs=279.15277777778
+        self.rsize={70.788194444444, 68.788194444444, 66.788194444444, 64.788194444444, 62.788194444444, 60.788194444444, -11, -13}
+        self.rw=0.44
+        self.rx1=138
+        self.rx=160
+        self.rx2=182
+        self.ry1=64
+        self.ry2=118
+        self.ry=91
+        self.scale_origin_exact=false
+        self.skiprunback=false
+        self.soundcon=4
+        self.soundthreshold=6
+        self.soundtimer=47
+        self.sparkles=0
+        self.sprite_index=1.6
+        self.threshold=130
+        self.timer=42.25
+        self.timescale=1
+        self.update_child_list=false
+        self.use_sprite_index=false
+        self.velocity=13
+        self.visible=true
+        self.width=0
+        self.x=0
+        self.y=0
+        for i, data in ipairs(self.character_data) do
+            data.sprite_holder.x = data.x
+            data.sprite_holder.y = data.y
+            data.sprite_1:set("jump_ball")
+            data.sprite_2:set("jump_ball")
+            data.sprite_3:set("jump_ball")
+
+            data.sprite_2.visible = true
+            data.sprite_3.visible = true
+
+            data.sprite_2.alpha = 0.5
+            data.sprite_3.alpha = 0.25
+        end
+    end
     self.drone_get_louder = false
     self.dronesfx_volume = 0
 
@@ -225,6 +328,7 @@ function LoadingDarkTransition:update()
         end
     end
 end
+
 function LoadingDarkTransition:draw()
     -- Draw a background cover.
     -- In Deltarune, this is a 999x999 black marker.
@@ -459,7 +563,6 @@ function LoadingDarkTransition:draw()
         end
     end
     if (self.soundcon == 1) then
-        self.dronesfx = Assets.newSound("dtrans_drone")
 
         -- Volume starts at 0 and goes to 0.5 over 60 deltarune frames (2 seconds)
         -- This is handled at the top of update
@@ -717,14 +820,17 @@ function LoadingDarkTransition:draw()
             data.sprite_3.y = -self.velocity * 2
         end
 
-        if (math.floor(self.timer) >= 12) and not self.do_once4 then
+        if (math.floor(self.timer) >= 11) and not self.do_once4 then
             self.do_once4 = true
             self.linecon = false
         end
         if (math.floor(self.timer) >= 48) and not self.do_once5 then
+            if self.loading_callback then
+                self.loading_callback(self)
+            end
             self.do_once5 = true
             for i, data in ipairs(self.character_data) do
-                data.y = -170
+                data.y = -57
             end
             -- TODO: why are these different? (answer: sprite sizes lol)
             --self.susie_y = -20
@@ -736,7 +842,7 @@ function LoadingDarkTransition:draw()
 
             if (self.character_data[1].y >= (self.final_y / 2) - self.character_data[1].sprite_1.height) then
                 -- Since our final_y is configurable, play the sound here
-                -- Assets.playSound("dtrans_flip")
+                Assets.playSound("dtrans_flip")
 
                 for i, data in ipairs(self.character_data) do
                     data.sprite_1:set("landed")
@@ -757,8 +863,8 @@ function LoadingDarkTransition:draw()
                 self.fake_shakeamount = 8
                 self.shaketimer       = 0
 
-                if self.loading_callback then
-                    self.loading_callback(self)
+                if self.land_callback then
+                    self.land_callback(self)
                 end
             end
         end
@@ -790,7 +896,42 @@ function LoadingDarkTransition:draw()
             --dz = (global.darkzone + 1)
             --room_goto(nextroom)
         end
-        if ((math.floor(self.timer) >= 27) and not self.do_once12) then
+        if ((math.floor(self.timer) >= 27) and not self.do_once9) then
+            self.do_once9 = true
+            Assets.playSound("him_quick")
+            Kristal.showBorder(1)
+            --with (obj_mainchara) then
+            --    x = -999
+            --    cutscene = true
+            --    visible = false
+            --end
+            --with (obj_caterpillarchara) then
+            --    x = -999
+            --    visible = false
+            --end
+            --if (global.chapter == 2) then
+            --    if (global.plot == 9) then
+            --        obj_mainchara.y = kris_y
+            --        kris_y = kris_y + 200
+            --        cameray_set((cameray() + 400))
+            --    end
+            --end
+        end
+        if (self.timer >= 30 and self.timer < 60) then
+            self.black_fade = self.black_fade - 0.05 * DTMULT
+            if self.quick_mode then
+                self.black_fade = self.black_fade - 0.05 * DTMULT
+            end
+        end
+        if ((math.floor(self.timer) >= 50) and not self.do_once10) then
+            self.do_once10 = true
+            self.getup_index = 1
+        end
+        if ((math.floor(self.timer) >= 53) and not self.do_once11) then
+            self.do_once11 = true
+            self.getup_index = 2
+        end
+        if ((math.floor(self.timer) >= 55) and not self.do_once12) then
             self.do_once12 = true
             -- We're done!
             if self.end_callback then

@@ -47,6 +47,11 @@ function enterdark.shelter(cutscene)
         end
     end
     transition.layer = 99999
+    -- Numbers gotten from CTRL+o mouse pos indicator
+    transition.rx1 = 240/2
+    transition.ry1 = 214/2
+    transition.rx2 = 398/2
+    transition.ry2 = 330/2
 
     Game.world:addChild(transition)
     for _, value in ipairs(party) do
