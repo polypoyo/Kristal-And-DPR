@@ -18,7 +18,7 @@ function enterdark.shelter(cutscene)
         table.insert(party,follower)
     end
     for index, value in ipairs(party) do
-        cutscene:slideTo(value,  320 + (60 * (index-(#party/2)) - 30) , 2396, 0.25)
+        cutscene:slideTo(value,  320 + (60 * (index-(#party/2)) - 30) , 2356, 0.25)
     end
     -- cutscene:slideTo(susie, 620 + 30, 280, 0.25)
     cutscene:panTo(620, 2240, 0.25)
@@ -29,12 +29,12 @@ function enterdark.shelter(cutscene)
             {  0.00 },
             {  0.50, -0.50 },
             {  0.50, -0.50,  0.00 },
-            {  1.00,  0.00, -1.00,  0.00 }
+            {  1.00,  0.00, -1.00,  0.00 },
         })[#party]
     })
-    transition.loading_callback = function() 
+    transition.loading_callback = function(transition)
         -- Game.world:loadMap("light/hometown/apartments")
-        DTRANS = true
+        DTRANS = transition.character_data
         Game:swapIntoMod("dpr_main", false, "main_hub")
         if Game.world.music then
             Game.world.music:stop()
@@ -47,6 +47,11 @@ function enterdark.shelter(cutscene)
         end
     end
     transition.layer = 99999
+    -- Numbers gotten from CTRL+o mouse pos indicator
+    transition.rx1 = 240/2
+    transition.ry1 = 214/2
+    transition.rx2 = 398/2
+    transition.ry2 = 330/2
 
     Game.world:addChild(transition)
     for _, value in ipairs(party) do

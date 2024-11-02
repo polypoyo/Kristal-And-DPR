@@ -12,7 +12,10 @@ function LoadingDarkTransition:init(final_y, options)
     self:setScale(2, 2)
     self:setParallax(0, 0)
 
-    self.loading_callback = function() error("Expected a loading callback to be defined") end
+    self.loading_callback = nil
+    self.land_callback = nil
+    self.end_callback = nil
+    self.dronesfx = Assets.newSound("dtrans_drone")
 
     Kristal.hideBorder(1)
 
@@ -33,23 +36,34 @@ function LoadingDarkTransition:init(final_y, options)
     self.character_data = {}
 
     for i, character in ipairs(self.characters) do
+        local function resume_prop(default, property)
+            if options["character_data"] then
+                return options["character_data"][i][property]
+            else
+                return default
+            end
+        end
         local x, y = character:localToScreenPos(0, 0)
         x = x / 2
         y = y / 2
         local movement = (options["movement_table"] or {1, -1})[i] or 0
         local sprite_holder = self:addChild(Object(x, y))
+        local actor = character.actor
+        if options["resuming"] then
+            actor = character:getPartyMember().dark_transition_actor
+        end
         local data = {
-            x = x,
-            y = y,
-            movement = movement,
+            x = resume_prop(x, "x"),
+            y = resume_prop(y, "y"),
+            movement = resume_prop(movement, "movement"),
             remx = 0,
             remy = 0,
             character = character,
             party = character:getPartyMember(),
             sprite_holder = sprite_holder,
-            sprite_1 = sprite_holder:addChild(ActorSprite(character.actor)),
-            sprite_2 = sprite_holder:addChild(ActorSprite(character.actor)),
-            sprite_3 = sprite_holder:addChild(ActorSprite(character.actor))
+            sprite_1 = sprite_holder:addChild(ActorSprite(actor)),
+            sprite_2 = sprite_holder:addChild(ActorSprite(actor)),
+            sprite_3 = sprite_holder:addChild(ActorSprite(actor))
         }
         data.sprite_1.visible = false
         data.sprite_2.visible = false
@@ -68,10 +82,10 @@ function LoadingDarkTransition:init(final_y, options)
     self.rect_draw = 0
     self.fake_screenshake = 0
     self.fake_shakeamount = 0
-    self.rx1 = 240/2
-    self.ry1 = 214/2
-    self.rx2 = 398/2
-    self.ry2 = 330/2
+    self.rx1 = 138
+    self.ry1 = 64
+    self.rx2 = 182
+    self.ry2 = 118
     self.soundtimer = 0
     self.soundcon = 0
     self.linesfxtimer = 0
@@ -123,6 +137,32 @@ function LoadingDarkTransition:init(final_y, options)
     self.do_once12 = false
     self.do_once13 = false
 
+    if options["resuming"] then
+        self.resuming = true
+        self.con=33
+        self.do_once=true
+        self.do_once2=true
+        self.do_once3=true
+        self.do_once4=true
+        
+        self.megablack=true
+        self.timer=42.25
+        self.velocity=13
+        for i, data in ipairs(self.character_data) do
+            data.x = DTRANS[i].x
+            data.y = DTRANS[i].y - 230
+            data.sprite_1:set("ball") -- or data.sprite_1:set("jump_ball")
+            data.sprite_2:set("ball") -- or data.sprite_2:set("jump_ball")
+            data.sprite_3:set("ball") -- or data.sprite_3:set("jump_ball")
+
+            data.sprite_1.visible = true
+            data.sprite_2.visible = true
+            data.sprite_3.visible = true
+
+            data.sprite_2.alpha = 0.5
+            data.sprite_3.alpha = 0.25
+        end
+    end
     self.drone_get_louder = false
     self.dronesfx_volume = 0
 
@@ -224,6 +264,7 @@ function LoadingDarkTransition:update()
         end
     end
 end
+
 function LoadingDarkTransition:draw()
     -- Draw a background cover.
     -- In Deltarune, this is a 999x999 black marker.
@@ -458,7 +499,6 @@ function LoadingDarkTransition:draw()
         end
     end
     if (self.soundcon == 1) then
-        self.dronesfx = Assets.newSound("dtrans_drone")
 
         -- Volume starts at 0 and goes to 0.5 over 60 deltarune frames (2 seconds)
         -- This is handled at the top of update
@@ -716,14 +756,17 @@ function LoadingDarkTransition:draw()
             data.sprite_3.y = -self.velocity * 2
         end
 
-        if (math.floor(self.timer) >= 12) and not self.do_once4 then
+        if (math.floor(self.timer) >= 11) and not self.do_once4 then
             self.do_once4 = true
             self.linecon = false
         end
         if (math.floor(self.timer) >= 48) and not self.do_once5 then
+            if self.loading_callback then
+                self.loading_callback(self)
+            end
             self.do_once5 = true
             for i, data in ipairs(self.character_data) do
-                data.y = -170
+                data.y = -57
             end
             -- TODO: why are these different? (answer: sprite sizes lol)
             --self.susie_y = -20
@@ -735,7 +778,7 @@ function LoadingDarkTransition:draw()
 
             if (self.character_data[1].y >= (self.final_y / 2) - self.character_data[1].sprite_1.height) then
                 -- Since our final_y is configurable, play the sound here
-                -- Assets.playSound("dtrans_flip")
+                Assets.playSound("dtrans_flip")
 
                 for i, data in ipairs(self.character_data) do
                     data.sprite_1:set("landed")
@@ -756,8 +799,8 @@ function LoadingDarkTransition:draw()
                 self.fake_shakeamount = 8
                 self.shaketimer       = 0
 
-                if self.loading_callback then
-                    self.loading_callback(self)
+                if self.land_callback then
+                    self.land_callback(self)
                 end
             end
         end
@@ -789,7 +832,42 @@ function LoadingDarkTransition:draw()
             --dz = (global.darkzone + 1)
             --room_goto(nextroom)
         end
-        if ((math.floor(self.timer) >= 27) and not self.do_once12) then
+        if ((math.floor(self.timer) >= 27) and not self.do_once9) then
+            self.do_once9 = true
+            Assets.playSound("him_quick")
+            Kristal.showBorder(1)
+            --with (obj_mainchara) then
+            --    x = -999
+            --    cutscene = true
+            --    visible = false
+            --end
+            --with (obj_caterpillarchara) then
+            --    x = -999
+            --    visible = false
+            --end
+            --if (global.chapter == 2) then
+            --    if (global.plot == 9) then
+            --        obj_mainchara.y = kris_y
+            --        kris_y = kris_y + 200
+            --        cameray_set((cameray() + 400))
+            --    end
+            --end
+        end
+        if (self.timer >= 30 and self.timer < 60) then
+            self.black_fade = self.black_fade - 0.05 * DTMULT
+            if self.quick_mode then
+                self.black_fade = self.black_fade - 0.05 * DTMULT
+            end
+        end
+        if ((math.floor(self.timer) >= 50) and not self.do_once10) then
+            self.do_once10 = true
+            self.getup_index = 1
+        end
+        if ((math.floor(self.timer) >= 53) and not self.do_once11) then
+            self.do_once11 = true
+            self.getup_index = 2
+        end
+        if ((math.floor(self.timer) >= 55) and not self.do_once12) then
             self.do_once12 = true
             -- We're done!
             if self.end_callback then
@@ -827,7 +905,7 @@ function LoadingDarkTransition:draw()
         end
     end
 
-    for _, data in ipairs(self.character_data) do
+    for i, data in ipairs(self.character_data) do
         if self.use_sprite_index then
             data.sprite_1:setFrame(math.floor(self.sprite_index) + 1)
         end
