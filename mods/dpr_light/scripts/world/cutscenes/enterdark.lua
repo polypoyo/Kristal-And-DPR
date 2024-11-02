@@ -18,7 +18,7 @@ function enterdark.shelter(cutscene)
         table.insert(party,follower)
     end
     for index, value in ipairs(party) do
-        cutscene:slideTo(value,  320 + (60 * (index-(#party/2)) - 30) , 2396, 0.25)
+        cutscene:slideTo(value,  320 + (60 * (index-(#party/2)) - 30) , 2356, 0.25)
     end
     -- cutscene:slideTo(susie, 620 + 30, 280, 0.25)
     cutscene:panTo(620, 2240, 0.25)
@@ -29,7 +29,7 @@ function enterdark.shelter(cutscene)
             {  0.00 },
             {  0.50, -0.50 },
             {  0.50, -0.50,  0.00 },
-            {  1.00,  0.00, -1.00,  0.00 }
+            {  1.00,  0.00, -1.00,  0.00 },
         })[#party]
     })
     transition.loading_callback = function(transition)
