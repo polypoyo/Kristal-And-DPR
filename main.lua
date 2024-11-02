@@ -23,6 +23,7 @@ require("src.utils.graphics")
 
 GitFinder = require("src.utils.gitfinder")
 Utils = require("src.utils.utils")
+DPR = require("src.utils.dpr")
 CollisionUtil = require("src.utils.collision")
 Draw = require("src.utils.draw")
 
