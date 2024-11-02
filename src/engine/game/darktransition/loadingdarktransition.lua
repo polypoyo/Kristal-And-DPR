@@ -36,15 +36,22 @@ function LoadingDarkTransition:init(final_y, options)
     self.character_data = {}
 
     for i, character in ipairs(self.characters) do
+        local function resume_prop(default, property)
+            if options["character_data"] then
+                return options["character_data"][i][property]
+            else
+                return default
+            end
+        end
         local x, y = character:localToScreenPos(0, 0)
         x = x / 2
         y = y / 2
         local movement = (options["movement_table"] or {1, -1})[i] or 0
         local sprite_holder = self:addChild(Object(x, y))
         local data = {
-            x = x,
-            y = y,
-            movement = movement,
+            x = resume_prop(x, "x"),
+            y = resume_prop(y, "y"),
+            movement = resume_prop(movement, "movement"),
             remx = 0,
             remy = 0,
             character = character,
@@ -214,12 +221,13 @@ function LoadingDarkTransition:init(final_y, options)
         self.x=0
         self.y=0
         for i, data in ipairs(self.character_data) do
-            data.sprite_holder.x = data.x
-            data.sprite_holder.y = data.y
+            data.x = DTRANS[i].x
+            data.y = DTRANS[i].y - 230
             data.sprite_1:set("jump_ball")
             data.sprite_2:set("jump_ball")
             data.sprite_3:set("jump_ball")
 
+            data.sprite_1.visible = true
             data.sprite_2.visible = true
             data.sprite_3.visible = true
 
@@ -969,7 +977,7 @@ function LoadingDarkTransition:draw()
         end
     end
 
-    for _, data in ipairs(self.character_data) do
+    for i, data in ipairs(self.character_data) do
         if self.use_sprite_index then
             data.sprite_1:setFrame(math.floor(self.sprite_index) + 1)
         end

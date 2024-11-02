@@ -17,11 +17,21 @@ return function(cutscene)
     })
     transition.layer = WORLD_LAYERS["top"]
     local waiting = true
+    local endData
     transition.end_callback = function(trans, data)
         waiting = false
+        endData = data
     end
     Game.world:addChild(transition)
     cutscene:wait(function() return not waiting end)
+    for _, character in ipairs(endData) do
+        local char = Game.world:getPartyCharacterInParty(character.party)
+        local kx, ky = character.sprite_1:localToScreenPos(character.sprite_1.width / 2, 0)
+        char:setScreenPos(kx + 8, transition.final_y)
+        char.visible = true
+        char:setFacing("down")
+    end
+    cutscene:wait(0.2)
     cutscene:attachCamera()
     cutscene:interpolateFollowers()
     cutscene:attachFollowers()
