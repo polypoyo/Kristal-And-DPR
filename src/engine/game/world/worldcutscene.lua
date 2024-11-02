@@ -1109,8 +1109,18 @@ end
 
 function WorldCutscene:gonerKeyboard(options)
     local chosen_text
+    local fade_rect = Rectangle(0, 0, Game.world.width, Game.world.height)
+    fade_rect:setColor(COLORS.black)
+    fade_rect.alpha = 0
+    if options.fade then
+        self.world:spawnObject(fade_rect, "below_ui")
+        self.world.timer:tween(00.40, fade_rect, {alpha = 0.4}, "linear")
+    end
     local keyboard = GonerKeyboard(options.length or -1, options.mode or "default", function(text)
         chosen_text = text
+        if options.fade then
+            fade_rect:fadeOutAndRemove(00.40)
+        end
     end)
     keyboard.x = self.world.camera.x - (SCREEN_WIDTH/2)
     keyboard.y = self.world.camera.y - (SCREEN_HEIGHT/2)
@@ -1146,11 +1156,12 @@ function WorldCutscene:warpBinInput(options)
     end
 end
 
-function WorldCutscene:getUserText(length, mode, wait)
+function WorldCutscene:getUserText(length, mode, wait, fade)
     local options = {
         length = length or -1,
         mode = mode or "default",
         wait = wait ~= false,
+        fade = fade ~= false,
     }
     if Input.usingGamepad() or (options.length == -1) then
         return self:gonerKeyboard(options)
