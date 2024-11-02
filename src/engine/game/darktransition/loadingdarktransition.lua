@@ -1,4 +1,5 @@
 ---@class LoadingDarkTransition : Object
+---@field loading_callback fun(transition: LoadingDarkTransition)
 ---@overload fun(...) : LoadingDarkTransition
 local LoadingDarkTransition, super = Class(Object)
 
