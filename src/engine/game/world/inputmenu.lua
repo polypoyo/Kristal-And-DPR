@@ -50,7 +50,7 @@ function WarpBinInputMenu:onAdd(...)
     end
     TextInput.submit_callback = function()
         if self.finish_cb then
-            self.finish_cb((self.as_warp_bin_ui or nil) and Mod:getBinCode(self.input[1]), self.input[1])
+            self.finish_cb(nil, self.input[1])
         end
         self:remove()
     end
