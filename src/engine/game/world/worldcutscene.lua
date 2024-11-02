@@ -1107,4 +1107,56 @@ function WorldCutscene:hideShop()
     end
 end
 
+function WorldCutscene:gonerKeyboard(options)
+    local chosen_text
+    local keyboard = GonerKeyboard(options.length or -1, options.mode or "default", function(text)
+        chosen_text = text
+    end)
+    keyboard.x = self.world.camera.x - (SCREEN_WIDTH/2)
+    keyboard.y = self.world.camera.y - (SCREEN_HEIGHT/2)
+    keyboard.layer = WORLD_LAYERS["ui"]
+
+    self.world:addChild(keyboard)
+    local waiter = function()
+        return chosen_text ~= nil, chosen_text
+    end
+    if options.wait then
+        return self:wait(waiter)
+    else
+        return waiter
+    end
+end
+
+function WorldCutscene:warpBinInput(options)
+    local action
+    local wbi_ok = false
+    local wbi = InputMenu(options.length)
+    wbi.as_warp_bin_ui = false
+    wbi.cancellable = false
+    wbi.finish_cb = function(_action, input)
+        wbi_ok = true
+        action = input
+    end
+    Game.world:spawnObject(wbi, "ui")
+    local waiter = function() return wbi_ok, action end
+    if options.wait then
+        return self:wait(waiter)
+    else
+        return waiter
+    end
+end
+
+function WorldCutscene:getUserText(length, mode, wait)
+    local options = {
+        length = length or -1,
+        mode = mode or "default",
+        wait = wait ~= false,
+    }
+    if Input.usingGamepad() or (options.length == -1) then
+        return self:gonerKeyboard(options)
+    else
+        return self:warpBinInput(options)
+    end
+end
+
 return WorldCutscene
