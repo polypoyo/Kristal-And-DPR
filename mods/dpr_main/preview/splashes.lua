@@ -14,6 +14,7 @@ return {
     "It's a game!",
     "Singleplayer!",
     "Keyboard\ncompatible!",
+    "Gamepad\ncompatible!",
     "Open source!",
     "Not on Steam!",
     "Pixels!",
