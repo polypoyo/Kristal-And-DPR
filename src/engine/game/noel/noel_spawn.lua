@@ -22,6 +22,7 @@ end
 
 local wake = function(cutscene, event)
             Game.world.music:fade(0, 0.25)
+        cutscene:wait(0.25)
 
             local turncoat = Music("turncoat", 1, 1)
 
