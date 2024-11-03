@@ -6,8 +6,8 @@ function Warstalker:init()
     -- Text displayed at the bottom of the screen at the start of the encounter
     self.text = "[instant]Error: src/engine/registry.lua:273: Attempt to create non existent enemy \"starwalker\"\nstack traceback:\n[C]: in function 'pcall'\nmain.lua:438: in function <main.lua:436>\n[C]: in function 'error'"
 
-    -- Battle music ("battle" is rude buster)
-    self.music = "battle2ut"
+    -- The Project Spacetime inspiration is evident here
+    self.music = "battle2ut-bitcrush"
     -- Enables the purple grid battle background
     self.background = true
 
@@ -18,8 +18,6 @@ function Warstalker:init()
     --self:addEnemy("dummy")
 
     self.timer = 0
-
-    self.ticker = 0
 end
 
 function Warstalker:onReturnToWorld(events)
@@ -46,27 +44,22 @@ function Warstalker:update()
       --  Game.battle.music.pitch = 1 + math.random(-0.1, 0.1)/10
     end]]
 
-    local time = math.floor(Game.battle.music:tell()) % 10
-    local swap = math.floor(self.ticker) % 10
-    if time == swap then
-        self.ticker = self.ticker + 1
-        print("ticked   "..self.ticker)
-        Game.battle.music.pitch = 1 + math.random(-1, 1)/math.random(5, 10)
-    --elseif time == 2 then
-      --  Game.battle.music.pitch = 1 + math.random(-0.1, 0.1)/10
+    
+    if self.timer > 3 then
+        Game.battle.music.pitch = Utils.random(0.4, 1.4) ^ 2
+        self.timer = self.timer - Utils.random(0.5,3)
     end
-
-    self.timer = self.timer + (1 * DTMULT)
-    print(self.warstalker.health)
+    
+    self.timer = self.timer + DT
     if self.warstalker.health < 1500/2 then
          self.warstalker.rotation = (math.sin(self.timer * math.random(1, 2)))/8 --for low hp
     end
-    if Game.battle.enemies[1]:canSpare() then
-    if math.random(1, 2) == 1 then
-         self.warstalker:setScale((math.sin(self.timer * math.random(0.1, 0.5))) * 2, 2)
-    else
-         self.warstalker:setScale(2, (math.sin(self.timer * math.random(0.1, 0.5))) * 2)
-    end
+    if Game.battle.enemies[1] and Game.battle.enemies[1]:canSpare() then
+        if math.random(1, 2) == 1 then
+            self.warstalker:setScale((math.sin(self.timer * math.random(0.1, 0.5))) * 2, 2)
+        else
+            self.warstalker:setScale(2, (math.sin(self.timer * math.random(0.1, 0.5))) * 2)
+        end
     end
     --self.warstalker:setScale(math.sin(self.timer * 0.1)) * 2, 2)
 end
