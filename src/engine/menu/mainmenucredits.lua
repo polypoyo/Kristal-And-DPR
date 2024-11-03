@@ -74,6 +74,62 @@ function MainMenuCredits:init(menu)
                 "",
                 "",
             }
+        },
+        {
+            "Dark Place",
+            {
+                {"Mod Idea", COLORS.silver},
+                "Racckoon",
+                "",
+                {"GitHub Managers", COLORS.silver},
+                "J.A.R.U.",
+                "BrendaK7200",
+                "",
+                {"Name Idea", COLORS.silver},
+                "AccousticJamm",
+            },
+            {
+                {"Contributors", COLORS.silver},
+                "AcousticJamm",
+                "Agent 7",
+                "AlexGamingSW",
+                "NyakoFox",
+                "BrendaK7200",
+                "Charbomber",
+                "PatateauBeurr",
+                "DiamondBor",
+                "Dobby233Liu",
+                "Radix121_",
+            }
+        },
+        {
+            "Dark Place",
+            {
+                {"Contributors", COLORS.silver},
+                "Hyperboid",
+                "J.A.R.U.",
+                "NelleMonelle",
+                "Racckoon",
+                "SpunkyTunky",
+                "THat",
+                "vitellary",
+                "YoshifanJordan",
+                "Bryan The Celestial",
+                "Elioze",
+            },
+            {
+                {"Contributors", COLORS.silver},
+                "FireRainV",
+                "SadDiamondMan",
+                "Sam Deluxe",
+                "Simbel",
+                "Silvaz",
+                "Tick358",
+                "ArleePuncher",
+                "",
+                "",
+                "",
+            }
         }
     }
     self.selected_page = 1
