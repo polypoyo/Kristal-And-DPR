@@ -5,6 +5,7 @@
  </editorsettings>
  <properties>
   <property name="border" value="mainhub"/>
+  <property name="music" value="mainhub"/>
  </properties>
  <tileset firstgid="1" source="../../tilesets/main_area.tsx"/>
  <objectgroup color="#ffaaff" id="8" name="objects_bg"/>

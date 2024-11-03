@@ -12,7 +12,8 @@ return {
   nextlayerid = 11,
   nextobjectid = 74,
   properties = {
-    ["border"] = "mainhub"
+    ["border"] = "mainhub",
+    ["music"] = "mainhub"
   },
   tilesets = {
     {

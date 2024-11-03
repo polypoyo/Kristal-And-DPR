@@ -5,6 +5,7 @@
  </editorsettings>
  <properties>
   <property name="border" value="mainhub"/>
+  <property name="music" value="mainhub"/>
  </properties>
  <tileset firstgid="1" source="../tilesets/castle.tsx"/>
  <tileset firstgid="41" source="../tilesets/main_area.tsx"/>
