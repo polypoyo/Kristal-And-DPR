@@ -6,81 +6,21 @@ return {
 			noel_here = 1
 		end
 
-		if cutscene:getCharacter("brenda") then
-			cutscene:showNametag("Brenda")
-			cutscene:text("* (Oh god...[wait:5] it's HER.)", "miffed", "brenda")     
-            if noel_here then
-			    noel_here = self.noel_here + 1
-			    cutscene:showNametag("Noel")
-			    cutscene:text("* (Who?)", "huh", "noel")
-			    cutscene:text("* (Why do you seem so [face:oh]darn upset?)", "bruh", "noel")
-            end
-		end
-
-		if cutscene:getCharacter("dumbie") then
-			cutscene:showNametag("Dumbie")
-			cutscene:text("* NO WAY DESS DELTARUNE", "pog", "dumbie")
-            if noel_here then
-                if noel_here == 2 then
-			        noel_here = noel_here + 1
-			        cutscene:showNametag("Noel")
-			        cutscene:text("* Dess?\n[face:...]* Is she one of the baddies?", "bruh", "noel")
-                else
-			        noel_here = noel_here + 1
-			        cutscene:showNametag("Noel")
-			        cutscene:text("* (Deltarune?)", "...", "noel")
-                    cutscene:text("* (... interisting.)", "huh", "noel")
-                end
-            end
-		end
-		
-		if cutscene:getCharacter("jamm") then
-			cutscene:showNametag("Jamm")
-            cutscene:text("* (Did we really have to do this one?)", "nervous", "jamm")
-            if noel_here then
-                if noel_here == 3 then
-			        cutscene:text("* OKAY, WHY THE [face:oh]FRICK[face:madloud] IS EVERYONE REACING IN THIS MANNER?![auto:true]", "madloud", "noel")
-                elseif noel_here == 2 then
-			        cutscene:showNametag("Noel")
-			        cutscene:text("* Is somthing wrong?", "bruh", "noel")
-                else
-			        cutscene:showNametag("Noel")
-			        cutscene:text("* (Do what?)", "...", "noel")
-                end
-            end
-		end
-
 		cutscene:showNametag("Dess Holiday?")
-		cutscene:text("* Yo is that-", "condescending", "dess")
-		cutscene:text("* ([func:sound]Low quality burp sound effect like that one time in Rick and Morty like what they do in the show)", "neutral", "dess",
-		{
-			functions = {
-				sound = function ()
-					Assets.stopAndPlaySound("lowqualityburp")
-				end
-			}
-		})
-		Assets.stopSound("lowqualityburp")
+		if #Game.party == 1 then
+			cutscene:text("* Yooo hey it's great to see you again", "condescending", "dess")
+		else
+			cutscene:text("* Yooo hey it's great to see you guys again", "condescending", "dess")
+		end
+		cutscene:showNametag("Dess")
+		cutscene:text("* its me,[wait:5] dess,[wait:5] from hit kristal mod dark place", "condescending", "dess")
         if cutscene:getCharacter("susie") then
-            cutscene:text("* Is that the fuckin' uhh 'Kris where the hell are we' guy??", "condescending", "dess")
-
             cutscene:showNametag("Susie")
-            cutscene:text("* ...", "annoyed", "susie")
-            cutscene:text("* Well first of all I'm a girl,[wait:10] and second of all I never said that.", "nervous", "susie")
-            cutscene:text("* Wait,[wait:5] how do you even know us??", "nervous_side", "susie")
-
-            cutscene:showNametag("Dess")
-            cutscene:text("* What do you mean I see you say it all the time on like", "condescending", "dess")
-            cutscene:text("* Twitter memes", "condescending", "dess")
-
-            cutscene:showNametag("Susie")
-            cutscene:text("* What the hell is Twitter?", "annoyed", "susie")
-
-            cutscene:showNametag("Dess")
-            cutscene:text("* Man idk anymore", "condescending", "dess")
-        else
-            cutscene:text("* Sup fuckers, DessHere!", "condescending", "dess")
-            cutscene:text("* Now that you're finally here, we can party!", "condescending", "dess")
+			cutscene:text("[speed:0.5]* ...", "", "susie")
+			cutscene:text("* I have literally never seen you before in my life.", "", "susie")
+		elseif cutscene:getCharacter("hero") then
+			cutscene:showNametag("Hero")
+            cutscene:text("* Uh,[wait:5] am I supposed to know you?", nil, "hero")
         end
 		if cutscene:getCharacter("brenda") then
 			cutscene:text("* Oh hey is that the gal?", "kind", "dess")
