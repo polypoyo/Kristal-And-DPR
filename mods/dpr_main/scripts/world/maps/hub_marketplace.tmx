@@ -3,6 +3,9 @@
  <editorsettings>
   <export target="hub_marketplace.lua" format="lua"/>
  </editorsettings>
+ <properties>
+  <property name="border" value="mainhub"/>
+ </properties>
  <tileset firstgid="1" source="../tilesets/main_area.tsx"/>
  <layer id="1" name="Tile Layer 1" width="21" height="16">
   <data encoding="csv">

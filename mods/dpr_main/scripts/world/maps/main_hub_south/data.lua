@@ -1,7 +1,7 @@
 return {
-  version = "1.9",
+  version = "1.11",
   luaversion = "5.1",
-  tiledversion = "1.9.0",
+  tiledversion = "1.11.0",
   class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
@@ -11,7 +11,9 @@ return {
   tileheight = 40,
   nextlayerid = 6,
   nextobjectid = 16,
-  properties = {},
+  properties = {
+    ["border"] = "mainhub"
+  },
   tilesets = {
     {
       name = "main_area",
@@ -83,7 +85,7 @@ return {
         {
           id = 2,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 0,
           y = 720,
@@ -96,7 +98,7 @@ return {
         {
           id = 3,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 200,
           y = 920,
@@ -109,7 +111,7 @@ return {
         {
           id = 4,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 920,
           y = 800,
@@ -122,7 +124,7 @@ return {
         {
           id = 5,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 640,
           y = 640,
@@ -135,7 +137,7 @@ return {
         {
           id = 6,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 480,
           y = 480,
@@ -148,7 +150,7 @@ return {
         {
           id = 9,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 200,
           y = 0,
@@ -161,7 +163,7 @@ return {
         {
           id = 10,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 400,
           y = 0,
@@ -174,7 +176,7 @@ return {
         {
           id = 11,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 0,
           y = 480,
@@ -203,7 +205,7 @@ return {
         {
           id = 1,
           name = "npc",
-          class = "",
+          type = "",
           shape = "point",
           x = 540,
           y = 660,
@@ -219,7 +221,7 @@ return {
         {
           id = 13,
           name = "transition",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 280,
           y = -40,
@@ -235,7 +237,7 @@ return {
         {
           id = 15,
           name = "transition",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = -40,
           y = 640,
@@ -264,7 +266,7 @@ return {
         {
           id = 12,
           name = "spawn",
-          class = "",
+          type = "",
           shape = "point",
           x = 340,
           y = 560,
@@ -277,7 +279,7 @@ return {
         {
           id = 14,
           name = "north",
-          class = "",
+          type = "",
           shape = "point",
           x = 340,
           y = 72,

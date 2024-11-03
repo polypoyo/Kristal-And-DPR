@@ -27,6 +27,13 @@
             "width": 800,
             "x": 1040,
             "y": -1520
+        },
+        {
+            "fileName": "maps/grey_cliffside/the_end.tmx",
+            "height": 480,
+            "width": 640,
+            "x": 200,
+            "y": -1320
         }
     ],
     "onlyShowAdjacentMaps": false,
