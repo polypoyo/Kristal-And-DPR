@@ -563,6 +563,7 @@ function MainMenuOptions:initializeOptions()
     self:registerOptionsPage("general", "GENERAL")
     self:registerOptionsPage("graphics", "GRAPHICS")
     self:registerOptionsPage("engine", "ENGINE")
+    self:registerOptionsPage("gameplay", "GAMEPLAY")
 
     ---------------------
     -- General Options
@@ -654,6 +655,8 @@ function MainMenuOptions:initializeOptions()
     self:registerConfigOption("engine", "Use System Mouse", "systemCursor", function () Kristal.updateCursor() end)
     self:registerConfigOption("engine", "Always Show Mouse", "alwaysShowCursor", function () Kristal.updateCursor() end)
     self:registerConfigOption("engine", "Instant Quit", "instantQuit")
+
+    self:registerConfigOption("gameplay", "Prefer Goner Keyboard", "prefersGonerKeyboard")
 end
 
 -------------------------------------------------------------------------------

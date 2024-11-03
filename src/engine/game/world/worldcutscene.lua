@@ -1163,7 +1163,7 @@ function WorldCutscene:getUserText(length, mode, wait, fade)
         wait = wait ~= false,
         fade = fade ~= false,
     }
-    if Input.usingGamepad() or (options.length == -1) then
+    if Input.usingGamepad() or (options.length == -1) or Kristal.Config["prefersGonerKeyboard"] then
         return self:gonerKeyboard(options)
     else
         return self:warpBinInput(options)
