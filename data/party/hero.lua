@@ -41,11 +41,11 @@ function character:init()
     self.lw_weapon_default = "light/pencil"
     self.lw_armor_default = "light/bandage"
 
-    self.color = {0, 1, 1}
-    self.dmg_color = {0.5, 1, 1}
-    self.attack_bar_color = {0, 162/255, 232/255}
-    self.attack_box_color = {0, 0, 1}
-    self.xact_color = {0.5, 1, 1}
+    self.color = {1, 0.5, 0}
+    self.dmg_color = {1, 0.5, 0.25}
+    self.attack_bar_color = {1, 0.5, 162/255}
+    self.attack_box_color = {1, 0.5, 0}
+    self.xact_color = {1, 0.5, 0}
 
     self.menu_icon = "party/hero/head"
     self.head_icons = "party/kris/icon" -- Placeholder

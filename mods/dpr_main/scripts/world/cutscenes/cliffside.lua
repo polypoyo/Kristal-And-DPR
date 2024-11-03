@@ -526,7 +526,7 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
     susie = function(cutscene, event)
         local hero = cutscene:getCharacter("hero")
         local susie = cutscene:getCharacter("susie")
-
+        
         hero:walkTo(300, 820, 1.5, "up")
         cutscene:wait(1.5)
         susie:alert()
@@ -546,14 +546,28 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
         cutscene:showNametag("???")
         susie:setSprite("exasperated_right")
         cutscene:text("* Thank GOD.", "teeth_b", "susie")
-        cutscene:text("* There's nothing but rocks and that stupid cat here!", "teeth", "susie")
+        cutscene:text("* There's nothing but rocks and that stupid cat here! [wait:1][react:1]", "teeth", "susie", 
+        {
+            reactions={
+                {"I can still hear\nyou...", "right", "bottom", "neutral", "cat"}
+            }
+        })
+
         susie:resetSprite()
-        cutscene:text("* Uh,[wait:5] you asked who I was,[wait:5] right?", "sus_nervous", "susie")
+        cutscene:text("*[react:1] Uh,[wait:5] you asked who I was,[wait:5] right?", "sus_nervous", "susie", 
+        {
+            reactions={
+                {"You're very [color:yellow]rude[color:rest].", "right", "bottom", "neutral", "cat"}
+            }
+        })
         cutscene:showNametag("Hero")
         cutscene:text("* Yeah.", nil, "hero")
         cutscene:showNametag("Susie")
         cutscene:text("* Well,[wait:5] the name's Susie!", "sincere_smile", "susie")
         cutscene:hideNametag()
+        
+        Game.world.music:pause()
+
         Assets.playSound("jump")
         susie:setFacing("down")
         cutscene:wait(0.1)
@@ -575,6 +589,10 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
         susie:setSprite("pose")
         cutscene:wait(0.5)
         cutscene:showNametag("Susie")
+        local get_bus = Music("get_on_the_bus")
+        
+
+
         cutscene:text("* You may have heard of my name before.", "small_smile", "susie")
         cutscene:text("* After all,[wait:5] I AM a Delta Warrior.", "smile", "susie")
         cutscene:showNametag("Hero")
@@ -602,8 +620,21 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
         cutscene:text("* Uh,[wait:5] hopefully not.", nil, "hero")
         cutscene:text("* So basically...", nil, "hero")
         cutscene:hideNametag()
+
+        get_bus:fade(0, 1)
+
         cutscene:wait(cutscene:fadeOut(1))
         cutscene:wait(2)
+
+        local lore_board = Sprite("world/cutscenes/cliffside/lore_board")
+
+        lore_board.x, lore_board.y = 220, 680
+
+        Game.world:addChild(lore_board)
+
+        lore_board:setScale(2)
+        lore_board.layer = 0.6
+
         cutscene:wait(cutscene:fadeIn(1))
         cutscene:showNametag("Susie")
         cutscene:text("* Oh damn.", "shock", "susie")
@@ -615,6 +646,9 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
         cutscene:showNametag("Susie")
         cutscene:text("* Uhh,[wait:5] guess I'm not opening any more Dark Fountains then.", "shock_nervous", "susie")
         susie:setSprite("exasperated_right")
+
+        get_bus:fade(1, 0.01)
+        
         cutscene:text("* WHY THE HELL DID RALSEI NOT TELL ME ABOUT THIS?!", "teeth_b", "susie")
         susie:resetSprite()
         cutscene:text("* The Roaring?[wait:10]\nCool and badass end of the world.", "teeth_smile", "susie")
@@ -645,11 +679,25 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
         cutscene:text("* Yeah,[wait:5] you're right.", "small_smile", "susie")
         cutscene:text("* Well,[wait:5] lead the way, Hero!", "sincere_smile", "susie")
         cutscene:hideNametag()
+
+        get_bus:stop()
+
+        local fan = Music("fanfare", 1, 1, false)
+
+        lore_board:slideTo(-120, 680, 15)
+
+        cutscene:text("[noskip][speed:0.1]* (Susie joined the[func:remove] party!)[wait:20]\n\n[speed:1]UwU", {auto = true, functions = {
+            remove = function()
+                lore_board:explode()
+            end
+        }})
+
         susie:convertToFollower()
         Game:setFlag("cliffside_susie", true)
         Game:addPartyMember("susie")
         Game:unlockPartyMember("susie")
         cutscene:wait(cutscene:attachFollowers())
-        cutscene:text("* (Susie joined the party!)")
+
+        Game.world.music:resume()
     end,
 }
