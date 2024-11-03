@@ -6,8 +6,8 @@ function Warstalker:init()
     -- Text displayed at the bottom of the screen at the start of the encounter
     self.text = "[instant]Error: src/engine/registry.lua:273: Attempt to create non existent enemy \"starwalker\"\nstack traceback:\n[C]: in function 'pcall'\nmain.lua:438: in function <main.lua:436>\n[C]: in function 'error'"
 
-    -- Battle music ("battle" is rude buster)
-    self.music = "battle2ut"
+    -- The Project Spacetime inspiration is evident here
+    self.music = "battle2ut-bitcrush"
     -- Enables the purple grid battle background
     self.background = true
 
