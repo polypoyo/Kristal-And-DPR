@@ -46,7 +46,7 @@ function Warstalker:update()
 
     
     if self.timer > 3 then
-        Game.battle.music.pitch = 1 + math.random(-1, 1)/math.random(5, 10)
+        Game.battle.music.pitch = Utils.random(0.4, 1.4) ^ 2
         self.timer = self.timer - Utils.random(0.5,3)
     end
     
