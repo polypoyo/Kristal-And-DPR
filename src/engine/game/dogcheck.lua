@@ -27,6 +27,8 @@ function DogCheck:init(variant)
     self.stretch_ex_timer = 0
 	
     self.color_siner = 0
+	
+    love.window.setTitle("Dog Place: REBIRTH")
 end
 
 function DogCheck:onAdd(parent)
@@ -158,6 +160,7 @@ function DogCheck:update()
         self.timer:after(1, function ()
             self:remove()
             Game:returnToMenu()
+            love.window.setTitle(mod and mod.name or Kristal.game_default_name)
         end)
     end
 
