@@ -55,6 +55,7 @@ function spell:onCast(user, target)
         spellf.action_command_threshold = math.max(1/15, spellf.action_command_threshold * 0.95)
         if spellf.target.parent then
             target:hurt(math.floor(strikedmg), user)
+            target.hit_count = 0
         end
 	end
     return false
