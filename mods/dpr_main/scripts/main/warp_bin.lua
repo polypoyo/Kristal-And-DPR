@@ -59,6 +59,18 @@ Mod.warp_bin_codes["GREYAREA"] = gray_area_info
 ---@return WarpBinCodeInfo info
 function Mod:getBinCode(code)
     code = code:upper()
+    for id, mod in  pairs(Kristal.Mods.data) do
+        if mod.dlc and mod.dlc.extraBinCodes and mod.dlc.extraBinCodes[code] then
+            local info = mod.dlc.extraBinCodes[code]
+            if info == true then
+                return {
+                    result = mod.map,
+                    mod = id,
+                }
+            end
+            return info
+        end
+    end
 
     return Mod.warp_bin_codes[code]
 end
