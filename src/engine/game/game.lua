@@ -7,6 +7,7 @@
 ---@field shop              Shop
 ---@field gameover          GameOver
 ---@field legend            Legend
+---@field dogcheck          DogCheck
 ---@field inventory         DarkInventory|LightInventory
 ---@field dark_inventory    DarkInventory
 ---@field light_inventory   LightInventory
@@ -65,6 +66,7 @@ function Game:clear()
     self.shop = nil
     self.gameover = nil
     self.legend = nil
+    self.dogcheck = nil
     self.inventory = nil
     self.quick_save = nil
     self.lock_movement = false
@@ -202,6 +204,8 @@ function Game:getActiveMusic()
         return self.gameover.music
     elseif self.state == "LEGEND" then
         return self.legend.music
+    elseif self.state == "DOGCHECK" then
+        return self.dogcheck.music
     else
         return self.music
     end
@@ -316,7 +320,7 @@ function Game:load(data, index, fade)
     BORDER_ALPHA = 0
     Kristal.showBorder(1)
 
-    -- states: OVERWORLD, BATTLE, SHOP, GAMEOVER, LEGEND
+    -- states: OVERWORLD, BATTLE, SHOP, MINIGAME, GAMEOVER, LEGEND, DOGCHECK
     self.state = "OVERWORLD"
 
     self.stage = Stage()
@@ -600,6 +604,7 @@ function Game:gameOver(x, y)
     if self.shop     then self.shop    :remove() end
     if self.gameover then self.gameover:remove() end
     if self.legend   then self.legend  :remove() end
+    if self.dogcheck then self.dogcheck:remove() end
 
     self.gameover = GameOver(x or 0, y or 0)
     self.stage:addChild(self.gameover)
@@ -739,6 +744,21 @@ function Game:startMinigame(game)
     Game.minigame:postInit()
 
     Game.stage:addChild(Game.minigame)
+end
+
+function Game:dogCheck()
+    Kristal.hideBorder(0)
+
+    self.state = "DOGCHECK"
+    if self.battle   then self.battle  :remove() end
+    if self.world    then self.world   :remove() end
+    if self.shop     then self.shop    :remove() end
+    if self.gameover then self.gameover:remove() end
+    if self.legend   then self.legend  :remove() end
+    if self.dogcheck then self.dogcheck:remove() end
+
+    self.dogcheck = DogCheck()
+    self.stage:addChild(self.dogcheck)
 end
 
 function Game:setPresenceState(details)

@@ -283,6 +283,8 @@ GameOver = require("src.engine.game.gameover")
 
 Legend = require("src.engine.game.legend")
 
+Dogcheck = require("src.engine.game.dogcheck")
+
 DarkTransition = require("src.engine.game.darktransition.darktransition")
 LoadingDarkTransition = require("src.engine.game.darktransition.loadingdarktransition")
 
