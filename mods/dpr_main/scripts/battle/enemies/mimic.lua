@@ -132,11 +132,12 @@ function Mimic:onDefeat(damage, battler)
 
     -- mark us as defeated first
     -- sprite is not destroyed yet
-    if not Mod:isInRematchMode() then
+    --[[if not Mod:isInRematchMode() then
         self:defeat("KILLED", true)
     else
         self:defeat("VIOLENCE", true)
-    end
+    end]]
+    self:defeat("KILLED", true)
 end
 
 return Mimic

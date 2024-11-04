@@ -595,7 +595,7 @@ function Battle:onStateChange(old,new)
                 end
             end
             if levelup then
-                win_text = "* You won!\n* Got " .. self.money .. " "..Game:getConfig("darkCurrencyShort")..".\n* Your LOVE increased!"
+                win_text = "* You won!\n* Got " .. self.xp .. " EXP and " .. self.money .. " "..Game:getConfig("darkCurrencyShort")..".\n* Your LOVE increased!"
 
                 Assets.playSound("levelup", 1, 1)
             end

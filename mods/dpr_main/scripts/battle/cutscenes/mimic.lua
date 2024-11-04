@@ -8,11 +8,12 @@ return {
         Assets.playSound("wing")
 
         if susie then
-            if Mod:isInRematchMode() then
+            --[[if Mod:isInRematchMode() then
                 cutscene:text("* Heh,[wait:5] looks like we've won.", "smile", "susie")
             else
                 cutscene:text("* Hey uh,[wait:5] something about this feels off...", "sad_frown", "susie")
-            end
+            end]]
+            cutscene:text("* Hey uh,[wait:5] something about this feels off...", "sad_frown", "susie")
         end
 
         enemy:shake(5)
@@ -23,11 +24,12 @@ return {
         cutscene:wait(1)
 
         if dess then
-            if Mod:isInRematchMode() then
+            --[[if Mod:isInRematchMode() then
                 cutscene:text("* funny explosion incomming", "kind", "dess")
             else
                 cutscene:text("* idk looks fine to me lol", "kind", "dess")
-            end
+            end]]
+            cutscene:text("* idk looks fine to me lol", "kind", "dess")
         end
 
         enemy:shake(5)
@@ -37,7 +39,7 @@ return {
         enemy:explode(0, 0, false)
         cutscene:wait(2)
 
-        if Mod:isInRematchMode() then
+        --[[if Mod:isInRematchMode() then
             if susie then
                 cutscene:text("* That was too easy!", "smile", "susie")
             end
@@ -46,6 +48,12 @@ return {
             end
         else
             cutscene:text("* ...", "shock", "susie")
+            cutscene:text("* well erm... THAT just happened lol", "condescending", "dess")
+        end]]
+        if susie then
+            cutscene:text("* ...", "shock", "susie")
+        end
+        if dess then
             cutscene:text("* well erm... THAT just happened lol", "condescending", "dess")
         end
     end

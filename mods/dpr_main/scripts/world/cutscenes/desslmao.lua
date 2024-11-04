@@ -122,6 +122,7 @@ return {
 		Game:addPartyMember("dess", 1)
 		if #Game.party == 4 then
 			Game.world:spawnFollower(Game.party[4].id)
+			Game:addFollower(Game.party[4].id)
 			Game:removePartyMember(Game.party[4].id)
 		end
 		for i, v in ipairs(Game.world.followers) do
@@ -201,10 +202,6 @@ return {
 			cutscene:showNametag("???")
 			cutscene:text("* Hey fucker you need to come talk to me first", "neutral", "dess")
 			
-			if cutscene:getCharacter("jamm") then
-				cutscene:showNametag("Jamm")
-				cutscene:text("* Well, there goes THAT idea.", "nervous", "jamm")
-			end
 			cutscene:hideNametag()
             leader.y = leader.y + 12
 		end
@@ -215,15 +212,12 @@ return {
 
 		local susie = cutscene:getCharacter("susie")
 		local leader = Game.world.player
-		local dess = cutscene:getCharacter("dess")
-		local brenda = cutscene:getCharacter("brenda")
-		local jamm = cutscene:getCharacter("jamm")
 
 		cutscene:detachFollowers()
 		cutscene:detachCamera()
 
-        for i,party in ipairs (Game.party) do
-            cutscene:walkTo(cutscene:getCharacter(party.id), leader.x, leader.y+16*i, 1, "up")
+        for i,party in ipairs (Game.world.followers) do
+            cutscene:walkTo(cutscene:getCharacter(party.actor.id), leader.x, leader.y+20*i, 1, "up")
         end
 
         if susie then
@@ -243,6 +237,7 @@ return {
 
 		cutscene:wait(1)
 		boss:shake(8, 0)
+		Assets.stopAndPlaySound("wing")
 		cutscene:wait(2)
 
         if susie then
@@ -257,6 +252,7 @@ return {
         end
 
 		boss:shake(8, 0)
+		Assets.stopAndPlaySound("wing")
 
         if susie then
             cutscene:showNametag("Susie")
@@ -266,6 +262,7 @@ return {
         end
 
 		boss:shake(16, 0)
+		Assets.stopAndPlaySound("wing")
 
 		cutscene:showNametag("Dess")
         if susie then
@@ -274,10 +271,12 @@ return {
             cutscene:text("* Oh shit!", "wtf_b", "dess")
         end
 		boss:shake(8, 0)
+		Assets.stopAndPlaySound("wing")
 
 		cutscene:showNametag("???")
 		cutscene:text("* Hee...")
 		boss:shake(16, 0)
+		Assets.stopAndPlaySound("wing")
 		cutscene:text("* Uheeheehee!!")
 		cutscene:hideNametag()
 
@@ -287,8 +286,8 @@ return {
 
 		cutscene:wait(0.8)
 
-        for i,party in ipairs (Game.party) do
-            cutscene:look(cutscene:getCharacter(party.id), "down")
+        for i,party in ipairs (Game.world.followers) do
+            cutscene:look(cutscene:getCharacter(party.actor.id), "down")
         end
         cutscene:look(leader, "down")
         
@@ -381,16 +380,6 @@ return {
             cutscene:text("* Whatever,[wait:5]I wanna smash you already", "neutral", "dess")
         end
 
-		if brenda then
-			cutscene:showNametag("Brenda")
-			cutscene:text("* Let's do this.", "happy", "brenda")
-		end
-		
-		if jamm then
-			cutscene:showNametag("Jamm")
-            cutscene:text("* Here we go!", "smug", "jamm")
-		end
-
 		cutscene:showNametag("???")
 		cutscene:text("* Suit yourself![wait:5] Uheehee!")
 
@@ -405,77 +394,39 @@ return {
 		cutscene:wait(1)
 
 		cutscene:showNametag("Dess")
-		cutscene:text("* Wow,[wait:10] we really learned a lot about each-other while on this journey.", "genuine", "dess")
-
-        if susie then
-            cutscene:showNametag("Susie")
-            cutscene:text("* WH-", "shock", "susie")
-            cutscene:text("* NO!!", "angry", "susie")
-            cutscene:text("* NO!!!!!", "angry_b", "susie")
-            cutscene:text("* You are NOT making this a 'touching' moment!", "angry_c", "susie")
-
-            cutscene:showNametag("Dess")
-            cutscene:text("* No,[wait:5] I really think we really started to value our friendship there.", "genuine", "dess")
-            cutscene:text("* Whaddya say,[wait:5] after this...", "genuine", "dess")
-            cutscene:text("* You and I smoke a ciggie outside of a 7/11?", "kind", "dess")
-         
-            cutscene:showNametag("Susie")
-            cutscene:text("* I just want you to know right now...", "suspicious", "susie")
-            cutscene:text("* You are the absolute worst person I've ever met.", "suspicious", "susie")
-
-            if brenda then
-                cutscene:showNametag("Brenda")
-                cutscene:text("* Now you know how I feel.", "miffed", "brenda")
-            end
-
-            cutscene:showNametag("Dess")
-            cutscene:text("* Alright but can I stay on the team?", "neutral", "dess")
-
-            cutscene:showNametag("Susie")
-            cutscene:text("* NO!", "teeth_b", "susie")
-
-            cutscene:showNametag("Dess")
-            cutscene:text("* ...", "neutral", "dess")
-            cutscene:text("* Please?", "condescending", "dess")
-
-            cutscene:showNametag("Susie")
-            cutscene:text("* NO!!![wait:20] NO NO NO!", "teeth_b", "susie")
-
-            cutscene:showNametag("Dess")
-            cutscene:text("* If I do I'll give the other guy's position back as leader", "neutral", "dess")
-
-            cutscene:showNametag("Susie")
-            cutscene:text("* ...", "teeth_b", "susie")
-            cutscene:text("* ALRIGHT, FINE!", "teeth_b", "susie")
-            cutscene:text("* But I am NOT talking to you anymore!", "angry", "susie")
-
-            cutscene:showNametag("Dess")
-            cutscene:text("* Yippeee", "condescending", "dess")
-        else
-            cutscene:text("* I really think we really started to value our friendship there.", "genuine", "dess")
-            cutscene:text("* Whaddya say,[wait:5] after this...", "genuine", "dess")
-            cutscene:text("* We all smoke a ciggie outside of a 7/11?", "kind", "dess")
-        end
-        
-		if brenda then
-			cutscene:showNametag("Brenda")
-			cutscene:text("* (God damnit.)", "miffed", "brenda")
-		end
-		if jamm then
-			cutscene:showNametag("Jamm")
-			cutscene:text("* (And dreams were broken that day.)", "neutral", "jamm")
+		cutscene:text("* well that was fun", "condescending", "dess")
+		cutscene:text("* so whaddaya say we all go and smoke a ciggie outside a 7-11?", "genuine", "dess")
+		if susie then
+			cutscene:showNametag("Susie")
+			cutscene:text("* What the hell is a 7-11?", "nervous_side", "susie")
+			cutscene:showNametag("Dess")
+			cutscene:text("* damn that's not what you said last time", "eyebrow", "dess")
+			cutscene:showNametag("Susie")
+			cutscene:text("* Why do you keep acting like I'm supposed to know you?", "suspicious", "susie")
+			cutscene:showNametag("Dess")
+			cutscene:text("* uhhh because you are?", "condescending", "dess")
+			cutscene:text("* damn this really IS a reboot", "neutral_b", "dess")
+			cutscene:text("* ok tell you what,[wait:5] I'll give the leader spot back", "genuine_b", "dess")
+			cutscene:text("* IF and only IF", "calm_b", "dess")
+			cutscene:text("* you promise to by me a Mug:tm: Root Beer when this is all over", "condescending", "dess")
+			cutscene:showNametag("Susie")
+			cutscene:text("* ...[wait:10] Fine.", "suspicious", "susie")
+			cutscene:text("* You are the single weirdest person I've ever met.", "annoyed", "susie")
+			cutscene:showNametag("Dess")
+			cutscene:text("* i'll take that as a compliment", "heckyeah", "dess")
+		else
+			cutscene:text("[speed:0.5]* ...", "genuine", "dess")
+			cutscene:text("* dang no takers then?", "neutral_b", "dess")
+			cutscene:text("* oh well more ciggies for me then", "condescending", "dess")
 		end
 		cutscene:hideNametag()
 
 		local susie_party = Game:getPartyMember("susie")
         if susie then
-            susie_party:addOpinion("dess", -20)
+            susie_party:addOpinion("dess", -10)
         end
 
-		cutscene:detachFollowers()
-		Game:movePartyMember("dess", 2)
-		cutscene:attachFollowers(3)
-		if Game:getFlag("library_kills") >= 9 then
+		if Game:getPartyMember("dess").kills >= 9 then
 			cutscene:wait(3)
 			cutscene:showNametag("Dess")
 			cutscene:text("* Hey actually wait", "genuine", "dess")
@@ -488,25 +439,49 @@ return {
                 cutscene:showNametag("Susie")
                 cutscene:text("* ...", "neutral_side", "susie")
                 cutscene:text("* Oooookay then...", "neutral", "susie")
-            end
-			if brenda then
-				cutscene:showNametag("Brenda")
-				cutscene:text("[speed:0.3]* ...", "frown", "brenda")
 			end
 			Assets.playSound("ominous")
 			Game:setFlag("can_kill", true)
-			cutscene:hideNametag()
 		end
-		if Game:getFlag("dessRemovedLeader") then
-			local removed_member_id = Game:getFlag("dessRemovedLeader")
-			if type(removed_member_id) == "table" then removed_member_id = removed_member_id.id end
+		cutscene:showNametag("Dess")
+		if #Game.world.followers == 3 then
+			cutscene:text("* anyways imma be chillin in the diner if you guys need me", "kind", "dess")
+			cutscene:hideNametag()
+			cutscene:wait(cutscene:fadeOut(1))
+			cutscene:wait(1)
+
+			-- Party setup 2: Desslectric boogaloo
+			local newparty = Game.world.followers[3].actor.id
+			Game:addPartyMember(newparty)
 			Game:removePartyMember("dess")
-			Game:setFlag("dess_party", false)
-			Game:addPartyMember(removed_member_id, 1)
-			Game:setFlag(removed_member_id.."_party", true)
-			cutscene:showNametag("Dess")
-			cutscene:text("* I'll be waiting for you at the diner aight?", "eyebrow", "dess")
+			Game.world:removeFollower(newparty)
+			cutscene:getCharacter(newparty):remove()
+			cutscene:wait(0.5)
+			for i, v in ipairs(Game.world.followers) do
+				v:setActor(Game.party[i+1]:getActor())
+			end
+			Game.world.player:setActor(Game.party[1]:getActor())
+			cutscene:interpolateFollowers()
+			cutscene:wait(0.5)
+
+			cutscene:wait(cutscene:fadeIn(1))
+		else
+			cutscene:text("* ok time to stop leading", "genuine", "dess")
 			cutscene:hideNametag()
+			cutscene:hideNametag()
+
+			cutscene:wait(cutscene:fadeOut(1))
+			cutscene:wait(1)
+			Game:movePartyMember("dess", 2)
+			for i, v in ipairs(Game.world.followers) do
+				v:setActor(Game.party[i+1]:getActor())
+			end
+			Game.world.player:setActor(Game.party[1]:getActor())
+			cutscene:interpolateFollowers()
+			cutscene:wait(0.5)
+
+			cutscene:wait(cutscene:fadeIn(1))
 		end
+		cutscene:text("* (Dess is no longer leading the party!)")
 	end,
 }
