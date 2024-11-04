@@ -656,7 +656,7 @@ function MainMenuOptions:initializeOptions()
     self:registerConfigOption("engine", "Always Show Mouse", "alwaysShowCursor", function () Kristal.updateCursor() end)
     self:registerConfigOption("engine", "Instant Quit", "instantQuit")
 
-    self:registerConfigOption("gameplay", "Prefer Goner Keyboard", "prefersGonerKeyboard")
+    self:registerConfigOption("gameplay", "Prefer Goner Keybd.", "prefersGonerKeyboard")
 end
 
 -------------------------------------------------------------------------------
