@@ -1,6 +1,7 @@
 return {
 	dessbegin = function(cutscene)
 		local dess = cutscene:getCharacter("dess")
+		local susie = cutscene:getCharacter("susie")
 
 		if cutscene:getCharacter("noel") then
 			noel_here = 1
@@ -13,38 +14,46 @@ return {
 			cutscene:text("* Yooo hey it's great to see you guys again", "condescending", "dess")
 		end
 		cutscene:showNametag("Dess")
-		cutscene:text("* its me,[wait:5] dess,[wait:5] from hit kristal mod dark place", "condescending", "dess")
-        if cutscene:getCharacter("susie") then
+		cutscene:text("* its me,[wait:5] dess,[wait:5] from hit kristal mod dark place", "heckyeah", "dess")
+        if susie then
             cutscene:showNametag("Susie")
-			cutscene:text("[speed:0.5]* ...", "", "susie")
-			cutscene:text("* I have literally never seen you before in my life.", "", "susie")
+			cutscene:text("[speed:0.5]* ...", "neutral_side", "susie")
+			cutscene:text("* I have literally never seen you before in my life.", "annoyed", "susie")
 		elseif cutscene:getCharacter("hero") then
 			cutscene:showNametag("Hero")
             cutscene:text("* Uh,[wait:5] am I supposed to know you?", nil, "hero")
+		else
+			cutscene:text("[speed:0.5]* ...", "heckyeah", "dess")
+			cutscene:text("* hey why are you looking at me like that", "eyebrow", "dess")
         end
-		if cutscene:getCharacter("brenda") then
-			cutscene:text("* Oh hey is that the gal?", "kind", "dess")
-
-			cutscene:showNametag("Brenda")
-			cutscene:text("[noskip][speed:0.3]* ...", "miffed", "brenda")
-
-			cutscene:showNametag("Dess")
-			cutscene:text("* uhhhh Breloom was it?", "neutral", "dess")
-
-			cutscene:showNametag("Brenda")
-			cutscene:text("* ... Brenda.", "miffed", "brenda")
-
-			cutscene:showNametag("Dess")
-			cutscene:text("* yeah I knew that", "condescending", "dess")
+		cutscene:showNametag("Dess")
+		cutscene:text("* aw c'mon don't tell me you guys forgot about me", "neutral", "dess")
+		local remembered = false
+		if cutscene:getCharacter("noel") then
+			cutscene:showNametag("Noel")
+			cutscene:text("* I remember you[wait:1][react:1]", "neutral", "noel",
+			{
+				reactions={
+					{"'re [color:red]Dessimation\nRoutes[color:reset].", "right", "bottom", "neutral", "noel"}
+				}
+			})
+			remembered = true
 		end
-		if cutscene:getCharacter("jamm") then
-			cutscene:text("* Oh hey didn't your wife die?", "kind", "dess")
-
-			cutscene:showNametag("Jamm")
-			cutscene:text("* She lasted longer than my patience with you, thank you very much.", "shaded_pissed", "jamm")
-
+		if remembered then
 			cutscene:showNametag("Dess")
-			cutscene:text("* yeah true I figured", "condescending", "dess")
+			cutscene:text("* ayyy finally someone remembers me", "condescending", "dess")
+			cutscene:text("* anyways", "calm_b", "dess")
+		end
+		cutscene:text("* I've been training in the hyperbolic time chamber for 20 years", "condescending", "dess")
+		cutscene:text("* got a whole entire attack point out of it", "heckyeah", "dess")
+		cutscene:text("* you could call me pretty strong now", "challenging", "dess")
+		cutscene:text("* a side effect tho is that i lost all of my character development", "genuine", "dess")
+		cutscene:text("* cause this is a reboot babyyyyy", "challenging", "dess")
+		if susie then
+            cutscene:showNametag("Susie")
+			cutscene:text("[speed:0.5]* ...", "nervous_side", "susie")
+			cutscene:text("* I have no idea what anything you just said meant.", "nervous", "susie")
+			cutscene:showNametag("Dess")
 		end
 		cutscene:text("* Oh yeah can I join your team btw", "neutral", "dess")
 
@@ -56,52 +65,119 @@ return {
 		if can_she_join_your_team_btw == 1 then
 			cutscene:text("* sick", "condescending", "dess")
 		else
-			cutscene:text("* Uhhh I don't care", "condescending", "dess")
+			cutscene:text("* Uhhh I don't care im joining anyways", "condescending", "dess")
 		end
 		cutscene:hideNametag()
+
+		Game.world.music:stop()
+		local fan = Music("fanfare", 1, 0.9, false)
+
+		local leader = cutscene:getCharacter(Game.party[1].id)
 
 		cutscene:detachFollowers()
-		cutscene:detachCamera()
-		cutscene:setAnimation(dess, "battle/attack")
-		dess.flip_x = true
-		cutscene:wait(0.2)
-		local leader = Game.world.player
-		leader:explode(0, 0, true)
-		cutscene:slideTo(leader, leader.x - 700, leader.y - 50, 1)
-		cutscene:wait(1.5)
+		leader:slideTo(leader.x-50, leader.y, 2, "out-cubic")
 
-		if #Game.party >= 3 then
-			local prev_leader_pm = Game.party[1]
-			Game:setFlag("dessRemovedLeader", prev_leader_pm.id)
-			Game:removePartyMember(prev_leader_pm)
-			Game:setFlag(prev_leader_pm.id.."_party", false)
-		end
-		
-		Game:addPartyMember("dess", 1)
-		Game:setFlag("dess_party", true)
-		Game:setFlag("dess_obtained", true)
-		Game.world:spawnPlayer(dess.x, dess.y, "dess")
-		dess:remove()
-		Game.world:removeFollower(leader)
-		cutscene:walkTo("dess", dess.x - 30, dess.y + 10, 1, "left")
+		cutscene:walkTo("dess", dess.x - 50, dess.y + 10, 11, "left")
+		cutscene:text("[noskip][speed:0.1]* (Dess joined the party!)[wait:70]\n\n[speed:1](Unfortunately)", {auto = true})
+		Game.world.music:resume()
 
 		cutscene:showNametag("Dess")
-		cutscene:text("* Ok lets go", "neutral", "dess")
+		cutscene:text("* Ok follow me guys", "heckyeah", "dess")
+		if susie then
+            cutscene:showNametag("Susie")
+			susie:setSprite("shock_right")
+			cutscene:text("* Wh-", "shock", "susie")
+			susie:setSprite("exasperated_right")
+			cutscene:text("* THAT'S NOT HOW THIS WORKS!", "teeth_b", "susie")
+			cutscene:showNametag("Dess")
+			cutscene:text("* uhhhh idc", "condescending", "dess")
+			cutscene:text("* just be happy i didnt smack the party leader with my bat this time", "condescending", "dess")
+			cutscene:showNametag("Susie")
+			cutscene:text("* I-", "teeth", "susie")
+			cutscene:hideNametag()
+			susie:setSprite("walk_unhappy/right_1")
+			susie:shake(5)
+			Assets.stopAndPlaySound("wing")
+			cutscene:wait(1)
+			cutscene:showNametag("Susie")
+			cutscene:text("* Ughhh,[wait:5] do I have much of a choice?", "annoyed", "susie")
+			cutscene:showNametag("Dess")
+			cutscene:text("* mmmmnope", "smug", "dess")
+			cutscene:text("* hey if it makes you feel any better", "calm", "dess")
+			cutscene:text("* i'll MAYBE give the leader's position back at the end of this", "condescending", "dess")
+			cutscene:text("* MAYBE", "calm_b", "dess")
+			cutscene:showNametag("Susie")
+			cutscene:text("* ...[wait:10] Fine,[wait:5] lead the way.", "annoyed_down", "susie")
+			cutscene:showNametag("Dess")
+			cutscene:text("* awesome sauce", "challenging", "dess")
+		elseif cutscene:getCharacter("hero") then
+			cutscene:showNametag("Hero")
+            cutscene:text("* Wait what.", nil, "hero")
+		end
 		cutscene:hideNametag()
+		cutscene:wait(cutscene:fadeOut(1))
+		cutscene:wait(1)
 
-        Kristal.callEvent("completeAchievement", "starstruck")
-
-		cutscene:attachFollowers(1)
+		-- Wooo party setup time
+		Game:addPartyMember("dess", 1)
+		if #Game.party == 4 then
+			Game.world:spawnFollower(Game.party[4].id)
+			Game:removePartyMember(Game.party[4].id)
+		end
+		for i, v in ipairs(Game.world.followers) do
+			if i ~= 3 then
+				v:setActor(Game.party[i+1]:getActor())
+			end
+		end
+		local fullparty = false
+		if #Game.world.followers == 3 then
+			fullparty = true
+		end
+		Game.world.player:setActor(Game.party[1]:getActor())
+		dess:remove()
+		leader = Game.world.player
+		cutscene:wait(cutscene:slideTo(leader, 300, 750, 0.1))
+		leader:setFacing("up")
+		cutscene:attachCamera()
+		cutscene:wait(cutscene:attachFollowers())
+		for i, v in ipairs(Game.world.followers) do
+			v.x = 300
+			v.y = 750 + (i*50)
+			v:setFacing("up")
+		end
 		cutscene:interpolateFollowers()
-		cutscene:attachCamera(0.5)
 		cutscene:wait(0.5)
 
+		cutscene:wait(cutscene:fadeIn(1))
+
+		if fullparty then
+			--[[if susie then
+				-- I'll write dialogue for this later
+			else
+				cutscene:showNametag("Dess")
+				cutscene:text("* oh yeah btw you can only have 3 party members at once", "heckyeah", "dess")
+				cutscene:text("* they had to nerf that shit", "heckyeah", "dess")
+				cutscene:text("* smth about it being too overpowered", "heckyeah", "dess")
+				cutscene:text("* anyways lets go", "heckyeah", "dess")
+			end]]
+			cutscene:showNametag("Dess")
+			cutscene:text("* oh yeah btw you can only have 3 party members at once", "neutral", "dess")
+			cutscene:text("* they had to nerf that shit from last time", "angry", "dess")
+			cutscene:text("* smth about it being too overpowered", "neutral_b", "dess")
+			cutscene:text("* anyways lets go", "heckyeah", "dess")
+		else
+			cutscene:showNametag("Dess")
+			cutscene:text("* ok lets go", "heckyeah", "dess")
+		end
+		cutscene:hideNametag()
+
+        --Kristal.callEvent("completeAchievement", "starstruck") -- Uncomment this when we've added achievements
 		Game:setFlag("gotDess", true)
 		Game:unlockPartyMember("dess")
 
 		local susie_party = Game:getPartyMember("susie")
         if cutscene:getCharacter("susie") then
-            susie_party:addOpinion("dess", -20)
+            susie_party:addOpinion("dess", -10)
         end
   end,
 
@@ -113,16 +189,8 @@ return {
 
             if cutscene:getCharacter("susie") then
                 cutscene:showNametag("Susie")
-                cutscene:text("* ...", "annoyed", "susie")
-                cutscene:text("* (We need to get rid of her as fast as possible.)", "annoyed", "susie")
-                if cutscene:getCharacter("brenda") then
-                    cutscene:showNametag("Brenda")
-                    cutscene:text("* (Agreed.)", "miffed", "brenda")
-                end
-                if cutscene:getCharacter("jamm") then
-                    cutscene:showNametag("Jamm")
-                    cutscene:text("* (Are we only agreeing on this now?)", "nervous_left", "jamm")
-                end
+                cutscene:text("[speed:0.5]* ...", "nervous_side", "susie")
+                cutscene:text("* (Who the hell is THAT?)", "nervous", "susie")
             end
 			cutscene:hideNametag()
 			Game:setFlag("dessThingy", true)

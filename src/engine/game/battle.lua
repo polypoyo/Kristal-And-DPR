@@ -586,8 +586,18 @@ function Battle:onStateChange(old,new)
         end
 
         if self.killed then
+            local levelup = false
             for i,v in ipairs(self.party) do
+                local love = v.chara.love
                 v.chara:addExp(self.xp)
+                if v.chara.love > love then
+                    levelup = true
+                end
+            end
+            if levelup then
+                win_text = "* You won!\n* Got " .. self.money .. " "..Game:getConfig("darkCurrencyShort")..".\n* Your LOVE increased!"
+
+                Assets.playSound("levelup", 1, 1)
             end
         end
 
