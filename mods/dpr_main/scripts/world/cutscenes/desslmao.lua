@@ -1,4 +1,5 @@
-return {
+---@type table<string, fun(cutscene:WorldCutscene, event?:NPC|Event)>
+local desslmao = {
 	dessbegin = function(cutscene)
 		local dess = cutscene:getCharacter("dess")
 		local susie = cutscene:getCharacter("susie")
@@ -117,41 +118,25 @@ return {
             cutscene:textTagged("* Wait what.")
 		end
 		cutscene:hideNametag()
-		cutscene:wait(cutscene:fadeOut(1))
-		cutscene:wait(1)
+		cutscene:wait(cutscene:fadeOut(.25))
+		cutscene:wait(0.25)
 
 		-- Wooo party setup time
 		Game:addPartyMember("dess", 1)
-		if #Game.party == 4 then
-			Game.world:spawnFollower(Game.party[4].id)
-			Game:addFollower(Game.party[4].id)
-			Game:removePartyMember(Game.party[4].id)
+		local old_followers = {}
+		for _, value in ipairs(Game.world.followers) do
+			table.insert(old_followers, value)
 		end
-		for i, v in ipairs(Game.world.followers) do
-			if i ~= 3 then
-				v:setActor(Game.party[i+1]:getActor())
-			end
-		end
-		local fullparty = false
-		if #Game.world.followers == 3 then
-			fullparty = true
-		end
-		Game.world.player:setActor(Game.party[1]:getActor())
-		dess:remove()
-		leader = Game.world.player
-		cutscene:wait(cutscene:slideTo(leader, 300, 750, 0.1))
-		leader:setFacing("up")
-		cutscene:attachCamera()
-		cutscene:wait(cutscene:attachFollowers())
-		for i, v in ipairs(Game.world.followers) do
-			v.x = 300
-			v.y = 750 + (i*50)
-			v:setFacing("up")
+		Game.world.player:convertToFollower(2)
+		for i, follower in ipairs(old_followers) do
+			follower:convertToFollower(2+i)
 		end
 		cutscene:interpolateFollowers()
-		cutscene:wait(0.5)
 
-		cutscene:wait(cutscene:fadeIn(1))
+		cutscene:getCharacter("dess"):convertToPlayer()
+		cutscene:walkTo(Game.world.player, Game.world.player.x-200, Game.world.player.y, 2)
+		cutscene:wait(2.2)
+		cutscene:wait(cutscene:fadeIn(0.25))
 
 		if fullparty then
 			--[[if susie then
@@ -484,3 +469,4 @@ return {
 		cutscene:text("* (Dess is no longer leading the party!)")
 	end,
 }
+return desslmao
