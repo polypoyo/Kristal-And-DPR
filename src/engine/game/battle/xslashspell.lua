@@ -14,6 +14,7 @@ function XSlashSpell:init(user,target)
     self.action_command_threshold = 0.2
     self.slashes_count = 2
     self.slash_flipped = false
+    self.damage_delay = 0
 end
 
 function XSlashSpell:update()
@@ -28,10 +29,12 @@ function XSlashSpell:update()
         self:generateSlash((self.slash_flipped) and -1 or 1)
         self.slash_flipped = not self.slash_flipped
         self.slashes_count = self.slashes_count - 1
-        local hit_action_command = self.action_command_timer < self.action_command_threshold and self.antispam <= 2
-        self.antispam = 0
         self.clock = self.clock - .5
-        self:damage_callback(hit_action_command)
+        Game.battle.timer:after(self.damage_delay, function ()
+            local hit_action_command = self.action_command_timer < self.action_command_threshold and self.antispam <= 2
+            self.antispam = 0
+            self:damage_callback(hit_action_command)
+        end)
     elseif self.clock > 1 then
         self:remove()
         Game.battle:finishAction()
