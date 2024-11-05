@@ -35,6 +35,7 @@ function spell:onCast(user, target)
 	local spellobj = XSlashSpell(user,target)
     spellobj.slashes_count = 1
     spellobj.clock = -0.5
+    spellobj.damage_delay = 1/30
     local chain = 0
 	Game.battle:addChild(spellobj):setLayer(BATTLE_LAYERS["above_battlers"])
 
