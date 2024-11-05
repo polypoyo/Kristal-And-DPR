@@ -885,6 +885,7 @@ end
 ---|"skip"      # If false, the player will be unable to skip the textbox with the cancel key.
 ---|"advance"   # When `false`, the player cannot advance the textbox, and the cutscene will no longer suspend itself on the dialogue by default.
 ---|"auto"      # When `true`, the text will auto-advance after the last character has been typed.
+---|"nametag"   # If set, use this for the nametag instead of the actor's name.
 function WorldCutscene:textTagged(text, portrait, actor, options)
     if type(actor) == "table" and not isClass(actor) then
         options = actor
@@ -901,7 +902,7 @@ function WorldCutscene:textTagged(text, portrait, actor, options)
     if actor == nil then
         actor = self.textbox_actor
     end
-    self:showNametag(actor:getName(), {font = actor:getFont()})
+    self:showNametag(options.nametag or actor:getName(), {font = options.nametag_font or actor:getFont()})
     self:text(text, portrait, actor, options)
     self:hideNametag()
 end
