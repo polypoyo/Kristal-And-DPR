@@ -51,6 +51,15 @@ function Character:getDebugInfo()
     return info
 end
 
+-- TODO: pr these to upstream
+-- if there's a merge conflict accept kristal (incoming change)
+function Character:getName()
+    return self.actor:getName()
+end
+function Character:getFont()
+    return self.actor:getFont()
+end
+
 function Character:onAdd(parent)
     if parent:includes(World) then
         self.world = parent
