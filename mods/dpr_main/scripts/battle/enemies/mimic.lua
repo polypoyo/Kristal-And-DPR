@@ -65,8 +65,10 @@ function Mimic:init()
     self:registerAct("Mutate", "TP to\nEnergy", nil, 10)
 	self:registerAct("X-Mutate", "All to\nEnergy", "all", 25)
 	self:registerAct("Send", "Send All\nEnergy", "all")
+    
+    -- TODO: Write a Mimic:spare() override for this
+    --self.exit_on_defeat = false
 
-    self.exit_on_defeat = false
     self.killable = false
 
     self.current_actor = "ufoofdoom"
