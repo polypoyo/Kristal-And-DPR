@@ -75,10 +75,26 @@ function Mimic:init()
 
     self:addFX(ShaderFX(Mod.shaders["wave"], {
         ["wave_sine"] = function () return Kristal.getTime() * 100 end,
-        ["wave_mag"] = 2,
+        ["wave_mag"] = function () return self:getFXWaveMag() end,
         ["wave_height"] = 2,
         ["texsize"] = { SCREEN_WIDTH, SCREEN_HEIGHT }
     }), "funky_mode")
+end
+
+function Mimic:getFXWaveMag()
+    return Utils.clampMap(self.alpha, 1, 0.5, 2, 64)
+end
+
+function Mimic:morph(actor_id)
+    if self.current_actor == actor_id then return end
+    self.current_actor = actor_id
+    Game.battle.timer:script(function(wait)
+        self:fadeTo(0.5, 0.2)
+        wait(0.3)
+        self:setActor(actor_id)
+        self:fadeTo(0.5, 0)
+        self:fadeTo(1, 0.25)
+    end)
 end
 
 function Mimic:onAct(battler, name)

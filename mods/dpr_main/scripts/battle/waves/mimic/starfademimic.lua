@@ -1,17 +1,9 @@
 local Basic, super = Class(Wave)
 
 function Basic:onStart()
+    ---@type Mimic
     local mimic = Game.battle:getEnemyBattler("mimic")
-    if mimic.current_actor ~= "ufoofdoom" then
-        mimic.current_actor = "ufoofdoom"
-        self.timer:script(function(wait)
-			mimic:fadeTo(0.2, 0.05)
-			wait(0.1)
-			mimic:setActor("ufoofdoom")
-			mimic:fadeTo(0.2, 0)
-			mimic:fadeTo(1, 0.05)
-		end)
-    end
+    mimic:morph("ufoofdoom")
 
 	self.time = 10
 	
