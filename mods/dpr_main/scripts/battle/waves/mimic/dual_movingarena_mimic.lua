@@ -48,7 +48,7 @@ function Dual_MovingArena_Mimic:spawnstarthing()
 end
 
 function Dual_MovingArena_Mimic:onStart()
-    ---@type Mimic
+    ---@type EnemyBattler.Mimic
 	local mimic = Game.battle:getEnemyBattler("mimic")
     mimic:morph("warstalker")
 

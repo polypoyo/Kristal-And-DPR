@@ -1,7 +1,7 @@
 local Basic, super = Class(Wave)
 
 function Basic:onStart()
-    ---@type Mimic
+    ---@type EnemyBattler.Mimic
     local mimic = Game.battle:getEnemyBattler("mimic")
     mimic:morph("ufoofdoom")
 	self.time = 10

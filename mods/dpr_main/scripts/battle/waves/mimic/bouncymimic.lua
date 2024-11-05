@@ -1,7 +1,7 @@
 local BouncyMimic, super = Class(Wave)
 
 function BouncyMimic:onStart()
-    ---@type Mimic
+    ---@type EnemyBattler.Mimic
     local mimic = Game.battle:getEnemyBattler("mimic")
     mimic:morph("poseur")
     self.timer:every(1/8, function()

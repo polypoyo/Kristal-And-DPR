@@ -1,4 +1,4 @@
----@class Mimic : EnemyBattler
+---@class EnemyBattler.Mimic : EnemyBattler
 local Mimic, super = Class(EnemyBattler)
 
 function Mimic:init()

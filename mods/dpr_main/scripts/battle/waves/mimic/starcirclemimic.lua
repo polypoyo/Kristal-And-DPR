@@ -1,7 +1,7 @@
 local Aiming, super = Class(Wave)
 
 function Aiming:onStart()
-    ---@type Mimic
+    ---@type EnemyBattler.Mimic
     local mimic = Game.battle:getEnemyBattler("mimic")
     mimic:morph("ufoofdoom")
 
