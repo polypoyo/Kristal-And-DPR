@@ -1,3 +1,4 @@
+---@class EnemyBattler.starwalker: EnemyBattler
 local Starwalker, super = Class(EnemyBattler)
 
 function Starwalker:init()

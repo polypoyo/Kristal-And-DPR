@@ -150,15 +150,17 @@ function Registry.createDrawFX(id, ...)
     end
 end
 
----@param id string
----@return Actor|nil
+---@generic T
+---@param id Actor.`T`
+---@return T|Actor|nil
 function Registry.getActor(id)
     return self.actors[id]
 end
 
----@param id string
+---@generic T
+---@param id Actor.`T`
 ---@param ... any
----@return Actor
+---@return T|Actor|nil
 function Registry.createActor(id, ...)
     if self.actors[id] then
         return self.actors[id](...)
@@ -167,15 +169,17 @@ function Registry.createActor(id, ...)
     end
 end
 
----@param id string
----@return Item|nil
+---@generic T
+---@param id Item.`T`
+---@return T|Item|nil
 function Registry.getItem(id)
     return self.items[id]
 end
 
----@param id string
+---@generic T
+---@param id Item.`T`
 ---@param ... any
----@return Item
+---@return T|Item
 function Registry.createItem(id, ...)
     if self.items[id] then
         return self.items[id](...)
@@ -252,15 +256,17 @@ function Registry.createEncounter(id, ...)
     end
 end
 
----@param id string
----@return EnemyBattler|nil
+---@generic T
+---@param id EnemyBattler.`T`
+---@return T|EnemyBattler|nil
 function Registry.getEnemy(id)
     return self.enemies[id]
 end
 
----@param id string
+---@generic T
+---@param id EnemyBattler.`T`
 ---@param ... any
----@return EnemyBattler
+---@return T|EnemyBattler
 function Registry.createEnemy(id, ...)
     if self.enemies[id] then
         return self.enemies[id](...)
@@ -286,15 +292,17 @@ function Registry.createWave(id, ...)
     end
 end
 
----@param id string
----@return Bullet|nil
+---@generic T
+---@param id Bullet.`T`
+---@return T|Bullet|nil
 function Registry.getBullet(id)
     return self.bullets[id]
 end
 
----@param id string
+---@generic T
+---@param id Bullet.`T`
 ---@param ... any
----@return Bullet
+---@return T|Bullet
 function Registry.createBullet(id, ...)
     if self.bullets[id] then
         return self.bullets[id](...)

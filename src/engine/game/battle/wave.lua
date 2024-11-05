@@ -129,7 +129,8 @@ function Wave:clear()
 end
 
 --- Spawns a new bullet to this wave and parents it to [`Game.battle`](lua://Game.battle).
----@param bullet    string|Bullet   As a string, this parameter is either a sprite path, which will create a basic bullet with that sprite, or the id of a custom bullet. As a `Bullet`, it will directly spawn that instance to the wave.
+---@generic T : Bullet
+---@param bullet    Bullet.`T` | Bullet  As a string, this parameter is either a sprite path, which will create a basic bullet with that sprite, or the id of a custom bullet. As a `Bullet`, it will directly spawn that instance to the wave.
 ---@param ...       any             Additional arguments to be passed to the created bullet's init() function. Basic bullets take an `x` and `y` coordinate here.
 ---@return Bullet bullet            The newly added bullet instance.
 function Wave:spawnBullet(bullet, ...)

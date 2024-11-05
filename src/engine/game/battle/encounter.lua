@@ -153,11 +153,12 @@ function Encounter:drawBackground(fade) end
 -- Functions
 
 --- Adds an enemy to the encounter.
----@param enemy string|EnemyBattler The id of an `EnemyBattler`, or an `EnemyBattler` instance.
+---@generic T: EnemyBattler
+---@param enemy EnemyBattler.`T` | EnemyBattler The id of an `EnemyBattler`, or an `EnemyBattler` instance.
 ---@param x? number
 ---@param y? number
 ---@param ... any   Additional arguments to pass to [`EnemyBattler:init()`](lua://EnemyBattler.init).
----@return EnemyBattler
+---@return T|EnemyBattler
 function Encounter:addEnemy(enemy, x, y, ...)
     local enemy_obj
     if type(enemy) == "string" then

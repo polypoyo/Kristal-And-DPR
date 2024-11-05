@@ -1,3 +1,4 @@
+---@class Encounter.starwalker : Encounter
 local Starwalker, super = Class(Encounter)
 
 function Starwalker:init()
@@ -6,6 +7,7 @@ function Starwalker:init()
     self.text = "* Star walker has      changed forms"
 
     self.starwalker = self:addEnemy("starwalker", 530, 238)
+    -- self.starwalker.bl --uncomment and ctrl+space for fabled attack
 
     self.background = true
 
