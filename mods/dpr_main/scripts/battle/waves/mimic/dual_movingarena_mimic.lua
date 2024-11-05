@@ -48,19 +48,9 @@ function Dual_MovingArena_Mimic:spawnstarthing()
 end
 
 function Dual_MovingArena_Mimic:onStart()
-
-
+    ---@type EnemyBattler.Mimic
 	local mimic = Game.battle:getEnemyBattler("mimic")
-    if mimic.current_actor ~= "warstalker" then
-		mimic.current_actor = "warstalker"
-        self.timer:script(function(wait)
-			mimic:fadeTo(0.2, 0.05)
-			wait(0.1)
-			mimic:setActor("warstalker")
-			mimic:fadeTo(0.2, 0)
-			mimic:fadeTo(1, 0.05)
-		end)
-    end
+    mimic:morph("warstalker")
 
     -- Get the arena object
     local arena = Game.battle.arena
