@@ -746,7 +746,7 @@ function Game:startMinigame(game)
     Game.stage:addChild(Game.minigame)
 end
 
-function Game:dogCheck()
+function Game:dogCheck(variant)
     Kristal.hideBorder(0)
 
     self.state = "DOGCHECK"
@@ -757,7 +757,11 @@ function Game:dogCheck()
     if self.legend   then self.legend  :remove() end
     if self.dogcheck then self.dogcheck:remove() end
 
-    self.dogcheck = DogCheck()
+    if variant then
+        self.dogcheck = DogCheck(variant)
+    else
+        self.dogcheck = DogCheck()
+    end
     self.stage:addChild(self.dogcheck)
 end
 
