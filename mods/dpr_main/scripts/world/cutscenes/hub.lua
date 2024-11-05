@@ -1,4 +1,5 @@
-return {
+---@type table<string,fun(cutscene:WorldCutscene, event?: Event|NPC)>
+local hub = {
     -- The inclusion of the below line tells the language server that the first parameter of the cutscene is `WorldCutscene`.
     -- This allows it to fetch us useful documentation that shows all of the available cutscene functions while writing our cutscenes!
 
@@ -349,42 +350,20 @@ return {
     sans = function(cutscene, event)
         local susieHasMetSans = Game:getFlag("susieHasMetSans", false)
         if cutscene:getCharacter("susie") and susieHasMetSans == false then
-            cutscene:showNametag("Susie")
-            cutscene:text("* YOU!?", "teeth_b", "susie")
-
-            cutscene:showNametag("sans.", {font = "sans"})
-            cutscene:text("[font:sans]* 'sup.", "neutral", "sans")
-
-            cutscene:showNametag("Susie")
-            cutscene:text("* What the hell are you doing here???", "teeth", "susie")
-
-            cutscene:showNametag("sans.", {font = "sans"})
-            cutscene:text("[font:sans]* i'm keeping people away from the elevator.", "neutral", "sans")
-
-            cutscene:showNametag("Susie")
-            cutscene:text("* Why?! We got places to be here, dude!!", "angry_b", "susie")
-
-            cutscene:showNametag("sans.", {font = "sans"})
-            cutscene:text("[font:sans]* well,[wait:5] i would let you pass if the elevator wasn't finished.", "joking", "sans")
-
-            cutscene:showNametag("Susie")
-            cutscene:text("* ...it looks finished to me.", "suspicious", "susie")
-
-            cutscene:showNametag("sans.", {font = "sans"})
-            cutscene:text("[font:sans]* oh, that's just the door for it.", "look_left", "sans")
-            cutscene:text("[font:sans]* the actual elevator hasn't been installed yet.", "neutral", "sans")
-            cutscene:text("[font:sans]* give it some time,[wait:5] it'll come eventually.", "wink", "sans")
-
-            cutscene:showNametag("Susie")
-            cutscene:text("* Right...", "sus_nervous", "susie")
-			
-
-            cutscene:showNametag("sans.", {font = "sans"})
-            cutscene:text("[font:sans]* anyways, what's up?", "neutral", "sans")
-            cutscene:hideNametag()
+            cutscene:textTagged("* YOU!?", "teeth_b", "susie")
+            cutscene:textTagged("* 'sup.", "neutral", "sans")
+            cutscene:textTagged("* What the hell are you doing here???", "teeth", "susie")
+            cutscene:textTagged("* i'm keeping people away from the elevator.", "neutral", "sans")
+            cutscene:textTagged("* Why?! We got places to be here, dude!!", "angry_b", "susie")
+            cutscene:textTagged("* well,[wait:5] i would let you pass if the elevator wasn't finished.", "joking", "sans")
+            cutscene:textTagged("* ...it looks finished to me.", "suspicious", "susie")
+            cutscene:textTagged("* oh, that's just the door for it.", "look_left", "sans")
+            cutscene:textTagged("* the actual elevator hasn't been installed yet.", "neutral", "sans")
+            cutscene:textTagged("* give it some time,[wait:5] it'll come eventually.", "wink", "sans")
+            cutscene:textTagged("* Right...", "sus_nervous", "susie")
+            cutscene:textTagged("* anyways, what's up?", "neutral", "sans")
             Game:setFlag("susieHasMetSans", true)
-			
-        
+
         -- commenting out noelle's dialogue for now.
         --[[elseif cutscene:getCharacter("noelle") and Game:getFlag("noelleHasMetSans") == false then
             cutscene:showNametag("Sans", {font = "sans"})
@@ -601,3 +580,4 @@ return {
         end
     end,
 }
+return hub

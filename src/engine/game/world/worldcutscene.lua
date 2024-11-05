@@ -867,6 +867,45 @@ function WorldCutscene:text(text, portrait, actor, options)
     end
 end
 
+--- Wrapper for [WorldCutscene:text](lua://WorldCutscene.text) that adds a nametag
+---@overload fun(self: WorldCutscene, text: string, options?: table) : (finished:(fun():boolean), textbox: Textbox?)
+---@overload fun(self: WorldCutscene, text: string, portrait?: string, options?: table) : (finished:(fun():boolean), textbox: Textbox?)
+---@param text      string                      The text to be typed.
+---@param portrait? string|nil                  The name of the character portrait to use for this textbox.
+---@param actor?    Character|Actor|string|nil  The Character/Actor to be used for voice bytes and portraits, overriding the active cutscene speaker.
+---@param options?  table                       A table definining additional properties to control the textbox.
+---|"talk"      # If a `Character` instance is attached to the textbox, whether they should use their talk sprite in world. 
+---|"top"       # Override for the default textbox position, defining whether the textbox should appear at the top of the screen.
+---|"x"         # The x-offset of the dialgoue portrait.
+---|"y"         # The y-offset of the dialogue portrait.
+---|"reactions" # A table of tables that define "reaction" dialogues. Each table defines the dialogue, x and y position of the face, actor and face sprite, in that order. x and y can be strings as well, referring to existing positions; x can be left, leftmid, mid, middle, rightmid, or right, and y can be top, mid, middle, bottommid, and bottom. Must be used in combination with a react text command.
+---|"functions" # A table defining additional functions that can be used in the text with the `func` text command. Each key, value pair will form the id to use with `func` and the function to be called, respectively.
+---|"font"      # The font to be used for this text. Can optionally be defined as a table {font, size} to also set the text size.
+---|"align"     # Sets the alignment of the text.
+---|"skip"      # If false, the player will be unable to skip the textbox with the cancel key.
+---|"advance"   # When `false`, the player cannot advance the textbox, and the cutscene will no longer suspend itself on the dialogue by default.
+---|"auto"      # When `true`, the text will auto-advance after the last character has been typed.
+function WorldCutscene:textTagged(text, portrait, actor, options)
+    if type(actor) == "table" and not isClass(actor) then
+        options = actor
+        actor = nil
+    end
+    if type(portrait) == "table" then
+        options = portrait
+        portrait = nil
+    end
+    options = options or {}
+    if type(actor) == "string" then
+        actor = self:getCharacter(actor) or actor
+    end
+    if actor == nil then
+        actor = self.textbox_actor
+    end
+    self:showNametag(actor:getName(), {font = actor:getFont()})
+    self:text(text, portrait, actor, options)
+    self:hideNametag()
+end
+
 --- Closes the currently active textboxes, choicers and textchoicers, if they are open.
 function WorldCutscene:closeText()
     if self.textbox then
