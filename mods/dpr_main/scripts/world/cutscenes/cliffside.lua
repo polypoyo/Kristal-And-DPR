@@ -2,14 +2,13 @@ local function getBind(name)
     if Input.usingGamepad() then
         return Input.getText(name)
     end
-    return Input.getText(name).." "
+    return Input.getText(name) .. " "
 end
 
 return {
     ---@param cutscene WorldCutscene
-    intro = function(cutscene, event)
-        
-        cutscene:wait(function()
+    intro = function (cutscene, event)
+        cutscene:wait(function ()
             if Game.world.map.id == [[grey_cliffside/cliffside_start]] then
                 return true
             else
@@ -24,196 +23,184 @@ return {
         lightsource.alpha = 0.25
         Game.world.player:addChild(lightsource)
 
-        local textobj = shakytextobject( "Press "..getBind("menu").."to open your menu.", 115, 810)
+        local textobj = shakytextobject("Press " .. getBind("menu") .. "to open your menu.", 115, 810)
         textobj.layer = 2
         Game.world:addChild(textobj)
-        
+
 
         local hero = cutscene:getCharacter("hero")
         hero:setSprite("fell")
 
-local function openMenulol(menu, layer)
-    local self = Game.world
-    if self.menu then
-        self.menu:remove()
-        self.menu = nil
-    end
-
-    if not menu then
-        menu = self:createMenu()
-    end
-
-    self.menu = menu
-    if self.menu then
-        self.menu.layer = layer and self:parseLayer(layer) or WORLD_LAYERS["ui"]
-
-        if self.menu:includes(AbstractMenuComponent) then
-            self.menu.close_callback = function()
-                self:afterMenuClosed()
+        local function openMenulol(menu, layer)
+            local self = Game.world
+            if self.menu then
+                self.menu:remove()
+                self.menu = nil
             end
-        elseif self.menu:includes(Component) then
-            -- Sigh... traverse the children to find the menu component
-            for _,child in ipairs(self.menu:getComponents()) do
-                if child:includes(AbstractMenuComponent) then
-                    child.close_callback = function()
+
+            if not menu then
+                menu = self:createMenu()
+            end
+
+            self.menu = menu
+            if self.menu then
+                self.menu.layer = layer and self:parseLayer(layer) or WORLD_LAYERS["ui"]
+
+                if self.menu:includes(AbstractMenuComponent) then
+                    self.menu.close_callback = function ()
                         self:afterMenuClosed()
                     end
-                    break
+                elseif self.menu:includes(Component) then
+                    -- Sigh... traverse the children to find the menu component
+                    for _, child in ipairs(self.menu:getComponents()) do
+                        if child:includes(AbstractMenuComponent) then
+                            child.close_callback = function ()
+                                self:afterMenuClosed()
+                            end
+                            break
+                        end
+                    end
                 end
-            end
-        end
 
-        self:addChild(self.menu)
-        self:setState("MENU")
-    end
-    return self.menu
-end
+                self:addChild(self.menu)
+                self:setState("MENU")
+            end
+            return self.menu
+        end
         Game.tutorial = true
 
 
         --cutscene:text("* press c")
 
-        cutscene:wait(function()
+        cutscene:wait(function ()
             return Input.pressed("menu")
         end)
         openMenulol()
         --Game.world.menu:addChild()
 
-        textobj:setText("Press "..getBind("confirm").."to select the TALK option.")
+        textobj:setText("Press " .. getBind("confirm") .. "to select the TALK option.")
         textobj.x, textobj.y = 10, 560
 
 
-        cutscene:wait(function()
+        cutscene:wait(function ()
             return Input.pressed("confirm")
         end)
         Assets.playSound("ui_select")
         textobj:setText ""
-       
+
         Game.world:closeMenu()
 
-       local choicer = cutscene:choicer({"* Hero..."})
-       if choicer == 1 then
-          cutscene:wait(0.5)
-          Game.stage.timer:tween(1, lightsource, {alpha = 0.50})
-          local wing = Assets.playSound("wing")
-          Game.world.player:shake()
-          cutscene:wait(1.5)
-          wing:play()
-          Game.world.player:shake()
-          cutscene:wait(0.5)
-          wing:stop()
-          wing:play()
-          Game.world.player:shake()
-          lightsource.y = 25
-          hero:setSprite("walk/right")
-          cutscene:wait(2)
-          cutscene:showNametag("Hero")
-          cutscene:text("* Hello?", nil, "hero")
-          cutscene:hideNametag()
-          local stime = 0.30
-          cutscene:wait(stime)
-          hero:setSprite("walk/up")
-          cutscene:wait(stime)
-          hero:setSprite("walk/left")
-          cutscene:wait(stime)
-          hero:setSprite("walk/down")
-          cutscene:wait(stime)
-          hero:setSprite("walk/right")
-          cutscene:wait(0.75)
+        local choicer = cutscene:choicer({ "* Hero..." })
+        if choicer == 1 then
+            cutscene:wait(0.5)
+            Game.stage.timer:tween(1, lightsource, { alpha = 0.50 })
+            local wing = Assets.playSound("wing")
+            Game.world.player:shake()
+            cutscene:wait(1.5)
+            wing:play()
+            Game.world.player:shake()
+            cutscene:wait(0.5)
+            wing:stop()
+            wing:play()
+            Game.world.player:shake()
+            lightsource.y = 25
+            hero:setSprite("walk/right")
+            cutscene:wait(2)
+            cutscene:textTagged("* Hello?", nil, "hero")
+            local stime = 0.30
+            cutscene:wait(stime)
+            hero:setSprite("walk/up")
+            cutscene:wait(stime)
+            hero:setSprite("walk/left")
+            cutscene:wait(stime)
+            hero:setSprite("walk/down")
+            cutscene:wait(stime)
+            hero:setSprite("walk/right")
+            cutscene:wait(0.75)
 
-          cutscene:showNametag("Hero")
-          cutscene:text("* Is someone there?", nil, "hero")
-          cutscene:hideNametag()
+            cutscene:textTagged("* Is someone there?", nil, "hero")
 
-          textobj:setText "What will you do?"
-          textobj.x, textobj.y = 200, 560
+            textobj:setText "What will you do?"
+            textobj.x, textobj.y = 200, 560
 
-          local choicer = cutscene:choicer({"Speak", "Do not"})
-          textobj:setText ""
-          if choicer == 1 then
-          elseif choicer == 2 then
-              cutscene:wait(2)
-              cutscene:showNametag("Hero")
-              cutscene:text("* Hello?", nil, "hero")
-              cutscene:hideNametag()
+            local choicer = cutscene:choicer({ "Speak", "Do not" })
+            textobj:setText ""
+            if choicer == 1 then
+            elseif choicer == 2 then
+                cutscene:wait(2)
+                cutscene:textTagged("* Hello?", nil, "hero")
 
-              cutscene:wait(4)
+                cutscene:wait(4)
 
-              cutscene:showNametag("Hero")
-              cutscene:text("* Wow...[wait:30]\n* It's sad how I'm waiting a reply...", nil, "hero")
+                cutscene:textTagged("* Wow...[wait:30]\n* It's sad how I'm waiting a reply...", nil, "hero")
 
-              hero:setSprite("walk/down")
+                hero:setSprite("walk/down")
 
-              cutscene:text("* But,[wait:5] I know you're there though.[wait:10]\n* I overheard you talking to [color:yellow]him[color:white].", nil, "hero")
-              cutscene:hideNametag()
+                cutscene:textTagged(
+                "* But,[wait:5] I know you're there though.[wait:10]\n* I overheard you talking to [color:yellow]him[color:white].",
+                    nil, "hero")
+                cutscene:hideNametag()
 
-              cutscene:wait(0.5)
-              hero:setSprite("walk/left")
-              cutscene:wait(0.5)
+                cutscene:wait(0.5)
+                hero:setSprite("walk/left")
+                cutscene:wait(0.5)
 
-              cutscene:showNametag("Hero")
-              cutscene:text("* Unless he was talking to himself again...", nil, "hero")
-              cutscene:text("* Wouldn't be the first time.[wait:10]\n* I guess...", nil, "hero")
-              cutscene:hideNametag()
+                cutscene:textTagged("* Unless he was talking to himself again...", nil, "hero")
+                cutscene:textTagged("* Wouldn't be the first time.[wait:10]\n* I guess...", nil, "hero")
+                cutscene:hideNametag()
 
-              cutscene:wait(0.5)
-              hero:setSprite("walk/right")
-              cutscene:wait(0.5)
+                cutscene:wait(0.5)
+                hero:setSprite("walk/right")
+                cutscene:wait(0.5)
 
-              cutscene:showNametag("Hero")
-              cutscene:text("* But I could've sworn I heard someone call out to me.", nil, "hero")
-              cutscene:hideNametag()
+                cutscene:textTagged("* But I could've sworn I heard someone call out to me.", nil, "hero")
 
-              cutscene:wait(0.5)
-              hero:setFacing("up")
-              hero:resetSprite()
-              cutscene:wait(0.5)
+                cutscene:wait(0.5)
+                hero:setFacing("up")
+                hero:resetSprite()
+                cutscene:wait(0.5)
 
-              cutscene:showNametag("Hero")
-              cutscene:text("* Actually,[wait:5] where even IS[wait:5] me?", nil, "hero") --haha grammer
-              cutscene:hideNametag()
-          end
-          hero:resetSprite()
-          Game.stage.timer:tween(1, lightsource, {radius = 900})
-          Game.stage.timer:tween(1, lightsource, {alpha = 1})
-          cutscene:wait(0.75)
-          Game.world.music:play()
+                cutscene:textTagged("* Actually,[wait:5] where even IS[wait:5] me?", nil, "hero") --haha grammer
+            end
+            hero:resetSprite()
+            Game.stage.timer:tween(1, lightsource, { radius = 900 })
+            Game.stage.timer:tween(1, lightsource, { alpha = 1 })
+            cutscene:wait(0.75)
+            Game.world.music:play()
+        elseif choicer == 2 then
 
-       elseif choicer == 2 then
-
-       end
+        end
 
 
 
 
 
-        cutscene:wait(function()
+        cutscene:wait(function ()
             if lightsource.alpha >= 1 or lightsource.radius >= 900 then
-            return true
+                return true
             else
-            return false
+                return false
             end
         end)
         Game.tutorial = nil
         darknessoverlay:remove()
     end,
-    welcome = function(cutscene, event)
+    welcome = function (cutscene, event)
         cutscene:text("* Welcome to Cliffside![wait:10]\n* Watch your step!")
     end,
-    first_reverse_cliff = function(cutscene, event)
-
-       local text
+    first_reverse_cliff = function (cutscene, event)
+        local text
 
         local function gonerTextFade(wait)
             local this_text = text
-            Game.world.timer:tween(1, this_text, {alpha = 0}, "linear", function()
+            Game.world.timer:tween(1, this_text, { alpha = 0 }, "linear", function ()
                 this_text:remove()
             end)
             if wait ~= false then
                 cutscene:wait(1)
             end
         end
- 
+
         local function createsprite(kris)
             kris.parallax_x = 0
             kris.parallax_y = 0
@@ -223,7 +210,7 @@ end
         end
 
         local function gonerText(str, advance, option)
-            text = DialogueText("[speed:0.5][spacing:6][style:GONER]" .. str, 160, 100, 640, 480, {auto_size = true})
+            text = DialogueText("[speed:0.5][spacing:6][style:GONER]" .. str, 160, 100, 640, 480, { auto_size = true })
             text.layer = WORLD_LAYERS["top"] + 100
             text.skip_speed = true
             text.parallax_x = 0
@@ -237,17 +224,17 @@ end
             end
 
             if advance == "auto" then
-                cutscene:wait(function() return not text:isTyping() end)
+                cutscene:wait(function () return not text:isTyping() end)
                 text:remove()
             elseif advance ~= false then
-                cutscene:wait(function() return not text:isTyping() end)
+                cutscene:wait(function () return not text:isTyping() end)
                 gonerTextFade(true)
             end
         end
         Assets.playSound("noise")
 
         Game.world.player:setState("SLIDE")
-        
+
         --cutscene:text("* Oh okay.")
         local cat = cutscene:getCharacter("cat")
         if not cat then
@@ -262,7 +249,7 @@ end
         local num = 1
         local mum = 2
         local sam = "sdtart"
-        cutscene:during(function()
+        cutscene:during(function ()
             if sam == "start" then
                 local oh = plx + love.math.random(-num * mum, num * mum)
                 player.x = oh
@@ -276,11 +263,11 @@ end
         local time = 0.25
         local plir = 0.01
         for _ = 1, 25 do
-             Game.world.player.y = Game.world.player.y -10
-             Assets.playSound("wing")
-             Game.world.player:shake(0, 5)
-             cutscene:wait(time)
-             time = time - plir
+            Game.world.player.y = Game.world.player.y - 10
+            Assets.playSound("wing")
+            Game.world.player:shake(0, 5)
+            cutscene:wait(time)
+            time = time - plir
         end
         Game.world.player.slide_sound:stop()
 
@@ -303,9 +290,8 @@ end
         cutscene:wait(2)
         --gonerText("\nCareful.[wait:10]\nYou can't go down\nthose cliffs.", false)
 
-        cutscene:showNametag("???")
-        cutscene:text("* Careful.[wait:10]\nYou can't go down those cliffs.", nil, "cat")
-        cutscene:hideNametag()
+        local whodis = {nametag = "???"}
+        cutscene:textTagged("* Careful.[wait:10]\nYou can't go down those cliffs.", nil, "cat", whodis)
 
         local wat = 0.5
         Game.world.player:setFacing("left")
@@ -317,7 +303,7 @@ end
         Game.world.player:setFacing("right")
         cutscene:wait(wat)
 
-       --[[local choicer = cutscene:choicer({"Hello?", "Who's there?", "Thanks for the heads up.",  "No shit."})
+        --[[local choicer = cutscene:choicer({"Hello?", "Who's there?", "Thanks for the heads up.",  "No shit."})
        if choicer == 1 then
            cutscene:showNametag("???")
            cutscene:text("* Hello there.[wait:5]\n* Up here.", nil, "cat")
@@ -332,60 +318,58 @@ end
        elseif choicer == 4 then
        end]]
 
-       cutscene:showNametag("Hero")
-       cutscene:text("* Who's there?", nil, "hero")
+        cutscene:setSpeaker("hero")
+        cutscene:textTagged("* Who's there?")
 
-       cutscene:showNametag("???")
-       cutscene:text("* Me.[wait:10]\nI'm there.\n[wait:10]Up here.", nil, "cat")
+        cutscene:textTagged("* Me.[wait:10]\nI'm there.\n[wait:10]Up here.", nil, "cat", whodis)
+        Game.world.player:setFacing("up")
+        cutscene:wait(1)
+        local cattag = {nametag = "Cat?"}
+        cutscene:textTagged("* Hello there.", "neutral", "cat", cattag)
         cutscene:hideNametag()
-       Game.world.player:setFacing("up")
-       cutscene:wait(1)
-       cutscene:showNametag("Cat?")
-       cutscene:text("* Hello there.", "neutral", "cat")
-        cutscene:hideNametag()
-       cutscene:showNametag("Cat?")
-       local choicer = cutscene:choicer({"Hello?", "Is that a\ntalking cat?!"})
-       if choicer == 1 then
-          cutscene:text("* Yes,[wait:10] hello.", "neutral", "cat")
-          cutscene:text("* Hm...[wait:10]\n* You seem to be confused...", "neutral", "cat")
-       elseif choicer == 2 then
-           cutscene:text("* Yes,[wait:5] I am a cat[wait:5] and I can talk.", "neutral", "cat")
-           cutscene:text("* How very observant you are for someone with [color:red]their[color:white] eyes closed.", "neutral", "cat")
+        cutscene:setSpeaker("cat")
+        local choicer = cutscene:choicer({ "Hello?", "Is that a\ntalking cat?!" })
+        if choicer == 1 then
+            cutscene:textTagged("* Yes,[wait:10] hello.", "neutral", cattag)
+            cutscene:textTagged("* Hm...[wait:10]\n* You seem to be confused...", "neutral", cattag)
+        elseif choicer == 2 then
+            cutscene:textTagged("* Yes,[wait:5] I am a cat[wait:5] and I can talk.", "neutral", cattag)
+            cutscene:textTagged("* How very observant you are for someone with [color:red]their[color:white] eyes closed.",
+                "neutral", cattag)
 
-           --cutscene:text("* You seem to already know me.", "neutral", "cat")
-       end
+            --cutscene:text("* You seem to already know me.", "neutral", "cat")
+        end
 
-       Game:getQuest("cliffsides_cat"):unlock()
-       cutscene:text("* quest created", "neutral", "cat")
+        Game:getQuest("cliffsides_cat"):unlock()
+        cutscene:textTagged("* quest created", "neutral", "cat", cattag)
 
 
-       --cutscene:showNametag("Cat")
-       --cutscene:text("* My name is cat.", "neutral", "cat")
-      -- cutscene:text("* Say... You don't look like you're from around here.", "neutral", "cat")
-       --cutscene:text("* The both of you...", "neutral", "cat")
-       --cutscene:text("* Has fate brought you here?\n[wait:10]* Perchance Lady Luck?", "neutral", "cat")
+        --cutscene:setSpeaker("cat")
+        --cutscene:textTagged("* My name is cat.", "neutral")
+        --cutscene:textTagged("* Say... You don't look like you're from around here.", "neutral")
+        --cutscene:textTagged("* The both of you...", "neutral")
+        --cutscene:textTagged("* Has fate brought you here?\n[wait:10]* Perchance Lady Luck?", "neutral")
 
-       --cat walking
+        --cat walking
 
-       --cutscene:text("* Follow me...", "neutral", "cat")
+        --cutscene:text("* Follow me...", "neutral")
 
-       --cat keep walking
+        --cat keep walking
 
         cutscene:hideNametag()
     end,
-    reverse_cliff_2 = function(cutscene, event)
-
+    reverse_cliff_2 = function (cutscene, event)
         local end_y = 80
         local p_y = Game.world.player.y
         local tiles = 12
-        local length = tiles*40
-        local reverse_spot = p_y + length/2
+        local length = tiles * 40
+        local reverse_spot = p_y + length / 2
 
         Assets.playSound("noise")
 
         Game.world.player:setState("SLIDE")
 
-        cutscene:wait(function()
+        cutscene:wait(function ()
             if Game.world.player.walk_speed < -8 then
                 Assets.playSound("jump", 1, 0.5)
                 Game.world.player.physics.speed_y = -10
@@ -394,12 +378,12 @@ end
 
                 return true
             else
-                Game.world.player.walk_speed = Game.world.player.walk_speed - DT*8
+                Game.world.player.walk_speed = Game.world.player.walk_speed - DT * 8
                 return false
             end
         end)
 
-        cutscene:wait(function()
+        cutscene:wait(function ()
             if Game.world.player.y < p_y then
                 Game.world.player:setState("WALK")
                 Game.world.player:setSprite("walk/down_1")
@@ -411,9 +395,8 @@ end
             end
         end)
 
-        cutscene:wait(function()
+        cutscene:wait(function ()
             if Game.world.player.y < -20 then
-
                 local x = Game.world.player.x - 240 + 400
                 phys_speed = Game.world.player.physics.speed_y
                 Game.world:mapTransition("grey_cliffside/cliffside_start", x, 1040)
@@ -424,13 +407,12 @@ end
             end
         end)
 
-        cutscene:wait(function()
+        cutscene:wait(function ()
             if Game.world.map.id == "grey_cliffside/cliffside_start" then
-
                 Game.world.player:setSprite("walk/down_1")
                 Game.world.player.noclip = true
 
-                Game.world.player.physics.speed_y = phys_speed 
+                Game.world.player.physics.speed_y = phys_speed
                 Game.world.player.physics.friction = -1.5
 
                 return true
@@ -439,7 +421,7 @@ end
             end
         end)
 
-        cutscene:wait(function()
+        cutscene:wait(function ()
             if Game.world.player.y < 520 then
                 Game.world.player.physics.friction = 4
 
@@ -449,7 +431,7 @@ end
             end
         end)
 
-        cutscene:wait(function()
+        cutscene:wait(function ()
             if Game.world.player.physics.speed_y == 0 then
                 Game.world.player.physics.friction = -1
 
@@ -461,9 +443,8 @@ end
             end
         end)
 
-        cutscene:wait(function()
+        cutscene:wait(function ()
             if Game.world.player.y > 420 then
-
                 return true
             else
                 return false
@@ -479,12 +460,11 @@ end
         Assets.playSound("dtrans_flip")
         Game.world.player.walk_speed = 4
     end,
-    warp_bin = function(cutscene, event)
+    warp_bin = function (cutscene, event)
         Game.world:mapTransition("main_hub")
     end,
-    video = function(cutscene, event)
-
-local cool = [[
+    video = function (cutscene, event)
+        local cool = [[
 extern vec4 keyColor;    // The color to be made transparent (greenscreen color)
 extern float threshold;  // The tolerance for matching the key color
 
@@ -505,18 +485,18 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
 
 
 
-    local cooler = love.graphics.newShader(cool)
+        local cooler = love.graphics.newShader(cool)
 
         local video = Video("spongebob", true, 0, 0, 640, 480) -- assets/videos/video_here.ogv
         video.parallax_x, video.parallax_y = 0, 0
         video:play()
-            video:addFX(ShaderFX(cooler, {
-                ["keyColor"] = {0.0, 1.0, 0.0, 1.0},  -- Pure green (R=0, G=1, B=0)
-                ["threshold"] = 0.4,  -- Adjust the threshold for green color tolerance
-            }), 66)
+        video:addFX(ShaderFX(cooler, {
+                        ["keyColor"] = { 0.0, 1.0, 0.0, 1.0 }, -- Pure green (R=0, G=1, B=0)
+                        ["threshold"] = 0.4,         -- Adjust the threshold for green color tolerance
+                    }), 66)
         Game.stage:addChild(video)
-        
-        cutscene:wait(function()
+
+        cutscene:wait(function ()
             local check = video:isPlaying()
 
             if video.was_playing and not video.video:isPlaying() then
@@ -524,55 +504,46 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
             else
                 return false
             end
-
-            
         end)
         video:remove()
     end,
 
-    susie = function(cutscene, event)
+    susie = function (cutscene, event)
         local hero = cutscene:getCharacter("hero")
         local susie = cutscene:getCharacter("susie")
-        
+
         hero:walkTo(300, 820, 1.5, "up")
         cutscene:wait(1.5)
         susie:alert()
+        local whodis = {nametag = "???"}
         hero:setFacing("left")
-        cutscene:showNametag("Hero")
-        cutscene:text("* Hey,[wait:5] who are you?", nil, "hero")
+        cutscene:textTagged("* Hey,[wait:5] who are you?", nil, "hero")
         susie:setFacing("right")
-        cutscene:showNametag("???")
-        cutscene:text("* Woah.", "surprise", "susie")
-        cutscene:hideNametag()
+        cutscene:textTagged("* Woah.", "surprise", "susie", whodis)
         susie:walkTo(230, 820, 0.75, "right")
         cutscene:wait(0.75)
-        cutscene:showNametag("???")
-        cutscene:text("* Are you like,[wait:5] another person?", "surprise_smile", "susie")
-        cutscene:showNametag("Hero")
-        cutscene:text("* Uh,[wait:5] I guess?", nil, "hero")
-        cutscene:showNametag("???")
+        cutscene:textTagged("* Are you like,[wait:5] another person?", "surprise_smile", "susie", whodis)
+        cutscene:textTagged("* Uh,[wait:5] I guess?", nil, "hero")
         susie:setSprite("exasperated_right")
-        cutscene:text("* Thank GOD.", "teeth_b", "susie")
-        cutscene:text("* There's nothing but rocks and that stupid cat here! [wait:1][react:1]", "teeth", "susie", 
-        {
-            reactions={
-                {"I can still hear\nyou...", "right", "bottom", "neutral", "cat"}
-            }
-        })
+        cutscene:textTagged("* Thank GOD.", "teeth_b", "susie", whodis)
+        cutscene:textTagged("* There's nothing but rocks and that stupid cat here! [wait:1][react:1]", "teeth", "susie",
+                      {
+                          reactions = {
+                              { "I can still hear\nyou...", "right", "bottom", "neutral", "cat" }
+                          }
+                      })
 
         susie:resetSprite()
-        cutscene:text("*[react:1] Uh,[wait:5] you asked who I was,[wait:5] right?", "sus_nervous", "susie", 
-        {
-            reactions={
-                {"You're very [color:yellow]rude[color:rest].", "right", "bottom", "neutral", "cat"}
-            }
-        })
-        cutscene:showNametag("Hero")
-        cutscene:text("* Yeah.", nil, "hero")
-        cutscene:showNametag("Susie")
-        cutscene:text("* Well,[wait:5] the name's Susie!", "sincere_smile", "susie")
+        cutscene:textTagged("*[react:1] Uh,[wait:5] you asked who I was,[wait:5] right?", "sus_nervous", "susie",
+                      {
+                          reactions = {
+                              { "You're very [color:yellow]rude[color:rest].", "right", "bottom", "neutral", "cat" }
+                          }, nametag = "???"
+                      })
+        cutscene:textTagged("* Yeah.", nil, "hero")
+        cutscene:textTagged("* Well,[wait:5] the name's Susie!", "sincere_smile", "susie")
         cutscene:hideNametag()
-        
+
         Game.world.music:pause()
 
         Assets.playSound("jump")
@@ -595,37 +566,39 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
         Assets.playSound("impact")
         susie:setSprite("pose")
         cutscene:wait(0.5)
-        cutscene:showNametag("Susie")
+        cutscene:setSpeaker("susie")
         local get_bus = Music("get_on_the_bus")
-        
 
 
-        cutscene:text("* You may have heard of my name before.", "small_smile", "susie")
-        cutscene:text("* After all,[wait:5] I AM a Delta Warrior.", "smile", "susie")
-        cutscene:showNametag("Hero")
-        cutscene:text("* I have literally never heard of you in my life.", nil, "hero")
+
+        cutscene:textTagged("* You may have heard of my name before.", "small_smile")
+        cutscene:textTagged("* After all,[wait:5] I AM a Delta Warrior.", "smile")
+        cutscene:setSpeaker("hero")
+        get_bus:pause()
+        cutscene:textTagged("* I have literally never heard of you in my life.")
         susie:resetSprite()
-        cutscene:showNametag("Susie")
-        cutscene:text("* Oh.", "shock", "susie")
+        cutscene:setSpeaker("susie")
+        cutscene:textTagged("* Oh.", "shock")
         susie:setSprite("away_scratch")
-        cutscene:text("* Anyways...", "shy", "susie")
+        get_bus:resume()
+        cutscene:textTagged("* Anyways...", "shy")
         susie:resetSprite()
-        cutscene:text("* What's YOUR name?", "neutral", "susie")
-        cutscene:showNametag("Hero")
-        cutscene:text("* It's Hero.", nil, "hero")
-        cutscene:showNametag("Susie")
-        cutscene:text("* Hero?", "surprise", "susie")
-        cutscene:text("* Dude,[wait:5] that is the most cliche name I have ever heard!", "sincere_smile", "susie")
-        cutscene:text("* Uh,[wait:5] no offense.", "shock_nervous", "susie")
-        cutscene:showNametag("Hero")
-        cutscene:text("* ... Right.", nil, "hero")
-        cutscene:text("* Wait a second...", nil, "hero")
-        cutscene:text("* I'm actually looking for a Delta Warrior.", nil, "hero")
-        cutscene:showNametag("Susie")
-        cutscene:text("* Oh,[wait:5] you lookin' for a fight?", "teeth_smile", "susie")
-        cutscene:showNametag("Hero")
-        cutscene:text("* Uh,[wait:5] hopefully not.", nil, "hero")
-        cutscene:text("* So basically...", nil, "hero")
+        cutscene:textTagged("* What's YOUR name?", "neutral")
+        cutscene:setSpeaker("hero")
+        cutscene:textTagged("* It's Hero.")
+        cutscene:setSpeaker("susie")
+        cutscene:textTagged("* Hero?", "surprise")
+        cutscene:textTagged("* Dude,[wait:5] that is the most cliche name I have ever heard!", "sincere_smile")
+        cutscene:textTagged("* Uh,[wait:5] no offense.", "shock_nervous")
+        cutscene:setSpeaker("hero")
+        cutscene:textTagged("* ... Right.")
+        cutscene:textTagged("* Wait a second...")
+        cutscene:textTagged("* I'm actually looking for a Delta Warrior.")
+        cutscene:setSpeaker("susie")
+        cutscene:textTagged("* Oh,[wait:5] you lookin' for a fight?", "teeth_smile")
+        cutscene:setSpeaker("hero")
+        cutscene:textTagged("* Uh,[wait:5] hopefully not.")
+        cutscene:textTagged("* So basically...")
         cutscene:hideNametag()
 
         get_bus:fade(0, 1)
@@ -643,48 +616,46 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
         lore_board.layer = 0.6
 
         cutscene:wait(cutscene:fadeIn(1))
-        cutscene:showNametag("Susie")
-        cutscene:text("* Oh damn.", "shock", "susie")
-        cutscene:showNametag("Hero")
-        cutscene:text("* Yeah.", nil, "hero")
+        cutscene:textTagged("* Oh damn.", "shock", "susie")
+        cutscene:textTagged("* Yeah.", nil, "hero")
         if Game:getFlag("cliffside_askedDeltaWarrior") == "susie" then
-            cutscene:text("* Plus you look just like the person who I was told did all this.", nil, "hero")
+            cutscene:textTagged("* Plus you look just like the person who I was told did all this.", nil, "hero")
         end
-        cutscene:showNametag("Susie")
-        cutscene:text("* Uhh,[wait:5] guess I'm not opening any more Dark Fountains then.", "shock_nervous", "susie")
+        cutscene:textTagged("* Uhh,[wait:5] guess I'm not opening any more Dark Fountains then.", "shock_nervous", "susie")
         susie:setSprite("exasperated_right")
 
         get_bus:fade(1, 0.01)
-        
-        cutscene:text("* WHY THE HELL DID RALSEI NOT TELL ME ABOUT THIS?!", "teeth_b", "susie")
+
+        cutscene:setSpeaker("susie")
+        cutscene:textTagged("* WHY THE HELL DID RALSEI NOT TELL ME ABOUT THIS?!", "teeth_b")
         susie:resetSprite()
-        cutscene:text("* The Roaring?[wait:10]\nCool and badass end of the world.", "teeth_smile", "susie")
-        cutscene:text("* I'd get to fight TITANS!", "closed_grin", "susie")
+        cutscene:textTagged("* The Roaring?[wait:10]\nCool and badass end of the world.", "teeth_smile")
+        cutscene:textTagged("* I'd get to fight TITANS!", "closed_grin")
         susie:setFacing("up")
-        cutscene:text("* But reality collapsing in on itself?", "neutral_side", "susie")
+        cutscene:textTagged("* But reality collapsing in on itself?", "neutral_side")
         susie:setFacing("right")
-        cutscene:text("* That's just lame.", "annoyed", "susie")
-        cutscene:showNametag("Hero")
-        cutscene:text("* Well,[wait:5] that's settled then.", nil, "hero")
-        cutscene:text("* We'll go seal this fountain and the world is saved.", nil, "hero")
-        cutscene:text("* Y'know unless anyone else decides to open up fountains but uh...", nil, "hero")
-        cutscene:text("* I'm sure it'll be fine.", nil, "hero")
+        cutscene:textTagged("* That's just lame.", "annoyed")
+        cutscene:setSpeaker("hero")
+        cutscene:textTagged("* Well,[wait:5] that's settled then.")
+        cutscene:textTagged("* We'll go seal this fountain and the world is saved.")
+        cutscene:textTagged("* Y'know unless anyone else decides to open up fountains but uh...")
+        cutscene:textTagged("* I'm sure it'll be fine.")
         cutscene:showNametag("Susie")
-        cutscene:text("* Uhh,[wait:5] where even IS the Dark Fountain?", "nervous_side", "susie")
+        cutscene:textTagged("* Uhh,[wait:5] where even IS the Dark Fountain?", "nervous_side", "susie")
         cutscene:showNametag("Hero")
-        cutscene:text("* That...[wait:5] is something I don't know.", nil, "hero")
+        cutscene:textTagged("* That...[wait:5] is something I don't know.", nil, "hero")
         cutscene:showNametag("Susie")
         susie:setSprite("exasperated_right")
-        cutscene:text("* Oh great,[wait:5] don't tell me we're stuck here!", "teeth", "susie")
+        cutscene:textTagged("* Oh great,[wait:5] don't tell me we're stuck here!", "teeth", "susie")
         susie:resetSprite()
         cutscene:showNametag("Hero")
-        cutscene:text("* Hey I'm sure there's a way out of here.", nil, "hero")
+        cutscene:textTagged("* Hey,[wait:2] I'm sure there's a way out of here.", nil, "hero")
         susie:setFacing("left")
-        cutscene:text("* We just gotta keep going forward.", nil, "hero")
+        cutscene:textTagged("* We just gotta keep going forward.", nil, "hero")
         cutscene:showNametag("Susie")
         susie:setFacing("right")
-        cutscene:text("* Yeah,[wait:5] you're right.", "small_smile", "susie")
-        cutscene:text("* Well,[wait:5] lead the way, Hero!", "sincere_smile", "susie")
+        cutscene:textTagged("* Yeah,[wait:5] you're right.", "small_smile", "susie")
+        cutscene:textTagged("* Well,[wait:5] lead the way, Hero!", "sincere_smile", "susie")
         cutscene:hideNametag()
 
         get_bus:stop()
@@ -693,11 +664,16 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
 
         lore_board:slideTo(-120, 680, 15)
 
-        cutscene:text("[noskip][speed:0.1]* (Susie joined the[func:remove] party!)[wait:20]\n\n[speed:1]UwU", {auto = true, functions = {
-            remove = function()
-                lore_board:explode()
-            end
-        }})
+        cutscene:text("[noskip][speed:0.1]* (Susie joined the[func:remove] party!)[wait:20]\n\n[speed:1]UwU",
+            {
+                auto = true,
+                functions = {
+                    remove = function ()
+                        lore_board:explode()
+                    end
+                }
+            })
+        fan:remove()
 
         susie:convertToFollower()
         Game:setFlag("cliffside_susie", true)

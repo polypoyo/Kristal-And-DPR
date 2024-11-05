@@ -454,10 +454,9 @@ local hub = {
 				
         if choice == 1 then
             local kid = #Game.party > 1 and "kids" or "kid"
-            cutscene:showNametag("sans.", {font = "sans"})
-            cutscene:text(string.format("[font:sans]* sorry %s,[wait:5] but you can't access the elevator yet.", kid), "eyes_closed", "sans")
-            cutscene:text("[font:sans]* it's kinda...[wait:5] not finished.", "look_left", "sans")
-            cutscene:text("[font:sans]* so come back later,[wait:2] 'k?", "wink", "sans")
+            cutscene:textTagged(string.format("* sorry %s,[wait:5] but you can't access the elevator yet.", kid), "eyes_closed", "sans")
+            cutscene:textTagged("* it's kinda...[wait:5] not finished.", "look_left", "sans")
+            cutscene:textTagged("* so come back later,[wait:2] 'k?", "wink", "sans")
             cutscene:hideNametag()
         elseif choice == 2 then
             if cutscene:getCharacter("susie") then
@@ -465,43 +464,40 @@ local hub = {
                 cutscene:text("* How are you here by the way?", "neutral", "susie")
 
                 cutscene:showNametag("sans.", {font = "sans"})
-                cutscene:text("[font:sans]* i don't know. i'm just here for the work.", "neutral", "sans")
+                cutscene:textTagged("* i don't know. i'm just here for the work.", "neutral", "sans")
 
                 cutscene:showNametag("Susie")
                 cutscene:text("* Do you even know something?", "annoyed", "susie")
 
                 cutscene:showNametag("sans.", {font = "sans"})
-                cutscene:text("[font:sans]* hey, if you have a complaint[wait:1] you can tell my manager.", "joking", "sans")
+                cutscene:textTagged("* hey, if you have a complaint[wait:1] you can tell my manager.", "joking", "sans")
 
                 cutscene:showNametag("Susie")
                 cutscene:text("* And who would that be?", "neutral_side", "susie")
 
                 cutscene:showNametag("sans.", {font = "sans"})
-                cutscene:text("[font:sans]* me.", "neutral", "sans")
+                cutscene:textTagged("* me.", "neutral", "sans")
 
                 cutscene:showNametag("Susie")
                 cutscene:text("* Aren't you already the cashier at Hometown??", "angry", "susie")
 
                 cutscene:showNametag("sans.", {font = "sans"})
-                cutscene:text("[font:sans]* nah, i'm the janitor.", "wink", "sans")
+                cutscene:textTagged("* nah, i'm the janitor.", "wink", "sans")
                 cutscene:hideNametag()
             else
-                cutscene:showNametag("sans.", {font = "sans"})
-                cutscene:text("[font:sans]* well, best answer i can give is that i'm just here for the work.", "look_left", "sans")
-                cutscene:text("[font:sans]* which is basically just loitering and guarding this elevator.", "wink", "sans")
+                cutscene:textTagged("* well, best answer i can give is that i'm just here for the work.", "look_left", "sans")
+                cutscene:textTagged("* which is basically just loitering and guarding this elevator.", "wink", "sans")
                 if Game.world.player.actor.id == "hero" then
-                    cutscene:text("[font:sans]* by the way,[wait:5] have we met before somewhere?", "look_left", "sans")
-                    cutscene:text("[font:sans]* you look very familiar to me...", "look_left", "sans")
-                    cutscene:text("[font:sans]* maybe it's the way you're dressed?", "neutral", "sans")
-                    cutscene:text("[font:sans]* yeah, that's probably it.", "eyes_closed", "sans")
-                    cutscene:text("[font:sans]* there's a lotta kids running around in striped shirts these days.", "joking", "sans")
+                    cutscene:textTagged("* by the way,[wait:5] have we met before somewhere?", "look_left", "sans")
+                    cutscene:textTagged("* you look very familiar to me...", "look_left", "sans")
+                    cutscene:textTagged("* maybe it's the way you're dressed?", "neutral", "sans")
+                    cutscene:textTagged("* yeah, that's probably it.", "eyes_closed", "sans")
+                    cutscene:textTagged("* there's a lotta kids running around in striped shirts these days.", "joking", "sans")
                 end
                 cutscene:hideNametag()
             end
         elseif choice == 4 then
-            cutscene:showNametag("sans.", {font = "sans"})
-            cutscene:text("[font:sans]* see ya.", "wink", "sans")
-            cutscene:hideNametag()
+            cutscene:textTagged("* see ya.", "wink", "sans")
         end
     end,
 
