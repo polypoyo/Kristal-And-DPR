@@ -33,6 +33,7 @@
 Mod.warp_bin_codes = {
     ["TESTROOM"] = { result = "room1" },
     ["00000000"] = { result = "warp_hub/hub" },
+    ["DESSHERE"] = { result = "dessstuff/dessstart" },
     ["RDMCODE"] = {
         result = function(cutscene)
             cutscene:text("* test uwu.")
