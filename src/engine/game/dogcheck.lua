@@ -27,6 +27,8 @@ function DogCheck:init(variant)
     self.stretch_ex_timer = 0
 	
     self.color_siner = 0
+
+    self.chicken_anim_siner = 0
 	
     love.window.setTitle("Dog Place: REBIRTH")
 end
@@ -82,7 +84,7 @@ function DogCheck:start()
 
     if not self.variant then
         local month = os.date("*t").month
-        local variant_choices = {"dance", "sleep", "maracas", "piano", "banned", "chapter2", "montypython"}
+        local variant_choices = {"dance", "sleep", "maracas", "piano", "banned", "chapter2", "montypython", "house"}
         if month >= 3 and month <= 5 then
             table.insert(variant_choices, "spring")
         elseif month >= 6 and month <= 8 then
@@ -140,6 +142,8 @@ function DogCheck:start()
         self.timer:script(function(...) self:chapter2Script(...) end)
     elseif self.variant == "montypython" then
         playSong(song_path.."intermission")
+    elseif self.variant == "house" then
+        playSong(song_path.."house")
     end
 end
 
@@ -197,11 +201,26 @@ end
 
 function DogCheck:draw()
     super.draw(self)
-	
+
+    local cust_sprites_base = "kristal/dogcheck"
+
+    --check it out, i'm house
+    if self.variant == "house" then
+        self.chicken_anim_siner = self.chicken_anim_siner + DTMULT
+
+		local chicken = Assets.getFrames(cust_sprites_base.."/chicken")
+        local house   = Assets.getTexture(cust_sprites_base.."/house")
+
+		local chicken_frame =  math.floor(self.chicken_anim_siner/24) % #chicken + 1
+
+        Draw.draw(house, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0, 1, 1, 105/2 + 0.5, 86/2)
+        Draw.draw(chicken[chicken_frame], 285, 241, 0, 1, 1)
+    end
+
     if self.variant == "montypython" then
         Draw.setColor({Utils.hsvToRgb(((self.color_siner) % 255)/255, 255/255, 255/255)})
-        Draw.drawWrapped(Assets.getTexture("kristal/dogcheck/intermission_bg"), true, true, 0, 0, 0, 1, 1)
-		
+        Draw.drawWrapped(Assets.getTexture(cust_sprites_base.."/intermission_bg"), true, true, 0, 0, 0, 1, 1)
+
         Draw.setColor({Utils.hsvToRgb(((self.color_siner) % 255)/255, (60 + (math.sin((self.color_siner / 10)) * 15))/255, 255/255)})		
         love.graphics.printf("Intermission", -320, 200, SCREEN_WIDTH, "center", 0, 2, 2, 0.5, 0.5)
     end
