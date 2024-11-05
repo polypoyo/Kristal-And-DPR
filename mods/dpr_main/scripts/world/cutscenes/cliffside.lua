@@ -1,3 +1,10 @@
+local function getBind(name)
+    if Input.usingGamepad() then
+        return Input.getText(name)
+    end
+    return Input.getText(name).." "
+end
+
 return {
     ---@param cutscene WorldCutscene
     intro = function(cutscene, event)
@@ -17,7 +24,7 @@ return {
         lightsource.alpha = 0.25
         Game.world.player:addChild(lightsource)
 
-        local textobj = shakytextobject(115, 810, "Press C to open your menu.")
+        local textobj = shakytextobject( "Press "..getBind("menu").."to open your menu.", 115, 810)
         textobj.layer = 2
         Game.world:addChild(textobj)
         
@@ -72,7 +79,7 @@ end
         openMenulol()
         --Game.world.menu:addChild()
 
-        textobj.text = "Press Z to select the TALK option."
+        textobj:setText("Press "..getBind("confirm").."to select the TALK option.")
         textobj.x, textobj.y = 10, 560
 
 
@@ -80,7 +87,7 @@ end
             return Input.pressed("confirm")
         end)
         Assets.playSound("ui_select")
-        textobj.text = ""
+        textobj:setText ""
        
         Game.world:closeMenu()
 
@@ -118,11 +125,11 @@ end
           cutscene:text("* Is someone there?", nil, "hero")
           cutscene:hideNametag()
 
-          textobj.text = "What will you do?"
+          textobj:setText "What will you do?"
           textobj.x, textobj.y = 200, 560
 
           local choicer = cutscene:choicer({"Speak", "Do not"})
-          textobj.text = ""
+          textobj:setText ""
           if choicer == 1 then
           elseif choicer == 2 then
               cutscene:wait(2)
