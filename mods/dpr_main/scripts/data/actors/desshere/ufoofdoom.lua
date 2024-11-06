@@ -41,7 +41,7 @@ function actor:init()
     self.animations = {
         -- Looping animation with 0.25 seconds between each frame
         -- (even though there's only 1 idle frame)
-        ["idle"] = {"idle", (75/120)/12, true},
+        ["idle"] = {"idle", (75/120)/4, true},
     }
 
     -- Table of sprite offsets (indexed by sprite name)
