@@ -50,6 +50,8 @@ function character:init()
     self.attack_box_color = {1, 0, 0}
     self.xact_color = nil
 
+    self.icon_color = {220/255, 21/255, 16/255}
+
     self.menu_icon = "party/mario/head"
     self.head_icons = "party/mario/icon"
     self.name_sprite = "party/mario/name"

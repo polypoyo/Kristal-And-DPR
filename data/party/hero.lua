@@ -47,8 +47,10 @@ function character:init()
     self.attack_box_color = {1, 0.5, 0}
     self.xact_color = {1, 0.5, 0}
 
+    self.icon_color = {1, 127/255, 39/255}
+
     self.menu_icon = "party/hero/head"
-    self.head_icons = "party/kris/icon" -- Placeholder
+    self.head_icons = "party/hero/icon" -- Placeholder
     self.name_sprite = "party/hero/name"
 
     self.attack_sprite = "effects/attack/cut"
