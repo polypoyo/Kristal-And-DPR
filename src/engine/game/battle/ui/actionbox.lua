@@ -93,6 +93,8 @@ end
 
 function ActionBox:setHeadIcon(icon)
     self.force_head_sprite = true
+    
+    self.head_sprite:setColor(1, 1, 1)
 
     local full_icon = self.battler.chara:getHeadIcons().."/"..icon
     if self.head_sprite:hasSprite(full_icon) then
@@ -104,6 +106,8 @@ end
 
 function ActionBox:resetHeadIcon()
     self.force_head_sprite = false
+
+    self.head_sprite:setColor(1, 1, 1)
 
     local full_icon = self.battler.chara:getHeadIcons().."/"..self.battler:getHeadIcon()
     if self.head_sprite:hasSprite(full_icon) then
@@ -136,12 +140,21 @@ function ActionBox:update()
     self.hp_sprite.y = 22 - self.data_offset
 
     if not self.force_head_sprite then
+
+        --its a bit messy but i dont have the willpower to clean it
+
         local current_head = self.battler.chara:getHeadIcons().."/"..self.battler:getHeadIcon()
         if not self.head_sprite:hasSprite(current_head) then
-            current_head = self.battler.chara:getHeadIcons().."/head"
+            current_head = "ui/battle/icon/"..self.battler:getHeadIcon()
+
+            if not self.head_sprite:hasSprite(current_head) then
+               current_head = self.battler.chara:getHeadIcons().."/head"
+            end
         end
 
         if not self.head_sprite:isSprite(current_head) then
+            local color = {1, 1, 1}
+            self.head_sprite:setColor(self.battler.chara.icon_color or color)
             self.head_sprite:setSprite(current_head)
         end
     end

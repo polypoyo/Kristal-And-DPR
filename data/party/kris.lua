@@ -89,6 +89,8 @@ function character:init()
     -- X-Action color (for the color of X-Action menu items) (defaults to the main color)
     self.xact_color = {0.5, 1, 1}
 
+    self.icon_color = {0, 162/255, 232/255}
+
     -- Head icon in the equip / power menu
     self.menu_icon = "party/kris/head"
     -- Path to head icons used in battle

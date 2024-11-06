@@ -49,6 +49,8 @@ function character:init()
     self.attack_box_color = {0, 0, 0.5}
     self.xact_color = nil
 
+    self.icon_color = {12/255, 48/255, 205/255}
+
     self.menu_icon = "party/brenda/head"
     self.head_icons = "party/brenda/icon"
     self.name_sprite = "party/brenda/name"

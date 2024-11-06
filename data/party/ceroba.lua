@@ -62,6 +62,8 @@ function character:init()
     self.attack_box_color = {1, 0, 0.35}
     self.xact_color = {1, 0, 0.35}
 
+    self.icon_color = {1, 0, 87/255}
+
     self.menu_icon = "party/ceroba/head"
     self.head_icons = "party/ceroba/icon"
     self.name_sprite = "party/ceroba/name"

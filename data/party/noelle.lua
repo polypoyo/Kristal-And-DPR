@@ -79,6 +79,8 @@ function character:init()
     -- X-Action color (for the color of X-Action menu items) (defaults to the main color)
     self.xact_color = {1, 1, 0.5}
 
+    self.icon_color = {1, 1, 0}
+
     -- Head icon in the equip / power menu
     self.menu_icon = "party/noelle/head"
     -- Path to head icons used in battle
