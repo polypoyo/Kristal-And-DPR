@@ -3,7 +3,7 @@ modRequire("scripts/main/utils_general")
 
 function Mod:init()
     print("Loaded "..self.info.name.."!")
-    self:registerShaders()
+    self.border_shaders = {}
 end
 
 function Mod:postInit(new_file)
@@ -15,7 +15,6 @@ function Mod:postInit(new_file)
         },
     }
     Kristal.callEvent("setItemsList", items_list)
-    
     if new_file then
         Game:setFlag("library_love", 1)
         Game:setFlag("library_experience", 0)
@@ -31,6 +30,9 @@ function Mod:postInit(new_file)
 
         Game.world:startCutscene("_main.introcutscene")
     end
+    self.border_shaders = {
+        ["cliffside"] = Assets.newShader("glitch")
+    }
 end
 
 function Mod:addGlobalEXP(exp)
@@ -66,22 +68,17 @@ function Mod:unlockQuest(quest, silent)
     end
 end
 
-function Mod:registerShaders()
-    self.shaders = {}
-    for _,path,shader in Registry.iterScripts("shaders/") do
-        assert(shader ~= nil, '"shaders/'..path..'.lua" does not return value')
-        self.shaders[path] = shader
-    end
-end
-
 function Mod:onBorderDraw(border_sprite)
+    if not self.border_shaders then return end
     if border_sprite == "cliffside" then
-
-        if math.random(10) == 1 then 
-            love.graphics.setShader(Mod.shaders["glitch"])
+        if math.random(10) == 1 then
+            love.graphics.setShader(self.border_shaders["cliffside"])
             love.graphics.draw(Assets.getTexture("borders/cliffside"), 0, 0, 0, BORDER_SCALE)
         end
-
-        love.graphics.setShader() 
+        love.graphics.setShader()
+    elseif self.border_shaders[border_sprite] then
+        love.graphics.setShader(self.border_shaders[border_sprite])
+        love.graphics.draw(Assets.getTexture("borders/"..border_sprite), 0, 0, 0, BORDER_SCALE)
+        love.graphics.setShader()
     end
 end

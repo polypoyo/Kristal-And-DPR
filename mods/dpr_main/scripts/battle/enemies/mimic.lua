@@ -73,7 +73,7 @@ function Mimic:init()
 
     self.current_actor = "ufoofdoom"
 
-    self:addFX(ShaderFX(Mod.shaders["wave"], {
+    self:addFX(ShaderFX("wave", {
         ["wave_sine"] = function () return Kristal.getTime() * 100 end,
         ["wave_mag"] = function () return self:getFXWaveMag() end,
         ["wave_height"] = 2,
