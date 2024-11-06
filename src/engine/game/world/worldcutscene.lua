@@ -1191,6 +1191,11 @@ function WorldCutscene:warpBinInput(options)
         wbi_ok = true
         action = input
     end
+    wbi.key_callback = function(text, key)
+        if options.key_callback then
+            options.key_callback(text,key, wbi, Object())
+        end
+    end
     Game.world:spawnObject(wbi, "ui")
     local waiter = function() return wbi_ok, action end
     if options.wait then
