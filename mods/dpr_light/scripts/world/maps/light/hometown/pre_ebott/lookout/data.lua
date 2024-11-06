@@ -1,7 +1,7 @@
 return {
-  version = "1.9",
+  version = "1.11",
   luaversion = "5.1",
-  tiledversion = "1.9.0",
+  tiledversion = "1.11.0",
   class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 10,
-  nextobjectid = 12,
+  nextobjectid = 14,
   backgroundcolor = { 50, 185, 255 },
   properties = {
     ["border"] = "leaves",
@@ -43,7 +43,7 @@ return {
         {
           id = 11,
           name = "ebott_bgclouds",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 0,
           y = 0,
@@ -220,7 +220,7 @@ return {
         {
           id = 1,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 0,
           y = 600,
@@ -233,7 +233,7 @@ return {
         {
           id = 2,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 360,
           y = 600,
@@ -246,7 +246,7 @@ return {
         {
           id = 3,
           name = "",
-          class = "",
+          type = "",
           shape = "polygon",
           x = 0,
           y = 360,
@@ -271,7 +271,7 @@ return {
         {
           id = 4,
           name = "",
-          class = "",
+          type = "",
           shape = "polygon",
           x = 400,
           y = 600,
@@ -289,7 +289,7 @@ return {
         {
           id = 5,
           name = "",
-          class = "",
+          type = "",
           shape = "polygon",
           x = 240,
           y = 600,
@@ -307,7 +307,7 @@ return {
         {
           id = 6,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = -40,
           y = 360,
@@ -320,7 +320,7 @@ return {
         {
           id = 7,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 640,
           y = 360,
@@ -349,7 +349,7 @@ return {
         {
           id = 9,
           name = "transition",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 280,
           y = 940,
@@ -361,6 +361,21 @@ return {
             ["facing"] = "down",
             ["map"] = "light/hometown/secret_path",
             ["marker"] = "entry_up"
+          }
+        },
+        {
+          id = 13,
+          name = "interactable",
+          type = "",
+          shape = "rectangle",
+          x = 200,
+          y = 240,
+          width = 240,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["cutscene"] = "ebott.lookout"
           }
         }
       }
@@ -382,7 +397,7 @@ return {
         {
           id = 10,
           name = "entry_pre_ebott",
-          class = "",
+          type = "",
           shape = "point",
           x = 320,
           y = 920,
