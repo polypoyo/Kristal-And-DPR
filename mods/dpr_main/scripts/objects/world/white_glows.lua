@@ -2,7 +2,7 @@ local white_glows, super = Class(Sprite)
 
 function white_glows:init()
     super.init(self, "world/bg/glows", 0, 0)
-                    local code = self:addFX(ShaderFX(Mod.shaders["glitch"], {
+                    local code = self:addFX(ShaderFX("glitch", {
             ["iTime"] = function() return Kristal.getTime() end,
             ["iResolution"] = {SCREEN_WIDTH, SCREEN_HEIGHT}
         }), "color_shift_mode")
