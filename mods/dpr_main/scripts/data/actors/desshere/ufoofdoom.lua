@@ -8,7 +8,7 @@ function actor:init()
 
     -- Width and height for this actor, used to determine its center
     self.width = 32
-    self.height = 64
+    self.height = 32
 
     -- Hitbox for this actor in the overworld (optional, uses width and height by default)
     --self.hitbox = {0, 25, 19, 14}
@@ -41,7 +41,7 @@ function actor:init()
     self.animations = {
         -- Looping animation with 0.25 seconds between each frame
         -- (even though there's only 1 idle frame)
-        ["idle"] = {"idle", 0.25, true},
+        ["idle"] = {"idle", (75/120)/12, true},
     }
 
     -- Table of sprite offsets (indexed by sprite name)
