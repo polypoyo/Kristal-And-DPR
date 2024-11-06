@@ -31,6 +31,7 @@ function WarpBinInputMenu:init(length)
     -- affects whether we query the bincode list or not
     self.as_warp_bin_ui = true
     self.finish_cb = nil
+    self.key_callback = nil
 end
 
 function WarpBinInputMenu:onAdd(...)
@@ -47,6 +48,9 @@ function WarpBinInputMenu:onAdd(...)
     })
     TextInput.text_callback = function()
         self.input[1] = Utils.sub(self.input[1], 1, self.code_len)
+        if self.key_callback then
+            self.key_callback(Utils.sub(self.input[1],1,#self.input[1]-1), Utils.sub(self.input[1],#self.input[1]),self)
+        end
     end
     TextInput.submit_callback = function()
         if self.finish_cb then
