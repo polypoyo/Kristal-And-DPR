@@ -902,7 +902,7 @@ function WorldCutscene:textTagged(text, portrait, actor, options)
     if actor == nil then
         actor = self.textbox_actor
     end
-    self:showNametag(options.nametag or actor:getName(), {font = options.nametag_font or actor:getFont()})
+    self:showNametag(options.nametag or actor:getName(), {font = options.nametag_font or (actor and actor:getFont())})
     self:text(text, portrait, actor, options)
     self:hideNametag()
 end

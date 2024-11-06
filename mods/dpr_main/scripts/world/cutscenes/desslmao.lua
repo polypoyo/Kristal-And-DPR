@@ -10,9 +10,9 @@ local desslmao = {
 
 		cutscene:showNametag("Dess Holiday?")
 		if #Game.party == 1 then
-			cutscene:textTagged("* Yooo hey it's great to see you again", "condescending", "dess")
+			cutscene:text("* Yooo hey it's great to see you again", "condescending", "dess")
 		else
-			cutscene:textTagged("* Yooo hey it's great to see you guys again", "condescending", "dess")
+			cutscene:text("* Yooo hey it's great to see you guys again", "condescending", "dess")
 		end
 		cutscene:setSpeaker("dess")
 		cutscene:textTagged("* its me,[wait:5] dess,[wait:5] from hit kristal mod dark place", "heckyeah", "dess")
@@ -196,6 +196,7 @@ local desslmao = {
 
 	dessboss = function(cutscene)
 		local boss = cutscene:getCharacter("ufoofdoom", 1)
+		local whodis = {nametag = "???"}
 
 		local susie = cutscene:getCharacter("susie")
 		local leader = Game.world.player
@@ -260,11 +261,11 @@ local desslmao = {
 		boss:shake(8, 0)
 		Assets.stopAndPlaySound("wing")
 
-		cutscene:showNametag("???")
-		cutscene:textTagged("* Hee...")
+		cutscene:setSpeaker()
+		cutscene:textTagged("* Hee...", whodis)
 		boss:shake(16, 0)
 		Assets.stopAndPlaySound("wing")
-		cutscene:textTagged("* Uheeheehee!!")
+		cutscene:textTagged("* Uheeheehee!!", whodis)
 		cutscene:hideNametag()
 
 		boss:fadeTo(0, 0.1, function() boss:fadeTo(1, 0.05) end)
@@ -279,9 +280,9 @@ local desslmao = {
         cutscene:look(leader, "down")
         
 		cutscene:wait(1.2)
-		cutscene:showNametag("???")
-		cutscene:textTagged("* I'm sorry![wait:10]\n* I simply couldn't contain myself!")
-		cutscene:textTagged("* Uheehee!")
+		cutscene:setSpeaker(boss)
+		cutscene:textTagged("* I'm sorry![wait:10]\n* I simply couldn't contain myself!", whodis)
+		cutscene:textTagged("* Uheehee!", whodis)
 		cutscene:hideNametag()
 
         if susie then
@@ -295,14 +296,14 @@ local desslmao = {
 		cutscene:look(boss, "up")
 		boss:fadeTo(1, 0.05)
 		cutscene:wait(1)
-        cutscene:showNametag("???")
+		cutscene:setSpeaker(nil)
         if susie then
-            cutscene:textTagged("[face:susie_bangs/smile_b][voice:susie]* I'm you!")
+            cutscene:textTagged("[face:susie_bangs/smile_b][voice:susie]* I'm you!", whodis)
 
             cutscene:setSpeaker("susie")
             cutscene:textTagged("* Wha-?![wait:10] What the hell??", "surprise_frown", "susie")
         else
-            cutscene:textTagged("[face:susie_bangs/smile_b][voice:susie]* LOOK at me![wait:10] I'm the Angry Dino Girl!")
+            cutscene:textTagged("[face:susie_bangs/smile_b][voice:susie]* LOOK at me![wait:10] I'm the Angry Dino Girl!", whodis)
         end
 
 		cutscene:hideNametag()
@@ -313,14 +314,14 @@ local desslmao = {
 		cutscene:look(boss, "up")
 		boss:fadeTo(1, 0.05)
 		cutscene:wait(1)
-		cutscene:showNametag("???")
+		cutscene:setSpeaker()
 
         if susie then
-            cutscene:textTagged("* SUSIE LOOK![wait:5]\n* IT'S ME[wait:5] [color:yellow]KRIS[color:reset]!")
+            cutscene:textTagged("* SUSIE LOOK![wait:5]\n* IT'S ME[wait:5] [color:yellow]KRIS[color:reset]!", whodis)
         else
-            cutscene:textTagged("* AND NOW I'm the blue one!")
+            cutscene:textTagged("* AND NOW I'm the blue one!", whodis)
         end
-		cutscene:textTagged("* Uheeheehee!")
+		cutscene:textTagged("* Uheeheehee!", whodis)
 		cutscene:hideNametag()
 
 		boss:fadeTo(0.2, 0.05)
@@ -330,28 +331,28 @@ local desslmao = {
 		cutscene:setSpeaker("dess")
 		cutscene:textTagged("* Whatever can we fight now", "condescending", "dess")
 
-		cutscene:setSpeaker(boss)
-		cutscene:textTagged("* ...OH![wait:10] I see!")
-		cutscene:textTagged("* ...Uheehee!")
-		cutscene:textTagged("* You're even worse than me! Uhee!")
+		cutscene:setSpeaker()
+		cutscene:textTagged("* ...OH![wait:10] I see!", whodis)
+		cutscene:textTagged("* ...Uheehee!", whodis)
+		cutscene:textTagged("* You're even worse than me! Uhee!", whodis)
 
         if susie then
             cutscene:setSpeaker("susie")
             cutscene:textTagged("* Uhh,[wait:10] what do they mean by that?", "nervous", "susie")
 
-			cutscene:setSpeaker(boss)
-            cutscene:textTagged("* Uheehee![wait:10] You're much better!")
+			cutscene:setSpeaker()
+            cutscene:textTagged("* Uheehee![wait:10] You're much better!", whodis)
         end
 		cutscene:setSpeaker(boss)
-		cutscene:textTagged("* It's too easy to be who you want to be!")
-		cutscene:textTagged("* I know that is not the real Dess Holiday!")
+		cutscene:textTagged("* It's too easy to be who you want to be!", whodis)
+		cutscene:textTagged("* I know that is not the real Dess Holiday!", whodis)
 
         if susie then
             cutscene:textTagged("* Huh???", "surprise_frown", "susie")
 
             cutscene:setSpeaker(boss)
-            cutscene:textTagged("* Don't act all surprised!")
-            cutscene:textTagged("* I know that you aren't the real Susie either!")
+            cutscene:textTagged("* Don't act all surprised!", whodis)
+            cutscene:textTagged("* I know that you aren't the real Susie either!", whodis)
 
             cutscene:setSpeaker("susie")
             cutscene:textTagged("* ...???", "suspicious")
@@ -363,8 +364,8 @@ local desslmao = {
             cutscene:textTagged("* Whatever,[wait:5]I wanna smash you already", "neutral", "dess")
         end
 
-		cutscene:showNametag("???")
-		cutscene:textTagged("* Suit yourself![wait:5] Uheehee!")
+		cutscene:setSpeaker()
+		cutscene:textTagged("* Suit yourself![wait:5] Uheehee!", whodis)
 
 		cutscene:hideNametag()
 		cutscene:attachCamera(1)
