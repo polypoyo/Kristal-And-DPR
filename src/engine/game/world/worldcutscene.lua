@@ -1161,6 +1161,10 @@ function WorldCutscene:gonerKeyboard(options)
         if options.fade then
             fade_rect:fadeOutAndRemove(00.40)
         end
+    end, function (key, _, _, kbd)
+        if options.key_callback then
+            options.key_callback(kbd.text,key,kbd,fade_rect)
+        end
     end)
     keyboard.x = self.world.camera.x - (SCREEN_WIDTH/2)
     keyboard.y = self.world.camera.y - (SCREEN_HEIGHT/2)
@@ -1196,13 +1200,13 @@ function WorldCutscene:warpBinInput(options)
     end
 end
 
-function WorldCutscene:getUserText(length, mode, wait, fade)
-    local options = {
+function WorldCutscene:getUserText(length, mode, wait, fade, options)
+    options = Utils.merge({
         length = length or -1,
         mode = mode or "default",
         wait = wait ~= false,
         fade = fade ~= false,
-    }
+    }, options or {})
     if Input.usingGamepad() or (options.length == -1) or Kristal.Config["prefersGonerKeyboard"] then
         return self:gonerKeyboard(options)
     else

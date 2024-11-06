@@ -18,6 +18,7 @@
 ---@field on_fail? fun(cutscene: WorldCutscene) called when the condition is not satifised
 ---@field silence_system_messages? boolean
 ---@field mod? string the mod ID of a mod to swap into.
+---@field instant? boolean whether to automatically confirm the selection as soon as the code is typed
 
 ---@class WarpBinCodeInfoMini
 ---@field result string map id
@@ -49,6 +50,7 @@ local gray_area_info = {
             Game.world:loadMap("greyarea", "entry")
         end)
     end,
+    instant = true
 }
 Mod.warp_bin_codes["GRAYAREA"] = gray_area_info
 Mod.warp_bin_codes["GREYAREA"] = gray_area_info

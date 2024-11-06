@@ -11,8 +11,18 @@ return function(cutscene, event)
     if cutscene:choicer({"Sure", "Nope"}) == 2 then
         return
     end
-    
-    local action_raw = cutscene:getUserText(8, "warpbin")
+
+    local action_raw = cutscene:getUserText(8, "warpbin", nil, nil, {
+        ---@type fun(text:string,key:string,object:WarpBinInputMenu|GonerKeyboard)
+        key_callback = function (text, key, object, fade_rect)
+            local code = Mod:getBinCode(text..key)
+            if code and code.instant then
+                object.callback(text..key)
+                fade_rect:remove()
+                object:remove()
+            end
+        end
+    })
     ---@type WarpBinCodeInfo
     local action = Mod:getBinCode(action_raw)
 
