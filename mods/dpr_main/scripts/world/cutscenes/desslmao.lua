@@ -58,8 +58,8 @@ local desslmao = {
 		end
 		cutscene:textTagged("* Oh yeah can I join your team btw", "neutral", "dess")
 
-		cutscene:hideNametag()
-		cutscene:textTagged("* (Can she join your team btw?)")
+		cutscene:setSpeaker()
+		cutscene:text("* (Can she join your team btw?)")
 		local can_she_join_your_team_btw = cutscene:choicer({"Yes", "No"})
 
 		cutscene:setSpeaker("dess")
