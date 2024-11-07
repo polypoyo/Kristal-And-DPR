@@ -30,9 +30,6 @@ function Mod:postInit(new_file)
 
         Game.world:startCutscene("_main.introcutscene")
     end
-    self.border_shaders = {
-        ["cliffside"] = Assets.newShader("glitch")
-    }
 end
 
 function Mod:addGlobalEXP(exp)
@@ -70,14 +67,14 @@ end
 
 function Mod:onBorderDraw(border_sprite)
     if not self.border_shaders then return end
-    if border_sprite == "cliffside" then
-        if math.random(10) == 1 then
-            love.graphics.setShader(self.border_shaders["cliffside"])
-            love.graphics.draw(Assets.getTexture("borders/cliffside"), 0, 0, 0, BORDER_SCALE)
-        end
-        love.graphics.setShader()
-    elseif self.border_shaders[border_sprite] then
-        love.graphics.setShader(self.border_shaders[border_sprite])
+    if not self.border_shaders[border_sprite] and Assets.data.shaders["borders/"..border_sprite] then
+        self.border_shaders[border_sprite] = love.graphics.newShader(Assets.data.shaders["borders/"..border_sprite])
+    end
+    local shader = self.border_shaders[border_sprite]
+    if shader then
+        shader:send("iTime", Kristal.getTime())
+        shader:send("iResolution", {love.graphics.getWidth(), love.graphics.getHeight()})
+        love.graphics.setShader(shader)
         love.graphics.draw(Assets.getTexture("borders/"..border_sprite), 0, 0, 0, BORDER_SCALE)
         love.graphics.setShader()
     end
