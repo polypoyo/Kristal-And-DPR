@@ -176,7 +176,7 @@ return {
 
 
         cutscene:wait(function ()
-            if lightsource.alpha >= 1 or lightsource.radius >= 900 then
+            if lightsource.alpha >= 0.95 or lightsource.radius >= 890 then
                 return true
             else
                 return false
