@@ -1,10 +1,12 @@
-local item, super = Class(Item, "aeonlance")
+local item, super = Class(Item, "chosen_blade")
 
 function item:init()
     super.init(self)
 
+    self.last_stand = true
+
     -- Display name
-    self.name = "AeonLance"
+    self.name = "Chosen Blade"
 
     -- Item type (item, key, weapon, armor)
     self.type = "weapon"
@@ -16,12 +18,12 @@ function item:init()
     -- Shop description
     self.shop = ""
     -- Menu description
-    self.description = "A powerful lance once wielded by the legendary\nAeon Hero. Attacks hurt all foes."
+    self.description = "Please add details."
 
     -- Default shop price (sell price is halved)
-    self.price = nil
+    self.price = 999 -- If you sell this your* stupid.
     -- Whether the item can be sold
-    self.can_sell = false
+    self.can_sell = true
 
     -- Consumable target mode (ally, party, enemy, enemies, or none)
     self.target = "none"
@@ -34,31 +36,25 @@ function item:init()
 
     -- Equip bonuses (for weapons and armor)
     self.bonuses = {
-        attack = 15,
+        attack = 0,
     }
     -- Bonus name and icon (displayed in equip menu)
-    self.bonus_name = "Hurt ALL"
-    self.bonus_icon = "ui/menu/icon/sword"
+    self.bonus_name = "Determination"
+    self.bonus_icon = "ui/menu/icon/up"
 
     -- Equippable characters (default true for armors, false for weapons)
     self.can_equip = {
         kris = true,
-        YOU = true
+        hero = true,
     }
 
     -- Character reactions
     self.reactions = {
-        susie = "Nah, lances aren't really my style.",
-        ralsei = "Um, that looks dangerous, Kris.",
-        noelle = "It feels... magical?",
-		jamm = {
-            jamm = "I never was a swords guy.",
-            brenda = "Grah, lances aren't swords !! /lh",
-        },
-	kris = {
-            noel = "Sure, give it to the possesed kid...",
-        },
     }
 end
+
+--function item:convertToLightEquip(chara)
+--    return "light/pencil"
+--end
 
 return item

@@ -34,7 +34,7 @@ function character:init()
 
     self.weapon_icon = "ui/menu/equip/sword"
 
-    self:setWeapon("wood_blade") -- Placeholder
+    self:setWeapon("chosen_blade")
     self:setArmor(1, "amber_card") -- Placeholder
     self:setArmor(2, "amber_card") -- Placeholder
 
