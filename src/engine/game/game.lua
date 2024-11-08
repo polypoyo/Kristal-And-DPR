@@ -15,7 +15,7 @@
 ---@field lock_movement     boolean
 ---@field key_repeat        boolean
 ---@field started           boolean
----@field border            string
+---@field border            Border
 ---
 ---@field previous_state    string
 ---@field state             string
@@ -134,22 +134,33 @@ function Game:leave()
     self.quick_save = nil
 end
 
----@return string
+---@return Border
 function Game:getBorder()
     return self.border
 end
 
----@param border?   string
+---@param border?   string|Border
 ---@param time?     number
 function Game:setBorder(border, time)
     time = time or 1
-
+    local new_border_id = border
+    if type(border) ~= "string" then
+        new_border_id = border.id
+    end
+    local current_border_id
+    if Kristal.getBorder() then
+        current_border_id = Kristal.getBorder().id
+    end
     if time == 0 then
         Kristal.showBorder(0)
-    elseif time > 0 and Kristal.getBorder() ~= border then
+    elseif time > 0 and current_border_id ~= new_border_id then
         Kristal.transitionBorder(time)
     end
 
+    if type(border) == "string" then
+        local border_class = Registry.createBorder(border)
+        if border_class then border = border_class end
+    end
     self.border = border
 end
 
@@ -253,7 +264,7 @@ function Game:save(x, y)
 
         level_up_count = self.level_up_count,
 
-        border = self.border,
+        border = self.border.id,
 
         temp_followers = self.temp_followers,
 

@@ -64,18 +64,3 @@ function Mod:unlockQuest(quest, silent)
         Game.stage:addChild(QuestCreatedPopup(quest))
     end
 end
-
-function Mod:onBorderDraw(border_sprite)
-    if not self.border_shaders then return end
-    if not self.border_shaders[border_sprite] and Assets.data.shaders["borders/"..border_sprite] then
-        self.border_shaders[border_sprite] = love.graphics.newShader(Assets.data.shaders["borders/"..border_sprite])
-    end
-    local shader = self.border_shaders[border_sprite]
-    if shader then
-        shader:send("iTime", Kristal.getTime())
-        shader:send("iResolution", {love.graphics.getWidth(), love.graphics.getHeight()})
-        love.graphics.setShader(shader)
-        love.graphics.draw(Assets.getTexture("borders/"..border_sprite), 0, 0, 0, BORDER_SCALE)
-        love.graphics.setShader()
-    end
-end
