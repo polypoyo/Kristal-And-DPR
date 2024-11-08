@@ -30,6 +30,7 @@
 ---@field events table<string, Event|Object>
 ---@field controllers table<string, Event|Object>
 ---@field shops table<string, Shop>
+---@field borders table<string, Border>
 ---@field minigames table<string, MinigameHandler>
 ---
 local Registry = {}
@@ -62,6 +63,7 @@ Registry.paths = {
     ["events"]           = "world/events",
     ["controllers"]      = "world/controllers",
     ["shops"]            = "shops",
+    ["borders"]          = "borders",
     ["minigames"]        = "minigames",
     ["combos"]           = "battle/combos",
     ["quests"]           = "data/quests",
@@ -111,6 +113,7 @@ function Registry.initialize(preload)
         Registry.initEvents()
         Registry.initControllers()
         Registry.initShops()
+        Registry.initBorders()
         Registry.initMinigames()
         Registry.initCombos()
         Registry.initQuests()
@@ -481,6 +484,24 @@ function Registry.createShop(id, ...)
     end
 end
 
+---@generic T
+---@param id Border.`T`
+---@param ... any
+---@return T|Border
+function Registry.createBorder(id, ...)
+    if self.borders[id] then
+        return self.borders[id](...)
+    else
+        local texture = Assets.getTexture("borders/"..id)
+        if texture then
+            return ImageBorder(texture,id)
+        end
+        local border = Border()
+        border.id = id
+        return border
+    end
+end
+
 ---@param id string
 ---@return Minigame|nil
 function Registry.getMinigame(id)
@@ -652,6 +673,12 @@ end
 ---@param class Shop
 function Registry.registerShop(id, class)
     self.shops[id] = class
+end
+
+---@param id string
+---@param border Border
+function Registry.registerBorder(id, border)
+    self.borders[id] = border
 end
 
 ---@param id string
@@ -928,6 +955,18 @@ function Registry.initShops()
     end
 
     Kristal.callEvent(KRISTAL_EVENT.onRegisterShops)
+end
+
+function Registry.initBorders()
+    self.borders = {}
+
+    for _,path,border in self.iterScripts(Registry.paths["borders"]) do
+        assert(border ~= nil, '"borders/'..path..'.lua" does not return value')
+        border.id = border.id or path
+        self.registerBorder(border.id, border)
+    end
+
+    Kristal.callEvent(KRISTAL_EVENT.onRegisterBorders)
 end
 
 function Registry.initMinigames()
