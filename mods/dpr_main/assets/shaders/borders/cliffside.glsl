@@ -53,9 +53,9 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords)
 	float gcolor = Texel(texture, uv + gDisplace).g;
 	float bcolor = Texel(texture, uv + bDisplace).b;
 
-	vec4 fragColor = interlace(screen_coords, vec4(rcolor, gcolor, bcolor, 1.0) * color);
+	vec4 fragColor = interlace(screen_coords, vec4(rcolor, gcolor, bcolor, 1.0));
 	if (rand(floor(iTime*4)) > 0.1) {
 		fragColor = Texel(texture, texture_coords);
 	}
-	return fragColor;
+	return fragColor * color;
 }
