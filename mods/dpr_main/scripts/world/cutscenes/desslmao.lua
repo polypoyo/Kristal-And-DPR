@@ -418,7 +418,7 @@ local desslmao = {
 			cutscene:textTagged("* All of the sensless murder we've been doing like...", "condescending", "dess")
 			cutscene:textTagged("* Allowed us to actually kill people normally?", "kind", "dess")
 			cutscene:showNametag("Dess", {top = true})
-			cutscene:textTagged("* That'd be a cool reference to hit Deltarune fangame made by RynoGG know as Deltatraveler where in the section 2 obliteration route you can actually kill the animals and people if you clear out all the enemies in the first few rooms", "condescending", "dess", {top = true})
+			cutscene:textTagged("* That'd be a cool reference to hit Deltarune fangame made by Vyletbunni known as Deltatraveler where in the section 2 obliteration route you can actually kill the animals and people if you clear out all the enemies in the first few rooms", "condescending", "dess", {top = true})
 			if susie then
                 cutscene:setSpeaker("susie")
                 cutscene:textTagged("* ...", "neutral_side", "susie")
