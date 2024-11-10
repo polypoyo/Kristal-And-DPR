@@ -763,7 +763,21 @@ function MainMenuDLCHandler:handleMod(id)
 		self.loading_queue_index = self.loading_queue_index + 1
 		self:setState("DOWNLOAD")
 	else
-		print("Nothing")
+		local function recursivelyDelete(item)
+	        if love.filesystem.getInfo( item , "directory" ) then
+	            for _, child in ipairs( love.filesystem.getDirectoryItems( item )) do
+	                recursivelyDelete( item .. '/' .. child )
+	                love.filesystem.remove( item .. '/' .. child )
+	            end
+	        elseif love.filesystem.getInfo( item ) then
+	            love.filesystem.remove( item )
+	        end
+	        love.filesystem.remove( item )
+	    end
+    	recursivelyDelete("mods/"..id)
+		self:reloadMods(function()
+			self:buildDLCList(false)
+		end)
 	end
 end
 
