@@ -67,7 +67,7 @@ function InputButton:setDpadMode()
     self.collider = ColliderGroup(self, {
         CircleCollider(self,7,7,7), Hitbox(self, -5,0,10,14),
         PolygonCollider(self, {
-            {20,7},
+            {25,7},
             {0, -w},
             {0, 14 + w},
         })
@@ -84,6 +84,13 @@ function InputButton:draw()
     end
     if DEBUG_RENDER then
         self.collider:draw(unpack(COLORS.green))
+        for _,touch_index in ipairs(love.touch.getTouches()) do
+            local x,y = love.touch.getPosition(touch_index)
+            local pressure = love.touch.getPressure(touch_index)
+            local radius = pressure * 10
+            local point = CircleCollider(nil, x+(radius/2), y+(radius/2), radius)
+            point:draw()
+        end
     end
     super.draw(self)
 end
