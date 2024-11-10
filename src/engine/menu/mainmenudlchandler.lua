@@ -146,7 +146,6 @@ end
 
 function MainMenuDLCHandler:onKeyPressedMain(key, is_repeat)
 	if Input.isConfirm(key) and not is_repeat then
-		print("confirm")
     	local id = self.list:getSelectedId()
     	self:handleMod(id)
 	elseif Input.isCancel(key) then
@@ -433,7 +432,6 @@ end
 
 -- Handles what to do with mod.json once downloaded
 function MainMenuDLCHandler:handleDataFile(body)
-	print("mod.json file")
 	local data = JSON.decode(body)
 	local content = JSON.decode(Utils.decodeBase64(data.content))
 	Kristal.Mods.dlc_data[content.id] = content
@@ -446,7 +444,6 @@ end
 
 -- Handles what to do with images files once downloaded
 function MainMenuDLCHandler:handleImageFile(body, filename, data)
-	print(filename.." file")
 	local name = "cache/"..filename..".png"
 	if not data then
 		Kristal.Console:warn("No data given! Was the "..filename.." downloaded before the data?")
@@ -480,7 +477,6 @@ function MainMenuDLCHandler:handleContentDownload(data, index)
 	local content = data.contents
 	local file = content[index]
 	local link = "https://api.github.com/repos/"..data.owner.."/"..data.repo.."/contents/"..file
-	print(link)
 	local headers
 	if file:find(".png") then headers = {Accept="application/vnd.github.v3.raw"} end
 
@@ -511,7 +507,6 @@ end
 
 function MainMenuDLCHandler:handleZipDownload(data)
 	local link = "https://api.github.com/repos/"..data.owner.."/"..data.repo.."/zipball"
-	print(link)
 
 	local ok = Kristal.fetch(link, {
 		headers={Accept="application/vnd.github.v3.raw"},
@@ -617,9 +612,7 @@ function MainMenuDLCHandler:REALbuildDLCList()
         if mod.preview and not self.images.preview[mod.id] then
         	self.images.preview[mod.id] = love.graphics.newImage(mod.preview)
         end
-        print(self.images.banner[mod.id], mod.id)
         button.button_texture = self.images.banner[mod.id]
-        print(mod.button_texture)
         if Kristal.Mods.getMod(mod.id) then
         	table.insert(self.installed_dlcs, mod.id)
         end
@@ -653,17 +646,14 @@ function MainMenuDLCHandler:buildDLCList(reset_cache)
 	local url_list = GITHUB_REPOS
 
 	if not self.list then
-		print("Creating List")
 		self.list = ModList(10, 48+4, 280, SCREEN_HEIGHT-(48-4)-10)
 		self.list.layer = 50
     	self.menu.stage:addChild(self.list)
     else
-    	print("Clearing List")
     	self.list:clearMods()
     end
 
     if reset_cache then
-    	print("Reset cache")
     	local function recursivelyDelete(item)
 	        if love.filesystem.getInfo( item , "directory" ) then
 	            for _, child in ipairs( love.filesystem.getDirectoryItems( item )) do
@@ -678,13 +668,13 @@ function MainMenuDLCHandler:buildDLCList(reset_cache)
     	recursivelyDelete('cache')
     	Kristal.Mods.dlc_data = {}
     else
-    	print("Try to load cache")
+    	--print("Try to load cache")
     	if not love.filesystem.getInfo("cache", "directory") then
-    		print("Creating cache folder")
+    		--print("Creating cache folder")
     		love.filesystem.createDirectory("cache")
     	end
     	if love.filesystem.getInfo("cache/dlc_data.json") then
-    		print("Cache found, loading...")
+    		--print("Cache found, loading...")
     		for i,mod in ipairs(Kristal.Mods.getMods()) do
     			if not Utils.containsValue({"dpr_main", "dpr_light"}, mod.id) then
     				Kristal.Mods.dlc_data[mod.id] = mod
@@ -693,7 +683,6 @@ function MainMenuDLCHandler:buildDLCList(reset_cache)
     		end
     		local data = JSON.decode(love.filesystem.read("cache/dlc_data.json"))
     		for i,mod in pairs(data) do
-    			print(mod.id)
     			if not Kristal.Mods.dlc_data[mod.id] then
     				Kristal.Mods.dlc_data[mod.id] = mod
     			end
@@ -701,12 +690,11 @@ function MainMenuDLCHandler:buildDLCList(reset_cache)
 
     		-- TODO: remake that better
     		local new, list = self:checkForNewDLCs()
-    		print(new)
     		if not new then
     			self:REALbuildDLCList()
     			return
     		end
-    		print("New DLCs found")
+    		--print("New DLCs found")
     		url_list = list
     	end
     end
