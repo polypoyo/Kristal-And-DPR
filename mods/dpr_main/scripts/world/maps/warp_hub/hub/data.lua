@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 6,
-  nextobjectid = 8,
+  nextobjectid = 11,
   properties = {
     ["music"] = "warphub"
   },
@@ -140,6 +140,23 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        },
+        {
+          id = 9,
+          name = "npc",
+          type = "",
+          shape = "rectangle",
+          x = 160,
+          y = 112,
+          width = 40,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["actor"] = "diamond_giant",
+            ["cutscene"] = "warp_hub.diamond_store",
+            ["sprite"] = "hole_empty"
+          }
         }
       }
     },
