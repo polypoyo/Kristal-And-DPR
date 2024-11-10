@@ -244,8 +244,8 @@ function DogCheck:makeBGPumpkin(axis, y, x)
     pumpkin_sprite.id = self.pumpkins_made
     Utils.hook(pumpkin_sprite, "update", function(orig, self, ...)
         orig(self, ...)
-        self.siner = self.siner + 1
-        self.alpha_siner = self.alpha_siner + 1
+        self.siner = self.siner + DTMULT
+        self.alpha_siner = self.alpha_siner + DTMULT
         local alpha_base = self.id % 2 == 0 and math.sin((self.alpha_siner)/10) or math.cos((self.alpha_siner)/10),0,1
         self.alpha = Utils.clampMap(alpha_base, -0.9, 0.9, 0.1, 1)
         if axis > 0 then
