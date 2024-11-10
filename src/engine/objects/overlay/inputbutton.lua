@@ -84,15 +84,15 @@ function InputButton:draw()
     end
     if DEBUG_RENDER then
         self.collider:draw(unpack(COLORS.green))
-        for _,touch_index in ipairs(love.touch.getTouches()) do
-            local x,y = love.touch.getPosition(touch_index)
-            local pressure = love.touch.getPressure(touch_index)
-            local radius = pressure * 10
-            local point = CircleCollider(nil, x+(radius/2), y+(radius/2), radius)
-            point:draw()
-        end
     end
-    super.draw(self)
+    for _,touch_index in ipairs(love.touch.getTouches()) do
+        local x,y = love.touch.getPosition(touch_index)
+        local pressure = love.touch.getPressure(touch_index)
+        local radius = pressure * 20
+        local point = CircleCollider(nil, x+(radius/2), y+(radius/2), radius)
+        point:drawFill(COLORS.red)
+    end
+    -- super.draw(self)
 end
 
 return InputButton
