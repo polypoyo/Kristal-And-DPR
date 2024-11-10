@@ -524,13 +524,31 @@ function MainMenuDLCHandler:handleZipDownload(data)
 				extractZIP("mods/"..name, "mods", true, function()
 					self.send_request = false
 					self.loading_callback = function()
+						for i,dlc in ipairs(love.filesystem.getDirectoryItems("mods")) do
+							local s, _ = dlc:find(data.repo)
+							if s and s>1 then
+								local path = love.filesystem.getSaveDirectory().."/mods"
+								
+								local old_name = dlc
+								local new_name = data.repo
+
+								local command = "mv \""..path.."/"..old_name.."\" \""..path.."/"..new_name.."\""
+								if love.system.getOS() == "Windows" then
+									command = "cd /d \""..path.."\" && ren \""..old_name.."\" \""..new_name.."\""
+								end
+								print("Running command: "..command)
+
+								os.execute(command)
+							end
+						end
 						self:reloadMods(function()
     						self:buildDLCList(false)
     					end)
 					end
 				end)
 			else
-				print("An error occured: "..JSON.decode(body).message)
+				self.send_request = false
+				self:handleError(data.owner, data.repo, JSON.decode(body).message, nil)
 			end
 		end
 	})

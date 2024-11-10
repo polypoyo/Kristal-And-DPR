@@ -14,7 +14,6 @@ local function enu(folder, saveDir)
 			lfs.createDirectory(saveFile)
             enu(file, saveFile)
         else
-        	print("Copying "..file.." to "..saveFile)
 			lfs.write(saveFile, tostring(lfs.read(file)))
 		end
     end
