@@ -5,6 +5,8 @@
 ---@overload fun(menu:MainMenu) : MainMenuDLCHandler
 local MainMenuDLCHandler, super = Class(StateClass)
 
+require("src.lib.extractor")
+
 function MainMenuDLCHandler:init(menu)
     self.menu = menu
 
@@ -15,6 +17,7 @@ function MainMenuDLCHandler:init(menu)
     	draw = self.drawMain
     })
     self.state_manager:addState("DOWNLOAD", {
+    	enter = self.onEnterDownload,
     	draw = self.drawDownload,
     	update = self.updateDownload
     })
@@ -135,11 +138,17 @@ end
 --- MAIN
 function MainMenuDLCHandler:onEnterMain()
 	--print("Gello world...?")
+	if self.list then
+        self.list.active = true
+        self.list.visible = true
+    end
 end
 
 function MainMenuDLCHandler:onKeyPressedMain(key, is_repeat)
 	if Input.isConfirm(key) and not is_repeat then
-		
+		print("confirm")
+    	local id = self.list:getSelectedId()
+    	self:handleMod(id)
 	elseif Input.isCancel(key) then
 		Assets.stopAndPlaySound("ui_move")
 
@@ -300,6 +309,13 @@ function MainMenuDLCHandler:drawMain()
 end
 
 -- DOWNLOAD
+function MainMenuDLCHandler:onEnterDownload()
+	if self.list then
+        self.list.active = false
+        self.list.visible = false
+    end
+end
+
 function MainMenuDLCHandler:updateDownload()
 	if not self.send_request then
 		if self.loading_queue_index > 0 then
@@ -333,7 +349,11 @@ function MainMenuDLCHandler:updateDownload()
 			---------------
 			--- ZIPBALL ---
 			---------------
-			-- TODO
+			if data.zipball then
+				print("Downloading zip of "..owner.."'s repo "..repo)
+				self:handleZipDownload(data)
+				self.loading_queue_index = 0
+			end
 		else
 			self.loading_dlcs = false
 			love.filesystem.write("cache/dlc_data.json", JSON.encode(Kristal.Mods.dlc_data))
@@ -342,6 +362,9 @@ function MainMenuDLCHandler:updateDownload()
 				self.loading_callback = nil
 			end
 			Input.clear("confirm", true)
+			self.loading_list = {}
+			self.loading_queue_index = 0
+			self.content_index = 0
 			if #self.loading_errors > 0 then
 				self:setState("ERROR")
 			else
@@ -477,6 +500,38 @@ function MainMenuDLCHandler:handleContentDownload(data, index)
 			end
 			self.send_request = false
 			self.content_index = self.content_index + 1
+		end
+	})
+	if not ok then
+		self:handleError(data.owner, data.repo, "The fetching request failed. Is HTTPS available?", nil)
+		self.content_index = self.content_index + 1
+		self.send_request = false
+	end
+end
+
+function MainMenuDLCHandler:handleZipDownload(data)
+	local link = "https://api.github.com/repos/"..data.owner.."/"..data.repo.."/zipball"
+	print(link)
+
+	local ok = Kristal.fetch(link, {
+		headers={Accept="application/vnd.github.v3.raw"},
+		callback = function(res, body, headers)
+			if res == 200 then
+				print("Writing zip to disk...")
+				local name = data.repo..".zip"
+				love.filesystem.write("mods/"..name, body)
+
+				extractZIP("mods/"..name, "mods", true, function()
+					self.send_request = false
+					self.loading_callback = function()
+						self:reloadMods(function()
+    						self:buildDLCList(false)
+    					end)
+					end
+				end)
+			else
+				print("An error occured: "..JSON.decode(body).message)
+			end
 		end
 	})
 	if not ok then
@@ -676,6 +731,22 @@ function MainMenuDLCHandler:buildDLCList(reset_cache)
 		end
 	}
 	)]]
+end
+
+function MainMenuDLCHandler:handleMod(id)
+	print("Handle "..id)
+	local data = Kristal.Mods.dlc_data[id]
+	if not Kristal.Mods.getMod(id) then
+		table.insert(self.loading_list, {
+			owner=data.repo_data.owner,
+			repo=data.repo_data.repo,
+			zipball=true
+		})
+		self.loading_queue_index = self.loading_queue_index + 1
+		self:setState("DOWNLOAD")
+	else
+		print("Nothing")
+	end
 end
 
 return MainMenuDLCHandler
