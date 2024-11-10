@@ -16,4 +16,14 @@ GITHUB_ORGANISATION = nil
 
 -- Additional DLCs that aren't in the organisation above for some reason
 -- (like the organisation not existing yet)
-GITHUB_REPOS = {}
+GITHUB_REPOS = {
+	Simbel0={
+		"Temple-Of-Creativity"
+	},
+	AcousticJammYT={
+		"dpr_jamm_dlc"
+	},
+	polypoyo={
+		"dlc_test"
+	}
+}
