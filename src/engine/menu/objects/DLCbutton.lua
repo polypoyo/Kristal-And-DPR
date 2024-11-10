@@ -3,9 +3,9 @@ local DLCButton, super = Class(ModButton, nil, "DLCButton")
 function DLCButton:init(name, width, height, mod)
 	super:init(self, name, width, height, mod)
 
-    if mod.button then
+    --[[if mod.button and love.filesystem.getInfo(mod.button) then
         self.button_texture = love.graphics.newImage(mod.button)
-    end
+    end]]
 end
 
 function DLCButton:update()
