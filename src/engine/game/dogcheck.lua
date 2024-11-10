@@ -33,7 +33,7 @@ function DogCheck:init(variant)
     self.pumpkin_x = 0
     self.pumpkin_goal_x = 0
     self.pumpkin_frame = 1
-    self.bg_pumpkin_x = 0
+    self.pumpkins_made = 0
 
     love.window.setTitle("Dog Place: REBIRTH")
 end
@@ -155,6 +155,11 @@ function DogCheck:start()
         playSong(song_path.."house")
     elseif self.variant == "halloween" then
         playSong(song_path.."halloween")
+        for i = 0, 9 do
+            self:makeBGPumpkin(1, 50, i*68)
+            self:makeBGPumpkin(-1, SCREEN_HEIGHT-50-44, i*68)
+            self.pumpkins_made = self.pumpkins_made + 1
+        end
         self.timer:script(function(...) self:pumpkinDudeScript(...) end)
     end
 end
@@ -199,10 +204,10 @@ function DogCheck:update()
     end
     if self.variant == "halloween" then
         self.pumpkin_x = Utils.ease(self.pumpkin_x, self.pumpkin_goal_x, DTMULT/10, "out-quad")
-        self.bg_pumpkin_x = self.bg_pumpkin_x + 2*DTMULT
-        -- This will probably look bad after a while but fuck it
-        if self.bg_pumpkin_x >= 640*68 then
-            self.bg_pumpkin_x = self.bg_pumpkin_x - 640*68
+        if self.chicken_anim_siner % 34 == 0 then
+            self:makeBGPumpkin(1, 50)
+            self:makeBGPumpkin(-1, SCREEN_HEIGHT-50-44)
+            self.pumpkins_made = self.pumpkins_made + 1
         end
     end
 end
@@ -217,6 +222,45 @@ function DogCheck:getDebugInfo()
         "Variant: " .. self.variant,
         string.format("Song: %s (%gx)", self.song, self.song_pitch)
     }
+end
+
+function DogCheck:makeBGPumpkin(axis, y, x)
+    local pumpkin_sprite = Sprite("kristal/dogcheck/pumpkin", 0, y)
+    if not x then
+        if axis > 0 then
+            pumpkin_sprite.x = -68
+        else
+            pumpkin_sprite.x = SCREEN_WIDTH+34
+        end
+    else
+        pumpkin_sprite.x = x
+    end
+    pumpkin_sprite:setScale(2)
+    pumpkin_sprite.start_y = y
+    pumpkin_sprite.physics.speed = axis * 2
+    pumpkin_sprite.siner = self.chicken_anim_siner+self.pumpkins_made*4
+    pumpkin_sprite.alpha_siner = self.chicken_anim_siner+self.pumpkins_made
+    pumpkin_sprite.axis = axis
+    pumpkin_sprite.id = self.pumpkins_made
+    Utils.hook(pumpkin_sprite, "update", function(orig, self, ...)
+        orig(self, ...)
+        self.siner = self.siner + DTMULT
+        self.alpha_siner = self.alpha_siner + DTMULT
+        local alpha_base = self.id % 2 == 0 and math.sin((self.alpha_siner)/10) or math.cos((self.alpha_siner)/10),0,1
+        self.alpha = Utils.clampMap(alpha_base, -0.9, 0.9, 0.1, 1)
+        if axis > 0 then
+            self.y = self.start_y + math.sin((self.siner)/5)*6
+            if self.x < -70 then
+                self:remove()
+            end
+        else
+            self.y = self.start_y - math.cos((self.siner)/5)*6
+            if self.x > SCREEN_WIDTH+70 then
+                self:remove()
+            end
+        end
+    end)
+    self:addChild(pumpkin_sprite)
 end
 
 function DogCheck:draw()
@@ -245,19 +289,8 @@ function DogCheck:draw()
 		local pumpkin_dude = Assets.getFrames(cust_sprites_base.."/pumpkin_dude")
         local bg_pumpkin   = Assets.getTexture(cust_sprites_base.."/pumpkin")
 
-		local chicken_frame = math.floor(self.chicken_anim_siner/12) % #chicken + 1
+		local chicken_frame = math.floor(self.chicken_anim_siner/10) % #chicken + 1
 
-        -- If anyone knows how to do this better feel free to change it (and maybe let me know too i guess???)
-        for i = 0, 720 do
-            local alpha_base = i % 2 == 0 and math.sin((self.chicken_anim_siner+i)/8) or math.cos((self.chicken_anim_siner+i)/8),0,1
-            local alpha = Utils.clampMap(alpha_base, -0.9, 0.9, 0.1, 1)
-            Draw.setColor(1,1,1,alpha)
-            Draw.draw(bg_pumpkin, SCREEN_WIDTH-23+self.bg_pumpkin_x-i*68, 50+math.sin((self.chicken_anim_siner+i*4)/8)*6, 0, 2, 2)
-            local alpha_base = i % 2 == 1 and math.sin((self.chicken_anim_siner+i)/8) or math.cos((self.chicken_anim_siner+i)/8),0,1
-            local alpha = Utils.clampMap(alpha_base, -0.9, 0.9, 0.1, 1)
-            Draw.setColor(1,1,1,alpha)
-            Draw.draw(bg_pumpkin, 23-self.bg_pumpkin_x+i*68, SCREEN_HEIGHT-50-44+math.cos((self.chicken_anim_siner+i*4)/8)*6, 0, 2, 2)
-        end
         Draw.setColor(1,1,1,1)
         Draw.draw(chicken[chicken_frame], (SCREEN_WIDTH/2)+self.pumpkin_x-15*2, SCREEN_HEIGHT/2-21*2, 0, 4, 4)
         Draw.draw(pumpkin_dude[self.pumpkin_frame], (SCREEN_WIDTH/2)+self.pumpkin_x-160-23*2, SCREEN_HEIGHT/2-35*2, 0, 4, 4)
@@ -374,10 +407,10 @@ function DogCheck:pumpkinDudeScript(wait)
         wait(5/30)
     end
     while true do
-        pumpkinGoLeft(-15*4)
-        pumpkinGoRight(0)
-        pumpkinGoRight(15*4)
+        pumpkinGoRight(-15*4)
         pumpkinGoLeft(0)
+        pumpkinGoLeft(15*4)
+        pumpkinGoRight(0)
     end
 end
 
