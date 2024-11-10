@@ -7,11 +7,11 @@ function actor:init()
     self.name = "Diamond"
     self.voice = nil
     -- Width and height for this actor, used to determine its center
-    self.width = 36
-    self.height = 74
+    self.width = 41
+    self.height = 84
 
     -- Hitbox for this actor in the overworld (optional, uses width and height by default)
-    self.hitbox = {0, 0, 36, 74}
+    self.hitbox = {3, 64, 36, 14}
 
     -- Color for this actor used in outline areas (optional, defaults to red)
     self.color = {1, 1, 1}
@@ -26,9 +26,16 @@ function actor:init()
 
     -- Table of sprite animations
     self.animations = {
-        ["idle"]               = {"ow_idle", 1/5, false},
+        ["hole_idle"]         = {"hole_idle", 1, true},
+        ["fall"]         = {"fall", 1/10, false, next="hole_empty"},
+        ["rise"]         = {"rise", 1/10, false, next="hole_idle"},
     }
     -- Table of sprite offsets (indexed by sprite name)
-    self.offsets = {}
+    self.offsets = {
+        ["hole_idle"] = {-9, 2 + 35},
+        ["hole_empty"] = {-9, 2 + 35},
+        ["fall"] = {-9, 2 + 35},
+        ["rise"] = {-9, 2 + 35},
+    }
 end
 return actor
