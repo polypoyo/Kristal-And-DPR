@@ -35,6 +35,21 @@ if not HOTSWAPPING then
         waiting = 0,
         end_funcs = {}
     }
+
+    function Kristal.reloadnoel()
+        -- If you don't know what this is for, then don't touch it!!!
+        
+        package.loaded["src.engine.game.noel.noel_spawn"] = nil 
+        Noel = require("src.engine.game.noel.noel_spawn")      
+        if Noel:loadNoel() then
+            Kristal.noel = true
+        else 
+            Kristal.noel = false
+        end
+    end
+
+    Kristal.reloadnoel()
+
 end
 
 function Kristal.fetch(url, options)
@@ -63,21 +78,6 @@ function Kristal.fetch(url, options)
     })
     Kristal.HTTPS.next_key = Kristal.HTTPS.next_key + 1
     return true
-    
-function Kristal.reloadnoel()
-    -- If you don't know what this is for, then don't touch it!!!
-    
-    package.loaded["src.engine.game.noel.noel_spawn"] = nil 
-    Noel = require("src.engine.game.noel.noel_spawn")      
-    if Noel:loadNoel() then
-        Kristal.noel = true
-    else 
-        Kristal.noel = false
-    end
-end
-
-Kristal.reloadnoel()
-
 end
 
 function love.load(args)
