@@ -10,6 +10,10 @@ end
 local ok, module = pcall(package.loadlib, name, "luaopen_https")
 
 if not module then
+    ok, module = pcall(package.loadlib, "lib/"..name, "luaopen_https")
+end
+
+if not module then
     ok = false
 end
 
