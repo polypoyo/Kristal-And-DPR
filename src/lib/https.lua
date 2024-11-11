@@ -1,13 +1,17 @@
 local ffi = require "ffi"
 
-local name = "lib/https.so"
+local name = "https.so"
 if ffi.os == "Windows" then
-    name = "lib/https-" .. ffi.arch .. ".dll"
+    name = "https-" .. ffi.arch .. ".dll"
 elseif ffi.os == "OSX" then
-    name = "lib/https-mac.so"
+    name = "https-mac.so"
 end
 
 local ok, module = pcall(package.loadlib, name, "luaopen_https")
+
+if not module then
+    ok, module = pcall(package.loadlib, "lib/"..name, "luaopen_https")
+end
 
 if not module then
     ok = false
