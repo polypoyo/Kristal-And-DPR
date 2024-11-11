@@ -609,6 +609,21 @@ function MainMenuDLCHandler:REALbuildDLCList()
 	for i,mod in ipairs(dlcs) do
 		local button = DLCButton(mod.name or mod.id, 424, 62, mod)
         self.list:addMod(button)
+
+        if self:isModLocal(mod.id) then
+	        local path = Kristal.Mods.getMod(mod.id).path
+	        if not self.images.preview[mod.id] and love.filesystem.getInfo(path.."/preview.png") then
+	        	self.images.preview[mod.id] = love.graphics.newImage(path.."/preview.png")
+	        end
+	        if not self.images.banner[mod.id] then
+	        	if love.filesystem.getInfo(path.."/banner.png") then
+	        		self.images.banner[mod.id] = love.graphics.newImage(path.."/banner.png")
+	        	elseif love.filesystem.getInfo(path.."/button.png") then -- ??? Gonna have to make sure which one is the one we want to go with
+	        		self.images.banner[mod.id] = love.graphics.newImage(path.."/button.png")
+	        	end
+	        end
+	    end
+
         if mod.preview and not self.images.preview[mod.id] then
         	self.images.preview[mod.id] = love.graphics.newImage(mod.preview)
         end
