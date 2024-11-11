@@ -124,7 +124,7 @@ function MainMenuDLCHandler:draw()
 	self.state_manager:draw()
 
 	Draw.setColor(COLORS.red)
-	Draw.printShadow("Note: This thing is very much a WIP, to not call it a piece of shit held together by prayers", 0, SCREEN_HEIGHT-16)
+	Draw.printShadow("Note: This thing is held together by hopes and dreams", 0, SCREEN_HEIGHT-16)
 end
 
 function MainMenuDLCHandler:onKeyPressed(key, is_repeat)
