@@ -1317,4 +1317,16 @@ function Game:getQuest(id)
     return self.quests_data[id]
 end
 
+--- Checks if you have a certain DLC installed and returns true if you do. Returns false otherwise
+---@param dlc string -- the DLC ID to check for
+function Game:hasDLC(dlc)
+    local dlcs = Utils.filter(Kristal.Mods.getMods(), function(mod) return not mod.hidden end)
+    for i, v in ipairs(dlcs) do
+        if v.id == dlc then
+            return true
+        end
+    end
+    return false
+end
+
 return Game

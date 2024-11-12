@@ -423,12 +423,6 @@ return {
             cutscene:text("* He's...[wait:10]\n* He's just sleeping...", "shy_down", "susie")
             cutscene:text("* Right...?", "bangs_neutral", "susie")
         end
-        if cutscene:getCharacter("brenda_lw") then
-            cutscene:showNametag("Brenda")
-            cutscene:text("* Oh no...", "ohgod", "brenda")
-            cutscene:text("* Oh nonononono.", "panicattack", "brenda")
-            cutscene:text("* I think I'm gonna be sick...", "sad", "brenda")
-        end
         if cutscene:getCharacter("dess") then
             cutscene:showNametag("Dess")
             cutscene:text("* oh...[wait:10]\n* oh that's a dead body...", "genuine", "dess")

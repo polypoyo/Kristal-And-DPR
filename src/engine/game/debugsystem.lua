@@ -120,6 +120,12 @@ function DebugSystem:init()
     self.filtered_flags_list = {}
 end
 
+function DebugSystem:locateDLCs()
+    for i, v in ipairs(t) do
+        
+    end
+end
+
 function DebugSystem:getStage()
     if Gamestate.current() then
         return Gamestate.current().stage
@@ -655,6 +661,21 @@ function DebugSystem:registerSubMenus()
         end)
     end
 
+    self:registerMenu("dlc_select", "DLC Select", "search")
+
+    local dlcs = Utils.filter(Kristal.Mods.getMods(), function(mod) return not mod.hidden end)
+    local dlc_ids = {}
+    for i, v in ipairs(dlcs) do
+        table.insert(dlc_ids, v.id)
+    end
+
+    for i, v in ipairs(dlc_ids) do
+        self:registerOption("dlc_select", v, "Enter this DLC.", function ()
+            Game:swapIntoMod(v, false)
+            self:closeMenu()
+        end)
+    end
+
     self:registerMenu("wave_select", "Wave Select", "search")
     -- loop through registry and add menu options for all waves
     local waves_list = {}
@@ -833,6 +854,10 @@ function DebugSystem:registerDefaults()
     self:registerOption("main", "Play Legend", "Play a legend cutscene.", function ()
                             self:enterMenu("legend_select", 0)
                         end, function() return in_overworld() or in_legend() end)
+
+    self:registerOption("main", "Select DLC", "Select a DLC to load into.", function ()
+                            self:enterMenu("dlc_select", 0)
+    end, function() return in_overworld()end)
 
     -- Battle specific
     self:registerOption("main", "Start Wave", "Start a wave.", function ()
