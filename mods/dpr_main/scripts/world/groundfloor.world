@@ -26,7 +26,7 @@
             "height": 480,
             "width": 920,
             "x": 1000,
-            "y": 800
+            "y": 760
         },
         {
             "fileName": "maps/hub_tutorialmasters.tmx",
@@ -51,17 +51,17 @@
         },
         {
             "fileName": "maps/main_hub_south/main_hub_south.tmx",
-            "height": 1000,
-            "width": 1000,
-            "x": 120,
+            "height": 1120,
+            "width": 1320,
+            "x": -200,
             "y": 1160
         },
         {
             "fileName": "maps/hub_traininggrounds.tmx",
-            "height": 520,
-            "width": 800,
+            "height": 600,
+            "width": 880,
             "x": 2000,
-            "y": 640
+            "y": 560
         }
     ],
     "onlyShowAdjacentMaps": false,

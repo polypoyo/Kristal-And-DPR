@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.11" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="23" height="27" tilewidth="40" tileheight="40" infinite="0" nextlayerid="11" nextobjectid="74">
+<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="23" height="27" tilewidth="40" tileheight="40" infinite="0" nextlayerid="11" nextobjectid="74">
  <editorsettings>
   <export target="data.lua" format="lua"/>
  </editorsettings>
  <properties>
   <property name="border" value="mainhub"/>
   <property name="music" value="mainhub"/>
+  <property name="name" value="Floor One - Central Hub"/>
  </properties>
  <tileset firstgid="1" source="../../tilesets/main_area.tsx"/>
  <objectgroup color="#ffaaff" id="8" name="objects_bg"/>
@@ -241,15 +242,7 @@
   </object>
   <object id="68" name="interactable" x="240" y="80" width="40" height="40">
    <properties>
-    <property name="text1">* HOW TO USE THE WARP BIN
-* A two-step guide to all your dumpster-traveling needs.</property>
-    <property name="text2">* STEP 1:
-Enter a valid code on the keypad beneath the bin's lid.</property>
-    <property name="text3">* STEP 2:
-Happy traveling!</property>
-    <property name="text4" value="* (NOTICE: If you ever get lost or run out of codes to input, type FLOORONE get back here.)"/>
-    <property name="text5" value="* (Management is also not responsible for any odors emitting from the bin.)"/>
-    <property name="text6" value="* (This is due to a certain public menace throwing cans of Mug Root Beer into it.)"/>
+    <property name="cutscene" value="hub.warp_bin_note"/>
    </properties>
   </object>
   <object id="70" name="warpbin" x="280" y="120" width="120" height="40">
