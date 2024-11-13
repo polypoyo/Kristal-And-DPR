@@ -212,17 +212,30 @@ function Item:canEquip(character, slot_type, slot_index)
     end
 end
 
-function Item:getReaction(user_id, reactor_id)
+function Item:getReaction(user_id, reactor_id, miniparty)
     local reactions = self:getReactions()
+    local miniparty_reactor
+    if miniparty then
+        miniparty_reactor = reactor_id.."+"..miniparty
+    end
     if reactions[user_id] then
         if type(reactions[user_id]) == "string" then
             if reactor_id == user_id then
+                if miniparty then
+                    local reaction = reactions[miniparty_reactor]
+                    if reaction then return reaction end
+                end
                 return reactions[user_id]
             else
                 return nil
             end
         else
-            return reactions[user_id][reactor_id]
+            local reaction = reactions[user_id]
+            if miniparty then
+                local minireaction = minireaction[miniparty_reactor]
+                if minireaction then return minireaction end
+            end
+            return reaction[reactor_id]
         end
     end
 end
