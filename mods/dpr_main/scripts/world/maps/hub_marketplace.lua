@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 6,
-  nextobjectid = 28,
+  nextobjectid = 30,
   properties = {
     ["border"] = "mainhub",
     ["music"] = "mainhub"
@@ -306,6 +306,38 @@ return {
           properties = {
             ["marker"] = "exit_shop",
             ["shop"] = "mousehole"
+          }
+        },
+        {
+          id = 28,
+          name = "npc",
+          type = "",
+          shape = "point",
+          x = 320,
+          y = 200,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["actor"] = "morshu",
+            ["cutscene"] = "hub.morshu"
+          }
+        },
+        {
+          id = 29,
+          name = "npc",
+          type = "",
+          shape = "point",
+          x = 520,
+          y = 200,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["actor"] = "magolor",
+            ["cutscene"] = "hub.magshop"
           }
         }
       }

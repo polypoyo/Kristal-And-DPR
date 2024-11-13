@@ -575,5 +575,247 @@ local hub = {
             Game.world:mapTransition("hub_traininggrounds", "entry")
         end
     end,
+    morshu = function(cutscene, morshu)
+        local magolor = cutscene:getCharacter("magolor")
+        local m_anim = Character("billboard/room3_morshu", SCREEN_WIDTH/2, SCREEN_HEIGHT)
+        Game.world:spawnObject(m_anim, "textbox")
+        m_anim.visible = false
+        m_anim:setParallax(0, 0)
+        m_anim:setScale(2)
+        cutscene:after(function()
+            m_anim:remove()
+        end)
+
+        local cust_wait_timer = 0
+        local function waitForTimeOrUserCancellation(time)
+            cust_wait_timer = time
+            return function()
+                cust_wait_timer = Utils.approach(cust_wait_timer, 0, DT)
+                if morshu.interact_count > 1 and Input.pressed("cancel") then
+                    cust_wait_timer = 0
+                    return true
+                end
+                return cust_wait_timer == 0
+            end
+        end
+
+        local function showMorshuAnim(anim)
+            m_anim.visible = true
+            m_anim:setAnimation(anim)
+            return function(time, disallow_cancel)
+                if time > 0 then
+                    cutscene:wait(not disallow_cancel and waitForTimeOrUserCancellation(time) or time)
+                end
+                m_anim.visible = false
+            end
+        end
+
+        local music_inst = Music()
+        cutscene:after(function()
+            music_inst:remove()
+        end)
+        local function showMorshuAnimWithVoc(anim, clip, time, disallow_cancel)
+            local rem = showMorshuAnim(anim)
+            Game.world.music:pause()
+            music_inst:play(clip, 1, 1, false)
+            rem(time, disallow_cancel)
+            music_inst:stop()
+            Game.world.music:resume()
+        end
+
+        Input.clear("cancel")
+
+        showMorshuAnimWithVoc("rubies", "voiceover/morshu_rubies", 8.8)
+
+        cutscene:text("* (Buy Lamp Oil for 40 dolla-[wait:5] er-[wait:5] rupee-[wait:5] er-[wait:5] rubies?)")
+        cutscene:showShop()
+        local choice = cutscene:choicer({ "Buy", "Do not" })
+        cutscene:hideShop()
+
+        if choice == 2 then
+            showMorshuAnimWithVoc("menacing", "menace", 18.8, false)
+            return
+        end
+
+        if Game.money < 40 then
+            showMorshuAnimWithVoc("richer", "voiceover/morshu_richer", 7)
+            return
+        end
+
+        if not Game.inventory:addItem("lampoil") then
+            cutscene:text('* (There is no "inventory full" clip for Morshu,[wait:5] so all you get is this dinky-ass text box.)')
+            return
+        end
+
+        Game.money = Game.money - 40
+
+        Game.world.music:pause()
+        local danceparty = Music("danceparty", 0.8)
+        danceparty:play()
+
+        -- show character dance animations
+        local svfx = Kristal.Config["simplifyVFX"]
+        local svfx_suffix = svfx and "_svfx" or ""
+        morshu.dance = true
+        local dance_anim_rem = showMorshuAnim("dance" .. svfx_suffix)
+        magolor.dance = true
+        magolor:setAnimation("speen" .. svfx_suffix)
+
+        dance_anim_rem(svfx and (9.694 * 2) or 31)
+
+        -- show character idle animations
+        morshu.dance = false
+        magolor.dance = false
+        magolor:setSprite("shop")
+        if doobie then
+            doobie:setAnimation("idle")
+        end
+
+        danceparty:remove()
+        Game.world.music:resume()
+
+        cutscene:text("* (You stashed the Lamp Oil inside your [color:yellow]ITEMS[color:reset].)")
+    end,
+    
+    magshop = function(cutscene, event)
+        local menu = {
+            {
+                name = "food",
+                first_level_disp = "Food",
+                prompt = "kind of food",
+                items = {
+                    { id = "pepbrew", name = "Pep Brew", price = 100, some = "some" },
+                    { id = "apple_uneaten", name = "Apple", price = 250, some = "an" },
+                    { id = "maximtomato", name = "Maxim Tomato", price = 5000 },
+                }
+            },
+            {
+                name = "weapon",
+                name_counted = "weapons",
+                first_level_disp = "Weapons",
+                items = {
+                    { id = "mets_bat", name = "Mets Bat", price = 700, post_purchase = function()
+                        cutscene:text("* Actually,[wait:10] did you know...", "happy", "magolor")
+                        cutscene:text("* that this bat is signed and autographed by Daniel Vogelbach?", "wink",
+                        "magolor")
+                        cutscene:text("* I know![wait:10] I thought it was crazy too!", "pensive", "magolor")
+                        cutscene:text("* But it's true![wait:10] I met Daniel Vogelbach and I got this bat signed!", "happy", "magolor")
+                        cutscene:text("* Y'know I think it's really been a shame that...", "angry", "magolor")
+                        cutscene:text("* The Mets have been on a drystreak lately!", "angry", "magolor")
+                        cutscene:text("* And people keep making fun of them!", "upset", "magolor")
+                        cutscene:text("* BUT NOT ANYMORE BABY!!", "wink", "magolor")
+                        cutscene:text("* It's not about the theme parks anymore!", "sad", "magolor")
+                        cutscene:text("* IT'S ABOUT THE METS BABY, THE METS!", "happy", "magolor")
+                        if cutscene:getCharacter("dess") then
+                            cutscene:showNametag("Dess")
+                            cutscene:text("* YEAHHHHHH!", "condescending", "dess")
+                        end
+                    end },
+                    { id = "powerring", name = "PowerRing", price = 1000 },
+                    { id = "superscope", name = "SuperScope", price = 650 },
+                }
+            },
+            {
+                name = "armor",
+                name_counted = "armors",
+                first_level_disp = "Armor",
+                items = {
+                    { id = "leadmaker", name = "Leadmaker", price = 750 }
+                }
+            }
+        }
+
+        local function onDeclined()
+            cutscene:showNametag("Magolor")
+            cutscene:text("* Uh,[wait:5] okay then.", "pensive", "magolor")
+            cutscene:text("* Nobody likes a window shopper.", "unamused", "magolor")
+            cutscene:hideNametag()
+        end
+        local function onCateHasNoItems(category_name)
+            cutscene:showNametag("Magolor")
+            cutscene:text(string.format("* Sorry,[wait:5] I don't have any %s right now.", category_name), "sad", "magolor")
+            cutscene:hideNametag()
+        end
+        local function onCateSelected(prompt)
+            cutscene:showNametag("Magolor")
+            cutscene:text(string.format("* What %s would you like?", prompt), "happy", "magolor")
+            cutscene:hideNametag()
+        end
+        local function onItemSelected(item)
+            cutscene:showNametag("Magolor")
+            cutscene:text(string.format("* Do you want to buy %s %s for %dD$?", item.some or "a", item.name, item.price), "neutral", "magolor")
+            cutscene:hideNametag()
+        end
+        local function onMoneyNotEnough()
+            cutscene:showNametag("Magolor")
+            cutscene:text("* Come back when you can actually afford this...", "unamused", "magolor")
+            cutscene:hideNametag()
+        end
+        local function onInventoryFull()
+            cutscene:showNametag("Magolor")
+            cutscene:text("* Your pockets look too full for this...", "unamused", "magolor")
+            cutscene:hideNametag()
+        end
+        local function onPurchaseComplete(special_message)
+            cutscene:playSound("locker")
+            cutscene:showNametag("Magolor")
+            cutscene:text("* Here you go!", "happy", "magolor")
+            cutscene:text("* Pleasure doing business with you!", "wink", "magolor")
+            if special_message then special_message() end
+            cutscene:hideNametag()
+        end
+
+        cutscene:showNametag("Magolor")
+        cutscene:text("* Welcome to my shoppe!", "happy", "magolor")
+        cutscene:text("* What would you like to buy?", "neutral", "magolor")
+        cutscene:hideNametag()
+
+        local cate_opinions = {}
+        for _, v in ipairs(menu) do
+            table.insert(cate_opinions, v.first_level_disp)
+        end
+        table.insert(cate_opinions, "None")
+        local cate_opinion = cutscene:choicer(cate_opinions)
+        if cate_opinion == #cate_opinions then
+            onDeclined()
+            return
+        end
+
+        local cate = menu[cate_opinion]
+        if #cate.items <= 0 then
+            onCateHasNoItems(cate.name_counted or cate.name)
+            return
+        end
+        onCateSelected(cate.prompt or cate.name)
+        local item_opinions = {}
+        for _, v in ipairs(cate.items) do
+            table.insert(item_opinions, v.name)
+        end
+        table.insert(item_opinions, "None")
+        local item_opinion = cutscene:choicer(item_opinions)
+        if item_opinion == #item_opinions then
+            onDeclined()
+            return
+        end
+
+        local item = cate.items[item_opinion]
+        cutscene:showShop()
+        onItemSelected(item)
+        local buy = cutscene:choicer({ "Yes", "No" })
+        cutscene:hideShop()
+        if buy == 2 then
+            onDeclined()
+            return
+        end
+
+        if Game.money <= item.price then
+            onMoneyNotEnough()
+        elseif not Game.inventory:addItem(item.id) then
+            onInventoryFull()
+        else
+            Game.money = Game.money - item.price
+            onPurchaseComplete(item.post_purchase)
+        end
+    end,
 }
 return hub
