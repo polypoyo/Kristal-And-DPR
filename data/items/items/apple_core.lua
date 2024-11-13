@@ -65,15 +65,9 @@ function item:init()
 		dess = "yeah this is still good",
         brenda = "...Ew.",
 		jamm = "Yeah... No way am I eating that...",
+        ["jamm+marcy"] = "...But we don't eat this part, Marcy.",
 		noel = "Don't waste food.",
     }
-end
-
-function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return "...But we don't eat this part, Marcy."
-	end
-	return super.getReaction(self, user_id, reactor_id)
 end
 
 return item

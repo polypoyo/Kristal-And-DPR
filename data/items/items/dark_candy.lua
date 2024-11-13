@@ -55,14 +55,9 @@ function item:init()
         },
         noelle = "Oh, it's... sticky?",
         jamm = "I'm not much of a sweet tooth. But...",
+        ["jamm+marcy"] = "Here, Marcy. It's not my kind of snack.",
     }
 end
 
-function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return "Here, Marcy. It's not my kind of snack."
-	end
-	return super.getReaction(self, user_id, reactor_id)
-end
 
 return item

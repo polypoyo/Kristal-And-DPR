@@ -166,4 +166,11 @@ function character:getFleeText()
 	return self.flee_text
 end
 
+function character:getMinimemberID()
+    if Game:getFlag("marcy_joined") then
+        return "marcy"
+    end
+    return super.getMinimemberID(self)
+end
+
 return character

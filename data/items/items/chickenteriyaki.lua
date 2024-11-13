@@ -61,15 +61,9 @@ function item:init()
         noelle = "It's JUST the meat???",
 		dess = "needs more salt lmao",
 		jamm = "I missed this... It's so good!",
+        ["jamm+marcy"] = "Like your mother used to make, right, Marcy?",
 		mario = "Blech! That tastes like shit!"
 	}
-end
-
-function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return "Like your mother used to make, right, Marcy?"
-	end
-	return super.getReaction(self, user_id, reactor_id)
 end
 
 -- Function overrides go here

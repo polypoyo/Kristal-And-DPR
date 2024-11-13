@@ -63,15 +63,9 @@ function item:init()
 		dess = "YEAH WOO AMERICA BABY YEAH",
         brenda = "Eh, pumpkin's better.",
 		jamm = "I'm lovin' it!",
+        ["jamm+marcy"] = "I'm lovin' it! // What?",
 		noel = "I wish I had a grandma.",
     }
-end
-
-function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return "I'm lovin' it! // What?"
-	end
-	return super.getReaction(self, user_id, reactor_id)
 end
 
 return item

@@ -54,14 +54,8 @@ function item:init()
         dess = "wow this seems familiar for no reason in particular",
         jamm = "Not really a glasses guy, but...",
         noel = "Can't take em with me.",
+        ["jamm+marcy"] = "You look like a real big shot with those, Marcy!",
     }
-end
-
-function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return "You look like a real big shot with those, Marcy!"
-	end
-	return super.getReaction(self, user_id, reactor_id)
 end
 
 function item:applyMoneyBonus(gold)

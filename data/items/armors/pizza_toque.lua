@@ -54,15 +54,9 @@ function item:init()
         dess = "i cooka da pizza",
         brenda = "Y'all ready to get funky?",
 		jamm = "Pizza, pasta, put it in my box! Deliver it to my house and put it on my--",
+        ["jamm+marcy"] = "Hold on tight, Marcy!",
         noel = "Too much power for one man. Maybe enough power for two man. Defiently too much power for one man.",
     }
-end
-
-function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return "Hold on tight, Marcy!"
-	end
-	return super.getReaction(self, user_id, reactor_id)
 end
 
 function item:canEquip(character, slot_type, slot_index)

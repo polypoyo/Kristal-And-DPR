@@ -50,15 +50,9 @@ function item:init()
         noelle = "... from the family entertainment center?",
         dess = "ermmm possible chuck-e-cheese reference?",
         jamm = "This brings back memories.",
+        ["jamm+marcy"] = "Marcy wants to go there! // Maybe soon, Marcy.",
         noel = "Is this from a resturant?",
     }
-end
-
-function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return "Marcy wants to go there! // Maybe soon, Marcy."
-	end
-	return super.getReaction(self, user_id, reactor_id)
 end
 
 return item

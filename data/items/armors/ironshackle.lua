@@ -51,15 +51,9 @@ function item:init()
         noelle = "I'm the ghost of holidays past!",
         dess = "holy shit terraria reference?????",
         jamm = "Relatable.",
+        ["jamm+marcy"] = "Relatable. // What do you mean, papa?",
         noel = "Am I being detained?",
     }
-end
-
-function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return "Relatable. // What do you mean, papa?"
-	end
-	return super.getReaction(self, user_id, reactor_id)
 end
 
 return item

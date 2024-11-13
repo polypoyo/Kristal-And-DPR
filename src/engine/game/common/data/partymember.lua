@@ -533,6 +533,12 @@ function PartyMember:resetBuffs()
     self.stat_buffs = {}
 end
 
+--- Returns the min
+---@return string?
+function PartyMember:getMinimemberID()
+    return nil
+end
+
 --- Gets this party member's reaction for using or seeing someone use a particular item \
 --- *By default, calls [`item:getReaction()`](lua://Item.getReaction) for reaction text*
 ---@param item Item
@@ -540,7 +546,7 @@ end
 ---@return string?
 function PartyMember:getReaction(item, user)
     if item then
-        return item:getReaction(user.id, self.id)
+        return item:getReaction(user.id, self.id, self:getMinimemberID())
     end
 end
 
