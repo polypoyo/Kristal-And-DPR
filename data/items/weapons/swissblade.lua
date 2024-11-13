@@ -39,7 +39,7 @@ function item:init()
         noelle = "Y-you're telling me a m-m-mouse had this?",
 	    dess = "aint no fuckin WAY the swiss guard uses these",
         brenda = "Ew, Swiss cheese? Really?",
-	    jamm = "",
+	    jamm = "A lot of holes... You sure it's effective?",
         noel = "",
     }
 end

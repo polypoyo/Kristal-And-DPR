@@ -35,14 +35,11 @@ function item:init()
         noelle = "H-hopefully this doesn't stain my teeth...",
         dess = "this is a certified cheetos classic",
         brenda = "(I'll just wipe my hands on my pants...)",
-        jamm = "",
+        jamm = "Isn't this dangerously cheesy???",
     }
 end
 
 function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return ""
-	end
 	return super.getReaction(self, user_id, reactor_id)
 end
 
