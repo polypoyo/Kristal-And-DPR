@@ -575,6 +575,7 @@ local hub = {
             Game.world:mapTransition("hub_traininggrounds", "entry")
         end
     end,
+
     morshu = function(cutscene, morshu)
         local magolor = cutscene:getCharacter("magolor")
         local m_anim = Character("billboard/room3_morshu", SCREEN_WIDTH/2, SCREEN_HEIGHT)
@@ -817,6 +818,7 @@ local hub = {
             onPurchaseComplete(item.post_purchase)
         end
     end,
+
     money_hole = function(cutscene, event)
         if Game:getFlag("money_hole") == 1 then
             cutscene:text("* (The hole is filled to the brim with cash.)")
@@ -826,7 +828,8 @@ local hub = {
             local choicer = cutscene:choicer({"Throw $1", "Do not"})
             if choicer == 1 then
                 if Game.money < 1 then
-                    cutscene:text("* (You don't have any money you [color:yellow]stupid cunt[color:reset].)") -- I dunno what to put here honestly
+                    cutscene:text("* (You don't have enough money.)")
+                    cutscene:text("* (You failed to budget enough money to throw into a hole...)")
                 else
                     Game.money = Game.money - 1
                     cutscene:text("* (You put a dollar in the \"Hole.\")")
