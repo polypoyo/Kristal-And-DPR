@@ -37,7 +37,7 @@ function item:init()
         defense = 1,
     }
     -- Bonus name and icon (displayed in equip menu)
-    self.bonus_name = "$ +/-200%"
+    self.bonus_name = "$ +/-???%"
     self.bonus_icon = "ui/menu/icon/dice"
 
     -- Equippable characters (default true for armors, false for weapons)
