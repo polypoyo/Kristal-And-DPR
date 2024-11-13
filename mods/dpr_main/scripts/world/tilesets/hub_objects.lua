@@ -1,7 +1,7 @@
 return {
-  version = "1.9",
+  version = "1.11",
   luaversion = "5.1",
-  tiledversion = "1.9.0",
+  tiledversion = "1.11.0",
   name = "hub_objects",
   class = "",
   tilewidth = 77,
@@ -23,13 +23,19 @@ return {
   },
   properties = {},
   wangsets = {},
-  tilecount = 1,
+  tilecount = 2,
   tiles = {
     {
       id = 0,
       image = "../../../assets/sprites/world/maps/hub/funfax_station.png",
       width = 77,
       height = 61
+    },
+    {
+      id = 1,
+      image = "../../../assets/sprites/world/events/money_hole.png",
+      width = 30,
+      height = 14
     }
   }
 }
