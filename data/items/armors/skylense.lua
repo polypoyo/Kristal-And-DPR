@@ -1,4 +1,4 @@
-local item, super = Class(Item, "crescentpin") -- File name is staying the same just so I don't break an save files.
+local item, super = Class(Item, "skylense")
 
 function item:init()
     super.init(self)
