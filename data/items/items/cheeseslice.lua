@@ -35,14 +35,11 @@ function item:init()
         noelle = "It barely tastes like real cheese...",
         dess = "HELL YEAH AN AMERICAN CLASSIC!!!!",
         brenda = "The perfect midnight snack.",
-        jamm = "",
+        jamm = "Can't go wrong with a chunk of swiss.",
     }
 end
 
 function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return ""
-	end
 	return super.getReaction(self, user_id, reactor_id)
 end
 
