@@ -817,5 +817,24 @@ local hub = {
             onPurchaseComplete(item.post_purchase)
         end
     end,
+    money_hole = function(cutscene, event)
+        if Game:getFlag("money_hole") == 1 then
+            cutscene:text("* (The hole is filled to the brim with cash.)")
+        else
+            cutscene:text("* \"Donation Hole\"")
+            cutscene:text("* (If you like our tutorials, please throw your money into a hole.)")
+            local choicer = cutscene:choicer({"Throw $1", "Do not"})
+            if choicer == 1 then
+                if Game.money < 1 then
+                    cutscene:text("* (You don't have any money you [color:yellow]stupid cunt[color:reset].)") -- I dunno what to put here honestly
+                else
+                    Game.money = Game.money - 1
+                    cutscene:text("* (You put a dollar in the \"Hole.\")")
+                    cutscene:text("* (The \"Hole\" became \"Full.\")")
+                    Game:setFlag("money_hole", 1)
+                end
+            end
+        end
+    end,
 }
 return hub

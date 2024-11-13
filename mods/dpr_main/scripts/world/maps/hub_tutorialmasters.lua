@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 8,
-  nextobjectid = 18,
+  nextobjectid = 21,
   properties = {
     ["border"] = "mainhub",
     ["music"] = "mainhub"
@@ -211,6 +211,19 @@ return {
           properties = {
             ["cutscene"] = "hub.fun_fax"
           }
+        },
+        {
+          id = 19,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 120,
+          y = 160,
+          width = 80,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {}
         }
       }
     },
@@ -273,6 +286,36 @@ return {
           visible = true,
           properties = {
             ["cutscene"] = "hub.fun_fax"
+          }
+        },
+        {
+          id = 18,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 130,
+          y = 194,
+          width = 60,
+          height = 28,
+          rotation = 0,
+          gid = 210,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 20,
+          name = "interactable",
+          type = "",
+          shape = "rectangle",
+          x = 120,
+          y = 160,
+          width = 80,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["cutscene"] = "hub.money_hole",
+            ["once"] = false
           }
         }
       }
