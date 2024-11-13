@@ -56,15 +56,9 @@ function item:init()
         noelle = "... (I like it...)",
         dess = "im gonna go commit a felony now",
         jamm = "It won't fit...!",
+        ["jamm+marcy"] = "It won't fit either of us...!",
         noel = "I am not a circus.",
     }
-end
-
-function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return "It won't fit either of us...!"
-	end
-	return super.getReaction(self, user_id, reactor_id)
 end
 
 return item

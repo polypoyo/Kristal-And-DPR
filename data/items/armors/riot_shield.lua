@@ -50,18 +50,12 @@ function item:init()
         susie = "What's black and blue and red all over?",
         ralsei = "Knock knock!",
         noelle = "Wh- uh... airline food?",
-	dess = "69 lmao",
+	    dess = "69 lmao",
         brenda = "Sus Among U-",
-	jamm = "Well, I'm on my way to the White House. Don't wait up.",
+	    jamm = "Well, I'm on my way to the White House. Don't wait up.",
+        ["jamm+marcy"] =  "Shouldn't make this joke around Marcy...",
         noel = "An oversized mug would be better.",
     }
-end
-
-function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return "Shouldn't make this joke around Marcy..."
-	end
-	return super.getReaction(self, user_id, reactor_id)
 end
 
 return item

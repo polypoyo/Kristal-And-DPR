@@ -39,8 +39,4 @@ function item:init()
     }
 end
 
-function item:getReaction(user_id, reactor_id)
-	return super.getReaction(self, user_id, reactor_id)
-end
-
 return item

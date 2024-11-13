@@ -60,6 +60,7 @@ function item:init()
     -- Character reactions
     self.reactions = {
 		jamm = "Oh, sweet! I remember this!",
+        ["jamm+marcy"] = "You ever use one of these, Marcy?",
 		dess = {
 			dess = "oh sick",
 			jamm = "The wrist strap! Use the wrist strap!",
@@ -67,13 +68,6 @@ function item:init()
 		},
 	    noel = "... It's like the ads now...",
 	}
-end
-
-function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return "You ever use one of these, Marcy?"
-	end
-	return super.getReaction(self, user_id, reactor_id)
 end
 
 function item:convertToLightEquip(inventory)

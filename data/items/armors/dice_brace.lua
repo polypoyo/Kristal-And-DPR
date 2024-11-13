@@ -50,15 +50,9 @@ function item:init()
         noelle = "Hey, y-you jumbled it...",
         dess = "alr how do you spell a swear",
         jamm = "Spells \"Memory...\"",
+        ["jamm+marcy"] = "Spells \"Family.\"",
         noel = "\"Dear Lunet?\"",
     }
-end
-
-function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return "Spells \"Family.\""
-	end
-	return super.getReaction(self, user_id, reactor_id)
 end
 
 return item

@@ -68,14 +68,8 @@ function item:init()
         ralsei = "Aww, thanks, Kris!",
         noelle = "Umm, it's ok, Kris, I'll share...",
         jamm = "I thought this was hollow...?",
+        ["jamm+marcy"] = "Prepare for a sugar rush, guys...!",
     }
-end
-
-function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return "Prepare for a sugar rush, guys...!"
-	end
-	return super.getReaction(self, user_id, reactor_id)
 end
 
 function item:onWorldUse(target)

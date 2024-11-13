@@ -55,15 +55,9 @@ function item:init()
 		dess = "I hate work",
         brenda = "How the hell does this work?",
 		jamm = "I could use some lead, but if I have to sell it...",
+        ["jamm+marcy"] = "That reminds me. Never eat Lunchables, Marcy.",
         noel = "(I will treat this like a candy dispenser.)",
     }
-end
-
-function item:getReaction(user_id, reactor_id)
-    if user_id == "jamm" and reactor_id == user_id and Game:getFlag("marcy_joined") then
-		return "That reminds me. Never eat Lunchables, Marcy."
-	end
-	return super.getReaction(self, user_id, reactor_id)
 end
 
 function item:applyMoneyBonus(gold)
