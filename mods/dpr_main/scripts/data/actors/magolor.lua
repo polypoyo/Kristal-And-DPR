@@ -24,8 +24,6 @@ function actor:init()
     -- This actor's default sprite or animation, relative to the path (defaults to "")
     self.default = "shop"
 
-    -- Sound to play when this actor speaks (optional)
-    self.voice = "mago1"
     -- Path to this actor's portrait for dialogue (optional)
     self.portrait_path = "face/magolor"
     -- Offset position for this actor's portrait (optional)
@@ -48,9 +46,11 @@ function actor:init()
     self.offsets = {
         ["speen"] = {0, 0}
     }
+    self.voice_timer = 0
 end
 
 function actor:onWorldUpdate(chara)
+    self.voice_timer = Utils.approach(self.voice_timer, 0, DTMULT)
 	if chara.dance then
         if chara.dance_anim_timer == nil then
             chara.dance_anim_timer = 0
@@ -62,6 +62,14 @@ function actor:onWorldUpdate(chara)
 	    chara.sprite.x = 0
         chara.dance_anim_timer = nil
 	end
+end
+
+function actor:onTextSound()
+    if self.voice_timer == 0 then
+        Assets.playSound("voice/mago/mago"..Utils.random(1,8,1))
+        self.voice_timer = 2
+    end
+    return true
 end
 
 return actor
