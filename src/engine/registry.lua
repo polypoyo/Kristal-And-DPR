@@ -92,6 +92,11 @@ function Registry.initialize(preload)
             self.base_scripts["battle/"..path] = chunk
         end
 
+        for _,path in ipairs(Utils.getFilesRecursive("borders", ".lua")) do
+            local chunk = love.filesystem.load("borders/"..path..".lua")
+            self.base_scripts["borders/"..path] = chunk
+        end
+
         Registry.initActors()
     end
     if not preload then
