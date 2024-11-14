@@ -270,7 +270,9 @@ function Game:save(x, y)
 
         flags = self.flags,
 
-        total_bp = self.total_bp
+        total_bp = self.total_bp,
+
+        bossrush_encounters = self.bossrush_encounters,
     }
 
     if x then
@@ -417,6 +419,8 @@ function Game:load(data, index, fade)
         end
     end
 
+    self.bossrush_encounters = data.bossrush_encounters
+
     self.level_up_count = data.level_up_count or 0
 
     self.money = data.money or Kristal.getModOption("money") or 0
@@ -436,7 +440,7 @@ function Game:load(data, index, fade)
 
     local map = nil
     local room_id = data.room_id or Kristal.getModOption("map")
-    if room_id then
+    if room_id and not self.bossrush_encounters then
         map = Registry.createMap(room_id, self.world)
 
         self.light = map.light or false
@@ -541,6 +545,8 @@ function Game:load(data, index, fade)
         elseif Kristal.getModOption("shop") then
             self:enterShop(Kristal.getModOption("shop"), {menu = true})
         end
+    elseif self.bossrush_encounters then
+        self:encounter(self:getBossRef(self.bossrush_encounters[1]).encounter)
     end
 
     Kristal.callEvent(KRISTAL_EVENT.postLoad)
@@ -1242,6 +1248,19 @@ function Game:getBadgeStorage(ignore_light)
     end
     if not inventory then return {} end
     return inventory:getStorage("badges")
+end
+
+---@return {mod: string, encounter: string} boss?
+function Game:getBossRef(id)
+    for mod_id, mod in pairs(Kristal.Mods.data) do
+        if mod.dlc and mod.dlc.bosses then
+            if mod.dlc.bosses[id] then
+                local t = Utils.copy(mod.dlc.bosses[id])
+                t.mod = t.mod or mod_id
+                return t
+            end
+        end
+    end
 end
 
 function Game:getUsedBadgePoints(ignore_light)

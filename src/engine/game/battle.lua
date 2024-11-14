@@ -2388,6 +2388,22 @@ function Battle:returnToWorld()
     self.encounter.defeated_enemies = self.defeated_enemies
     Game.battle = nil
     Game.state = "OVERWORLD"
+    if Game.bossrush_encounters then
+        table.remove(Game.bossrush_encounters, 1)
+        if #Game.bossrush_encounters > 0 then
+            local boss = Game:getBossRef(Game.bossrush_encounters[1])
+            if boss.mod == Mod.info.id then
+                Game:encounter(boss.encounter)
+            else
+                Kristal.swapIntoMod(boss.mod)
+            end
+        else
+            Game.bossrush_encounters = nil
+            -- Can't use Game:swapIntoMod because it kicks you
+            -- back to the title screen before that happens
+            Kristal.swapIntoMod("dpr_main", false, "main_hub")
+        end
+    end
 end
 
 function Battle:setActText(text, dont_finish)
