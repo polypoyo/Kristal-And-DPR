@@ -546,6 +546,7 @@ function Game:load(data, index, fade)
             self:enterShop(Kristal.getModOption("shop"), {menu = true})
         end
     elseif self.bossrush_encounters then
+        self:setBorder("battle")
         self:encounter(self:getBossRef(self.bossrush_encounters[1]).encounter)
     end
 
