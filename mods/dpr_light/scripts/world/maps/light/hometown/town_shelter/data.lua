@@ -742,19 +742,6 @@ return {
           properties = {
             ["cutscene"] = "enterdark.shelter"
           }
-        },
-        {
-          id = 44,
-          name = "warpbin",
-          type = "",
-          shape = "rectangle",
-          x = 440,
-          y = 2080,
-          width = 120,
-          height = 40,
-          rotation = 0,
-          visible = true,
-          properties = {}
         }
       }
     },

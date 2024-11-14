@@ -282,7 +282,6 @@
     <property name="cutscene" value="enterdark.shelter"/>
    </properties>
   </object>
-  <object id="44" name="warpbin" x="440" y="2080" width="120" height="40"/>
  </objectgroup>
  <objectgroup color="#ff00ff" id="10" name="markers">
   <object id="20" name="entrynorth" x="320" y="40">
