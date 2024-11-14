@@ -2,14 +2,12 @@
 local DiscoBall, super = Class(Object)
 
 function DiscoBall:init()
-    super.init(self)
+    super.init(self, SCREEN_WIDTH/2, -120, 56*2, 60*2)
     self.sprite = Sprite("battle/discoball")
     self.layer = BATTLE_LAYERS["below_battlers"]
     self.sprite:setScale(2)
-    self.sprite:setOrigin(0.5, 0)
+    self:setOrigin(0.5, 0)
     self.sprite:play(1/5, true)
-    self.x = SCREEN_WIDTH/2
-    self.y = -120
     self:addChild(self.sprite)
     self.tweendir = 0
     self.lasttween = 0
@@ -44,9 +42,8 @@ end
 
 function DiscoBall:draw()
     love.graphics.setColor(DiscoBall:HSV(self.hue, 1, 1))
-    love.graphics.circle("fill", 0, 65, 55, 100)
+    love.graphics.circle("fill", 56, 65, 55, 100)
     super.draw(self)
-
 end
 
 
