@@ -1,9 +1,12 @@
-modRequire("scripts/main/warp_bin")
-modRequire("scripts/main/utils_general")
+--modRequire("scripts/main/warp_bin")
+--modRequire("scripts/main/utils_general")
 
 function Mod:init()
     print("Loaded "..self.info.name.."!")
     self.border_shaders = {}
+
+    self:setMusicPitches()
+
 end
 
 function Mod:postInit(new_file)
@@ -49,6 +52,13 @@ function Mod:addGlobalEXP(exp)
     end
 
     return leveled_up
+end
+
+function Mod:setMusicPitches()
+
+    MUSIC_PITCHES["deltarune/THE_HOLY"] = 0.9
+
+
 end
 
 function Mod:getGlobalNextLvRequiredEXP()

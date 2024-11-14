@@ -16,7 +16,7 @@ return function(cutscene, event)
         ---@type fun(text:string,key:string,object:WarpBinInputMenu|GonerKeyboard)
         key_callback = function (text, key, object, fade_rect)
             -- Kristal.Console.log(text..key)
-            local code = Mod:getBinCode(text..key)
+            local code = Kristal:getBinCode(text..key)
             if code and code.instant then
                 if object.__includes_all[GonerKeyboard] then
                     object.callback(text..key)
@@ -29,30 +29,35 @@ return function(cutscene, event)
         end
     })
     ---@type WarpBinCodeInfo
-    local action = Mod:getBinCode(action_raw)
+    local action = Kristal:getBinCode(action_raw)
 
     if not action_raw then
         -- user changed their mind
         return
     elseif not action then
-        if event.foolproof_counter == nil then event.foolproof_counter = 0 end
-        event.foolproof_counter = event.foolproof_counter + 1
-        if event.foolproof_counter == 10 then
-            cutscene:text("* For some reason,[wait:5] the lid opened...")
-            action = { result = "backrooms/gramophone" }
+        if event then
+            if event.foolproof_counter == nil then event.foolproof_counter = 0 end
+            event.foolproof_counter = event.foolproof_counter + 1
+            if event.foolproof_counter == 10 then
+                cutscene:text("* For some reason,[wait:5] the lid opened...")
+                action = { result = "backrooms/gramophone" }
+            else
+                cutscene:text("* That doesn't seem to work.")
+                if event.foolproof_counter >= 3 and event.foolproof_counter < 10 then
+                    cutscene:text("* You're reminded of the fact that you can put in \"FLOORONE\" when you're stuck.")
+                    if event.foolproof_counter >= 5 then
+                        cutscene:text("* Seriously, you're not getting anywhere with this.")
+                    end
+                end
+                return
+            end
         else
             cutscene:text("* That doesn't seem to work.")
-            if event.foolproof_counter >= 3 and event.foolproof_counter < 10 then
-                cutscene:text("* You're reminded of the fact that you can put in \"00000000\" when you're stuck.")
-                if event.foolproof_counter >= 5 then
-                    cutscene:text("* Seriously, you're not getting anywhere with this.")
-                end
-            end
             return
         end
     end
 
-    local warpable = Mod:evaluateCond(action)
+    local warpable = GeneralUtils:evaluateCond(action)
 
     local result = action.result or action[1]
     local marker = action.marker or action[2]
@@ -88,14 +93,14 @@ return function(cutscene, event)
         end
         return
     end
-    if not mod and Game.world.map.id == dest_map.id  then
+    if (not mod or (mod == Mod.info.id)) and Game.world.map.id == dest_map.id  then
         if not silence_system_messages then
             cutscene:text("* But you're already there.")
         end
         return
     end
 
-    if mod then
+    if mod and mod ~= Mod.info.id then
         local has_dess = cutscene:getCharacter("dess") ~= nil
 
         if Kristal.Mods.data[mod] == nil then
@@ -104,7 +109,7 @@ return function(cutscene, event)
             return
         end
         cutscene:text("* Your "
-            .. (has_dess and "desstination" or "destination ")
+            .. (has_dess and "desstination" or "destination")
             .." is "
             ..(has_dess and "in another castle" or "infinitely far away")
             ..".\n* Leave this "

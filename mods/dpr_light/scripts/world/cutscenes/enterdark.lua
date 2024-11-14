@@ -18,7 +18,11 @@ function enterdark.shelter(cutscene)
         table.insert(party,follower)
     end
     for index, value in ipairs(party) do
-        cutscene:slideTo(value,  320 + (60 * (index-(#party/2)) - 30) , 2356, 0.25)
+        -- This orders party members from left to right, but the leader should be in the center with a full team of 3.
+        local xpos
+        if #party == 3 and index <3 then xpos = (index == 2 and 1 or 2)
+        else xpos = index end
+        cutscene:slideTo(value,  320 + (60 * (xpos-(#party/2)) - 30) , 2356, 0.25)
     end
     -- cutscene:slideTo(susie, 620 + 30, 280, 0.25)
     cutscene:panTo(620, 2240, 0.25)
@@ -28,7 +32,7 @@ function enterdark.shelter(cutscene)
         movement_table = ({
             {  0.00 },
             {  0.50, -0.50 },
-            {  0.50, -0.50,  0.00 },
+            {  0.00, 0.00,  0.00 },
             {  1.00,  0.00, -1.00,  0.00 },
         })[#party]
     })

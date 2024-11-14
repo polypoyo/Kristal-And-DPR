@@ -31,13 +31,58 @@ return function(cutscene)
     
     cutscene:detachFollowers()
     
-    cutscene:walkToSpeed(Game.world.player, "sealready", 1, "up", true)
+    cutscene:walkToSpeed(Game.world.player, "sealready_1", 1, "up", true)
+    if Game.party[2] then
+        cutscene:walkToSpeed(Game.world.followers[1], "sealready_2", 1.5, "up", false)
+    end
+    if Game.party[3] then
+        cutscene:walkToSpeed(Game.world.followers[2], "sealready_3", 1.5, "up", false)
+    end
     
     showDialog("[speed:0.8](Do you want to return to the Light World?)")
 
     local seal = cutscene:choicer({"Yes", "No"})
 
     if seal == 1 then 
+
+        -- If we've done the fountain sealing cutscene before, we can skip it by pressing C+D.
+        local skip_hint = nil
+        local can_skip = false
+        if Game:getFlag("used_hub_fountain") == true then
+            skip_hint = Text("Hold C+D to skip",
+                0, SCREEN_HEIGHT/2+50, SCREEN_WIDTH, SCREEN_HEIGHT,
+                {
+                    align = "center",
+                    font = "plain"
+                }
+            )
+            skip_hint.alpha = 0.05
+            skip_hint:setParallax(0, 0)
+            skip_hint:setLayer(WORLD_LAYERS["ui"])
+            Game.world:addChild(skip_hint)
+            can_skip = true
+
+            cutscene:during(function()
+                if not can_skip then return false end
+                if Input.down("c") and Input.down("d") then
+                    Input.clear("c")
+                    Input.clear("d")
+
+                    Assets.playSound("item", 0.1, 1.2)
+                    Game.world.music:stop()
+                    cutscene:fadeOut(1/30, {color = {0,0,0}})
+                    cutscene:wait(1/30)
+                    
+                    cutscene:after(function()
+                        Game.world.timer:after(1, function() Game:swapIntoMod("dpr_light") end) end)
+                    Game.world:stopCutscene()
+                end
+            end)
+
+
+        end
+
+
         Game.world.music:stop()
 
         local leader = Game.world.player
@@ -62,7 +107,8 @@ return function(cutscene)
         fountain.adjust = 2 -- freeze in place and fade to white
         cutscene:wait(3)
         
-
+        can_skip = false
+        if skip_hint then skip_hint:remove() end
         cutscene:playSound("revival")
         soul:shine()
 
@@ -103,9 +149,12 @@ return function(cutscene)
         cutscene:wait(1)
 
         cutscene:fadeIn(1, {color = {1, 1, 1}})
+        Game:setFlag("used_hub_fountain", true)
         cutscene:after(Game:swapIntoMod("dpr_light"))
     else
         Kristal.showBorder(1)
+        cutscene:interpolateFollowers()
+        cutscene:attachFollowers()
     end
 
 end

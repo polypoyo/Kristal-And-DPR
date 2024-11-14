@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.11" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="40" tileheight="40" infinite="0" nextlayerid="7" nextobjectid="14">
+<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="40" tileheight="40" infinite="0" nextlayerid="7" nextobjectid="19">
  <editorsettings>
-  <export target="../hub_fountain.lua" format="lua"/>
+  <export target="data.lua" format="lua"/>
  </editorsettings>
  <properties>
   <property name="music" value="deltarune/THE_HOLY"/>
@@ -59,7 +59,13 @@
   <object id="7" name="entry" x="320" y="440">
    <point/>
   </object>
-  <object id="13" name="sealready" x="320" y="330">
+  <object id="13" name="sealready_1" x="320" y="330">
+   <point/>
+  </object>
+  <object id="14" name="sealready_2" x="252" y="410">
+   <point/>
+  </object>
+  <object id="18" name="sealready_3" x="392" y="410">
    <point/>
   </object>
  </objectgroup>
