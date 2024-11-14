@@ -334,14 +334,14 @@ end
 ---@param flag  string
 ---@param value any
 function Encounter:setFlag(flag, value)
-    Game:setFlag("encounter#"..self.id..":"..flag, value)
+    Game:setFlag("encounter#"..Mod.info.id.."/"..self.id..":"..flag, value)
 end
 
 ---@param flag      string
 ---@param default?  any
 ---@return any
 function Encounter:getFlag(flag, default)
-    return Game:getFlag("encounter#"..self.id..":"..flag, default)
+    return Game:getFlag("encounter#"..Mod.info.id.."/"..self.id..":"..flag, default)
 end
 
 --- Increments a numerical flag by `amount`.
