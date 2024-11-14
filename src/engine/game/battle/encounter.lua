@@ -18,6 +18,8 @@
 ---
 ---@field defeated_enemies      table
 ---
+---@field no_dojo_bg            boolean
+---
 ---@overload fun(...) : Encounter
 local Encounter = Class()
 
@@ -49,6 +51,9 @@ function Encounter:init()
 	self.flee = true
 	-- Chance out of 100 that the player can flee this battle (x/100)
 	self.flee_chance = 60
+
+    -- Prevents the Dojo background from being added on Boss Rushes and Boss Refights
+    self.no_dojo_bg = false
 end
 
 -- Callbacks

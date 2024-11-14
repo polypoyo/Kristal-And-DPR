@@ -299,6 +299,10 @@ function Battle:postInit(state, encounter)
     if not self.encounter:onBattleInit() then
         self:setState(state)
     end
+
+    if Game.bossrush_encounters and not self.encounter.no_dojo_bg then
+        self.dojobg = self:addChild(DojoBG())
+    end
 end
 
 function Battle:showUI()
