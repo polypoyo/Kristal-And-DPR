@@ -1233,13 +1233,14 @@ end
 
 ---@param ignore_light? boolean -- if you still want some stats etc. despite being in LW
 function Game:getBadgeStorage(ignore_light)
-    if Game:isLight() and not ignore_light then return {} end
+    if self:isLight() and not ignore_light then return {} end
     local inventory ---@type DarkInventory
-    if not Game:isLight() then
-        inventory = Game.inventory
+    if not self:isLight() then
+        inventory = self.inventory
     else
-        inventory = Game.inventory:getItemByID("light/ball_of_junk").inventory
+        inventory = self.dark_inventory
     end
+    if not inventory then return {} end
     return inventory:getStorage("badges")
 end
 
