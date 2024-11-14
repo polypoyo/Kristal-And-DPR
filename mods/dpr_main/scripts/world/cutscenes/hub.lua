@@ -576,6 +576,21 @@ local hub = {
         end
     end,
 
+    warp_bin_note = function(cutscene, event)
+        local dess = cutscene:getCharacter("dess")
+	
+        cutscene:text("* HOW TO USE THE WARP BIN\n* A two-step guide to all your dumpster-traveling needs.")
+        cutscene:text("* STEP 1:\nEnter a valid code on the keypad beneath the bin's lid.")
+        cutscene:text("* STEP 2:\nHappy traveling!")
+        cutscene:text("* (NOTICE: If you ever get lost or run out of codes to input, type FLOORONE get back here.)")
+        cutscene:text("* (Management is also not responsible for any odors emitting from the bin.)")
+        cutscene:text("* (This is due to a certain public menace throwing cans of Mug Root Beer into it.)")
+		
+        if dess then
+            cutscene:textTagged("* gee, I wonder who that could be", "condescending", dess)
+        end
+    end,
+
     morshu = function(cutscene, morshu)
         local magolor = cutscene:getCharacter("magolor")
         local m_anim = Character("billboard/room3_morshu", SCREEN_WIDTH/2, SCREEN_HEIGHT)
