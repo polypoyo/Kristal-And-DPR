@@ -28,6 +28,7 @@ GitFinder = require("src.utils.gitfinder")
 Utils = require("src.utils.utils")
 CollisionUtil = require("src.utils.collision")
 Draw = require("src.utils.draw")
+GeneralUtils = require("src.utils.utils_general")
 
 Kristal = require("src.kristal")
 -- Ease of access for game variables
@@ -229,6 +230,7 @@ MagicGlass = require("src.engine.game.world.events.magicglass")
 TileObject = require("src.engine.game.world.events.tileobject")
 FrozenEnemy = require("src.engine.game.world.frozenenemy")
 WarpDoor = require("src.engine.game.world.events.warpdoor")
+WarpBin = require("src.engine.game.world.events.warpbin")
 DarkFountain = require("src.engine.game.world.events.darkfountain")
 FountainFloor = require("src.engine.game.world.events.fountainfloor")
 QuicksaveEvent = require("src.engine.game.world.events.quicksave")
@@ -292,6 +294,11 @@ GameOver = require("src.engine.game.gameover")
 Legend = require("src.engine.game.legend")
 
 DogCheck = require("src.engine.game.dogcheck")
+
+
+WarpBinCodes = require("src.engine.warp_bin")
+WarpBinCS = require("src.engine.game.world.warp_bin_cs")
+
 
 DarkTransition = require("src.engine.game.darktransition.darktransition")
 LoadingDarkTransition = require("src.engine.game.darktransition.loadingdarktransition")

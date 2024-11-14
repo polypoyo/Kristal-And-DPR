@@ -737,6 +737,8 @@ function Map:loadObject(name, data)
         return MagicGlass(data.x, data.y, data.width, data.height)
     elseif name:lower() == "warpdoor" then
         return WarpDoor(data.x, data.y, data.properties)
+    elseif name:lower() == "warpbin" then
+        return WarpBin(data)
     elseif name:lower() == "darkfountain" then
         return DarkFountain(data.x, data.y)
     elseif name:lower() == "fountainfloor" then

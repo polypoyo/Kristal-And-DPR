@@ -1,5 +1,5 @@
-modRequire("scripts/main/warp_bin")
-modRequire("scripts/main/utils_general")
+--modRequire("scripts/main/warp_bin")
+--modRequire("scripts/main/utils_general")
 
 function Mod:init()
     print("Loaded "..self.info.name.."!")
