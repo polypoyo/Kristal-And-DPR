@@ -49,7 +49,13 @@ function BossRematchMenu:init()
         local page = math.floor(i/8) + 1
         if self.encounters[page] == nil then self.encounters[page] = {} end
         table.insert(self.encounters[page], value)
-        value.flag = value.flag or "encounter#"..value.mod.."/"..value.encounter..":done"
+        value.flag = value.flag or ("encounter#"..value.mod.."/"..value.encounter..":done")
+        if value.preview then
+            local path = value.preview
+            if type(path) == "table" then path = path[1] end
+            local image = love.graphics.newImage(Kristal.Mods.data[value.mod].path.."/"..path)
+            value.preview = {image, value.preview[2] or 0, value.preview[3] or 0}
+        end
     end
 
 	self.bosses = {}
@@ -92,7 +98,10 @@ function BossRematchMenu:draw()
 
     if Game:getFlag(entry.flag) and entry.preview then
         local preview = entry.preview
-        love.graphics.draw(Assets.getTexture(preview[1]), 260 + preview[2], 50 + preview[3], 0, (entry.name == "Omega Spamton" and 1 or 2))
+        local canvas = Draw.pushCanvas(200, 140)
+        love.graphics.draw(preview[1], preview[2], preview[3], 0, (entry.name == "Omega Spamton" and 1 or 2))
+        Draw.popCanvas()
+        Draw.draw(canvas, 260, 50)
     end
 
     local y_off = 16
