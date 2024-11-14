@@ -18,12 +18,12 @@ function item:init()
     -- Shop description
     self.shop = ""
     -- Menu description
-    self.description = "Please add details."
+    self.description = "Blade of the chosen one, forged in the depths.\nThe wielder can take a fatal blow in battle."
 
     -- Default shop price (sell price is halved)
-    self.price = 999 -- If you sell this your* stupid.
+    self.price = nil
     -- Whether the item can be sold
-    self.can_sell = true
+    self.can_sell = false
 
     -- Consumable target mode (ally, party, enemy, enemies, or none)
     self.target = "none"
@@ -50,6 +50,12 @@ function item:init()
 
     -- Character reactions
     self.reactions = {
+        susie = "Me? Some sorta chosen one? Nah.",
+        ralsei = "Um, I don't think this is mine.",
+        noelle = "It feels... magical?",
+        hero = "Back where it belongs.",
+        dess = "little ol' me a hero? surely you're jestin",
+        brenda = "Swords aren't really my style."
     }
 end
 
