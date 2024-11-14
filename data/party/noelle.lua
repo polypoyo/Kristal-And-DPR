@@ -9,6 +9,7 @@ function character:init()
     -- Actor (handles sprites)
     self:setActor("noelle")
     self:setLightActor("noelle_lw")
+    self:setDarkTransitionActor("noelle_dark_transition")
 
     -- Display level (saved to the save file)
     self.love = 1
