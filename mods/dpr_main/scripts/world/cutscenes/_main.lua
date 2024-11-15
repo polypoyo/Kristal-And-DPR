@@ -55,7 +55,10 @@ return {
         cutscene:during(function()
             if not can_exit then return false end
 
-            if Input.down("c") and Input.down("d") then
+            if ( false
+                or (Input.down("c") and Input.down("d"))
+                or (Input.down("gamepad:leftshoulder") and Input.down("gamepad:rightshoulder"))
+            ) then
                 Game:setFlag("skipped_intro", true)
                 Assets.playSound("item", 0.1, 1.2)
                 skip_hint:remove()
