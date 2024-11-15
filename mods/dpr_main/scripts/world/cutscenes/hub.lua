@@ -496,6 +496,19 @@ local hub = {
                 end
                 cutscene:hideNametag()
             end
+        elseif choice == 3 then
+            cutscene:textTagged("* my brother?", "neutral", "sans")
+            cutscene:textTagged("* well,[wait:5] there's not much i can say about him [color:yellow]right now[color:reset].", "eyes_closed", "sans")
+            cutscene:textTagged("* other than the fact that he has a very...", "look_left", "sans")
+            cutscene:textTagged("* [speed:0.8]...[speed:1]actually,[wait:5] nevermind.", "wink", "sans")
+            if cutscene:getCharacter("susie") then
+                local me = #Game.party > 1 and "us" or "me"
+                cutscene:textTagged("* Are you trying to keep something from "..me.."?", "suspicious", "susie")
+                cutscene:textTagged("* yep.", "neutral", "sans")
+                cutscene:textTagged("* And what's that?", "suspicious", "susie")
+                cutscene:textTagged("* the elevator.", "neutral", "sans")
+                cutscene:textTagged("* THAT'S NOT WHAT I MEANT!", "teeth_b", "susie")
+            end
         elseif choice == 4 then
             cutscene:textTagged("* see ya.", "wink", "sans")
         end
