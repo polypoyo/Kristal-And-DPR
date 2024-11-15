@@ -283,6 +283,9 @@ FatalEffect = require("src.engine.game.effects.fataleffect")
 RudeBusterBeam = require("src.engine.game.effects.rudebusterbeam")
 RudeBusterBurst = require("src.engine.game.effects.rudebusterburst")
 
+Discoball = require("src.engine.game.battle.bg.discoball")
+DojoBG = require("src.engine.game.battle.bg.dojobg")
+
 Shop = require("src.engine.game.shop")
 Shopkeeper = require("src.engine.game.shop.shopkeeper")
 
