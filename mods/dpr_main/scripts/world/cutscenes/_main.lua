@@ -2,6 +2,7 @@ return {
     ---@param cutscene WorldCutscene
     introcutscene = function(cutscene)
         local text
+        Game:setBorder("simple")
 
         local function gonerTextFade(wait)
             local this_text = text
@@ -65,6 +66,9 @@ return {
                 or (Input.down("c") and Input.down("d"))
                 or (Input.down("gamepad:leftshoulder") and Input.down("gamepad:rightshoulder"))
             ) then
+                Game.fader:fadeOut { speed = 0 }
+                -- Kristal.hideBorder(0) takes an entire frame, which is too slow.
+                BORDER_ALPHA = 0
                 Game:setFlag("skipped_intro", true)
                 Assets.playSound("item", 0.1, 1.2)
                 skip_hint:remove()
@@ -347,12 +351,14 @@ return {
         gonerText("THE FUTURE[wait:20]")
         cutscene:wait(1)
         Assets.playSound("locker")
+        Kristal.hideBorder()
         world_music:stop()
         background:remove()
         hero_sprite:remove()
         cutscene:wait(1)
         gonerText("IS IN YOUR HANDS[wait:20]")
         cutscene:wait(1.5)
+        Game.fader:fadeOut {speed = 0}
 
         cutscene:after(function()
             Game.tutorial = true

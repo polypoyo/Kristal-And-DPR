@@ -8,6 +8,7 @@ end
 return {
     ---@param cutscene WorldCutscene
     intro = function (cutscene, event)
+        Kristal.hideBorder(0)
         cutscene:wait(function ()
             if Game.world.map.id == [[grey_cliffside/cliffside_start]] then
                 return true
@@ -15,6 +16,7 @@ return {
                 return false
             end
         end)
+        Game.fader:fadeIn { speed = 0 }
         Game.world.music:stop()
         local darknessoverlay = DarknessOverlay()
         darknessoverlay.layer = 1
@@ -165,6 +167,7 @@ return {
             hero:resetSprite()
             Game.stage.timer:tween(1, lightsource, { radius = 900 })
             Game.stage.timer:tween(1, lightsource, { alpha = 1 })
+            Kristal.showBorder(1.5)
             cutscene:wait(0.75)
             Game.world.music:play()
         elseif choicer == 2 then
