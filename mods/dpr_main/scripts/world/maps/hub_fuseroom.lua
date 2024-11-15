@@ -1,7 +1,7 @@
 return {
-  version = "1.11",
+  version = "1.10",
   luaversion = "5.1",
-  tiledversion = "1.11.0",
+  tiledversion = "1.10.2",
   class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
@@ -204,7 +204,7 @@ return {
           name = "npc",
           type = "",
           shape = "point",
-          x = 320,
+          x = 360,
           y = 340,
           width = 0,
           height = 0,
