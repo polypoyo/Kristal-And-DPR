@@ -46,10 +46,16 @@ return {
                 font = "plain"
             }
         )
-        skip_hint.alpha = 0.05
+        skip_hint.alpha = 0.1
         skip_hint:setParallax(0, 0)
         skip_hint:setLayer(WORLD_LAYERS["ui"])
         Game.world:addChild(skip_hint)
+        if Input.usingGamepad() then
+            skip_hint:setText("Hold [button:leftshoulder]+ [button:rightshoulder] to skip")
+            for key, value in pairs(skip_hint.sprites) do
+                value.alpha = skip_hint.alpha
+            end
+        end
 
         local can_exit = true
         cutscene:during(function()
