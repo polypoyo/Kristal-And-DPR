@@ -12,6 +12,8 @@ function MainMenuWarningHandler:init(menu)
     self.list = nil
 
     self.warnings = Utils.split(love.filesystem.read("assets/warning.txt"), "\n")
+    -- Removes the last item and errors if that wasn't a blank line
+    assert(table.remove(self.warnings, #self.warnings) == "", "No final newline on warnings.txt!")
     if Kristal.Config["seenLegitWarning"] then
         self.current_warning = Utils.pick(self.warnings)
     else
