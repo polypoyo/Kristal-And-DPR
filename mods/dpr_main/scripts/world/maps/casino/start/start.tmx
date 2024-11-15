@@ -8,7 +8,7 @@
   <property name="music" value="casino"/>
   <property name="name" value="Gamblopolis"/>
  </properties>
- <tileset firstgid="1" source="../../tilesets/castle.tsx"/>
+ <tileset firstgid="1" source="../../../tilesets/castle.tsx"/>
  <layer id="1" name="tiles" width="20" height="24">
   <data encoding="csv">
 0,22,13,23,23,13,23,23,23,13,23,23,13,24,0,0,0,0,0,0,

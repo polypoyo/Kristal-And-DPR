@@ -26,7 +26,8 @@ function Basic:onStart()
 	self:spawnObject(Solid(true, Game.battle.arena:getRight() - 75, Game.battle.arena:getBottom() - 360, 20, 30))
 	self:spawnObject(Solid(true, Game.battle.arena:getLeft(), Game.battle.arena:getBottom() - 400, 20, 70))
 	
-	self:spawnBullet("egg_spikes_labyrinth", 320, 520)
+	self:spawnBulletTo(Game.battle.mask,"egg_spikes_labyrinth", 320, 520)
+	--self:spawnBullet("egg_spikes_labyrinth", 320, 520)
 end
 
 function Basic:update()

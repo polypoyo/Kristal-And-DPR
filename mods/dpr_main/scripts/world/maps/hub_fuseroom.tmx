@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.11" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="24" height="12" tilewidth="40" tileheight="40" infinite="0" nextlayerid="7" nextobjectid="11">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="24" height="12" tilewidth="40" tileheight="40" infinite="0" nextlayerid="7" nextobjectid="11">
  <editorsettings>
   <export target="hub_fuseroom.lua" format="lua"/>
  </editorsettings>
@@ -54,7 +54,7 @@
     <property name="marker" value="west1"/>
    </properties>
   </object>
-  <object id="9" name="npc" x="320" y="340">
+  <object id="9" name="npc" x="360" y="340">
    <properties>
     <property name="actor" value="malius"/>
     <property name="cutscene" value="hub.malius"/>
