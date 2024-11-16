@@ -65,7 +65,8 @@ function Tileset:init(data, path, base_dir)
 
     if data.image then
         local image_path = Utils.absoluteToLocalPath("assets/sprites/", data.image, self.base_dir)
-        self.texture = Assets.getTexture(image_path)
+        local backup_image = GeneralUtils:breakString("../../../assets/sprites/", data.image, ".png")
+        self.texture = Assets.getTexture(image_path or backup_image)
         if not self.texture then
             error("Could not load tileset texture: " .. tostring(image_path) .. " [" .. tostring(path) .. "]")
         end
