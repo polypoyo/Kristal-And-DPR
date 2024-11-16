@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="23" height="27" tilewidth="40" tileheight="40" infinite="0" nextlayerid="11" nextobjectid="74">
+<map version="1.8" tiledversion="1.8.6" orientation="orthogonal" renderorder="right-down" width="23" height="27" tilewidth="40" tileheight="40" infinite="0" nextlayerid="11" nextobjectid="76">
  <editorsettings>
   <export target="data.lua" format="lua"/>
  </editorsettings>
@@ -250,6 +250,11 @@
     <property name="skin" value="cyber_city"/>
    </properties>
   </object>
+  <object id="74" name="transition" x="420" y="60" width="80" height="40">
+   <properties>
+    <property name="map" value="hub_elevator"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup color="#7f00ff" id="4" name="markers">
   <object id="35" name="south" x="460" y="1040">
@@ -277,6 +282,9 @@
    <point/>
   </object>
   <object id="73" name="landing" x="460" y="644">
+   <point/>
+  </object>
+  <object id="75" name="entry_elevator" x="460" y="170">
    <point/>
   </object>
  </objectgroup>

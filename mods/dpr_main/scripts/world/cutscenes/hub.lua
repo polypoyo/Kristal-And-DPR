@@ -355,10 +355,10 @@ local hub = {
             cutscene:textTagged("* What the hell are you doing here???", "teeth", "susie")
             cutscene:textTagged("* i'm keeping people away from the elevator.", "neutral", "sans")
             cutscene:textTagged("* Why?! We got places to be here, dude!!", "angry_b", "susie")
-            cutscene:textTagged("* well,[wait:5] i would let you pass if the elevator wasn't finished.", "joking", "sans")
+            cutscene:textTagged("* well,[wait:5] i would let you pass if the elevator was finished.", "joking", "sans")
             cutscene:textTagged("* ...it looks finished to me.", "suspicious", "susie")
-            cutscene:textTagged("* oh, that's just the door for it.", "look_left", "sans")
-            cutscene:textTagged("* the actual elevator hasn't been installed yet.", "neutral", "sans")
+            cutscene:textTagged("* oh, that's because it is.", "look_left", "sans")
+            cutscene:textTagged("* it doesn't go anywhere yet, though.", "neutral", "sans")
             cutscene:textTagged("* give it some time,[wait:5] it'll come eventually.", "wink", "sans")
             cutscene:textTagged("* Right...", "sus_nervous", "susie")
             cutscene:textTagged("* anyways, what's up?", "neutral", "sans")
@@ -454,8 +454,8 @@ local hub = {
 				
         if choice == 1 then
             local kid = #Game.party > 1 and "kids" or "kid"
-            cutscene:textTagged(string.format("* sorry %s,[wait:5] but you can't access the elevator yet.", kid), "eyes_closed", "sans")
-            cutscene:textTagged("* it's kinda...[wait:5] not finished.", "look_left", "sans")
+            cutscene:textTagged(string.format("* sorry %s,[wait:5] but you can't access the elevator right now.", kid), "eyes_closed", "sans")
+            cutscene:textTagged("* it kinda...[wait:5] doesn't go anywhere yet.", "look_left", "sans")
             cutscene:textTagged("* so come back later,[wait:2] 'k?", "wink", "sans")
             cutscene:hideNametag()
         elseif choice == 2 then
