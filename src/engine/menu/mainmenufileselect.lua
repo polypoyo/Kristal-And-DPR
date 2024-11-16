@@ -275,7 +275,11 @@ function MainMenuFileSelect:onKeyPressed(key, is_repeat)
                     local selected = self:getSelectedFile()
                     if selected == self.copied_button then
                         Assets.stopAndPlaySound("ui_cancel")
-                        self:setResultText("You can't copy there.")
+                        if Kristal.getMainMenuVariant() == "DEVICE" then
+                            self:setResultText("IT IS IMMUNE TO IT'S OWN IMAGE.")
+                        else
+                            self:setResultText("You can't copy there.")
+                        end
                     elseif selected.data then
                         Assets.stopAndPlaySound("ui_select")
                         self.focused_button = selected
@@ -370,31 +374,47 @@ function MainMenuFileSelect:update()
 
     self.menu.heart_target_x, self.menu.heart_target_y = self:getHeartPos()
 end
-
+local function d(text)
+    if Kristal.getMainMenuVariant() == "DEVICE" then
+        return string.upper(text)
+    end
+    return text
+end
 function MainMenuFileSelect:draw()
     local mod_name = string.upper(self.mod.name or self.mod.id)
     Draw.printShadow(mod_name, 16, 8)
 
+    if Kristal.getMainMenuVariant() == "DEVICE" then
+        Draw.setColor(COLORS.lime)
+    end
     Draw.printShadow(self:getTitle(), 80, 60)
 
     local function setColor(x, y)
         if self.selected_x == x and self.selected_y == y then
-            Draw.setColor(1, 1, 1)
+            if Kristal.getMainMenuVariant() == "DEVICE" then
+                Draw.setColor(0, 1, 0)
+            else
+                Draw.setColor(1, 1, 1)
+            end
         else
-            Draw.setColor(0.6, 0.6, 0.7)
+            if Kristal.getMainMenuVariant() == "DEVICE" then
+                Draw.setColor(0, 0.6, 0)
+            else
+                Draw.setColor(0.6, 0.6, 0.7)
+            end
         end
     end
 
     if self.state == "SELECT" or self.state == "TRANSITIONING" then
         setColor(1, 4)
-        Draw.printShadow("Copy", 108, 380)
+        Draw.printShadow(d"Copy", 108, 380)
         setColor(2, 4)
-        Draw.printShadow("Erase", 280, 380)
+        Draw.printShadow(d"Erase", 280, 380)
         setColor(3, 4)
-        Draw.printShadow("Back", 468, 380)
+        Draw.printShadow(d"Back", 468, 380)
     else
         setColor(1, 4)
-        Draw.printShadow("Cancel", 110, 380)
+        Draw.printShadow(d"Cancel", 110, 380)
     end
 
     Draw.setColor(1, 1, 1)
@@ -409,6 +429,7 @@ function MainMenuFileSelect:getTitle()
         return self.result_text
     end
     if self.state == "SELECT" or self.state == "TRANSITIONING" then
+        if Kristal.getMainMenuVariant() == "DEVICE" then return"" end
         return "Please select a file."
     else
         if self.state == "ERASE" then

@@ -44,6 +44,7 @@ end
 
 function FileButton:getDrawColor()
     local r, g, b, a = super.getDrawColor(self)
+    if Kristal.getMainMenuVariant() == "DEVICE" then r,g,b,a = unpack(COLORS.lime) end
     if not self.selected then
         return r * 0.6, g * 0.6, b * 0.7, a
     else
@@ -70,12 +71,16 @@ function FileButton:drawCoolRectangle(x, y, w, h)
     -- Set the color
     Draw.setColor(self:getDrawColor())
     -- Draw the rectangles
-    love.graphics.rectangle("line", x, y, w + 1, h + 1)
-    -- Increase the width and height by one instead of two to produce the broken effect
-    love.graphics.rectangle("line", x - 1, y - 1, w + 2, h + 2)
-    love.graphics.rectangle("line", x - 2, y - 2, w + 5, h + 5)
-    -- Here too
-    love.graphics.rectangle("line", x - 3, y - 3, w + 6, h + 6)
+    if Kristal.getMainMenuVariant() == "normal" then
+        love.graphics.rectangle("line", x, y, w + 1, h + 1)
+        -- Increase the width and height by one instead of two to produce the broken effect
+        love.graphics.rectangle("line", x - 1, y - 1, w + 2, h + 2)
+        love.graphics.rectangle("line", x - 2, y - 2, w + 5, h + 5)
+        -- Here too
+        love.graphics.rectangle("line", x - 3, y - 3, w + 6, h + 6)
+    else
+        love.graphics.rectangle("line", x-0, y-0, w+0, h+0)
+    end
 end
 
 function FileButton:draw()

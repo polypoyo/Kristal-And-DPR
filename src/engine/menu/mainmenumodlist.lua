@@ -219,7 +219,7 @@ function MainMenuModList:draw()
             Draw.setColor(1, 1, 1)
         else
             -- Draw some menu text
-            Draw.printShadow("Choose your world.", 80, 34 - 8)
+            Draw.printShadow(({normal = "Choose your world.", DEVICE = "SELECT YOUR DESIRED DESTINATION."})[Kristal.getMainMenuVariant()], 80, 34 - 8)
 
             local control_menu_width = 0
             local control_cancel_width = 0

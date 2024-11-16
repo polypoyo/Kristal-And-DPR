@@ -103,7 +103,11 @@ function MainMenu:enter()
     end
 
     if not self.music:isPlaying() then
-        self.music:play("mod_menu", 1, 0.95)
+        if Kristal.getMainMenuVariant() == "DEVICE" then
+            self.music:play("AUDIO_DRONE", 1, 1)
+        else
+            self.music:play("mod_menu", 1, 0.95)
+        end
     end
 
     if #Kristal.Mods.failed_mods > 0 then
@@ -335,6 +339,7 @@ end
 function MainMenu:drawBackground()
     -- This code was originally 30 fps, so we need a deltatime variable to multiply some values by
     local dt_mult = DT * 30
+    if Kristal.getMainMenuVariant() == "DEVICE" then return end
 
     if not (TARGET_MOD and self.selected_mod.preview) then
         -- We need to draw the background on a canvas

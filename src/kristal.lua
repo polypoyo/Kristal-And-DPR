@@ -1779,6 +1779,11 @@ function Kristal.clearModSubclasses()
     MOD_SUBCLASSES = {}
 end
 
+function Kristal.getMainMenuVariant()
+    return "normal"
+    -- return "DEVICE"
+end
+
 --- Executes a `.lua` script inside the mod folder.
 ---@param path string  The script name to execute.
 ---@param ...  any     The arguments to pass to the script.

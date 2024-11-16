@@ -41,12 +41,12 @@ function MainMenuTitle:onEnter(old_state)
         }
     else
         self.options = {
-            {"play",      "Play a mod"},
-            {"modfolder", "Open mods folder"},
-            {"options",   "Options"},
-            {"credits",   "Credits"},
-            {"wiki",      "Open wiki"},
-            {"quit",      "Quit"},
+            {"play",      "Play a mod", "ESTABLISH"},
+            {"modfolder", "Open mods folder", "MANAGE DESTINATIONS"},
+            {"options",   "Options", "CONFIGURATION"},
+            {"credits",   "Credits", "ATTRIBUTIONS"},
+            {"wiki",      "Open wiki", "DOCUMENTATION"},
+            {"quit",      "Quit", "TERMINATE"},
         }
     end
 
@@ -119,12 +119,19 @@ end
 
 function MainMenuTitle:draw()
     local logo_img = self.menu.selected_mod and self.menu.selected_mod.logo or self.logo
-
-    Draw.draw(logo_img, SCREEN_WIDTH/2 - logo_img:getWidth()/2, 105 - logo_img:getHeight()/2)
+    if Kristal.getMainMenuVariant() == "DEVICE" then
+        Draw.setColor(COLORS.lime)
+    else
+        Draw.draw(logo_img, SCREEN_WIDTH/2 - logo_img:getWidth()/2, 105 - logo_img:getHeight()/2)
+    end
     --Draw.draw(self.selected_mod and self.selected_mod.logo or self.logo, 160, 70)
 
     for i, option in ipairs(self.options) do
-        Draw.printShadow(option[2], 215, 219 + 32 * (i - 1))
+        local name = option[2]
+        if Kristal.getMainMenuVariant() == "DEVICE" then
+            name = option[3]
+        end
+        Draw.printShadow(name, 215, 219 + 32 * (i - 1))
     end
 end
 
