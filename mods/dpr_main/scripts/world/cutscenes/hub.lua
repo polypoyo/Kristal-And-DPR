@@ -355,7 +355,7 @@ local hub = {
             cutscene:textTagged("* What the hell are you doing here???", "teeth", "susie")
             cutscene:textTagged("* i'm keeping people away from the elevator.", "neutral", "sans")
             cutscene:textTagged("* Why?! We got places to be here, dude!!", "angry_b", "susie")
-            cutscene:textTagged("* well,[wait:5] i would let you pass if the elevator wasn't finished.", "joking", "sans")
+            cutscene:textTagged("* well,[wait:5] i would let you pass if the elevator was finished.", "joking", "sans")
             cutscene:textTagged("* ...it looks finished to me.", "suspicious", "susie")
             cutscene:textTagged("* oh, that's because it is.", "look_left", "sans")
             cutscene:textTagged("* it doesn't go anywhere yet, though.", "neutral", "sans")

@@ -118,6 +118,8 @@ function ElevatorButtons:confirmModSwitch(floor, mod)
                 ELEVATOR_TRANSITION = {
                     party_data = { {}, {}, {} },
                     target_floor = floor,
+                    target_name = self.elevator.floors[self.elevator.target_floor].name,
+                    target_dest = self.elevator.floors[self.elevator.target_floor].dest,
                     target_dir = self.elevator.dir,
                 }
                 Kristal.Console:log(self.elevator.dir)

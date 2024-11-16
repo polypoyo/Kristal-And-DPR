@@ -151,6 +151,7 @@ return {
             ["color_2"] = "#ff4429ff",
             ["cutscene_2"] = "broken_elevator",
             ["dest_1"] = "main_hub",
+            ["dest_2"] = "nothing",
             ["length_1"] = 40,
             ["length_2"] = 40,
             ["name_1"] = "Floor 1",

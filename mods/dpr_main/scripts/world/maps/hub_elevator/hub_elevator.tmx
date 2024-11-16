@@ -24,6 +24,7 @@
     <property name="color_2" type="color" value="#ff4429ff"/>
     <property name="cutscene_2" value="broken_elevator"/>
     <property name="dest_1" value="main_hub"/>
+    <property name="dest_2" value="nothing"/>
     <property name="length_1" type="int" value="40"/>
     <property name="length_2" type="int" value="40"/>
     <property name="name_1" value="Floor 1"/>

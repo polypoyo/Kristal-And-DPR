@@ -27,8 +27,24 @@ function Elevator:onEnter()
             cutscene:detachFollowers()
 
             -- Copy data from ELEVATOR_TRANSITION to the elevator.
-            elevator.target_floor =    ELEVATOR_TRANSITION["target_floor"]
-            elevator.dir =             ELEVATOR_TRANSITION["target_dir"]
+
+            if not ELEVATOR_TRANSITION["target_floor"] then -- Floor number wasn't set! Let's see if we can find it.
+                -- First, check for a floor name.
+                if elevator:getFloorByName(ELEVATOR_TRANSITION["target_name"]) then
+                    elevator.target_floor = elevator:getFloorByName(ELEVATOR_TRANSITION["target_name"])
+                -- If that doesn't work, check for a destination map.
+                elseif elevator:getFloorByDestination(ELEVATOR_TRANSITION["target_dest"]) then
+                    elevator.target_floor = elevator:getFloorByDest(ELEVATOR_TRANSITION["target_dest"])
+                -- If THAT doesn't work, then, uh. We're kinda fucked.
+                else
+                    error("ELEVATOR_TRANSITION did not contain a target floor")
+                end
+
+            else
+                elevator.target_floor =    ELEVATOR_TRANSITION["target_floor"]
+            end
+
+            elevator.dir =             ELEVATOR_TRANSITION["target_dir"] or 1
             Game.world.player.x =      ELEVATOR_TRANSITION.party_data[1].x
             Game.world.player.y =      ELEVATOR_TRANSITION.party_data[1].y
             Game.world.player:setFacing(ELEVATOR_TRANSITION.party_data[1].facing)

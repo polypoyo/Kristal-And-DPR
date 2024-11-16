@@ -989,4 +989,37 @@ function Elevator:draw()
     super.draw(self)
 end
 
+-- A few helper functions for getting floor numbers
+
+-- Returns a floor number based on the name that appears in the selection menu, or returns nil if no match can be found.
+function Elevator:getFloorByName(name)
+    local floor_found = nil
+    for i, _ in ipairs(self.floors) do
+        if self.floors[i].name == name then
+            floor_found = i
+            --break
+        end
+    end
+    if floor_found == nil then
+        Kristal.Console:warn("No floor with the name " .. name .. " was found!")
+    end
+    return floor_found
+end
+
+-- Returns a floor number based on the destination map, or returns nil if no match can be found.
+function Elevator:getFloorByDestination(dest)
+    local floor_found = nil
+    for i, _ in ipairs(self.floors) do
+        if self.floors[i].dest == dest then
+            floor_found = i
+            break
+        end
+    end
+    if floor_found == nil then
+        Kristal.Console:warn("No floor going to the map " .. dest .. " was found!")
+    end
+    return floor_found
+end
+
+
 return Elevator
