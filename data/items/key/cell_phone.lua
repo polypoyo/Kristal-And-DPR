@@ -109,7 +109,7 @@ function item:onWorldUse()
             pauseMusic()
             local _ = playCellPhoneAudio("voiceover/cell_phone/hello_world")
     
-            local leader = Mod:getLeader("chara")
+            local leader = Game.world.player
             local old_layer = leader.layer
             leader:setLayer(WORLD_LAYERS["below_ui"])
     
