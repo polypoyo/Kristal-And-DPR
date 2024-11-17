@@ -3,7 +3,8 @@ local Elevator, super = Class(Map)
 function Elevator:onEnter()
     Game.world.timer:after(1/30, function()
     local elevator = Game.world.map:getEvent("elevator")
-    if ELEVATOR_TRANSITION then -- We've just come in from another mod
+    if ELEVATOR_TRANSITION -- We've have information for moving the elevator between mods
+    and Game.world.player.y <= 360 then -- We did NOT spawn in from the door. Ideally I'd check which marker we spawned in from, but I dunno how to do that.
 
         Game.fader:fadeOut(nil, {speed = 0})
 
@@ -45,13 +46,13 @@ function Elevator:onEnter()
             end
 
             elevator.dir =             ELEVATOR_TRANSITION["target_dir"] or 1
-            Game.world.player.x =      ELEVATOR_TRANSITION.party_data[1].x
-            Game.world.player.y =      ELEVATOR_TRANSITION.party_data[1].y
-            Game.world.player:setFacing(ELEVATOR_TRANSITION.party_data[1].facing)
+            Game.world.player.x =      ELEVATOR_TRANSITION.party_data[1].x or 320
+            Game.world.player.y =      ELEVATOR_TRANSITION.party_data[1].y or 320
+            Game.world.player:setFacing(ELEVATOR_TRANSITION.party_data[1].facing or "down")
             for i, chara in ipairs(Game.world.followers) do
-                chara.x =       ELEVATOR_TRANSITION.party_data[i+1].x
-                chara.y =       ELEVATOR_TRANSITION.party_data[i+1].y
-                chara:setFacing(ELEVATOR_TRANSITION.party_data[i+1].facing)
+                chara.x =       ELEVATOR_TRANSITION.party_data[i+1].x or 320
+                chara.y =       ELEVATOR_TRANSITION.party_data[i+1].y or 320
+                chara:setFacing(ELEVATOR_TRANSITION.party_data[i+1].facing or "down")
             end
 
             Game.world.timer:tween(3, elevator, {volcount = 0.7}, "linear")
@@ -72,7 +73,8 @@ function Elevator:onEnter()
             
             
             
-            
+        
+        else ELEVATOR_TRANSITION = nil
         end
     end)
 end

@@ -61,7 +61,7 @@ return function(cutscene)
     end)
     elevator.dir = -1
     elevator.rectcon = 1
-    elevator.target_floor = 1
+    elevator.target_floor = elevator:getFloorByName("Floor 1")
     cutscene:wait(2)
     
     -- Susie glances over

@@ -836,7 +836,8 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["map"] = "hub_elevator"
+            ["map"] = "hub_elevator",
+            ["marker"] = "entry"
           }
         }
       }

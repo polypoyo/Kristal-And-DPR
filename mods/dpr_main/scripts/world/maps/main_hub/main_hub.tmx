@@ -253,6 +253,7 @@
   <object id="74" name="transition" x="420" y="60" width="80" height="40">
    <properties>
     <property name="map" value="hub_elevator"/>
+    <property name="marker" value="entry"/>
    </properties>
   </object>
  </objectgroup>
