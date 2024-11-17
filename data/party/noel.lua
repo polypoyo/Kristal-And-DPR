@@ -134,6 +134,34 @@ function character:init()
 
 end
 
+function character:PainStat(y)
+    local i = y
+
+    Draw.setColor(0, 0, 0, 1)
+    love.graphics.rectangle("fill", 18,145, 180,30)
+    Draw.setColor(1, 1, 1, 1)
+    love.graphics.print("Pain:", 18, i)
+
+    love.graphics.print("x", 134, i)
+
+    local n = 2
+
+    local x, y = math.random(n, -n), math.random(n, -n)
+    love.graphics.print("1", 148 + x, i + y)
+
+    local x, y = math.random(n, -n), math.random(n, -n)
+    love.graphics.print("0", 162 + x, i + y)
+end
+
+function character:drawPowerStat(index, x, y, menu)
+    self:PainStat(143)
+end
+
+function character:drawEquipStat(menu)
+    self:PainStat(145)
+end
+
+
 function character:getGameOverMessage(main)
     local save = Game:loadNoel()
     assert(save)
