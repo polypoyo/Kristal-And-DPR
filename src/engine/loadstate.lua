@@ -155,6 +155,9 @@ function Loading:draw()
         if (self.animation_phase_timer >= 60) and self.animation_phase == 0 then
             self.animation_phase_timer = 0
             self.animation_phase = 1
+            if not self.loading and not self.load_complete then
+               self:beginLoad()
+            end
         end
     end
     if (self.animation_phase >= 1) then
@@ -214,16 +217,12 @@ function Loading:draw()
         if (self.animation_phase_timer >= 120 and self.animation_phase == 1) then
             self.animation_phase_timer = 0
             self.animation_phase = 2
-            self.animation_done = true
         end
     end
     if (self.animation_phase >= 2) then
         self.tagline_alpha = Utils.approach(self.tagline_alpha, 1, 0.01 * DTMULT)
         if (self.animation_phase_timer >= 160) and not self.skipped and self.animation_phase == 2 then
             self.skipped = true
-            if not self.loading and not self.load_complete then
-               self:beginLoad()
-            end
             self.animation_phase = 3
         end
         love.graphics.setColor(1, 1, 1, self.tagline_alpha)
