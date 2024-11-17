@@ -14,12 +14,17 @@ if not module then
 end
 
 if not module then
+    ok, module = pcall(package.loadlib, love.filesystem.getSource().."/lib/"..name, "luaopen_https")
+end
+
+if not module then
     ok = false
 end
 
 HTTPS_AVAILABLE = ok
 
 if not ok then
+    print("The HTTPS library has failed to load.")
     return
 end
 
