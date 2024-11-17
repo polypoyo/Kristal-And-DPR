@@ -1,7 +1,8 @@
 return {
-  version = "1.5",
+  version = "1.10",
   luaversion = "5.1",
-  tiledversion = "1.8.6",
+  tiledversion = "1.10.1",
+  class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
   width = 16,
@@ -18,6 +19,7 @@ return {
       draworder = "topdown",
       id = 6,
       name = "collision",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -98,6 +100,7 @@ return {
       draworder = "topdown",
       id = 4,
       name = "objects",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -147,15 +150,20 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["color_1"] = "#ff4429ff",
+            ["color_1"] = "#ff321fc3",
             ["color_2"] = "#ff4429ff",
-            ["cutscene_2"] = "broken_elevator",
-            ["dest_1"] = "main_hub",
-            ["dest_2"] = "nothing",
-            ["length_1"] = 40,
+            ["color_3"] = "#ff4429ff",
+            ["cutscene_3"] = "broken_elevator",
+            ["dest_1"] = "pre_pit",
+            ["dest_2"] = "main_hub",
+            ["dest_3"] = "nothing",
+            ["length_1"] = 140,
             ["length_2"] = 40,
-            ["name_1"] = "Floor 1",
-            ["name_2"] = "Nowhere"
+            ["length_3"] = 40,
+            ["mod_1"] = "dpr_pit_dlc",
+            ["name_1"] = "The Dark Pit",
+            ["name_2"] = "Floor 1",
+            ["name_3"] = "Nowhere"
           }
         }
       }
@@ -165,6 +173,7 @@ return {
       draworder = "topdown",
       id = 5,
       name = "markers",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
