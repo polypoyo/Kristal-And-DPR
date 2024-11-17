@@ -1381,6 +1381,10 @@ function Kristal.processDynamicBorder()
     if Kristal.getState() == Game then
         return Game:getBorder()
     elseif Kristal.getState() == MainMenu then
+        if Kristal.getMainMenuVariant() == "DEVICE" then
+            return ImageBorder("simple")
+            
+        end
         return ImageBorder("castle")
     end
 end
@@ -1780,8 +1784,8 @@ function Kristal.clearModSubclasses()
 end
 
 function Kristal.getMainMenuVariant()
-    return "normal"
-    -- return "DEVICE"
+    -- return "normal"
+    return "DEVICE"
 end
 
 --- Executes a `.lua` script inside the mod folder.

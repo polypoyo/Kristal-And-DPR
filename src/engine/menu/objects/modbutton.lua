@@ -120,22 +120,7 @@ function ModButton:isFavorited()
 end
 
 function ModButton:drawCoolRectangle(x, y, w, h)
-    -- Make sure the line is a single pixel wide
-    love.graphics.setLineWidth(1)
-    love.graphics.setLineStyle("rough")
-    -- Set the color
-    Draw.setColor(self:getDrawColor())
-    -- Draw the rectangles
-    if Kristal.getMainMenuVariant() == "normal" then
-        love.graphics.rectangle("line", x, y, w + 1, h + 1)
-        -- Increase the width and height by one instead of two to produce the broken effect
-        love.graphics.rectangle("line", x - 1, y - 1, w + 2, h + 2)
-        love.graphics.rectangle("line", x - 2, y - 2, w + 5, h + 5)
-        -- Here too
-        love.graphics.rectangle("line", x - 3, y - 3, w + 6, h + 6)
-    else
-        love.graphics.rectangle("line", x-0, y-0, w+0, h+0)
-    end
+    FileButton.drawCoolRectangle(self,x,y,w,h)
 end
 
 function ModButton:update()
