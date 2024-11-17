@@ -122,7 +122,6 @@ function ElevatorButtons:confirmModSwitch(floor, mod)
                     target_dest = self.elevator.floors[self.elevator.target_floor].dest,
                     target_dir = self.elevator.dir,
                 }
-                Kristal.Console:log(self.elevator.dir)
                 -- Copy party position to party_data
                 ELEVATOR_TRANSITION.party_data[1].x =      Game.world.player.x
                 ELEVATOR_TRANSITION.party_data[1].y =      Game.world.player.y
