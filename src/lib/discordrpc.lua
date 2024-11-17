@@ -8,6 +8,16 @@ end
 
 local ok, discordRPClib = pcall(ffi.load, name)
 
+-- Apparently, that doesn't work for some reason like it did for the https module.
+-- It's fine since Discord RPC isn't critical for Rebirth but it's a bit weird
+if not discordRPClib then
+    ok, discordRPClib = pcall(ffi.load, "lib/"..name)
+end
+
+if not discordRPClib then
+    ok, discordRPClib = pcall(ffi.load, love.filesystem.getSource().."/lib/"..name)
+end
+
 DISCORD_RPC_AVAILABLE = ok
 
 if not ok then
