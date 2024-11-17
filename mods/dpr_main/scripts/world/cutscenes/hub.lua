@@ -583,9 +583,17 @@ local hub = {
 
     transition = function(cutscene, event)
         if love.math.random(1, 100) <= 5 then
-            Game.world:mapTransition("spamgolor_meeting", "west")
+            cutscene:mapTransition("spamgolor_meeting", "west")
+            -- default wait func waits for the fade animation to end. movement should be allowed slightly before that
+            cutscene:wait(function () return Game.world.map.id == "spamgolor_meeting" end)
+            local timeout = .5
+            cutscene:during(function () timeout = timeout - DT end)
+            -- prevent player from accidentally exiting the room
+            cutscene:wait(function ()
+                return Input.up("left") or (timeout <= 0)
+            end)
         else
-            Game.world:mapTransition("hub_traininggrounds", "entry")
+            cutscene:mapTransition("hub_traininggrounds", "entry")
         end
     end,
 
