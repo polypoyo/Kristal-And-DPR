@@ -12,8 +12,8 @@ function Elevator:init(data)
     self.rect_alpha = 0
     self.recty = 0
     self.dir = 1
-    self.target_floor = 2 -- what floor ID you're going to
-    self.current_floor = 1 -- what floor ID you're currently on
+    self.target_floor = 3 -- what floor ID you're going to
+    self.current_floor = 2 -- what floor ID you're currently on
 
     self.merge_amt = 0
     self.mergespeed = 0.1
