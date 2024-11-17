@@ -1,8 +1,10 @@
+---@class BossRematchMenu : Object
 local BossRematchMenu, super = Class(Object)
 
-function BossRematchMenu:init()
+function BossRematchMenu:init(options)
     super.init(self, SCREEN_WIDTH / 2 - 480 / 2, SCREEN_HEIGHT / 2 - 320 / 2, 480, 320)
 
+    self.options = options or {}
     self.parallax_x = 0
     self.parallax_y = 0
 
@@ -59,15 +61,21 @@ function BossRematchMenu:init()
     end
 
 	self.bosses = {}
-	
+    
     for i, _ in ipairs(self.encounters) do
 	    for n, v in ipairs(self.encounters[i]) do
-		    if Game:getFlag("encounter#"..v.mod.."/"..v.encounter..":done") then
+		    if self:isUnlocked(v) then
 			    table.insert(self.bosses, v.encounter)
 		    end
 	    end
     end
 
+end
+
+---@return boolean
+function BossRematchMenu:isUnlocked(boss)
+    if self.options.all_unlocked then return true end
+    return Game:getFlag(boss.flag)
 end
 
 function BossRematchMenu:draw()
@@ -79,13 +87,13 @@ function BossRematchMenu:draw()
 
     local entry = self.encounters[self.page][self.currently_selected]
 	
-    if Game:getFlag(entry.flag and entry.grad_color) then
+    if self:isUnlocked(entry) and entry.grad_color then
 	    love.graphics.setColor(entry.grad_color)
     end
 
     love.graphics.draw(self.gradient, 260, 50)
 
-    if Game:getFlag(entry.flag) then
+    if self:isUnlocked(entry) then
 	    love.graphics.setColor(1, 1, 1)
     else
         love.graphics.setColor(0, 0, 0)
@@ -96,7 +104,7 @@ function BossRematchMenu:draw()
 	love.graphics.setLineWidth(2)
     love.graphics.rectangle("line", 260, 50, 200, 140)
 
-    if Game:getFlag(entry.flag) and entry.preview then
+    if self:isUnlocked(entry) and entry.preview then
         local preview = entry.preview
         local canvas = Draw.pushCanvas(200, 140)
         love.graphics.draw(preview[1], preview[2], preview[3], 0, (entry.name == "Omega Spamton" and 1 or 2))
@@ -114,7 +122,7 @@ function BossRematchMenu:draw()
     local line_x = 24
     local line_y = y_off + self.line_height * 1
     for _, encounter in ipairs(self.encounters[self.page]) do
-        if Game:getFlag(encounter.flag) then
+        if self:isUnlocked(encounter) then
             love.graphics.setColor(unpack(self.item_color))
             love.graphics.print(encounter.name, line_x, line_y)
         else
@@ -178,7 +186,7 @@ function BossRematchMenu:onKeyPressed(key, is_repeat)
     end
     if Input.pressed("confirm") then
         local entry = self.encounters[self.page][self.currently_selected]
-        if Game:getFlag(entry.flag) then
+        if self:isUnlocked(entry) then
             self.ui_select:stop()
             self.ui_select:play()
             Game.world:closeMenu()
