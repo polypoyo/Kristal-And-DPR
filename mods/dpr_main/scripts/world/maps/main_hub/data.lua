@@ -1,7 +1,8 @@
 return {
-  version = "1.5",
+  version = "1.10",
   luaversion = "5.1",
-  tiledversion = "1.8.6",
+  tiledversion = "1.11.0",
+  class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
   width = 23,
@@ -9,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 11,
-  nextobjectid = 76,
+  nextobjectid = 78,
   properties = {
     ["border"] = "mainhub",
     ["music"] = "mainhub",
@@ -29,6 +30,7 @@ return {
       draworder = "topdown",
       id = 8,
       name = "objects_bg",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -46,6 +48,7 @@ return {
       height = 27,
       id = 1,
       name = "Tile Layer 1",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -92,6 +95,7 @@ return {
       height = 27,
       id = 7,
       name = "Tile Layer 3",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -138,6 +142,7 @@ return {
       height = 27,
       id = 6,
       name = "Tile Layer 2",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 20,
@@ -184,6 +189,7 @@ return {
       height = 27,
       id = 10,
       name = "flyers",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -227,6 +233,7 @@ return {
       draworder = "topdown",
       id = 2,
       name = "collision",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -571,6 +578,7 @@ return {
       draworder = "topdown",
       id = 9,
       name = "objects_elevator",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -599,6 +607,7 @@ return {
       draworder = "topdown",
       id = 3,
       name = "objects",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -839,6 +848,36 @@ return {
             ["map"] = "hub_elevator",
             ["marker"] = "entry"
           }
+        },
+        {
+          id = 76,
+          name = "dogconegroup",
+          type = "",
+          shape = "rectangle",
+          x = 160.919,
+          y = 200,
+          width = 40,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["default_state"] = true
+          }
+        },
+        {
+          id = 77,
+          name = "dogconegroup",
+          type = "",
+          shape = "rectangle",
+          x = 160.81,
+          y = 240.518,
+          width = 40,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["default_state"] = true
+          }
         }
       }
     },
@@ -847,6 +886,7 @@ return {
       draworder = "topdown",
       id = 4,
       name = "markers",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,

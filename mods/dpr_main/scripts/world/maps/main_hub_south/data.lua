@@ -1,7 +1,7 @@
 return {
-  version = "1.9",
+  version = "1.10",
   luaversion = "5.1",
-  tiledversion = "1.9.0",
+  tiledversion = "1.11.0",
   class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 6,
-  nextobjectid = 28,
+  nextobjectid = 37,
   properties = {
     ["border"] = "mainhub",
     ["music"] = "mainhub",
@@ -90,7 +90,7 @@ return {
         {
           id = 3,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 800,
           y = 920,
@@ -103,7 +103,7 @@ return {
         {
           id = 5,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 1000,
           y = 640,
@@ -116,7 +116,7 @@ return {
         {
           id = 6,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 800,
           y = 480,
@@ -129,7 +129,7 @@ return {
         {
           id = 9,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 520,
           y = 0,
@@ -142,7 +142,7 @@ return {
         {
           id = 10,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 720,
           y = 0,
@@ -155,7 +155,7 @@ return {
         {
           id = 11,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 320,
           y = 480,
@@ -168,7 +168,7 @@ return {
         {
           id = 18,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 0,
           y = 560,
@@ -181,7 +181,7 @@ return {
         {
           id = 21,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 0,
           y = 920,
@@ -194,7 +194,7 @@ return {
         {
           id = 22,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 520,
           y = 1000,
@@ -207,7 +207,7 @@ return {
         {
           id = 24,
           name = "",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 720,
           y = 1000,
@@ -236,7 +236,7 @@ return {
         {
           id = 1,
           name = "npc",
-          class = "",
+          type = "",
           shape = "point",
           x = 1060,
           y = 820,
@@ -252,7 +252,7 @@ return {
         {
           id = 13,
           name = "transition",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 600,
           y = -40,
@@ -268,7 +268,7 @@ return {
         {
           id = 15,
           name = "transition",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = -40,
           y = 800,
@@ -281,7 +281,7 @@ return {
         {
           id = 25,
           name = "savepoint",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 640,
           y = 800,
@@ -294,7 +294,7 @@ return {
         {
           id = 26,
           name = "transition",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 1320,
           y = 800,
@@ -307,7 +307,7 @@ return {
         {
           id = 27,
           name = "transition",
-          class = "",
+          type = "",
           shape = "rectangle",
           x = 600,
           y = 1120,
@@ -316,6 +316,141 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        },
+        {
+          id = 28,
+          name = "dogconegroup",
+          type = "",
+          shape = "rectangle",
+          x = 1,
+          y = 798.5,
+          width = 40,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["default_state"] = true
+          }
+        },
+        {
+          id = 29,
+          name = "dogconegroup",
+          type = "",
+          shape = "rectangle",
+          x = 1,
+          y = 839,
+          width = 40,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["default_state"] = true
+          }
+        },
+        {
+          id = 30,
+          name = "dogconegroup",
+          type = "",
+          shape = "rectangle",
+          x = 1,
+          y = 879.5,
+          width = 40,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["default_state"] = true
+          }
+        },
+        {
+          id = 31,
+          name = "dogconegroup",
+          type = "",
+          shape = "rectangle",
+          x = 1278.5,
+          y = 798.5,
+          width = 40,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["default_state"] = true
+          }
+        },
+        {
+          id = 32,
+          name = "dogconegroup",
+          type = "",
+          shape = "rectangle",
+          x = 1278.5,
+          y = 839.5,
+          width = 40,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["default_state"] = true
+          }
+        },
+        {
+          id = 33,
+          name = "dogconegroup",
+          type = "",
+          shape = "rectangle",
+          x = 1278.45,
+          y = 880.136,
+          width = 40,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["default_state"] = true
+          }
+        },
+        {
+          id = 34,
+          name = "dogconegroup",
+          type = "",
+          shape = "rectangle",
+          x = 602.455,
+          y = 1079.73,
+          width = 40,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["default_state"] = true
+          }
+        },
+        {
+          id = 35,
+          name = "dogconegroup",
+          type = "",
+          shape = "rectangle",
+          x = 642.909,
+          y = 1079.73,
+          width = 40,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["default_state"] = true
+          }
+        },
+        {
+          id = 36,
+          name = "dogconegroup",
+          type = "",
+          shape = "rectangle",
+          x = 683.364,
+          y = 1079.82,
+          width = 40,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["default_state"] = true
+          }
         }
       }
     },
@@ -336,7 +471,7 @@ return {
         {
           id = 12,
           name = "spawn",
-          class = "",
+          type = "",
           shape = "point",
           x = 660,
           y = 560,
@@ -349,7 +484,7 @@ return {
         {
           id = 14,
           name = "north",
-          class = "",
+          type = "",
           shape = "point",
           x = 660,
           y = 72,
