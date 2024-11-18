@@ -74,6 +74,9 @@ function UFOOfDoom:onAct(battler, name)
 		elseif battler.chara.id == "dess" then
             -- D-Action text
             return "* Dess did absolutely nothing."
+        elseif battler.chara.id == "noel" then
+            Game.battle:startActCutscene("ufoofdoom", "noel")
+            return
         end
         -- Give the enemy 50% mercy
         self:addMercy(50)
