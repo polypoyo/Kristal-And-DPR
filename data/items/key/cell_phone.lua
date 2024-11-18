@@ -172,7 +172,7 @@ function item:onWorldUse()
     
             cutscene:text("* (Click...)")
             cutscene:text("* Must've been a wrong number.")
-        elseif event_num >= 87 and event_num <= 93 then
+        elseif event_num == 87 then
             garbageNoise("voiceover/cell_phone/fnafcall")
     
             cutscene:text("* It's nothing but useless information.")
