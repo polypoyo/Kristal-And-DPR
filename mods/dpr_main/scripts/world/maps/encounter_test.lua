@@ -10,7 +10,7 @@ return {
   tilewidth = 32,
   tileheight = 32,
   nextlayerid = 7,
-  nextobjectid = 22,
+  nextobjectid = 25,
   properties = {},
   tilesets = {
     {
@@ -283,6 +283,54 @@ return {
           properties = {
             ["actor"] = "booty",
             ["encounter"] = "big_booty"
+          }
+        },
+        {
+          id = 22,
+          name = "enemy",
+          type = "",
+          shape = "point",
+          x = 688.713,
+          y = 305.749,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["actor"] = "eggman",
+            ["encounter"] = "eggman"
+          }
+        },
+        {
+          id = 23,
+          name = "enemy",
+          type = "",
+          shape = "point",
+          x = 638.964,
+          y = 146.138,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["actor"] = "seawalker",
+            ["encounter"] = "seawalker"
+          }
+        },
+        {
+          id = 24,
+          name = "enemy",
+          type = "",
+          shape = "point",
+          x = 195.887,
+          y = 467.433,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["actor"] = "shade_ania",
+            ["encounter"] = "ania_boss"
           }
         }
       }

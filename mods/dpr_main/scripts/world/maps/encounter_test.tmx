@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.11" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="22">
+<map version="1.11" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="25">
  <editorsettings>
   <export target="encounter_test.lua" format="lua"/>
  </editorsettings>
@@ -82,6 +82,27 @@ this project.)</property>
    <properties>
     <property name="actor" value="booty"/>
     <property name="encounter" value="big_booty"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="22" name="enemy" x="688.713" y="305.749">
+   <properties>
+    <property name="actor" value="eggman"/>
+    <property name="encounter" value="eggman"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="23" name="enemy" x="638.964" y="146.138">
+   <properties>
+    <property name="actor" value="seawalker"/>
+    <property name="encounter" value="seawalker"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="24" name="enemy" x="195.887" y="467.433">
+   <properties>
+    <property name="actor" value="shade_ania"/>
+    <property name="encounter" value="ania_boss"/>
    </properties>
    <point/>
   </object>
