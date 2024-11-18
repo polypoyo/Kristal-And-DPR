@@ -132,6 +132,8 @@ function character:init()
     self.opinions = {}
     self.default_opinion = 0
 
+    self.pain_img = Assets.getTexture("ui/menu/icon/pain")
+
 end
 
 function character:PainStat(y)
@@ -139,7 +141,15 @@ function character:PainStat(y)
 
     Draw.setColor(0, 0, 0, 1)
     love.graphics.rectangle("fill", 18,145, 180,30)
+
+    if math.random(1, 10) == 1 then
+        love.graphics.rectangle("fill", -9,145, 30,30)
+        Draw.setColor(1, 1, 1, 1)
+        Draw.draw(self.pain_img, -8, i + 6, 0, 2, 2)
+    end
+
     Draw.setColor(1, 1, 1, 1)
+
     love.graphics.print("Pain:", 18, i)
 
     love.graphics.print("x", 134, i)
