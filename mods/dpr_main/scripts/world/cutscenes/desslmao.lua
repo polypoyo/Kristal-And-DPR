@@ -3,10 +3,9 @@ local desslmao = {
 	dessbegin = function(cutscene)
 		local dess = cutscene:getCharacter("dess")
 		local susie = cutscene:getCharacter("susie")
-		local noel_here
-		if cutscene:getCharacter("noel") then
-			noel_here = 1
-		end
+
+		local noel = cutscene:getCharacter("noel")
+		local data = Noel:loadNoel()
 
 		cutscene:showNametag("Dess Holiday?")
 		if #Game.party == 1 then
@@ -23,33 +22,78 @@ local desslmao = {
 		elseif cutscene:getCharacter("hero") then
 			cutscene:setSpeaker("hero")
             cutscene:textTagged("* Uh,[wait:5] am I supposed to know you?")
+		elseif noel then -- make sure this is always next to last
+				cutscene:showNametag("Noel")
+			if data.met_dess then
+				cutscene:text("* Nice to see you agian?", "bruh", "noel")
+				noel_remembered_dess = true
+			else
+				cutscene:text("* ... [wait:10]Huh?", "huh", "noel")
+				cutscene:text("* You talking to me?", "...", "noel")
+				cutscene:text("* Pardon,[wait:5] but I think you have me confused for someone who looks [func:tag]and sounds exactly like me.", "bruh", "noel", 
+				{
+					functions = {
+						tag = function (text)
+							local face = Game.world.cutscene.textbox.face
+							face.y = face.y + 17
+							Game.world.cutscene.textbox.box.height = 103 + 34
+							Game.world.cutscene.nametag.y = 185 + 34
+						end
+					}
+				})
+				cutscene:showNametag("A very worrisome mistake.")
+				cutscene:text("* A simple wistake.[func:tag]", "huh", "noel", 
+				{
+					functions = {
+						tag = function (text)
+							cutscene:text("[instant]* A simple mistake.", "neutral", "noel")
+							cutscene:showNametag("(Nothing was here.)")
+						end
+					}
+				})
+				Noel:saveNoel({met_dess = {met = true}})
+				noel_not_remembered_dess = true
+			end
 		else
 			cutscene:textTagged("[speed:0.5]* ...", "heckyeah", "dess")
 			cutscene:textTagged("* hey why are you looking at me like that", "eyebrow", "dess")
         end
+
 		cutscene:setSpeaker("dess")
-		cutscene:textTagged("* aw c'mon don't tell me you guys forgot about me", "neutral", "dess")
-		local remembered = false
-		if cutscene:getCharacter("noel") then
-			cutscene:setSpeaker("noel")
-			cutscene:textTagged("* I remember you[wait:1][react:1]", "neutral", "noel",
-			{
-				reactions={
-					{"'re [color:red]Dessimation\nRoutes[color:reset].", "right", "bottom", "neutral", "noel"}
-				}
-			})
-			remembered = true
-		end
-		if remembered then
-			cutscene:setSpeaker("dess")
+		if noel_remembered_dess then
 			cutscene:textTagged("* ayyy finally someone remembers me", "condescending", "dess")
 			cutscene:textTagged("* anyways", "calm_b", "dess")
+		elseif noel_not_remembered_dess then
+			cutscene:textTagged("* nah man that was totally you", "wink", "dess")
+		else
+			cutscene:textTagged("* aw c'mon don't tell me you guys forgot about me", "neutral", "dess")
 		end
+
 		cutscene:textTagged("* I've been training in the hyperbolic time chamber for 20 years", "condescending", "dess")
 		cutscene:textTagged("* got a whole entire attack point out of it", "heckyeah", "dess")
 		cutscene:textTagged("* you could call me pretty strong now", "challenging", "dess")
 		cutscene:textTagged("* a side effect tho is that i lost all of my character development", "genuine", "dess")
 		cutscene:textTagged("* cause this is a reboot babyyyyy", "challenging", "dess")
+
+		if noel and data.met_dess and data.met_dess.understanding then
+			cutscene:showNametag("Noel")
+			cutscene:text("* Yeah, that's basically what happened.", "bruh", "noel")
+		elseif noel and data.met_dess then
+			cutscene:showNametag("Noel")
+			cutscene:text("* Stop using keywords, you're gonna confuse people.[func:tag]", "bruh", "noel", 
+			{
+				functions = {
+					tag = function (text)
+						cutscene:showNametag("Inventory, Skills, Attributes, Stats, Combat, Party, Buff, Debuff, Crafting, Loot, EXP.")
+					end
+				}
+			})
+		elseif noel then
+			cutscene:showNametag("Noel")
+			cutscene:text("* You don't care at all about keeping a low profile do you?", "bruh", "noel")
+			cutscene:text("*Well,[wait:5] neither do I\n[wait:10][face:oh]but that's besides the point.", "excusemebutwhatthefuck", "noel")
+		end
+
 		if susie then
             cutscene:setSpeaker("susie")
 			cutscene:textTagged("[speed:0.5]* ...", "nervous_side", "susie")
@@ -178,6 +222,18 @@ local desslmao = {
 			cutscene:setSpeaker("dess")
 			cutscene:textTagged("* Hey I can do a crazy impression watch this", "condescending", "dess")
 			cutscene:textTagged("* Look at meeee I'm FRISK from UNDERTALE lmao", "calm", "dess")
+
+			if cutscene:getCharacter("noel") then
+				cutscene:showNametag("Noel")
+				cutscene:text("[func:tag]* Damn, where did Dess go?", "bruh", "noel", 
+				{
+					functions = {
+						tag = function (text)
+							text.rotation = 0.1					
+						end
+					}
+				})
+			end
 
             if cutscene:getCharacter("susie") then
                 cutscene:setSpeaker("susie")
