@@ -74,3 +74,12 @@ function Mod:unlockQuest(quest, silent)
         Game.stage:addChild(QuestCreatedPopup(quest))
     end
 end
+
+function Mod:registerDebugOptions(debug)
+    debug:registerOption("main", "Party Menu", "Enter the  Party  Menu.", 
+        function () 
+            Game.world:openMenu(CharacterMenu()) 
+            debug:closeMenu()
+        end
+    )
+end

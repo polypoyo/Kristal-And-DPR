@@ -305,6 +305,9 @@ function PartyMember:onPowerDeselect(menu) end
 ---@param menu DarkPowerMenu The current menu instance
 function PartyMember:drawPowerStat(index, x, y, menu) end
 
+--- Same thing as the one above but for the party member's Equip menu.
+function PartyMember:drawEquipStat(menu) end
+
 --- *(Override)* Called whenever the party member's data is saved
 ---@param data PartyMemberSaveData
 function PartyMember:onSave(data)
