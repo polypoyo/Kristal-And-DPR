@@ -123,6 +123,10 @@ local desslmao = {
 
 		-- Wooo party setup time
 		Game:addPartyMember("dess", 1)
+        if #Game.party == 4 then
+			Game:addFollower(Game.party[4].id)
+			Game:removePartyMember(Game.party[4].id)
+		end
 		local old_followers = {}
 		for _, value in ipairs(Game.world.followers) do
 			table.insert(old_followers, value)
