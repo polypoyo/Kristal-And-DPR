@@ -354,7 +354,7 @@ end
 ---@param amount?   number  (Defaults to `1`)
 ---@return number
 function Encounter:addFlag(flag, amount)
-    return Game:addFlag("encounter#"..self.id..":"..flag, amount)
+    return Game:addFlag("encounter#"..Mod.info.id.."/"..self.id..":"..flag, amount)
 end
 
 return Encounter
