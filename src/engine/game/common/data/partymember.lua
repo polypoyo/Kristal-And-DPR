@@ -437,6 +437,9 @@ function PartyMember:getHeadIconOffset() return unpack(self.head_icon_offset or 
 ---@return number x
 ---@return number y
 function PartyMember:getMenuIconOffset() return unpack(self.menu_icon_offset or {0, 0}) end
+---@return number x
+---@return number y
+function PartyMember:getNameOffset() return unpack(self.name_offset or {0, 0}) end
 
 function PartyMember:getGameOverMessage() return self.gameover_message end
 
