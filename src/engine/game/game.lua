@@ -1093,7 +1093,7 @@ end
 ---@param amount        number
 ---@param dont_clamp?   boolean
 function Game:setTension(amount, dont_clamp)
-    Game.tension = dont_clamp and amount or Utils.clamp(amount, 0, Game.max_tension)
+    Game.tension = dont_clamp and amount or Utils.clamp(amount, 0, Game:getMaxTension())
 end
 
 ---@return number
@@ -1108,7 +1108,9 @@ end
 
 ---@return number
 function Game:getMaxTension()
-    return Game.max_tension or 100
+    local max_tension = Game.max_tension or 100
+    max_tension = max_tension + (50 * self:getBadgeEquipped("tension_plus"))
+    return max_tension
 end
 
 -- [Kristal.swapIntoMod](lua://Kristal.swapIntoMod) but it happens after update
