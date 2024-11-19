@@ -10,7 +10,7 @@ return {
   tilewidth = 32,
   tileheight = 32,
   nextlayerid = 7,
-  nextobjectid = 25,
+  nextobjectid = 26,
   properties = {},
   tilesets = {
     {
@@ -259,8 +259,8 @@ return {
           name = "warpbin",
           type = "",
           shape = "rectangle",
-          x = 285.134,
-          y = 168.632,
+          x = 168.535,
+          y = 107.482,
           width = 120,
           height = 40,
           rotation = 0,
@@ -290,8 +290,8 @@ return {
           name = "enemy",
           type = "",
           shape = "point",
-          x = 688.713,
-          y = 305.749,
+          x = 634.818,
+          y = 336.842,
           width = 0,
           height = 0,
           rotation = 0,
@@ -306,8 +306,8 @@ return {
           name = "enemy",
           type = "",
           shape = "point",
-          x = 638.964,
-          y = 146.138,
+          x = 655.547,
+          y = 148.211,
           width = 0,
           height = 0,
           rotation = 0,
@@ -331,6 +331,22 @@ return {
           properties = {
             ["actor"] = "shade_ania",
             ["encounter"] = "ania_boss"
+          }
+        },
+        {
+          id = 25,
+          name = "enemy",
+          type = "",
+          shape = "point",
+          x = 751.935,
+          y = 486.607,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["actor"] = "warstalker",
+            ["encounter"] = "warstalker"
           }
         }
       }

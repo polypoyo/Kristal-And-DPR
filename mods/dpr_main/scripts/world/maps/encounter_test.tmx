@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.11" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="25">
+<map version="1.11" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="26">
  <editorsettings>
   <export target="encounter_test.lua" format="lua"/>
  </editorsettings>
@@ -73,7 +73,7 @@ for those working on
 this project.)</property>
    </properties>
   </object>
-  <object id="19" name="warpbin" x="285.134" y="168.632" width="120" height="40">
+  <object id="19" name="warpbin" x="168.535" y="107.482" width="120" height="40">
    <properties>
     <property name="skin" value="main_hub"/>
    </properties>
@@ -85,14 +85,14 @@ this project.)</property>
    </properties>
    <point/>
   </object>
-  <object id="22" name="enemy" x="688.713" y="305.749">
+  <object id="22" name="enemy" x="634.818" y="336.842">
    <properties>
     <property name="actor" value="eggman"/>
     <property name="encounter" value="eggman"/>
    </properties>
    <point/>
   </object>
-  <object id="23" name="enemy" x="638.964" y="146.138">
+  <object id="23" name="enemy" x="655.547" y="148.211">
    <properties>
     <property name="actor" value="seawalker"/>
     <property name="encounter" value="seawalker"/>
@@ -103,6 +103,13 @@ this project.)</property>
    <properties>
     <property name="actor" value="shade_ania"/>
     <property name="encounter" value="ania_boss"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="25" name="enemy" x="751.935" y="486.607">
+   <properties>
+    <property name="actor" value="warstalker"/>
+    <property name="encounter" value="warstalker"/>
    </properties>
    <point/>
   </object>
