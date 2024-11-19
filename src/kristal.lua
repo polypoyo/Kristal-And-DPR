@@ -201,7 +201,7 @@ function love.load(args)
         love.graphics.reset()
 
         Draw.pushCanvas(SCREEN_CANVAS)
-        love.graphics.clear(0, 0, 0, 1)
+        love.graphics.clear(0, 0, 0, 0)
         orig(...)
         Kristal.Stage:draw()
         Kristal.Overlay:draw()
