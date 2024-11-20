@@ -24,7 +24,7 @@ function actor:init()
     -- Sound to play when this actor speaks (optional)
     self.voice = "brenda"
     -- Path to this actor's portrait for dialogue (optional)
-    self.portrait_path = "face/brenda"
+    self.portrait_path = "face/brenda_lw"
     -- Offset position for this actor's portrait (optional)
     self.portrait_offset = {-30, -15}
 
