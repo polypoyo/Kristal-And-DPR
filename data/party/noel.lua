@@ -140,7 +140,7 @@ function character:PainStat(y)
     local i = y
 
     Draw.setColor(0, 0, 0, 1)
-    love.graphics.rectangle("fill", 18,145, 180,30)
+    love.graphics.rectangle("fill", 18,145, 190,30)
 
     if math.random(1, 10) == 1 then
         love.graphics.rectangle("fill", -9,145, 30,30)
