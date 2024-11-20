@@ -657,6 +657,7 @@ function MainMenuOptions:initializeOptions()
     self:registerConfigOption("engine", "Instant Quit", "instantQuit")
 
     self:registerConfigOption("gameplay", "Prefer Goner Keybd.", "prefersGonerKeyboard")
+    self:registerConfigOption("gameplay", "Enable Shatter", "enableShatter")
 end
 
 -------------------------------------------------------------------------------

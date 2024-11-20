@@ -293,6 +293,14 @@ function MainMenu:update()
         self.heart.x = self.heart.x + ((self.heart_target_x - self.heart.x) / 2) * DTMULT
         self.heart.y = self.heart.y + ((self.heart_target_y - self.heart.y) / 2) * DTMULT
     end
+
+    if Kristal.Shatter then
+        if Kristal.Config["enableShatter"] then
+            Kristal.Shatter.active = true
+        else
+            Kristal.Shatter.active = false
+        end
+    end
 end
 
 function MainMenu:draw()
