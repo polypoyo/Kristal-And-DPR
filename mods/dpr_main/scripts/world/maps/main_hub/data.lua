@@ -1,5 +1,5 @@
 return {
-  version = "1.10",
+  version = "1.11",
   luaversion = "5.1",
   tiledversion = "1.11.0",
   class = "",
@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 11,
-  nextobjectid = 78,
+  nextobjectid = 81,
   properties = {
     ["border"] = "mainhub",
     ["music"] = "mainhub",
@@ -22,6 +22,12 @@ return {
       firstgid = 1,
       filename = "../../tilesets/main_area.tsx",
       exportfilename = "../../tilesets/main_area.lua"
+    },
+    {
+      name = "other-objects",
+      firstgid = 209,
+      filename = "../../tilesets/other-objects.tsx",
+      exportfilename = "../../tilesets/other-objects.lua"
     }
   },
   layers = {
@@ -877,6 +883,39 @@ return {
           visible = true,
           properties = {
             ["default_state"] = true
+          }
+        },
+        {
+          id = 78,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 424,
+          y = 926,
+          width = 72,
+          height = 104,
+          rotation = 0,
+          gid = 210,
+          visible = true,
+          properties = {
+            ["cond"] = "not Noel:loadNoel() and Game:getFlag(\"FUN\") == 99"
+          }
+        },
+        {
+          id = 80,
+          name = "interactable",
+          type = "",
+          shape = "rectangle",
+          x = 424,
+          y = 900,
+          width = 72,
+          height = 20,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["cond"] = "not Noel:loadNoel() and Game:getFlag(\"FUN\") == 99",
+            ["cutscene"] = "shared_cutscenes.greyarea",
+            ["solid"] = true
           }
         }
       }

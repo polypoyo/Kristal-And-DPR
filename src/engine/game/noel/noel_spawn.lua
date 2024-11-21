@@ -3,12 +3,18 @@ local self = Noel
 
 function Noel:checkNoel()
     local noelsave = Noel:loadNoel()
-    if noelsave and Game:hasPartyMember("noel") and noelsave.SaveID ~= Game:getFlag("noel_SaveID") then
+    local noel_char = Game:hasPartyMember("noel")
+    if noelsave and noel_char and noelsave.SaveID ~= Game:getFlag("noel_SaveID") then
         Game:removePartyMember("noel")
         Game.world:removeFollower("noel")
         local noel = Game.world:getCharacter("noel")
         if noel then noel:remove() end
         Noel:NoelEnter(noelsave)
+    elseif not noelsave and noel_char then
+        Game:removePartyMember("noel")
+        Game.world:removeFollower("noel")
+        local noel = Game.world:getCharacter("noel")
+        if noel then noel:remove() end
     end
 end
 
