@@ -100,11 +100,11 @@ return function(cutscene)
         --
             -- fade out the depth texture
             Game.world.timer:during(170/30, function()
-                fountain.eyebody = fountain.eyebody - (fountain.eyebody * (1 - 0.98) * DTMULT)
+                --fountain.eyebody = fountain.eyebody - (fountain.eyebody * (1 - 0.98) * DTMULT)
             end)
         --]]
         cutscene:wait(170/30)
-        fountain.adjust = 2 -- freeze in place and fade to white
+        --fountain.adjust = 2 -- freeze in place and fade to white
         cutscene:wait(3)
         
         can_skip = false
