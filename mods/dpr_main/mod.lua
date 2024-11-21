@@ -33,6 +33,10 @@ function Mod:postInit(new_file)
 
         Game.world:startCutscene("_main.introcutscene")
     end
+    if not Game:getFlag("FUN") then
+        local random = math.random(1,100)
+        Game:setFlag("FUN", random)
+    end
 end
 
 function Mod:addGlobalEXP(exp)
