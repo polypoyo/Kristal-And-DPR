@@ -157,6 +157,10 @@ function ActionBox:update()
         if not self.head_sprite:isSprite(current_head) then
             local color = {1, 1, 1}
             self.head_sprite:setColor(self.battler.chara.icon_color or color)
+            if self.battler:getHeadIcon() == "head" or self.battler:getHeadIcon() == "head_hurt" or self.battler:getHeadIcon() == "head_low" then
+                -- These icons are already colored and don't play nice with the coloring system.
+                self.head_sprite:setColor(color)
+            end
             self.head_sprite:setSprite(current_head)
         end
     end
