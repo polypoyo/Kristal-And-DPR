@@ -533,7 +533,7 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
                       {
                           reactions = {
                               { "I can still hear\nyou...", "right", "bottom", "neutral", "cat" }
-                          }
+                          }, nametag = "???"
                       })
 
         susie:resetSprite()
@@ -571,6 +571,7 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
         cutscene:wait(0.5)
         cutscene:setSpeaker("susie")
         local get_bus = Music("get_on_the_bus")
+        Game.world:spawnObject(MusicLogo(" Get on the Bus\n    Earthbound OST", 360, 220), WORLD_LAYERS["ui"])
 
 
 

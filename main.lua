@@ -145,6 +145,7 @@ Textbox = require("src.engine.game.common.textbox")
 Choicebox = require("src.engine.game.common.choicebox")
 TextChoicebox = require("src.engine.game.common.textchoicebox")
 SmallFaceText = require("src.engine.game.common.smallfacetext")
+MusicLogo = require("src.engine.game.common.musiclogo")
 
 World = require("src.engine.game.world")
 Map = require("src.engine.game.world.map")
