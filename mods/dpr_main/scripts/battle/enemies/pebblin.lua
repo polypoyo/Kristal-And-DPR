@@ -4,7 +4,7 @@ function Pebblin:init()
     super.init(self)
 
     self.name = "Pebblin"
-    self:setActor("dummy") -- Placeholder
+    self:setActor("pebblin")
 
     self.max_health = 150
     self.health = 150
@@ -17,10 +17,8 @@ function Pebblin:init()
 
     self.spare_points = 20
 
-    self.waves = { -- Placeholder
-        "basic",
-        "aiming",
-        "movingarena"
+    self.waves = {
+        "pebbledrop"
     }
 
     self.dialogue = { -- Placeholder
