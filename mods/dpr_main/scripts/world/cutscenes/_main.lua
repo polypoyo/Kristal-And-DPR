@@ -4,6 +4,9 @@ return {
         local text
         Game:setBorder("simple")
 
+        local skip_hint
+
+
         local function gonerTextFade(wait)
             local this_text = text
             Game.world.timer:tween(1, this_text, { alpha = 0 }, "linear", function()
@@ -40,13 +43,35 @@ return {
         cover:setLayer(WORLD_LAYERS["below_ui"])
         Game.world:addChild(cover)
 
-        local skip_hint = Text("Hold C+D to skip",
-            0, SCREEN_HEIGHT/2+50, SCREEN_WIDTH, SCREEN_HEIGHT,
-            {
-                align = "center",
-                font = "plain"
-            }
-        )
+        if Game:getGlobalFlag("Intro_seen") then
+            cutscene:text("Would you like to skip the intro?\n\n[wait:10](You might miss some things.)")
+            cutscene:showNametag("Skip intro?")
+            local choicer = cutscene:choicer({ "Yes", "No"})
+            cutscene:hideNametag()
+            if choicer == 1 then
+                cutscene:after(function()
+                    --[[if sideb_file_found then
+                        Game.world.timer:after(2, function()
+                            Game.world:startCutscene("_main.snowgraveskip")
+                        end)
+                    else]]
+                        Game.tutorial = true
+                        Game.world:loadMap("grey_cliffside/cliffside_start", nil, "down")
+                        Game.world:startCutscene("cliffside.intro")
+                    --end
+                end)
+                cutscene:endCutscene()
+            end
+        else
+            Game:setGlobalFlag("Intro_seen", true)
+            skip_hint = Text("Hold C+D to skip",
+                0, SCREEN_HEIGHT/2+50, SCREEN_WIDTH, SCREEN_HEIGHT,
+                {
+                    align = "center",
+                    font = "plain"
+                }
+            )
+
         skip_hint.alpha = 0.1
         skip_hint:setParallax(0, 0)
         skip_hint:setLayer(WORLD_LAYERS["ui"])
@@ -56,6 +81,8 @@ return {
             for key, value in pairs(skip_hint.sprites) do
                 value.alpha = skip_hint.alpha
             end
+        end
+
         end
 
         local can_exit = true

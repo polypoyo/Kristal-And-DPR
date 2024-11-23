@@ -18,8 +18,8 @@ return {
     {
       name = "cliffs",
       firstgid = 1,
-      filename = "../../tilesets/cliffs.tsx",
-      exportfilename = "../../tilesets/cliffs.lua"
+      filename = "../../../tilesets/cliffs.tsx",
+      exportfilename = "../../../tilesets/cliffs.lua"
     }
   },
   layers = {

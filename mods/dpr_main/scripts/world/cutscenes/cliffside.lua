@@ -170,6 +170,7 @@ return {
             Kristal.showBorder(1.5)
             cutscene:wait(0.75)
             Game.world.music:play()
+            Game.world:spawnObject(MusicLogo("demonic little grey cliffs", 30, 20), WORLD_LAYERS["ui"])
         elseif choicer == 2 then
 
         end
@@ -360,6 +361,7 @@ return {
         --cat keep walking
 
         cutscene:hideNametag()
+        Game:setFlag("met_cat", true)
     end,
     reverse_cliff_2 = function (cutscene, event)
         local end_y = 80
