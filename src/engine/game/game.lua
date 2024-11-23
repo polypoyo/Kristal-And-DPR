@@ -1321,7 +1321,7 @@ end
 function Game:getGlobalFlag(flag, default)
     local flags
 
-    if love.filesystem.getInfo("saves/global_flags.lua") then
+    if love.filesystem.getInfo("saves/global_flags.json") then
         flags = JSON.decode(love.filesystem.read("saves/global_flags.json"))
     else
         return false
@@ -1337,7 +1337,7 @@ end
 
 function Game:setGlobalFlag(flag_name, value)
     local data
-    if love.filesystem.getInfo("saves/global_flags.lua") then
+    if love.filesystem.getInfo("saves/global_flags.json") then
         data = JSON.decode(love.filesystem.read("saves/global_flags.json"))
     else
         data = {}
