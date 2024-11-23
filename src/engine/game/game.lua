@@ -1319,8 +1319,14 @@ function Game:loadNoel()
 end
 
 function Game:getGlobalFlag(flag, default)
+    local flags
 
-    local flags = JSON.decode(love.filesystem.read("saves/global_flags.lua"))
+    if love.filesystem.getInfo("saves/global_flags.lua") then
+        flags = JSON.decode(love.filesystem.read("saves/global_flags.json"))
+    else
+        return false
+    end
+
     local result = flags[flag]
     if result == nil then
         return default
@@ -1332,7 +1338,7 @@ end
 function Game:setGlobalFlag(flag_name, value)
     local data
     if love.filesystem.getInfo("saves/global_flags.lua") then
-        data = JSON.decode(love.filesystem.read("saves/global_flags.lua"))
+        data = JSON.decode(love.filesystem.read("saves/global_flags.json"))
     else
         data = {}
     end
@@ -1345,7 +1351,7 @@ function Game:setGlobalFlag(flag_name, value)
         end
     end
 
-    love.filesystem.write("saves/global_flags.lua", JSON.encode(data))
+    love.filesystem.write("saves/global_flags.json", JSON.encode(data))
 end
 
 function Game:getUISkin()
