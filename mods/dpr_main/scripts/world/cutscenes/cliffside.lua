@@ -192,6 +192,9 @@ return {
     welcome = function (cutscene, event)
         cutscene:text("* Welcome to Cliffside![wait:10]\n* Watch your step!")
     end,
+    stranger = function (cutscene, event)
+        cutscene:text("* ����������")
+    end,
     first_reverse_cliff = function (cutscene, event)
         local text
 
