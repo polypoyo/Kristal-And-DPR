@@ -1,7 +1,7 @@
 return {
-  version = "1.10",
+  version = "1.11",
   luaversion = "5.1",
-  tiledversion = "1.10.2",
+  tiledversion = "1.11.0",
   class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 9,
-  nextobjectid = 45,
+  nextobjectid = 46,
   properties = {
     ["music"] = "demonic_little_grey_cliffs"
   },
@@ -379,6 +379,23 @@ return {
           properties = {
             ["cutscene"] = "cliffside.susie",
             ["once"] = true
+          }
+        },
+        {
+          id = 45,
+          name = "npc",
+          type = "",
+          shape = "point",
+          x = 721,
+          y = 780,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["actor"] = "stranger",
+            ["cond"] = "Game:getFlag(\"FUN\") >= 51 and Game:getFlag(\"FUN\") <= 60",
+            ["cutscene"] = "cliffside.stranger"
           }
         }
       }
