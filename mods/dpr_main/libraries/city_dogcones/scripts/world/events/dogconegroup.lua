@@ -9,8 +9,8 @@ function DogConeGroup:init(data)
 
     self.solid = false
 
-    self.scissor_fx = ScissorFX(0, 0, self.width, self.height)
-    -- self:addFX(self.scissor_fx)
+    self.scissor_fx = ScissorFX(-40, -40, self.width+80, self.height+80)
+    self:addFX(self.scissor_fx)
 
     self.cones = { }
 
@@ -74,7 +74,15 @@ function DogConeGroup:getActiveConePosition(index)
 end
 
 function DogConeGroup:getInactiveConePosition(origin)
-    return origin == "left" and -34 or self.width + 6, 0
+    if origin == "left" then
+        return -34, 0
+    elseif origin == "right" then
+        return self.width + 6, 0
+    elseif origin == "top" then
+        return 6, -20
+    else
+        return 6, self.height + 0
+    end
 end
 
 ---Changes the state that the dogcones are in, or does nothing if they are already in that state.
@@ -85,6 +93,8 @@ function DogConeGroup:setConesState(state, options)
     local new
 
     local statedict = {
+        open        = false ,
+        closed      = true  ,
         inactive    = false ,
         active      = true  ,
         on          = true  ,
@@ -131,7 +141,7 @@ end
 
 function DogConeGroup:onInteract(player, dir)
     if not self.solid then
-        return true
+        return false
     end
 
     self.interact_count = self.interact_count + 1
@@ -151,7 +161,7 @@ end
 ---that the code WILL get angry if you don't specify `"right"`.
 ---@param origin any
 function DogConeGroup:assertOrigin(origin)
-    assert(type(origin) == "string" and (origin == "left" or origin == "right"), "Cone group origin must be 'left' or 'right', but was '" .. origin .. "' instead.")
+    assert(type(origin) == "string" and (origin == "left" or origin == "right" or origin == "top" or origin == "bottom"), "Cone group origin must be 'left' or 'right', but was '" .. origin .. "' instead.")
 end
 
 return DogConeGroup
