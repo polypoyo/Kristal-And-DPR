@@ -6,7 +6,6 @@ function Mod:init()
     self.border_shaders = {}
 
     self:setMusicPitches()
-
 end
 
 function Mod:postInit(new_file)
@@ -36,6 +35,10 @@ function Mod:postInit(new_file)
     if not Game:getFlag("FUN") then
         local random = math.random(1,100)
         Game:setFlag("FUN", random)
+    end
+    if Game:getFlag("oddstone_tossed") then
+        Game:setFlag("oddstone_tossed", false)
+        Game.inventory:addItem("oddstone")
     end
 end
 

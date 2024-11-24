@@ -1,7 +1,7 @@
 return {
-  version = "1.11",
+  version = "1.10",
   luaversion = "5.1",
-  tiledversion = "1.11.0",
+  tiledversion = "1.10.2",
   class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
@@ -18,8 +18,8 @@ return {
     {
       name = "cliffs",
       firstgid = 1,
-      filename = "../../tilesets/cliffs.tsx",
-      exportfilename = "../../tilesets/cliffs.lua"
+      filename = "../../../tilesets/cliffs.tsx",
+      exportfilename = "../../../tilesets/cliffs.lua"
     }
   },
   layers = {
@@ -394,7 +394,7 @@ return {
           visible = true,
           properties = {
             ["actor"] = "stranger",
-            ["cond"] = "Game:getFlag(\"FUN\") >= 51 and Game:getFlag(\"FUN\") <= 60",
+            ["cond"] = "Game:getFlag(\"FUN\") >= 51 and Game:getFlag(\"FUN\") <= 60 and not Game:getFlag(\"met_stranger\")",
             ["cutscene"] = "cliffside.stranger"
           }
         }

@@ -194,6 +194,18 @@ return {
     end,
     stranger = function (cutscene, event)
         cutscene:text("* ����������")
+        if not Game:getFlag("met_stranger") then
+            Game:setFlag("met_stranger", 1)
+        end
+    end,
+    stranger_item = function (cutscene, event)
+        if Game.inventory:addItem("oddstone") then
+            cutscene:wait(0.1)
+            cutscene:text("* You didn't see it happen, but you felt it, something entered your inventory.")
+            Game:setFlag("met_stranger", 2)
+        else
+            Game:setFlag("met_stranger", 0)
+        end
     end,
     first_reverse_cliff = function (cutscene, event)
         local text
