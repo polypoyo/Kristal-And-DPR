@@ -4,13 +4,13 @@ function DogConeGroup:init(data)
     super.init(self, data)
 
     self:setOrigin(0, 0)
-    self:setHitbox(0, self.height / 2, self.width, self.height / 2)
+    self:setHitbox(0, 20, self.width, self.height - 20)
     self.interact_count = 0
 
     self.solid = false
 
     self.scissor_fx = ScissorFX(0, 0, self.width, self.height)
-    self:addFX(self.scissor_fx)
+    -- self:addFX(self.scissor_fx)
 
     self.cones = { }
 
@@ -54,23 +54,27 @@ function DogConeGroup:onLoad()
 end
 
 function DogConeGroup:createCones()
-    local j = math.floor(self.width / 40)
+    local width = math.floor(self.width / 40)
+    local height = math.floor(self.height / 40)
 
-    for i=1,j do
-        local cone = Sprite("world/events/dogcone")
-        cone.x     = self:getInactiveConePosition(self.cone_origin)
-        self:addChild(cone)
-        cone:setScale(2)
-        table.insert(self.cones, cone)
+    for _=1,width do
+        for _=1,height do
+            local cone = Sprite("world/events/dogcone")
+            cone.x, cone.y = self:getInactiveConePosition(self.cone_origin)
+            self:addChild(cone)
+            cone:setScale(2)
+            table.insert(self.cones, cone)
+        end
     end
 end
 
 function DogConeGroup:getActiveConePosition(index)
-    return ((index - 1) * 40) + 6
+    return ((((index - 1) % math.floor(self.width / 40))) * 40) + 6,
+    math.floor((index-1) / (self.width/40)) * 40
 end
 
 function DogConeGroup:getInactiveConePosition(origin)
-    return origin == "left" and -34 or self.width + 6
+    return origin == "left" and -34 or self.width + 6, 0
 end
 
 ---Changes the state that the dogcones are in, or does nothing if they are already in that state.
@@ -108,12 +112,15 @@ function DogConeGroup:setConesState(state, options)
 
 
     for i, cone in ipairs(self.cones) do
-        local target_x = not new and self:getInactiveConePosition(origin) or self:getActiveConePosition(i)
+        --- @diagnostic disable-next-line: unbalanced-assignments # it's fine dw
+        local target_x, target_y = self:getInactiveConePosition(origin)
+        if new then target_x, target_y = self:getActiveConePosition(i) end
         if instant then
             cone.x = target_x
+            cone.y = target_y
 
         else
-            cone:slideTo(target_x, cone.y, frames/30)
+            cone:slideTo(target_x, target_y, frames/30)
 
         end
     end
