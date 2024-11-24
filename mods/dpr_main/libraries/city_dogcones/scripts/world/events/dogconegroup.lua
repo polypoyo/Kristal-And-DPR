@@ -61,6 +61,7 @@ function DogConeGroup:createCones()
         for _=1,height do
             local cone = Sprite("world/events/dogcone")
             cone.x, cone.y = self:getInactiveConePosition(self.cone_origin)
+            cone.debug_select = false
             self:addChild(cone)
             cone:setScale(2)
             table.insert(self.cones, cone)
