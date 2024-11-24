@@ -10,7 +10,7 @@ function character:init()
     self:setDarkTransitionActor("kris_dark_transition") -- placeholder
 
     self.level = 1
-    self.title = "Marksman\nTakes aim with\na rifle."
+    self.title = "Musketeer\nTakes aim with\na musket."
 
     self.soul_priority = 1
     self.soul_color = {1, 1, 1}

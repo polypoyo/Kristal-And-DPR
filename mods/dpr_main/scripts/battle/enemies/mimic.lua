@@ -33,6 +33,7 @@ function Mimic:init()
 		"mimic/starfademimic",
         "mimic/dual_movingarena_mimic",
         "mimic/bouncymimic",
+        "mimic/pebblerain",
 		-- add more, please :)
 		-- (PS, bonus points if it's an upgraded version of another enemy's attack to stick with the theme)
     }
