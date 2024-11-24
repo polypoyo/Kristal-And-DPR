@@ -5,6 +5,7 @@ function DogConeGroup:init(data)
 
     self:setOrigin(0, 0)
     self:setHitbox(0, self.height / 2, self.width, self.height / 2)
+    self.interact_count = 0
 
     self.solid = false
 
@@ -126,17 +127,13 @@ function DogConeGroup:onInteract(player, dir)
         return true
     end
 
-    local interact = self:getFlag("interact", 0)
+    self.interact_count = self.interact_count + 1
 
-    if interact > 3 then
-        Assets.playSound("snd_pombark", 1, Utils.pick({1, 1, 1, 1, 1, 1, 1, Utils.random(0.6, 1.6)}))
-
+    if self.interact_count > 3 and math.random() < 1/8 then
+        Assets.playSound("snd_pombark", 1, Utils.random(0.6, 1.6))
     else
         Assets.playSound("snd_pombark")
-
     end
-
-    self:setFlag("interact", interact + 1)
 
     return true
 end
