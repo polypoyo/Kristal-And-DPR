@@ -1,7 +1,7 @@
 return {
-  version = "1.10",
+  version = "1.11",
   luaversion = "5.1",
-  tiledversion = "1.10.2",
+  tiledversion = "1.11.0",
   class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
@@ -10,9 +10,10 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 8,
-  nextobjectid = 49,
+  nextobjectid = 53,
   properties = {
-    ["music"] = "demonic_little_grey_cliffs"
+    ["music"] = "demonic_little_grey_cliffs",
+    ["name"] = "Cliffside - Beginning"
   },
   tilesets = {
     {
@@ -36,7 +37,21 @@ return {
       parallaxx = 1,
       parallaxy = 1,
       properties = {},
-      objects = {}
+      objects = {
+        {
+          id = 52,
+          name = "magicglass",
+          type = "",
+          shape = "rectangle",
+          x = 440,
+          y = 400,
+          width = 160,
+          height = 80,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
+      }
     },
     {
       type = "tilelayer",
@@ -213,19 +228,6 @@ return {
           y = 480,
           width = 80,
           height = 40,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 19,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 560,
-          y = 400,
-          width = 40,
-          height = 80,
           rotation = 0,
           visible = true,
           properties = {}
@@ -485,6 +487,22 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        },
+        {
+          id = 50,
+          name = "savepoint",
+          type = "",
+          shape = "rectangle",
+          x = 300,
+          y = 180,
+          width = 40,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["text1"] = "* These monochromatic cliffs seem to go on forever.",
+            ["text2"] = "* The power of a new adventure shines within you."
+          }
         }
       }
     },
@@ -522,6 +540,19 @@ return {
           shape = "point",
           x = 400,
           y = 640,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 51,
+          name = "spawn",
+          type = "",
+          shape = "point",
+          x = 320,
+          y = 280,
           width = 0,
           height = 0,
           rotation = 0,
