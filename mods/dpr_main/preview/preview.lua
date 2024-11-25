@@ -53,6 +53,7 @@ function preview:update()
     local is_options = (MainMenu.state == "OPTIONS")
         or (MainMenu.state == "DEFAULTNAME")
         or (MainMenu.state == "CONTROLS")
+        or (Utils.startsWith(MainMenu.state, "plugin"))
     if is_options and self.music_once == 0 then
 
         self.music_settings = Music("options_starry")
