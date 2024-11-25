@@ -1,5 +1,5 @@
 return {
-  version = "1.10",
+  version = "1.11",
   luaversion = "5.1",
   tiledversion = "1.11.0",
   class = "",
@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 6,
-  nextobjectid = 37,
+  nextobjectid = 38,
   properties = {
     ["border"] = "mainhub",
     ["music"] = "mainhub",
@@ -315,7 +315,10 @@ return {
           height = 40,
           rotation = 0,
           visible = true,
-          properties = {}
+          properties = {
+            ["map"] = "tower_outside",
+            ["marker"] = "entry"
+          }
         },
         {
           id = 28,
@@ -406,51 +409,6 @@ return {
           properties = {
             ["default_state"] = true
           }
-        },
-        {
-          id = 34,
-          name = "dogconegroup",
-          type = "",
-          shape = "rectangle",
-          x = 602.455,
-          y = 1079.73,
-          width = 40,
-          height = 40,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["default_state"] = true
-          }
-        },
-        {
-          id = 35,
-          name = "dogconegroup",
-          type = "",
-          shape = "rectangle",
-          x = 642.909,
-          y = 1079.73,
-          width = 40,
-          height = 40,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["default_state"] = true
-          }
-        },
-        {
-          id = 36,
-          name = "dogconegroup",
-          type = "",
-          shape = "rectangle",
-          x = 683.364,
-          y = 1079.82,
-          width = 40,
-          height = 40,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["default_state"] = true
-          }
         }
       }
     },
@@ -488,6 +446,19 @@ return {
           shape = "point",
           x = 660,
           y = 72,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 37,
+          name = "south",
+          type = "",
+          shape = "point",
+          x = 660,
+          y = 1080,
           width = 0,
           height = 0,
           rotation = 0,
