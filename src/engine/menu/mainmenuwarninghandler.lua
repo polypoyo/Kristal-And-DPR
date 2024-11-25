@@ -47,10 +47,9 @@ function MainMenuWarningHandler:update()
         ), Utils.clampMap(
             self.animation_clock, 0, 1.3, 1, 0.0
         ))
-        local luma = Utils.clampMap(
+        self.alphafx.alpha = Utils.clampMap(
             self.animation_clock, 0, 1.3, 1, 0
         )
-        self.container:setColor(luma,luma,luma)
     end
 end
 
@@ -59,6 +58,7 @@ function MainMenuWarningHandler:onEnter()
 	self.active = true
     local options = {align = "center"}
     self.container = self.menu.stage:addChild(Object(0,0,SCREEN_WIDTH, SCREEN_HEIGHT))
+    self.alphafx = self.container:addFX(AlphaFX(1))
     self.container:setScaleOrigin(0.5, 0.5)
     self.text_warn = self.container:addChild(Text("asdf", 0, 115 + 30, options))
     self.text_warn.inherit_color = true
