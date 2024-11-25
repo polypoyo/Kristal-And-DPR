@@ -155,7 +155,71 @@ local hub = {
     end,
 
     malius = function(cutscene, event)
-        Game.world:openMenu(FuseMenu())
+        local malius = cutscene:getCharacter("malius")
+        local choice = cutscene:choicer({"Fix Item", "Fuse", "Fix Us", "Leave"})
+			
+        if choice == 3 then
+            cutscene:detachCamera()
+            cutscene:detachFollowers()
+            cutscene:text("* Your body is a weapon,[wait:10] too. You must take care of it from time to time.")
+            cutscene:text("* Huh-hah![wait:5] Let's feel my technique.")
+            malius:setAnimation("powerup")
+            cutscene:wait(1.5)
+
+            local order = {}
+
+            for i = #Game.party, 1, -1 do
+                table.insert(order, Game.party[i])
+            end
+
+            for i, party in pairs(order) do
+                local id = party.actor.id 
+
+                local char = cutscene:getCharacter(id)
+                local x, y = char.x, char.y
+                local facing = char.facing
+
+                char.layer = 0.39
+                char.x, char.y = 460, 348
+                char:setFacing("down")
+
+                if id == "susie" then
+                    char:setSprite("shock_left")
+                elseif id == "dess" then
+                    char:setSprite("beatbox")
+                elseif id == "ceroba_dw" then
+                    char.x = char.x - 10
+                    char.y = char.y + 15
+                    char:setSprite("fall")
+                elseif id == "mario" then
+                    char.x = char.x - 30
+                    char:setSprite("slide")
+                elseif id == "noelle" then
+                    char:setSprite("shocked")
+                end
+
+                malius:setAnimation("hit")
+                cutscene:wait(9/15)
+                malius:setAnimation("hit")
+                cutscene:wait(9/15)
+                
+                char:resetSprite()
+
+                char.x, char.y = x, y
+                char.layer = 0.4
+                char:setFacing(facing)
+            end
+
+            malius:resetSprite()
+
+            cutscene:text("* (Somehow, [wait:5]everyone's HP was restored.)")
+            cutscene:attachFollowers()
+            cutscene:attachCamera()
+        end
+
+        if choice == 2 then
+            Game.world:openMenu(FuseMenu())
+        end
     end,
 
     fun_fax = function(cutscene, event)
