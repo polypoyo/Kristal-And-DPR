@@ -1278,7 +1278,17 @@ function Kristal.swapIntoMod(id, use_lame_fadeout, ...)
     if map_args[1] then
         facing = table.remove(map_args, 1)
     end
-    save.room_id = map
+
+    Kristal.modswap_destination = {
+        map,
+        marker,
+        x,
+        y,
+        facing
+    }
+
+    save.room_id = "conversion_rooms/" .. (Game.light and "light" or "dark")
+    --save.room_id = map
     save.spawn_facing = facing
     if marker then
         save.spawn_marker = marker
