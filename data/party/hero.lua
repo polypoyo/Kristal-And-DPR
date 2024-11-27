@@ -35,8 +35,6 @@ function character:init()
     self.weapon_icon = "ui/menu/equip/sword"
 
     self:setWeapon("chosen_blade")
-    self:setArmor(1, "amber_card") -- Placeholder
-    self:setArmor(2, "amber_card") -- Placeholder
 
     self.lw_weapon_default = "light/pencil"
     self.lw_armor_default = "light/bandage"
@@ -50,7 +48,7 @@ function character:init()
     self.icon_color = {1, 127/255, 39/255}
 
     self.menu_icon = "party/hero/head"
-    self.head_icons = "party/hero/icon" -- Placeholder
+    self.head_icons = "party/hero/icon"
     self.name_sprite = "party/hero/name"
 
     self.attack_sprite = "effects/attack/cut"
