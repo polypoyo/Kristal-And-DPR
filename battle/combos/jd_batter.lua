@@ -95,7 +95,7 @@ function test:doCutscene(cutscene, target)
 			return
 		end
 	end
-	can_proceed = false
+	local can_proceed = false
 	cutscene:setAnimation(dess, "battle/attack")
 	cutscene:wait(0.2)
 	Assets.playSound("boowomp", 1, 1)
