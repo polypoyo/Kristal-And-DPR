@@ -44,7 +44,7 @@ function ActionButton:select()
             }
 
             Game.battle:addMenuItem({
-                ["name"] = self.battler.chara:getXActName() or "X-Action",
+                ["name"] = Game.battle.encounter.xact_name or (Game.battle.encounter.xact_names and Game.battle.encounter.xact_names[self.battler.chara.id]) or self.battler.chara:getXActName() or "X-Action",
                 ["tp"] = 0,
                 ["color"] = {self.battler.chara:getXActColor()},
                 ["data"] = spell,
