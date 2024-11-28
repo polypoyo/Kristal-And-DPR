@@ -777,7 +777,11 @@ function MainMenuDLCHandler:handleMod(id)
 	        end
 	        love.filesystem.remove( item )
 	    end
-    	recursivelyDelete("mods/"..id)
+    	if love.filesystem.getInfo((Kristal.Mods.getMod(id).path).."/.git") then
+            Assets.playSound("ui_cant_select")
+            return
+        end
+    	recursivelyDelete(Kristal.Mods.getMod(id).path)
 		self:reloadMods(function()
 			self:buildDLCList(false)
 		end)

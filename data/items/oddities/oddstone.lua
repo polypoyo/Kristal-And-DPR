@@ -73,4 +73,9 @@ function item:onToss()
     return false
 end
 
+function item:convertToLight(inventory)
+    local marble = inventory:addItem("light/grey_marble")
+    return true
+end
+
 return item

@@ -1261,6 +1261,7 @@ function Kristal.swapIntoMod(id, use_lame_fadeout, ...)
         -- TODO: Floweycheck DLC
         print("WARNING: DLC " .. id .. " is not installed.")
     end
+    Game:setFlag("is_swapping_mods", true)
 
     local save_id = Game.started and Game.save_id or 1
     local save = Game.started and Game:save() or Kristal.getSaveFile(save_id)
@@ -1278,7 +1279,17 @@ function Kristal.swapIntoMod(id, use_lame_fadeout, ...)
     if map_args[1] then
         facing = table.remove(map_args, 1)
     end
-    save.room_id = map
+
+    Kristal.modswap_destination = {
+        map,
+        marker,
+        x,
+        y,
+        facing
+    }
+
+    save.room_id = "conversion_rooms/" .. (Game.light and "light" or "dark")
+    --save.room_id = map
     save.spawn_facing = facing
     if marker then
         save.spawn_marker = marker
