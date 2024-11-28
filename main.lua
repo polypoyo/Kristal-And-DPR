@@ -123,7 +123,7 @@ LightEquipItem = require("src.engine.game.common.data.lightequipitem")
 Recruit = require("src.engine.game.common.data.recruit")
 Quest = require("src.engine.game.common.data.quest")
 FallbackQuest = require("src.engine.game.common.data.fallbackquest")
-SimpleText = require("src.engine.game.simpletext")
+ButtonPrompt = require("src.engine.game.buttonprompt")
 
 ActorSprite = require("src.engine.game.common.actorsprite")
 Inventory = require("src.engine.game.common.inventory")
