@@ -193,7 +193,7 @@ return {
         cutscene:text("* Welcome to Cliffside![wait:10]\n* Watch your step!")
     end,
     stranger = function (cutscene, event)
-        cutscene:text("* ����������")
+        cutscene:text("* [image:ui/replacement_char,0,0,2,2][image:ui/replacement_char,0,0,2,2][image:ui/replacement_char,0,0,2,2][image:ui/replacement_char,0,0,2,2][image:ui/replacement_char,0,0,2,2][image:ui/replacement_char,0,0,2,2][image:ui/replacement_char,0,0,2,2][image:ui/replacement_char,0,0,2,2][image:ui/replacement_char,0,0,2,2][image:ui/replacement_char,0,0,2,2]")
         if not Game:getFlag("met_stranger") then
             Game:setFlag("met_stranger", 1)
         end
@@ -201,7 +201,7 @@ return {
     stranger_item = function (cutscene, event)
         if Game.inventory:addItem("oddstone") then
             cutscene:wait(0.1)
-            cutscene:text("* You didn't see it happen, but you felt it, something entered your inventory.")
+            cutscene:text("* You didn't see it happen,[wait:5] but you felt it,[wait:5] something entered your inventory.")
             Game:setFlag("met_stranger", 2)
         else
             Game:setFlag("met_stranger", 0)

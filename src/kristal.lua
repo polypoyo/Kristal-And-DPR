@@ -1261,6 +1261,7 @@ function Kristal.swapIntoMod(id, use_lame_fadeout, ...)
         -- TODO: Floweycheck DLC
         print("WARNING: DLC " .. id .. " is not installed.")
     end
+    Game:setFlag("is_swapping_mods", true)
 
     local save_id = Game.started and Game.save_id or 1
     local save = Game.started and Game:save() or Kristal.getSaveFile(save_id)

@@ -520,7 +520,17 @@ function Game:load(data, index, fade)
             end
         end
     end
-
+    -- Make sure it only comes back when you load a file, not when switching between DLCs
+    if not Game:getFlag("is_swapping_mods", false) and Game:getFlag("oddstone_tossed", false) then
+        -- If you threw away the Odd Stone, bring it back
+        if self.light then
+            self.inventory:addItem("light/grey_marble")
+        else
+            self.inventory:addItem("oddstone")
+        end
+        Game:setFlag("oddstone_tossed", false)
+    end
+    Game:setFlag("is_swapping_mods", false)
     -- END SAVE FILE VARIABLES --
 
     Kristal.callEvent(KRISTAL_EVENT.load, data, self.is_new_file, index)
