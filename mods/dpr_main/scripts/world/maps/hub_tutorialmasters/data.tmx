@@ -7,8 +7,8 @@
   <property name="border" value="mainhub"/>
   <property name="music" value="mainhub"/>
  </properties>
- <tileset firstgid="1" source="../tilesets/main_area.tsx"/>
- <tileset firstgid="209" source="../tilesets/hub_objects.tsx"/>
+ <tileset firstgid="1" source="../../tilesets/main_area.tsx"/>
+ <tileset firstgid="209" source="../../tilesets/hub_objects.tsx"/>
  <layer id="1" name="Tile Layer 1" width="16" height="12">
   <data encoding="csv">
 54,54,54,54,54,54,54,54,54,54,54,54,54,54,55,0,
