@@ -143,6 +143,12 @@ function Battle:init()
 
 	self.super_timer = 0
 
+    if Game:getSoulPartyMember().pp > 0 then
+        self.no_buff_loop = true
+    else
+        self.no_buff_loop = false
+    end
+
     self.month = tonumber(os.date("%m"))
     self.day = tonumber(os.date("%d"))
 

@@ -260,6 +260,9 @@ function PartyMember:init()
     
     -- this fucking sucks but i don't care lol
     self.mhp_damage = 0
+
+    -- protection points for soul shield mechanic
+    self.pp = 0
 end
 
 -- Callbacks
