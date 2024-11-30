@@ -19,14 +19,14 @@ return {
     {
       name = "main_area",
       firstgid = 1,
-      filename = "../tilesets/main_area.tsx",
-      exportfilename = "../tilesets/main_area.lua"
+      filename = "../../tilesets/main_area.tsx",
+      exportfilename = "../../tilesets/main_area.lua"
     },
     {
       name = "hub_objects",
       firstgid = 209,
-      filename = "../tilesets/hub_objects.tsx",
-      exportfilename = "../tilesets/hub_objects.lua"
+      filename = "../../tilesets/hub_objects.tsx",
+      exportfilename = "../../tilesets/hub_objects.lua"
     }
   },
   layers = {
