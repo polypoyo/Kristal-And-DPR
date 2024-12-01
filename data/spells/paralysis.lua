@@ -1,4 +1,4 @@
-local spell, super = Class(Spell, "paralyze")
+local spell, super = Class(Spell, "paralysis")
 
 function spell:init()
     super.init(self)
@@ -8,7 +8,7 @@ function spell:init()
     self.effect = "Ceroba's\nSpecial"
     self.description = "Deals massive damage to one enemy.\nDepends on Magic."
 
-    self.cost = 55
+    self.cost = 70
 
     self.target = "enemy"
 
@@ -22,20 +22,23 @@ end
 function spell:onCast(user, target)
 	local damage = self:getDamage(user, target)
 
-	local function generateSlash(scale_x)
-		local cutAnim = Sprite("battle/bullets/ceroba/diamond")
-		cutAnim:setOrigin(0.5, 0.5)
-		cutAnim:setScale(2.5 * scale_x, 2.5)
-		cutAnim:setPosition(target:getRelativePos(target.width/2, target.height/2))
-		cutAnim.layer = target.layer + 0.01
+	local function generateSlash()
+		local diamond = Sprite("effects/spells/ceroba/diamond")
+		diamond:setOrigin(0.5, 0.5)
+		diamond:setScale(2.5, 2.5)
+		diamond:setPosition(target:getRelativePos(target.width/2, target.height/2))
+		diamond.layer = target.layer + 1
 		Assets.playSound("trap")
-		cutAnim:play(1/20, false, function(s) s:remove() end)
-		user.parent:addChild(cutAnim)
+		diamond:play(1/15, false, function(s) s:fadeOutAndRemove(0.1) end)
+		user.parent:addChild(diamond)
 	end
 
-	Game.battle.timer:after(15/30, function()
+	Game.battle.timer:after(0.65, function()
 		target:flash()
 		target:hurt(damage, user)
+	end)
+
+	Game.battle.timer:after(0.8, function()
 		Game.battle:finishActionBy(user)
 	end)
 
@@ -46,19 +49,22 @@ end
 function spell:onLightCast(user, target)
 	local damage = self:getDamage(user, target)
 
-	local function generateSlash(scale_x)
-		local cutAnim = Sprite("battle/bullets/ceroba/diamond")
-		cutAnim:setOrigin(0.5, 0.5)
-		cutAnim:setScale(3.5 * scale_x, 3.5)
-		cutAnim:setPosition(target:getRelativePos(target.width/2, target.height/2))
-		cutAnim.layer = target.layer + 0.01
+	local function generateSlash()
+		local diamond = Sprite("effects/spells/ceroba/diamond")
+		diamond:setOrigin(0.5, 0.5)
+		diamond:setScale(3.5, 3.5)
+		diamond:setPosition(target:getRelativePos(target.width/2, target.height/2))
+		diamond.layer = target.layer + 1
 		Assets.playSound("trap")
-		cutAnim:play(1/20, false, function(s) s:remove() end)
-		user.parent:addChild(cutAnim)
+		diamond:play(1/15, false, function(s) s:fadeOutAndRemove(0.1) end)
+		user.parent:addChild(diamond)
 	end
 
-	Game.battle.timer:after(15/30, function()
+	Game.battle.timer:after(0.65, function()
 		target:hurt(damage, user)
+	end)
+
+	Game.battle.timer:after(0.8, function()
 		Game.battle:finishActionBy(user)
 	end)
 
