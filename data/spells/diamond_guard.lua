@@ -34,6 +34,7 @@ end
 
 function spell:onCast(user, target)
 	if Game:getSoulPartyMember().pp > 0 then
+        Game:giveTension(self.cost)
     else
         Game.battle.no_buff_loop = false
     end
@@ -41,6 +42,7 @@ end
 
 function spell:onLightCast(user, target)
 	if Game:getSoulPartyMember().pp > 0 then
+        Game:giveTension(self.cost)
     else
         Game.battle.no_buff_loop = false
     end
