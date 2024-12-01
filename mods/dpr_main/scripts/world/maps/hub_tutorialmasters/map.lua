@@ -7,9 +7,11 @@ function map:onEnter()
         local id = partymember.id
         local ok, actor = pcall(Registry.createActor, "tutorialmaster/"..id)
         if not ok then actor = Registry.createActor("tutorialmaster/bepis"); id = "bepis" end
-        self.world:spawnObject(NPC(actor, 90 + (i * 80), 390, {
+        local master = self.world:spawnObject(NPC(actor, 90 + (i * 80), 390, {
             cutscene = "tutorialmaster."..id
         }))
+        -- needed for master:setFlag() to work
+        master.unique_id = self:getUniqueID()..":"..id.."_master"
     end
 end
 

@@ -6,13 +6,17 @@ function TutorialMasterSprite:init(actor, chara, x, y)
     super.init(self, x, y)
     self.body = Sprite(prefix.."body", x, (y or 0)+40, 40, 40)
     self.body:setOrigin(0,1)
+    self.body.debug_select = false
     self:addChild(self.body)
     self.hat = Sprite(prefix.."hat", x,y, 40, 40)
+    self.hat.debug_select = false
     self.body:addChild(self.hat)
     self.face_shocked = Sprite(prefix.."face_shocked")
+    self.face_shocked.debug_select = false
     self.face_shocked.visible = false
     self:addChild(self.face_shocked)
     self.face = Sprite(prefix.."face")
+    self.face.debug_select = false
     self:addChild(self.face)
 end
 

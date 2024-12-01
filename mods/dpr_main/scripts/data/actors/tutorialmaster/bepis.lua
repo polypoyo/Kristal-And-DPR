@@ -5,8 +5,8 @@ function actor:init()
     super.init(self)
     self.path = "npcs/tutorialmasters"
     self.hitbox = {0,15,34,20}
-    self.width = 40
-    self.height = 40
+    self.width = 34
+    self.height = 34
 end
 
 function actor:createSprite()
