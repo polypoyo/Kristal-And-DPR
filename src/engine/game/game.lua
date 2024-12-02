@@ -1369,6 +1369,7 @@ function Game:getUISkin()
 end
 
 function Game:unlockPartyMember(member)
+    Kristal.callEvent(KRISTAL_EVENT.onDPUnlockPartyMember, member)
     local currentUnlockedParty = Game:getFlag("_unlockedPartyMembers")
     if Game:getPartyMember(member) then
         table.insert(currentUnlockedParty, member)
