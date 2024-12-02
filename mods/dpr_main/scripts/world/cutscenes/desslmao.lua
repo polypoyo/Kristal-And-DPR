@@ -1,12 +1,14 @@
 ---@type table<string, fun(cutscene:WorldCutscene, event?:NPC|Event)>
 local desslmao = {
 	dessbegin = function(cutscene)
+        Kristal.callEvent(KRISTAL_EVENT.onDPDessTalk)
 		local dess = cutscene:getCharacter("dess")
 		local susie = cutscene:getCharacter("susie")
 
 		local noel = cutscene:getCharacter("noel")
 		local data = Noel:loadNoel()
 
+        local noel_remembered_dess, noel_not_remembered_dess
 		cutscene:showNametag("Dess Holiday?")
 		if #Game.party == 1 then
 			cutscene:text("* Yooo hey it's great to see you again", "condescending", "dess")
