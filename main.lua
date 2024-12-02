@@ -124,6 +124,7 @@ Recruit = require("src.engine.game.common.data.recruit")
 Quest = require("src.engine.game.common.data.quest")
 FallbackQuest = require("src.engine.game.common.data.fallbackquest")
 ButtonPrompt = require("src.engine.game.buttonprompt")
+Material = require("src.engine.game.common.data.material")
 
 ActorSprite = require("src.engine.game.common.actorsprite")
 Inventory = require("src.engine.game.common.inventory")
