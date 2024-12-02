@@ -32,6 +32,7 @@
 ---@field shops table<string, Shop>
 ---@field borders table<string, Border>
 ---@field minigames table<string, MinigameHandler>
+---@field materials table<string, Material>
 ---
 local Registry = {}
 local self = Registry
@@ -67,6 +68,7 @@ Registry.paths = {
     ["minigames"]        = "minigames",
     ["combos"]           = "battle/combos",
     ["quests"]           = "data/quests",
+    ["materials"]        = "data/materials",
 }
 
 ---@param preload boolean?
@@ -129,6 +131,7 @@ function Registry.initialize(preload)
         Registry.initMinigames()
         Registry.initCombos()
         Registry.initQuests()
+        Registry.initMaterials()
 
         Kristal.callEvent(KRISTAL_EVENT.onRegistered)
     end
@@ -547,6 +550,18 @@ function Registry.createQuest(id, ...)
     end
 end
 
+function Registry.getMaterial(id)
+    return self.materials[id]
+end
+
+function Registry.createMaterial(id, ...)
+    if self.materials[id] then
+        return self.materials[id](...)
+    else
+        error ("Attempted to create nonexistent material \"" .. tostring(id) .. "\"")
+    end
+end
+
 -- Register Functions --
 
 ---@param id string
@@ -697,6 +712,10 @@ end
 ---@param class Minigame
 function Registry.registerMinigame(id, class)
     self.minigames[id] = class
+end
+
+function Registry.registerMaterial(id, class)
+    self.materials[id] = class
 end
 
 -- Internal Functions --
@@ -1010,6 +1029,16 @@ function Registry.initQuests()
         assert(quest ~= nil, '"data/quests/' .. path .. '.lua" does not return value')
         quest.id = quest.id or path
         self.quests[quest.id] = quest
+    end
+end
+
+function Registry.initMaterials()
+    self.materials = {}
+
+    for _,path,material in self.iterScripts(Registry.paths["materials"]) do
+        assert(material ~= nil, '"data/materials/' .. path .. '.lua" does not return value')
+        material.id = material.id or path
+        self.materials[material.id] = material
     end
 end
 
