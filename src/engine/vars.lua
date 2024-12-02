@@ -285,5 +285,5 @@ KRISTAL_EVENT = {
     --dark place events--
     onDPDessTalk = "onDPDessTalk", -- talked to dess in Dess - THE BEGINNING / in: dpr_main/scripts/world/cutscenes/desslmao.lua / passes: NONE / returns: NONE
     onDPUnlockPartyMember = "onDPUnlockPartyMember", -- player unlocked a new party member / in: Game:unlockPartyMember(member) / passes: string:member / returns: NONE
-    onDPWarpBinUsed = "onDPWarpBinUsed",
+    onDPWarpBinUsed = "onDPWarpBinUsed", -- player used the warp bin / in: Game:unlockPartyMember(member) / passes: string:code, WarpBinCodeInfo?:action / returns: NONE
 }
