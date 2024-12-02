@@ -37,8 +37,6 @@ function character:init()
     self.weapon_icon = "ui/menu/equip/gun"
 
     self:setWeapon("basic_rifle")
-    self:setArmor(1, "bshot_glasses")
-    self:setArmor(2, "syrup_jar")
 
     self.lw_weapon_default = "light/foam_dart_rifle"
     self.lw_armor_default = "light/bandage"
