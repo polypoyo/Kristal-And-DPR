@@ -14,7 +14,22 @@ function MainMenuWarningHandler:init(menu)
     self.warnings = Utils.split(love.filesystem.read("assets/warning.txt"), "\n")
     -- Removes the last item and errors if that wasn't a blank line
     assert(table.remove(self.warnings, #self.warnings) == "", "No final newline on warnings.txt!")
-    if Kristal.Config["seenLegitWarning"] then
+
+    local char = Noel:loadNoel()
+    local nuh_uh = false
+
+    if char then
+        if char.version == 0.1 then
+        else
+            love.filesystem.remove("saves/null.char")
+            nuh_uh = true
+        end
+    end
+
+    if nuh_uh == true then
+        Assets.playSound("ominous", 10, 0.5)
+        self.current_warning = "Invalid null.char found!?!?\nnull.char has been [color:red][shake:0.55]deleted.\n\n\n\n\n\n\n\n\n[color:white]WARNING\nnan_spawn.lua is [color:red]missing!\n(IMPORTANT FILE)"
+    elseif Kristal.Config["seenLegitWarning"] then
         self.current_warning = Utils.pick(self.warnings)
     else
         self.current_warning = "May contain swears/profanity"

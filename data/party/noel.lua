@@ -200,13 +200,12 @@ function character:save()
         kills = self.kills,
     }
 
+    local save = Noel:loadNoel()
+
     if Kristal.temp_save == true then
-    else
+    elseif save then
         local num = love.math.random(1, 999999)
         Game:setFlag("noel_SaveID", num)
-
-    local save = Noel:loadNoel()
-    --if save then
         local newData = {
             Attack = self.stats.attack,
             Magic = self.stats.magic,

@@ -155,10 +155,13 @@ local hub = {
     end,
 
     malius = function(cutscene, event)
-        local malius = cutscene:getCharacter("malius")
         local choice = cutscene:choicer({"Fix Item", "Fuse", "Fix Us", "Leave"})
-			
-        if choice == 3 then
+	
+        if choice == 2 then
+            cutscene:wait(1)
+            Game.world:openMenu(FuseMenu())		
+        elseif choice == 3 then
+            local malius = cutscene:getCharacter("malius")
             cutscene:detachCamera()
             cutscene:detachFollowers()
             cutscene:text("* Your body is a weapon,[wait:10] too. You must take care of it from time to time.")
@@ -215,10 +218,6 @@ local hub = {
             cutscene:text("* (Somehow, [wait:5]everyone's HP was restored.)")
             cutscene:attachFollowers()
             cutscene:attachCamera()
-        end
-
-        if choice == 2 then
-            Game.world:openMenu(FuseMenu())
         end
     end,
 
