@@ -1135,6 +1135,10 @@ function Registry.iterScripts(base_path, exclude_folder)
             parse("scripts/"..base_path, library.info.script_chunks)
         end
         parse("scripts/"..base_path, Mod.info.script_chunks)
+        for plugin,_,_ in Kristal.PluginLoader.iterPlugins(true) do
+            local value = Kristal.PluginLoader.script_chunks[plugin.id]
+            parse(base_path, value)
+        end
     end
 
     CLASS_NAME_GETTER = DEFAULT_CLASS_NAME_GETTER

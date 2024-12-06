@@ -1249,6 +1249,9 @@ function Kristal.loadModAssets(id, asset_type, asset_paths, after)
         Kristal.loadAssets(mod.libs[lib_id].path, asset_type or "all", asset_paths or "", finishLoadStep)
     end
     Kristal.loadAssets(mod.path, asset_type or "all", asset_paths or "", finishLoadStep)
+    for plugin in Kristal.PluginLoader.iterPlugins(true) do
+        Kristal.loadAssets(plugin.path, asset_type or "all", asset_paths or "", finishLoadStep)
+    end
 end
 
 function Kristal.startGameDPR(save_id, save_name, after)
