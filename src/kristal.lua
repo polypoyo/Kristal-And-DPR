@@ -6,6 +6,7 @@ if not HOTSWAPPING then
     Kristal.Mods = require("src.engine.mods")
     Kristal.Overlay = require("src.engine.overlay")
     Kristal.Shaders = require("src.engine.shaders")
+    Kristal.PluginLoader = require("src.engine.pluginloader")
     Kristal.States = {
         ["Loading"] = require("src.engine.loadstate"),
         ["MainMenu"] = require("src.engine.menu.mainmenu"),

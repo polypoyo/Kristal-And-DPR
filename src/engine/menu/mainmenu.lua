@@ -53,6 +53,7 @@ function MainMenu:enter()
     self.deadzone_config = MainMenuDeadzone(self)
     self.dlc_handler = MainMenuDLCHandler(self)
     self.warning_handler = MainMenuWarningHandler(self)
+    self.plugins = MainMenuPlugins(self)
 
     -- Register states
     self.state = "NONE"
@@ -71,6 +72,7 @@ function MainMenu:enter()
     self.state_manager:addState("DEADZONE", self.deadzone_config)
     self.state_manager:addState("DLC", self.dlc_handler)
     self.state_manager:addState("WARNING", self.warning_handler)
+    self.state_manager:addState("plugins", self.plugins)
 
     self.fader = Fader()
     self.fader.layer = 10000
