@@ -594,7 +594,9 @@ function MainMenuDLCHandler:REALbuildDLCList()
 		if not mod.id then
 			mod.id = id
 		end
-		table.insert(dlcs, mod)
+		if not mod.plugin_path then
+			table.insert(dlcs, mod)
+		end
 	end
 
 	table.sort(dlcs, function(a, b)

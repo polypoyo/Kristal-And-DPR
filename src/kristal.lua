@@ -144,6 +144,7 @@ function love.load(args)
 
     -- setup structure
     love.filesystem.createDirectory("mods")
+    love.filesystem.createDirectory("plugins")
     love.filesystem.createDirectory("saves")
 
     -- default registry
