@@ -594,7 +594,9 @@ function MainMenuDLCHandler:REALbuildDLCList()
 		if not mod.id then
 			mod.id = id
 		end
-		table.insert(dlcs, mod)
+		if not mod.plugin_path then
+			table.insert(dlcs, mod)
+		end
 	end
 
 	table.sort(dlcs, function(a, b)
@@ -639,6 +641,7 @@ function MainMenuDLCHandler:reloadMods(callback)
     MOD_LOADING = true
 
     Kristal.Mods.clear()
+	Kristal.loadAssets("", "plugins", "")
     Kristal.loadAssets("", "mods", "", function()
         --[[if #Kristal.Mods.failed_mods > 0 then
             self.menu:setState("MODERROR")

@@ -80,6 +80,7 @@ function resetData()
 
     path_loaded = {
         ["mods"] = {},
+        ["plugins"] = {},
 
         ["sprites"] = {},
         ["fonts"] = {},
@@ -128,6 +129,10 @@ local loaders = {
 
             if love.filesystem.getInfo(full_path .. "/preview.lua") then
                 mod.preview_script_path = full_path .. "/preview.lua"
+            end
+			
+			if love.filesystem.getInfo(full_path .. "/plugin.lua") then
+                mod.plugin_path = full_path .. "/plugin.lua"
             end
 
             if love.filesystem.getInfo(full_path .. "/bg.png") then
@@ -270,6 +275,59 @@ local loaders = {
             data.mods[mod.id] = mod
         end
     end },
+	
+	["plugins"] = { "plugins", function (base_dir, path, full_path)
+        local zip_id = checkExtension(path, "zip")
+        if zip_id then
+            local mounted_path = full_path
+            full_path = combinePath(base_dir, "plugins", zip_id)
+            path = zip_id
+            love.filesystem.mount(mounted_path, full_path)
+        end
+		if (path:sub(-9) == "/mod.json") then
+			full_path = full_path:gsub("%/mod.json", "")
+			path = path:gsub("%/mod.json", "")
+		end
+        if love.filesystem.getInfo(full_path .. "/mod.json") then
+            local ok, mod = pcall(json.decode, love.filesystem.read(full_path .. "/mod.json"))
+
+            if love.filesystem.getInfo(full_path .. "/_GENERATED_FROM_MOD_TEMPLATE") then
+                full_path = "mod_template"
+            end
+
+            if not ok then
+                table.insert(data.failed_mods, {
+                    path = path,
+                    error = mod,
+                    file = "mod.json"
+                })
+                print("[WARNING] Mod \"" .. path .. "\" has an invalid mod.json!")
+                return
+            end
+
+            mod.id = mod.id or path
+            mod.folder = path
+            mod.path = full_path
+			
+			if love.filesystem.getInfo(full_path .. "/preview.lua") then
+                mod.preview_script_path = full_path .. "/preview.lua"
+            end
+			
+			if love.filesystem.getInfo(full_path .. "/plugin.lua") then
+                mod.plugin_path = full_path .. "/plugin.lua"
+            end
+			
+			if love.filesystem.getInfo(full_path .. "/preview") then
+                for _, file in ipairs(love.filesystem.getDirectoryItems(full_path .. "/preview")) do
+                    if file == "preview.lua" then
+                        mod.preview_script_path = full_path .. "/preview/preview.lua"
+                    end
+                end
+            end
+
+            data.mods[mod.id] = mod
+        end
+    end },
 
     -- Asset Loaders
 
@@ -388,7 +446,7 @@ function loadPath(baseDir, loader, path, pre)
     local full_path = combinePath(baseDir, loaders[loader][1], path)
     local info = love.filesystem.getInfo(full_path)
     if info then
-        if info.type == "directory" and (loader ~= "mods" or path == "") then
+        if info.type == "directory" and ((loader ~= "mods" and loader ~= "plugins") or path == "") then
             local files = love.filesystem.getDirectoryItems(full_path)
             for _, file in ipairs(files) do
                 if not pre or pre == "" or file:sub(1, #pre) == pre then
@@ -427,8 +485,8 @@ while true do
 
         if loader == "all" then
             for k, _ in pairs(loaders) do
-                -- dont load mods when we load with "all"
-                if k ~= "mods" then
+                -- dont load mods and plugins when we load with "all"
+                if (k ~= "mods" and k ~= "plugins") then
                     for _, path in ipairs(paths) do
                         loadPath(baseDir, k, path)
                     end

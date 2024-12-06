@@ -106,6 +106,18 @@ function MainMenu:enter()
         self.ver_string = self.ver_string .. "\nMonorepo commit: " .. trimmed_commit
     end
     local dlc_ids = Utils.getKeys(Kristal.Mods.data)
+	for _,dlc in ipairs(dlc_ids) do
+		local our_mod = nil
+		for _,mod in ipairs(Kristal.Mods.list) do
+			if dlc == mod.id then
+				our_mod = mod
+				break
+			end
+		end
+		if our_mod.plugin_path then
+			Utils.removeFromTable(dlc_ids, dlc)
+		end
+	end
     Utils.removeFromTable(dlc_ids, "dpr_main")
     Utils.removeFromTable(dlc_ids, "dpr_light")
     if #dlc_ids > 0 then

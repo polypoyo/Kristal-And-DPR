@@ -144,6 +144,7 @@ function love.load(args)
 
     -- setup structure
     love.filesystem.createDirectory("mods")
+    love.filesystem.createDirectory("plugins")
     love.filesystem.createDirectory("saves")
 
     -- default registry
@@ -1027,6 +1028,8 @@ function Kristal.returnToMenu()
     Gamestate.switch({})
     -- Clear the mod
     Kristal.clearModState()
+	
+	Kristal.loadAssets("", "plugins", "")
 
     -- Reload mods and return to memu
     Kristal.loadAssets("", "mods", "", function ()
@@ -1067,6 +1070,8 @@ function Kristal.quickReload(mode)
     Gamestate.switch({})
     -- Clear the mod
     Kristal.clearModState()
+	-- Reload plugins
+	Kristal.loadAssets("", "plugins", "")
     -- Reload mods
     Kristal.loadAssets("", "mods", "", function ()
         Kristal.setDesiredWindowTitleAndIcon()
