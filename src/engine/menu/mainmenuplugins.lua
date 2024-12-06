@@ -164,11 +164,7 @@ function MainMenuPlugins:onKeyPressed(key, is_repeat)
             -- "Back" button
             Kristal.saveConfig()
 
-            if TARGET_MOD then
-                self.menu:setState("OPTIONS")
-            else
-                self.menu:setState("MODSELECT")
-            end
+            self.menu:popState()
         elseif options[self.selected_option].callback then
             options[self.selected_option].callback()
         end
