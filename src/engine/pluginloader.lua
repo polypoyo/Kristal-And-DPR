@@ -40,4 +40,19 @@ function PluginLoader.pluginCall(f, ...)
     return Utils.unpack(result)
 end
 
+function PluginLoader.checkActive(ignorelist)
+    ignorelist = ignorelist or {}
+    local banned_plugins = {}
+    for plugin in self.iterPlugins(true) do
+        local key = plugin.id
+        for _, ignoretest in ipairs(ignorelist) do
+            if key == ignoretest then goto continue end
+        end
+        local plugin = Kristal.Mods.getMod(key)
+        table.insert(banned_plugins, plugin)
+        ::continue::
+    end
+    return (#banned_plugins > 0), banned_plugins
+end
+
 return PluginLoader
