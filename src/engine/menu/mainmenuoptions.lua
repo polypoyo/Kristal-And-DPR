@@ -674,7 +674,7 @@ function MainMenuOptions:initializeOptions()
         ---@diagnostic disable-next-line: undefined-field
         if Kristal.PluginLoader == nil then Assets.playSound("ui_cant_select"); return end
         self:remove_noel_char()
-        self.menu:setState("plugins")
+        self.menu:pushState("plugins")
     end)
 end
 

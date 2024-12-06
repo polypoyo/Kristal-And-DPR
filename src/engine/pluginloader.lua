@@ -2,6 +2,11 @@ local PluginLoader = {
     plugin_scripts = {},
     script_chunks = {}
 }
+local self = PluginLoader
+function PluginLoader.addScriptChunk(mod_id, path, chunk)
+    if self.script_chunks[mod_id] == nil then self.script_chunks[mod_id] = {} end
+    self.script_chunks[mod_id][path] = chunk
+end
 
 ---@return fun(): table?, boolean?, table?
 function PluginLoader.iterPlugins(active_only)
@@ -20,6 +25,19 @@ function PluginLoader.iterPlugins(active_only)
             end
         until index > #all_mods
     end
+end
+
+function PluginLoader.pluginCall(f, ...)
+    local result = {}
+    for _,_,plugin in Kristal.PluginLoader.iterPlugins(true) do
+        if plugin[f] then
+            local plugin_results = {plugin[f](plugin, ...)}
+            if(#plugin_results > 0) then
+                result = plugin_results
+            end
+        end
+    end
+    return Utils.unpack(result)
 end
 
 return PluginLoader

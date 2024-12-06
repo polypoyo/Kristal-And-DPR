@@ -1596,6 +1596,7 @@ function Kristal.loadConfig()
         defaultName = "",
         skipNameEntry = false,
         verboseLoader = false,
+        ["plugins/enabled_plugins"] = {}
     }
     if love.filesystem.getInfo("settings.json") then
         Utils.merge(config, JSON.decode(love.filesystem.read("settings.json")))
@@ -1739,8 +1740,11 @@ function Kristal.callEvent(f, ...)
     if not Mod then return end
     local lib_result = {Kristal.libCall(nil, f, ...)}
     local mod_result = {Kristal.modCall(f, ...)}
+    local plugin_result = {Kristal.PluginLoader.pluginCall(f, ...)}
     --print("EVENT: "..tostring(f), #mod_result, #lib_result)
-    if(#mod_result > 0) then
+    if(#plugin_result > 0) then
+        return Utils.unpack(plugin_result)
+    elseif(#mod_result > 0) then
         return Utils.unpack(mod_result)
     else
         return Utils.unpack(lib_result)

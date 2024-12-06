@@ -106,16 +106,14 @@ function Registry.initialize(preload)
             end
 
             Kristal.PluginLoader.script_chunks = {}
-            for plugin_id, plugin in pairs(Kristal.Mods.data) do
-                if Kristal.Config["enabled_plugins"][plugin.id] then
-                    for _,path in ipairs(Utils.getFilesRecursive(plugin.path.."/scripts", ".lua")) do
-                        local chunk = love.filesystem.load(plugin.path.."/scripts/"..path..".lua")
-                        Kristal.PluginLoader:addScriptChunk(plugin_id, path, chunk)
-                    end
-                    if Mod and love.filesystem.getInfo(plugin.path.."/plugin.lua") then
-                        local chunk = love.filesystem.load(plugin.path.."/plugin.lua")
-                        Kristal.PluginLoader.plugin_scripts[plugin_id] = assert(chunk(), plugin.path.."/plugin.lua returned nil.")
-                    end
+            for plugin in Kristal.PluginLoader.iterPlugins(true) do
+                for _,path in ipairs(Utils.getFilesRecursive(plugin.path.."/scripts", ".lua")) do
+                    local chunk = love.filesystem.load(plugin.path.."/scripts/"..path..".lua")
+                    Kristal.PluginLoader.addScriptChunk(plugin.id, path, chunk)
+                end
+                if Mod and love.filesystem.getInfo(plugin.path.."/plugin.lua") then
+                    local chunk = love.filesystem.load(plugin.path.."/plugin.lua")
+                    Kristal.PluginLoader.plugin_scripts[plugin.id] = assert(chunk(), plugin.path.."/plugin.lua returned nil.")
                 end
             end
         end
