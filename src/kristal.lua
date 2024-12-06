@@ -1028,6 +1028,8 @@ function Kristal.returnToMenu()
     Gamestate.switch({})
     -- Clear the mod
     Kristal.clearModState()
+	
+	Kristal.loadAssets("", "plugins", "")
 
     -- Reload mods and return to memu
     Kristal.loadAssets("", "mods", "", function ()
@@ -1068,6 +1070,8 @@ function Kristal.quickReload(mode)
     Gamestate.switch({})
     -- Clear the mod
     Kristal.clearModState()
+	-- Reload plugins
+	Kristal.loadAssets("", "plugins", "")
     -- Reload mods
     Kristal.loadAssets("", "mods", "", function ()
         Kristal.setDesiredWindowTitleAndIcon()

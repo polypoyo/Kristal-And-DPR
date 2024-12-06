@@ -446,7 +446,7 @@ function loadPath(baseDir, loader, path, pre)
     local full_path = combinePath(baseDir, loaders[loader][1], path)
     local info = love.filesystem.getInfo(full_path)
     if info then
-        if info.type == "directory" and (loader ~= "mods" or path == "") then
+        if info.type == "directory" and ((loader ~= "mods" and loader ~= "plugins") or path == "") then
             local files = love.filesystem.getDirectoryItems(full_path)
             for _, file in ipairs(files) do
                 if not pre or pre == "" or file:sub(1, #pre) == pre then
@@ -485,8 +485,8 @@ while true do
 
         if loader == "all" then
             for k, _ in pairs(loaders) do
-                -- dont load mods when we load with "all"
-                if k ~= "mods" then
+                -- dont load mods and plugins when we load with "all"
+                if (k ~= "mods" and k ~= "plugins") then
                     for _, path in ipairs(paths) do
                         loadPath(baseDir, k, path)
                     end

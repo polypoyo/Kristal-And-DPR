@@ -641,6 +641,7 @@ function MainMenuDLCHandler:reloadMods(callback)
     MOD_LOADING = true
 
     Kristal.Mods.clear()
+	Kristal.loadAssets("", "plugins", "")
     Kristal.loadAssets("", "mods", "", function()
         --[[if #Kristal.Mods.failed_mods > 0 then
             self.menu:setState("MODERROR")
