@@ -104,6 +104,18 @@ function Registry.initialize(preload)
                 local chunk = love.filesystem.load("scripts/"..path..".lua")
                 self.base_scripts[path] = chunk
             end
+
+            Kristal.PluginLoader.script_chunks = {}
+            for plugin in Kristal.PluginLoader.iterPlugins(true) do
+                for _,path in ipairs(Utils.getFilesRecursive(plugin.path.."/scripts", ".lua")) do
+                    local chunk = love.filesystem.load(plugin.path.."/scripts/"..path..".lua")
+                    Kristal.PluginLoader.addScriptChunk(plugin.id, path, chunk)
+                end
+                if Mod and love.filesystem.getInfo(plugin.path.."/plugin.lua") then
+                    local chunk = love.filesystem.load(plugin.path.."/plugin.lua")
+                    Kristal.PluginLoader.plugin_scripts[plugin.id] = assert(chunk(), plugin.path.."/plugin.lua returned nil.")
+                end
+            end
         end
 
         Registry.initActors()
@@ -1123,6 +1135,12 @@ function Registry.iterScripts(base_path, exclude_folder)
             parse("scripts/"..base_path, library.info.script_chunks)
         end
         parse("scripts/"..base_path, Mod.info.script_chunks)
+        for plugin,_,_ in Kristal.PluginLoader.iterPlugins(true) do
+            local value = Kristal.PluginLoader.script_chunks[plugin.id]
+            if value then
+                parse(base_path, value)
+            end
+        end
     end
 
     CLASS_NAME_GETTER = DEFAULT_CLASS_NAME_GETTER

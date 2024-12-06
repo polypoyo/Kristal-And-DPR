@@ -6,6 +6,7 @@ if not HOTSWAPPING then
     Kristal.Mods = require("src.engine.mods")
     Kristal.Overlay = require("src.engine.overlay")
     Kristal.Shaders = require("src.engine.shaders")
+    Kristal.PluginLoader = require("src.engine.pluginloader")
     Kristal.States = {
         ["Loading"] = require("src.engine.loadstate"),
         ["MainMenu"] = require("src.engine.menu.mainmenu"),
@@ -995,7 +996,8 @@ function Kristal.clearModState()
     Kristal.callEvent(KRISTAL_EVENT.unload)
     Mod = nil
 
-    Kristal.Mods.clear()
+    -- TODO: make this work with the plugin loader
+    -- Kristal.Mods.clear()
     Kristal.clearModHooks()
     Kristal.clearModSubclasses()
 
@@ -1248,6 +1250,9 @@ function Kristal.loadModAssets(id, asset_type, asset_paths, after)
         Kristal.loadAssets(mod.libs[lib_id].path, asset_type or "all", asset_paths or "", finishLoadStep)
     end
     Kristal.loadAssets(mod.path, asset_type or "all", asset_paths or "", finishLoadStep)
+    for plugin in Kristal.PluginLoader.iterPlugins(true) do
+        Kristal.loadAssets(plugin.path, asset_type or "all", asset_paths or "", finishLoadStep)
+    end
 end
 
 function Kristal.startGameDPR(save_id, save_name, after)
@@ -1595,6 +1600,7 @@ function Kristal.loadConfig()
         defaultName = "",
         skipNameEntry = false,
         verboseLoader = false,
+        ["plugins/enabled_plugins"] = {}
     }
     if love.filesystem.getInfo("settings.json") then
         Utils.merge(config, JSON.decode(love.filesystem.read("settings.json")))
@@ -1738,8 +1744,11 @@ function Kristal.callEvent(f, ...)
     if not Mod then return end
     local lib_result = {Kristal.libCall(nil, f, ...)}
     local mod_result = {Kristal.modCall(f, ...)}
+    local plugin_result = {Kristal.PluginLoader.pluginCall(f, ...)}
     --print("EVENT: "..tostring(f), #mod_result, #lib_result)
-    if(#mod_result > 0) then
+    if(#plugin_result > 0) then
+        return Utils.unpack(plugin_result)
+    elseif(#mod_result > 0) then
         return Utils.unpack(mod_result)
     else
         return Utils.unpack(lib_result)
