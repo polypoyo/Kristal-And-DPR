@@ -74,6 +74,14 @@ function MainMenu:enter()
     self.state_manager:addState("WARNING", self.warning_handler)
     self.state_manager:addState("plugins", self.plugins)
 
+    for _, mod in ipairs(Kristal.Mods.getMods()) do
+		if not mod.plugin then goto continue end
+		if not love.filesystem.getInfo(mod.path.."/options.lua") then goto continue end
+		local result = love.filesystem.load(mod.path.."/options.lua")(mod)
+		self.state_manager:addState("plugin_"..mod.id, result(MainMenu))
+		::continue::
+	end
+
     self.fader = Fader()
     self.fader.layer = 10000
     self.stage:addChild(self.fader)

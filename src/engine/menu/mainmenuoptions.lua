@@ -660,8 +660,6 @@ function MainMenuOptions:initializeOptions()
     self:registerConfigOption("gameplay", "Prefer Goner Keybd.", "prefersGonerKeyboard")
     self:registerConfigOption("gameplay", "Enable Shatter", "enableShatter")
     self:registerOption("gameplay", "Plugins", function ()
-        ---@diagnostic disable-next-line: undefined-field
-        if Kristal.PluginLoader == nil then return "N/A" end
         local active, total = 0, 0
         local enabled = Kristal.Config["plugins/enabled_plugins"] or {}
         for _, mod in ipairs(Kristal.Mods.getMods()) do

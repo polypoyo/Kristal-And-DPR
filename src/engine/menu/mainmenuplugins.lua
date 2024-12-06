@@ -81,7 +81,6 @@ function MainMenuPlugins:init(menu)
             end
             table.insert(self.options, option)
         end
-        
     end
 end
 
@@ -229,7 +228,7 @@ end
 function MainMenuPlugins:draw()
     local menu_font = self.font
 
-    local options = self.options
+    local options = #self.options > 0 and self.options or {{name = "No plugins installed."}}
 
     local title = "PLUGINS"
     local title_width = menu_font:getWidth(title)
