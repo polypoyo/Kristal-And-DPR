@@ -62,6 +62,13 @@
             "width": 880,
             "x": 2000,
             "y": 560
+        },
+        {
+            "fileName": "maps/dess_house.tmx",
+            "height": 840,
+            "width": 880,
+            "x": -1160,
+            "y": 1440
         }
     ],
     "onlyShowAdjacentMaps": false,
