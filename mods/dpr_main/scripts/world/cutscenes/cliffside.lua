@@ -704,4 +704,11 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
 
         Game.world.music:resume()
     end,
+    worse_vents = function (cutscene, event)
+
+        local data = event.data.properties
+        local chara = Game.world.player
+        Assets.playSound("jump")
+        cutscene:wait(cutscene:jumpTo(chara, data.marker, 1, 0.5, "jump_ball", "land"))
+    end,
 }

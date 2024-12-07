@@ -1,7 +1,7 @@
 return {
-  version = "1.10",
+  version = "1.11",
   luaversion = "5.1",
-  tiledversion = "1.10.2",
+  tiledversion = "1.11.0",
   class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
@@ -344,8 +344,8 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["map"] = "grey_cliffside/the_end",
-            ["marker"] = "entry"
+            ["map"] = "grey_cliffside/worse_vents",
+            ["marker"] = "spawn"
           }
         },
         {
