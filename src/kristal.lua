@@ -40,8 +40,8 @@ if not HOTSWAPPING then
     function Kristal.reloadnoel()
         -- If you don't know what this is for, then don't touch it!!!
         
-        package.loaded["src.engine.game.noel.noel_spawn"] = nil 
-        Noel = require("src.engine.game.noel.noel_spawn")      
+        package.loaded["src.engine.game.char_file_handlers.noel_spawn"] = nil 
+        Noel = require("src.engine.game.char_file_handlers.noel_spawn")      
         if Noel:loadNoel() then
             Kristal.noel = true
         else 

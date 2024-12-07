@@ -32,10 +32,10 @@ local wake = function(cutscene, event)
 
             local turncoat = Music("turncoat", 1, 1)
 
-        local index = love.window.showMessageBox("???", "* ...", {"    "}, "info")
-        local index = love.window.showMessageBox("???", "* Hello?", {"    "}, "info")
-        local index = love.window.showMessageBox("???", "* Is anyone there?", {"    "}, "info")
-        local index = love.window.showMessageBox("???", "* Can anyone hear me?", {"    "}, "warning")
+        --local index = love.window.showMessageBox("???", "* ...", {"    "}, "info")
+        --local index = love.window.showMessageBox("???", "* Hello?", {"    "}, "info")
+        --local index = love.window.showMessageBox("???", "* Is anyone there?", {"    "}, "info")
+        --local index = love.window.showMessageBox("???", "* Can anyone hear me?", {"    "}, "warning")
 
 
         turncoat:stop()
