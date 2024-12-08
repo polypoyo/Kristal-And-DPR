@@ -162,7 +162,9 @@ local hub = {
 	
         local choice = cutscene:choicer({"Fix Item", "Fuse", "Fix Us", "Leave"})
         if choice == 2 then
-            Game.world:openMenu(FuseMenu())		
+            cutscene:after(function()
+                Game.world:openMenu(FuseMenu())
+            end)	
         elseif choice == 3 then
             local malius = cutscene:getCharacter("malius")
             cutscene:detachCamera()
