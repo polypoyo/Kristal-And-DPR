@@ -33,6 +33,8 @@ function actor:init()
 
     self.offsets = {
         ["idle"] = {0, 0},
+        ["powerup"] = {-5, -4},
+        ["hit"] = {-5, -6},
     }
 end
 

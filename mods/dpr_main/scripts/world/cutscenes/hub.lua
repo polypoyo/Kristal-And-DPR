@@ -155,17 +155,23 @@ local hub = {
     end,
 
     malius = function(cutscene, event)
-        local choice = cutscene:choicer({"Fix Item", "Fuse", "Fix Us", "Leave"})
+        cutscene:text("* Well, [wait:5]well. [wait:5]Welcome to the FUSING ROOM.")
+        cutscene:text("* I am this room's smith, [wait:5]MALIUS.")
+        cutscene:text("* Using my skills, [wait:5]I can FUSE items to create NEW ONES.")
+        cutscene:text("* Or I can REPAIR whatever broken items you possess.")
 	
+        local choice = cutscene:choicer({"Fix Item", "Fuse", "Fix Us", "Leave"})
         if choice == 2 then
-            cutscene:wait(1)
             Game.world:openMenu(FuseMenu())		
         elseif choice == 3 then
             local malius = cutscene:getCharacter("malius")
             cutscene:detachCamera()
             cutscene:detachFollowers()
-            cutscene:text("* Your body is a weapon,[wait:10] too. You must take care of it from time to time.")
+            cutscene:text("* Your body is a weapon,[wait:5]too. [wait:5]You must take care of it from time to time.")
             cutscene:text("* Huh-hah![wait:5] Let's feel my technique.")
+
+            Game.world.music:pause()
+            Assets.playSound("noise")
             malius:setAnimation("powerup")
             cutscene:wait(1.5)
 
@@ -202,8 +208,10 @@ local hub = {
                 end
 
                 malius:setAnimation("hit")
+                Assets.playSound("squeaky")
                 cutscene:wait(9/15)
                 malius:setAnimation("hit")
+                Assets.playSound("squeaky")
                 cutscene:wait(9/15)
                 
                 char:resetSprite()
@@ -215,7 +223,13 @@ local hub = {
 
             malius:resetSprite()
 
+            Game.world.music:resume()
+            Assets.playSound("power")
+            for _,chara in ipairs(Game.party) do
+                chara:heal(math.huge, false)
+            end
             cutscene:text("* (Somehow, [wait:5]everyone's HP was restored.)")
+            cutscene:interpolateFollowers()
             cutscene:attachFollowers()
             cutscene:attachCamera()
         end
