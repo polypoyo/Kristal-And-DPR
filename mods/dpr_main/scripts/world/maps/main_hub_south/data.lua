@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 6,
-  nextobjectid = 38,
+  nextobjectid = 39,
   properties = {
     ["border"] = "mainhub",
     ["music"] = "mainhub",
@@ -276,7 +276,10 @@ return {
           height = 120,
           rotation = 0,
           visible = true,
-          properties = {}
+          properties = {
+            ["map"] = "dess_house",
+            ["marker"] = "entry"
+          }
         },
         {
           id = 25,
@@ -325,8 +328,8 @@ return {
           name = "dogconegroup",
           type = "",
           shape = "rectangle",
-          x = 1,
-          y = 798.5,
+          x = 0,
+          y = 800,
           width = 40,
           height = 40,
           rotation = 0,
@@ -340,8 +343,8 @@ return {
           name = "dogconegroup",
           type = "",
           shape = "rectangle",
-          x = 1,
-          y = 839,
+          x = 80,
+          y = 920,
           width = 40,
           height = 40,
           rotation = 0,
@@ -355,8 +358,8 @@ return {
           name = "dogconegroup",
           type = "",
           shape = "rectangle",
-          x = 1,
-          y = 879.5,
+          x = 160,
+          y = 900,
           width = 40,
           height = 40,
           rotation = 0,
@@ -459,6 +462,19 @@ return {
           shape = "point",
           x = 660,
           y = 1080,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 38,
+          name = "east",
+          type = "",
+          shape = "point",
+          x = 60,
+          y = 860,
           width = 0,
           height = 0,
           rotation = 0,

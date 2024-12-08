@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.11" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="33" height="28" tilewidth="40" tileheight="40" infinite="0" nextlayerid="6" nextobjectid="38">
+<map version="1.11" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="33" height="28" tilewidth="40" tileheight="40" infinite="0" nextlayerid="6" nextobjectid="39">
  <editorsettings>
   <export target="data.lua" format="lua"/>
  </editorsettings>
@@ -67,7 +67,12 @@
     <property name="marker" value="south"/>
    </properties>
   </object>
-  <object id="15" name="transition" x="-40" y="800" width="40" height="120"/>
+  <object id="15" name="transition" x="-40" y="800" width="40" height="120">
+   <properties>
+    <property name="map" value="dess_house"/>
+    <property name="marker" value="entry"/>
+   </properties>
+  </object>
   <object id="25" name="savepoint" x="640" y="800" width="40" height="40"/>
   <object id="26" name="transition" x="1320" y="800" width="40" height="120"/>
   <object id="27" name="transition" x="600" y="1120" width="120" height="40">
@@ -76,17 +81,17 @@
     <property name="marker" value="entry"/>
    </properties>
   </object>
-  <object id="28" name="dogconegroup" x="1" y="798.5" width="40" height="40">
+  <object id="28" name="dogconegroup" x="0" y="800" width="40" height="40">
    <properties>
     <property name="default_state" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="29" name="dogconegroup" x="1" y="839" width="40" height="40">
+  <object id="29" name="dogconegroup" x="80" y="920" width="40" height="40">
    <properties>
     <property name="default_state" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="30" name="dogconegroup" x="1" y="879.5" width="40" height="40">
+  <object id="30" name="dogconegroup" x="160" y="900" width="40" height="40">
    <properties>
     <property name="default_state" type="bool" value="true"/>
    </properties>
@@ -115,6 +120,9 @@
    <point/>
   </object>
   <object id="37" name="south" x="660" y="1080">
+   <point/>
+  </object>
+  <object id="38" name="east" x="60" y="860">
    <point/>
   </object>
  </objectgroup>
