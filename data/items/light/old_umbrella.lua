@@ -11,25 +11,33 @@ function item:init()
     -- Whether this item is for the light world
     self.light = true
 
+    -- Default shop price (sell price is halved)
+    self.price = 1
+    -- Default shop sell price
+    self.sell_price = 1
+    -- Whether the item can be sold
+    self.can_sell = false
+
     -- Item description text (unused by light items outside of debug menu)
-    self.description = "* This is my umbrella. * I carry it with me everywhere."
+    self.description = "* This is my umbrella.\n* I carry it with me everywhere.."
 
     -- Light world check text
-    self.check = "Weapon 1 AT\n* * Noel's umbrella.\n* They carry it with them everywhere.."
+    self.check = {
+        "How are you checking this?"
+    }
+
+    self.bonuses = {
+        attack = 1
+    }
 
     -- Where this item can be used (world, battle, all, or none)
     self.usable_in = "all"
     -- Item this item will get turned into when consumed
     self.result_item = nil
+end
 
-    -- Equip bonuses (for weapons and armor)
-    self.bonuses = {
-        attack = 1,
-        defense = 0
-    }
-
-    -- Default dark item conversion for this item
-    self.dark_item = "old_umbrella"
+function item:convertToDarkEquip(chara)
+    return "old_umbrella"
 end
 
 return item
