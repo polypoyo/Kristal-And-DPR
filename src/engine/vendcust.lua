@@ -26,5 +26,8 @@ GITHUB_REPOS = {
 	},
 	polypoyo={
 		"dlc_test"
+	},
+	NelleMonelle={
+		"dlc_yellow"
 	}
 }
