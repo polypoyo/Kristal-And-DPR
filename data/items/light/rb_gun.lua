@@ -1,51 +1,51 @@
-local item, super = Class(LightEquipItem, "light/foam_dart_rifle")
+local item, super = Class(LightEquipItem, "light/rb_gun")
 
 function item:init()
     super.init(self)
 
     -- Display name
-    self.name = "Foam Dart Rifle"
+    self.name = "R.B. Gun"
 
     -- Item type (item, key, weapon, armor)
     self.type = "weapon"
     -- Whether this item is for the light world
     self.light = true
 
+    -- Shop description
+    self.shop = "Bullets NOT\nincluded."
     -- Default shop price (sell price is halved)
-    self.price = 20
+    self.price = 350
     -- Default shop sell price
-    self.sell_price = 10
+    self.sell_price = 100
     -- Whether the item can be sold
     self.can_sell = true
 
     -- Item description text (unused by light items outside of debug menu)
-    self.description = "A toy rifle that shoots foam darts."
+    self.description = "It shoots rubber bands easily."
 
     -- Light world check text
     self.check = {
-        "Weapon AT 0\n* A toy rifle that\nshoots foam darts."
-    }
-
-    self.bonuses = {
-        attack = 0
+        "Weapon AT 0\n* It shoots rubber bands easily."
     }
 
     -- Where this item can be used (world, battle, all, or none)
     self.usable_in = "all"
     -- Item this item will get turned into when consumed
     self.result_item = nil
-end
 
-function item:showEquipText()
-    Game.world:showText("* Finally,[wait:5] an actual gun.")
+    self.light_bolt_count = 6
+    --self.light_bolt_speed = 10
+    --self.light_bolt_speed_variance = nil
+    self.light_bolt_start = 120
+    self.light_bolt_miss_threshold = 3
+    self.light_multibolt_variance = {{180, 210, 240}, {300, 330, 360}, {400, 430, 460}}
+    self.light_bolt_direction = "right"
+
+    self.attack_sound = "gunshot"
 end
 
 function item:convertToDarkEquip(chara)
-    return "basic_rifle"
-end
-
-function item:getLightAttackSound()
-    return "gunshot_ut"
+    return "derringer"
 end
 
 function item:onLightAttack(battler, enemy, damage, stretch, crit)
