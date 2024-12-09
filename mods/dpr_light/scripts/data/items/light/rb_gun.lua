@@ -1,10 +1,10 @@
-local item, super = Class(LightEquipItem, "light/pellet_gun")
+local item, super = Class(LightEquipItem, "light/rb_gun")
 
 function item:init()
     super.init(self)
 
     -- Display name
-    self.name = "Pellet Gun"
+    self.name = "R.B. Gun"
 
     -- Item type (item, key, weapon, armor)
     self.type = "weapon"
@@ -21,11 +21,11 @@ function item:init()
     self.can_sell = true
 
     -- Item description text (unused by light items outside of debug menu)
-    self.description = "A gun of many names."
+    self.description = "It shoots rubber bands easily."
 
     -- Light world check text
     self.check = {
-        "Weapon AT 12\n* A gun of many names."
+        "Weapon AT 0\n* It shoots rubber bands easily."
     }
 
     -- Where this item can be used (world, battle, all, or none)
@@ -33,13 +33,9 @@ function item:init()
     -- Item this item will get turned into when consumed
     self.result_item = nil
 
-    self.bonuses = {
-        attack = 12
-    }
-
-    self.light_bolt_count = 5
-    --self.light_bolt_speed = 12
-    --self.light_bolt_speed_variance = nil
+    self.light_bolt_count = 6
+    self.light_bolt_speed = 10
+    self.light_bolt_speed_variance = nil
     self.light_bolt_start = 120
     self.light_bolt_miss_threshold = 3
     self.light_multibolt_variance = {{180, 210, 240}, {300, 330, 360}, {400, 430, 460}}
@@ -49,7 +45,7 @@ function item:init()
 end
 
 function item:convertToDarkEquip(chara)
-    return "hornet_gun"
+    return "derringer"
 end
 
 function item:onLightAttack(battler, enemy, damage, stretch, crit)
