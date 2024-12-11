@@ -4,18 +4,29 @@ local self = Noel
 function Noel:checkNoel()
     local noelsave = Noel:loadNoel()
     local noel_char = Game:hasPartyMember("noel")
-    if noelsave and noel_char and noelsave.SaveID ~= Game:getFlag("noel_SaveID") then
+    if noelsave and not noel_char and noelsave.SaveID ~= Game:getFlag("noel_SaveID") then
         Game:removePartyMember("noel")
         Game.world:removeFollower("noel")
         local noel = Game.world:getCharacter("noel")
         if noel then noel:remove() end
         Noel:NoelEnter(noelsave)
+        print("oh1")
+    elseif noelsave and noel_char and noelsave.SaveID ~= Game:getFlag("noel_SaveID") then
+        Game:removePartyMember("noel")
+        Game.world:removeFollower("noel")
+        local noel = Game.world:getCharacter("noel")
+        if noel then noel:remove() end
+        Noel:NoelEnter(noelsave)
+        print("oh2")
     elseif not noelsave and noel_char then
         Game:removePartyMember("noel")
         Game.world:removeFollower("noel")
         local noel = Game.world:getCharacter("noel")
         if noel then noel:remove() end
+        print("oh3")
     end
+
+    print("oh4")
 end
 
 function Noel:test()
@@ -23,7 +34,22 @@ function Noel:test()
 end
 
 local place_holder = function(cutscene, event)
-    cutscene:text("* Placeholder.", "bruh", "noel")
+
+    if #Game.party == 3 then 
+        cutscene:text("* Party full.", "bruh", "noel")
+    else
+        cutscene:text("* May I join the party?", "bruh", "noel")
+        local choicer = cutscene:choicer({"Yes", "No"})
+        if choicer == 1 then
+            cutscene:text("* Cool beans.", "bruh", "noel")
+            local noel = cutscene:getCharacter("noel")
+            noel:convertToFollower()
+            cutscene:attachFollowers()
+            Game:addPartyMember("noel")
+        else
+            cutscene:text("* Alright.", "bruh", "noel")
+        end
+    end
 end
 
 local wake = function(cutscene, event)
@@ -52,12 +78,19 @@ function Noel:NoelEnter(noelsave)
         local spawnPositions = {
             warphub = {384, 361, {cutscene = place_holder, animation = "brella"}},
             room1 = {400, 740, {cutscene = place_holder, animation = "brella"}},
-            main_hub = {460, 380, {cutscene = wake, animation = "battle/defeat"}},
+            main_hub = {460, 380, {cutscene = place_holder, animation = "brella"}},
+            main_hub_south = {350, 160, {cutscene = place_holder, animation = "brella"}},
+            ["steamworks/05"] = {260, 290, {cutscene = place_holder}},
+            ["steamworks/09"] = {1000, 390, {cutscene = place_holder}},
+            ["steamworks/15"] = {490, 510, {cutscene = place_holder}},
+            ["steamworks/19"] = {460, 350, {cutscene = place_holder}},
+            ["steamworks/23"] = {980, 220, {cutscene = place_holder}},
         }
 
     if map == savedData.Map and mod == savedData.Mod then
         local position = spawnPositions[savedData.Map] 
         if position then
+            print(4)
             if position[3] then
                 Noel:spawnNoel(position[1], position[2], position[3])
             else

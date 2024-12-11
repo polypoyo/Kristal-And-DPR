@@ -224,7 +224,8 @@ function character:save()
 
             local maptable ={
                 SaveID = num,
-                Map = Game.world.map.id
+                Map = Game.world.map.id,
+                Mod = Mod.info.id
             }
 
             Noel:saveNoel(maptable)
