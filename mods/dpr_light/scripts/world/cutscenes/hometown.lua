@@ -433,6 +433,8 @@ return {
 
     brenda = function(cutscene, event)
         local susie = cutscene:getCharacter("susie_lw")
+        local jamm = cutscene:getCharacter("jamm_lw")
+        local jammarcy = cutscene:getCharacter("jammarcy_light")
         if susie then
             if not Game:getFlag("hometown_brenda") then
                 Game:setFlag("hometown_brenda", true)
@@ -447,9 +449,23 @@ return {
                 cutscene:showNametag("???")
                 cutscene:text("* Huh?[wait:10] Me?", "shocked", "brenda_lw")
                 cutscene:showNametag("Brenda")
-                cutscene:text("* I'm Brenda![wait:10]\n[face:smile]* What's your name?", "happy", "brenda_lw")
+				if #Game.party > 1 then
+					cutscene:text("* I'm Brenda![wait:10]\n[face:smile]* What are your names?", "happy", "brenda_lw")
+				else
+					cutscene:text("* I'm Brenda![wait:10]\n[face:smile]* What's your name?", "happy", "brenda_lw")
+				end
                 cutscene:showNametag("Susie")
-                cutscene:text("* Heh,[wait:5] the names Susie!", "smile", "susie")
+                cutscene:text("* Heh,[wait:5] the name's Susie!", "smile", "susie")
+				if jamm or jammarcy then
+					cutscene:showNametag("Jamm")
+					cutscene:text("* And my name's Luthane,[wait:10] but I really go by Jamm.", "side_smile", "jamm")
+					if jammarcy then
+						cutscene:text("* This little girl is my daughter,[wait:10] Marcy.", "smile", "jamm")
+						cutscene:showNametag("Marcy")
+						cutscene:text("* H-hello!", "happy", "marcy")
+					end
+				end
+				cutscene:showNametag("Susie")
                 cutscene:text("* You moved here recently?", "neutral_side", "susie")
                 cutscene:showNametag("Brenda")
                 cutscene:text("* Oh nono,[wait:5] not at all.", "neutral", "brenda_lw")
@@ -470,6 +486,26 @@ return {
                 cutscene:showNametag("Brenda")
                 cutscene:text("* Pshh,[wait:5] there's no bears in these woods.", "smug", "brenda_lw")
                 cutscene:text("* I think.", "suspicious", "brenda_lw")
+				if jamm or jammarcy then
+					cutscene:showNametag("Jamm")
+					cutscene:text("* You \"think\"?", "suspicious", "jamm")
+					cutscene:text("* Wait,[wait:5] are you even licensed in your work?", "suspicious", "jamm")
+					cutscene:showNametag("Brenda")
+					cutscene:text("* Licensed?[wait:10] What,[wait:5] do you think I'm just here for game hunting?", "shocked", "brenda_lw")
+					cutscene:text("* The only thing I'm hunting here are urban legends to disprove.", "angry_b", "brenda_lw")
+					cutscene:text("* Geez,[wait:5] I didn't think you'd need a license to explore some woods.", "suspicious", "brenda_lw")
+					cutscene:showNametag("Jamm")
+					cutscene:text("* Hey,[wait:5] I didn't mean it like that![wait:10][face:look_left] I was just...[wait:5][face:neutral] curious.", "shocked", "jamm")
+					if jammarcy then
+						cutscene:showNametag("Marcy")
+						cutscene:text("* But Marcy thought...", "confused", "marcy")
+						cutscene:showNametag("Jamm")
+						cutscene:text("* Marcy,[wait:5] what harm is going to come of this?", "look_left", "jamm")
+						cutscene:text("* There's literally nothing wrong with exploration.", "side_smile", "jamm")
+					cutscene:showNametag("Brenda")
+					cutscene:text("* Uh huh...", "suspicious", "brenda_lw")
+					end
+				end
                 cutscene:showNametag("Susie")
                 cutscene:text("* Hey,[wait:5] if you're gonna go in the woods alone,[wait:5] maybe I could tag along?", "smile", "susie")
                 cutscene:showNametag("Brenda")
@@ -477,6 +513,11 @@ return {
                 cutscene:showNametag("Susie")
                 cutscene:text("* HEY![wait:10]\n* I'M A TEENAGER,[wait:5] NOT A KID!", "teeth", "susie")
                 cutscene:text("* Besides,[wait:5] I can kick some serious ass.", "smile", "susie")
+				if jamm or jammarcy then
+					cutscene:showNametag("Jamm")
+					cutscene:text("* Look,[wait:5] if it's any consolation,[wait:5] I'm an adult.", "neutral", "jamm")
+					cutscene:text("* I'm just...[wait:5] short for my age.", "nervous_left", "jamm")
+				end
                 cutscene:showNametag("Brenda")
                 cutscene:text("* [speed:0.3]...", "suspicious_b", "brenda_lw")
                 cutscene:text("* Sigh,[wait:10] fine.", "dissapointed", "brenda_lw")
