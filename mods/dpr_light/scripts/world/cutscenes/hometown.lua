@@ -430,4 +430,85 @@ return {
         end
         cutscene:hideNametag()
     end,
+
+    brenda = function(cutscene, event)
+        local susie = cutscene:getCharacter("susie_lw")
+        if susie then
+            if not Game:getFlag("hometown_brenda") then
+                Game:setFlag("hometown_brenda", true)
+                event:alert()
+                cutscene:showNametag("Susie")
+                cutscene:text("* Hey,[wait:5] I haven't seen you around town before,[wait:5] who the hell are you?", "annoyed", "susie")
+                cutscene:hideNametag()
+                event:setFacing("down")
+                cutscene:wait(2/3)
+                event:setFacing("right")
+                cutscene:wait(1/2)
+                cutscene:showNametag("???")
+                cutscene:text("* Huh?[wait:10] Me?", "shocked", "brenda_lw")
+                cutscene:showNametag("Brenda")
+                cutscene:text("* I'm Brenda![wait:10]\n[face:smile]* What's your name?", "happy", "brenda_lw")
+                cutscene:showNametag("Susie")
+                cutscene:text("* Heh,[wait:5] the names Susie!", "smile", "susie")
+                cutscene:text("* You moved here recently?", "neutral_side", "susie")
+                cutscene:showNametag("Brenda")
+                cutscene:text("* Oh nono,[wait:5] not at all.", "neutral", "brenda_lw")
+                cutscene:text("* I'm here as a paranormal investigator.", "wink", "brenda_lw")
+                cutscene:showNametag("Susie")
+                cutscene:text("* What,[wait:5] you believe in ghosts or something?", "smile", "susie")
+                cutscene:showNametag("Brenda")
+                cutscene:text("* What?[wait:10] Pshhh of course not!", "dissapointed", "brenda_lw")
+                cutscene:text("* I'm here to debunk that sorta stuff.", "smug", "brenda_lw")
+                cutscene:text("* I've heard about rumors of there being a cult here in these woods.", "smile_b", "brenda_lw")
+                cutscene:text("* So I'm gonna go in there and prove there's nothing there.", "smug", "brenda_lw")
+                cutscene:showNametag("Susie")
+                cutscene:text("* Alone?", "sus_nervous", "susie")
+                cutscene:showNametag("Brenda")
+                cutscene:text("* [speed:0.3]Yyyyy[speed:1]yes?", "neutral", "brenda_lw")
+                cutscene:showNametag("Susie")
+                cutscene:text("* What if there's like a bear or something?", "suspicious", "susie")
+                cutscene:showNametag("Brenda")
+                cutscene:text("* Pshh,[wait:5] there's no bears in these woods.", "smug", "brenda_lw")
+                cutscene:text("* I think.", "suspicious", "brenda_lw")
+                cutscene:showNametag("Susie")
+                cutscene:text("* Hey,[wait:5] if you're gonna go in the woods alone,[wait:5] maybe I could tag along?", "smile", "susie")
+                cutscene:showNametag("Brenda")
+                cutscene:text("* But...[wait:10] you're just a kid.", "suspicious_b", "brenda_lw")
+                cutscene:showNametag("Susie")
+                cutscene:text("* HEY![wait:10]\n* I'M A TEENAGER,[wait:5] NOT A KID!", "teeth", "susie")
+                cutscene:text("* Besides,[wait:5] I can kick some serious ass.", "smile", "susie")
+                cutscene:showNametag("Brenda")
+                cutscene:text("* [speed:0.3]...", "suspicious_b", "brenda_lw")
+                cutscene:text("* Sigh,[wait:10] fine.", "dissapointed", "brenda_lw")
+                cutscene:text("* Just stay out of trouble.", "suspicious", "brenda_lw")
+                cutscene:showNametag("Susie")
+                cutscene:text("* No promises!", "smile", "susie")
+                cutscene:hideNametag()
+                cutscene:text("* (Will you follow Brenda into\nthe woods?)")
+                local choice = cutscene:choicer({"Yes", "No"})
+                if choice == 1 then
+                    
+                else
+                    cutscene:showNametag("Brenda")
+                    cutscene:text("* Alright,[wait:5] I'll be here when you're ready.", "neutral", "brenda_lw")
+                    cutscene:hideNametag()
+                end
+            else
+                cutscene:showNametag("Brenda")
+                cutscene:text("* You ready to head out?", "neutral", "brenda_lw")
+                cutscene:hideNametag()
+                local choice = cutscene:choicer({"Yes", "No"})
+                if choice == 1 then
+                    
+                else
+                    cutscene:showNametag("Brenda")
+                    cutscene:text("* Alright,[wait:5] I'll be here when you're ready.", "neutral", "brenda_lw")
+                    cutscene:hideNametag()
+                end
+            end
+        else
+            cutscene:text("* (This monster seems to be staring intensely at the woods.)")
+            cutscene:text("* (It might be best not to disturb them.)")
+        end
+    end,
 }
