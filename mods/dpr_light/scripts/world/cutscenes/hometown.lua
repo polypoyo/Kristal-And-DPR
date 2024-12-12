@@ -174,12 +174,12 @@ return {
                 Assets.playSound("locker")
 
                 for _, party in ipairs(Game.party) do
-                local pc = cutscene:getCharacter(party.actor.id)
-                pc:shake(4, 0)
-                pc:setSprite("battle/hurt")
-                if player.facing == "left" then
-                    pc.flip_x = true
-                end
+                    local pc = cutscene:getCharacter(party:getActor().id)
+                    pc:shake(4, 0)
+                    pc:setSprite("battle/hurt")
+                    if player.facing == "left" then
+                        pc.flip_x = true
+                    end
                 end
                 cutscene:wait(0.25)
 
@@ -187,7 +187,7 @@ return {
                 Kristal.hideBorder(0)
                 Game.state = "GAMEOVER"
                 Game.world:remove()
-                Game.gameover = GameOver(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, "[voice:sans]You are alone,[wait:5]\nchild.")
+                Game.gameover = GameOver(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, "[voice:sans]You are alone,[wait:5]\nchild.") -- custom message doesn't work??? Ah well.
                 Game.stage:addChild(Game.gameover)
             else
                 cutscene:showNametag("Sans?", {font = "sans"})
