@@ -558,7 +558,7 @@ return {
             end
         else
             cutscene:text("* (This monster seems to be staring intensely at the woods.)")
-            cutscene:text("* (It might be best not to disturb them.)")
+            cutscene:text("* (Perhaps [color:#ff00ff]another monster[color:reset] could get her attention.)")
         end
     end,
 }
