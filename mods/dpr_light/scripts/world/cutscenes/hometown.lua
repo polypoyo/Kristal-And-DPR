@@ -492,8 +492,10 @@ return {
                     cutscene:showNametag("Brenda")
                     cutscene:text("* Alright,[wait:5] I'll be here when you're ready.", "neutral", "brenda_lw")
                     cutscene:hideNametag()
+                    event:setFacing("left")
                 end
             else
+                event:setFacing("right")
                 cutscene:showNametag("Brenda")
                 cutscene:text("* You ready to head out?", "neutral", "brenda_lw")
                 cutscene:hideNametag()
@@ -504,6 +506,7 @@ return {
                     cutscene:showNametag("Brenda")
                     cutscene:text("* Alright,[wait:5] I'll be here when you're ready.", "neutral", "brenda_lw")
                     cutscene:hideNametag()
+                    event:setFacing("left")
                 end
             end
         else
