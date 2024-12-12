@@ -487,7 +487,10 @@ return {
                 cutscene:text("* (Will you follow Brenda into\nthe woods?)")
                 local choice = cutscene:choicer({"Yes", "No"})
                 if choice == 1 then
-                    
+                    Game.world.music:fade(0, 1)
+                    cutscene:wait(cutscene:fadeOut(1))
+                    Game:addFollower("brenda_lw")
+                    Game:swapIntoMod("dlc_forest", false)
                 else
                     cutscene:showNametag("Brenda")
                     cutscene:text("* Alright,[wait:5] I'll be here when you're ready.", "neutral", "brenda_lw")
@@ -501,7 +504,10 @@ return {
                 cutscene:hideNametag()
                 local choice = cutscene:choicer({"Yes", "No"})
                 if choice == 1 then
-                    
+                    Game.world.music:fade(0, 1)
+                    cutscene:wait(cutscene:fadeOut(1))
+                    Game:addFollower("brenda_lw")
+                    Game:swapIntoMod("dlc_forest", false)
                 else
                     cutscene:showNametag("Brenda")
                     cutscene:text("* Alright,[wait:5] I'll be here when you're ready.", "neutral", "brenda_lw")

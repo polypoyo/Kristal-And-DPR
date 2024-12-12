@@ -9,8 +9,8 @@ return {
   height = 12,
   tilewidth = 40,
   tileheight = 40,
-  nextlayerid = 18,
-  nextobjectid = 22,
+  nextlayerid = 19,
+  nextobjectid = 23,
   properties = {
     ["border"] = "leaves",
     ["light"] = true,
@@ -557,6 +557,38 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 18,
+      name = "controllers",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 22,
+          name = "toggle",
+          type = "",
+          shape = "point",
+          x = 120,
+          y = 280,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["cond"] = "not Game:hasDLC(\"dlc_forest\")",
+            ["target"] = { id = 21 }
+          }
         }
       }
     },

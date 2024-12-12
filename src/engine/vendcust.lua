@@ -29,5 +29,10 @@ GITHUB_REPOS = {
 	},
 	NelleMonelle={
 		"dlc_yellow"
+	},
+	-- Unfortunately has to be my deadname unless I can find a way to change my GitHub username properly, PLEASE don't refer to me with this username /srs
+	-- - BrendaK7200
+	BrandonK7200={
+		"dlc_forest"
 	}
 }
