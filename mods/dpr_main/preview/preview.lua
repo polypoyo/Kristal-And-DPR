@@ -243,8 +243,7 @@ function preview:draw()
 end
 
 function preview:drawOverlay()
-    if (TARGET_MOD == self.mod_id and self.menu.state == "TITLE")
-        or (self:areWeSelected() and self.menu.state == "FILESELECT") then
+    if TARGET_MOD == self.mod_id and self.menu.state == "TITLE" then
         self:drawSplashText()
     end
 
