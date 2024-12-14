@@ -23,11 +23,11 @@ local desslmao = {
 			cutscene:textTagged("* I have literally never seen you before in my life.", "annoyed", "susie")
 		elseif cutscene:getCharacter("hero") then
 			cutscene:setSpeaker("hero")
-            cutscene:textTagged("* Uh,[wait:5] am I supposed to know you?")
+            cutscene:textTagged("* Uh,[wait:5] am I supposed to know you?", "really")
 		elseif noel then -- make sure this is always next to last
 				cutscene:showNametag("Noel")
 			if data.met_dess then
-				cutscene:text("* Nice to see you agian?", "bruh", "noel")
+				cutscene:text("* Nice to see you again?", "bruh", "noel")
 				noel_remembered_dess = true
 			else
 				cutscene:text("* ... [wait:10]Huh?", "huh", "noel")

@@ -108,7 +108,7 @@ return {
             lightsource.y = 25
             hero:setSprite("walk/right")
             cutscene:wait(2)
-            cutscene:textTagged("* Hello?", nil, "hero")
+            cutscene:textTagged("* Hello?", "neutral_closed_b", "hero")
             local stime = 0.30
             cutscene:wait(stime)
             hero:setSprite("walk/up")
@@ -120,7 +120,7 @@ return {
             hero:setSprite("walk/right")
             cutscene:wait(0.75)
 
-            cutscene:textTagged("* Is someone there?", nil, "hero")
+            cutscene:textTagged("* Is someone there?", "neutral_closed", "hero")
 
             textobj:setText "What will you do?"
             textobj.x, textobj.y = 200, 560
@@ -130,39 +130,39 @@ return {
             if choicer == 1 then
             elseif choicer == 2 then
                 cutscene:wait(2)
-                cutscene:textTagged("* Hello?", nil, "hero")
+                cutscene:textTagged("* Hello?", "neutral_closed_b", "hero")
 
                 cutscene:wait(4)
 
-                cutscene:textTagged("* Wow...[wait:30]\n* It's sad how I'm waiting a reply...", nil, "hero")
+                cutscene:textTagged("* Wow...[wait:30]\n* It's sad how I'm waiting a reply...", "really", "hero")
 
                 hero:setSprite("walk/down")
 
                 cutscene:textTagged(
-                "* But,[wait:5] I know you're there though.[wait:10]\n* I overheard you talking to [color:yellow]him[color:white].",
-                    nil, "hero")
+                "* But,[wait:5] I know you're there though.[wait:10] I overheard you talking to [color:yellow]him[color:white].",
+                    "neutral_closed", "hero")
                 cutscene:hideNametag()
 
                 cutscene:wait(0.5)
                 hero:setSprite("walk/left")
                 cutscene:wait(0.5)
 
-                cutscene:textTagged("* Unless he was talking to himself again...", nil, "hero")
-                cutscene:textTagged("* Wouldn't be the first time.[wait:10]\n* I guess...", nil, "hero")
+                cutscene:textTagged("* Unless he was talking to himself again...", "pout", "hero")
+                cutscene:textTagged("* Wouldn't be the first time.[wait:10]\n* I guess...", "really", "hero")
                 cutscene:hideNametag()
 
                 cutscene:wait(0.5)
                 hero:setSprite("walk/right")
                 cutscene:wait(0.5)
 
-                cutscene:textTagged("* But I could've sworn I heard someone call out to me.", nil, "hero")
+                cutscene:textTagged("* But I could've sworn I heard someone call out to me.", "suspicious", "hero")
 
                 cutscene:wait(0.5)
                 hero:setFacing("up")
                 hero:resetSprite()
                 cutscene:wait(0.5)
 
-                cutscene:textTagged("* Actually,[wait:5] where even IS[wait:5] me?", nil, "hero") --haha grammer
+                cutscene:textTagged("* Actually,[wait:5] where even IS[wait:5] me?", "neutral_closed", "hero") --haha grammer
             end
             hero:resetSprite()
             Game.stage.timer:tween(1, lightsource, { radius = 900 })
@@ -338,7 +338,7 @@ return {
        end]]
 
         cutscene:setSpeaker("hero")
-        cutscene:textTagged("* Who's there?")
+        cutscene:textTagged("* Who's there?", "neutral_closed_b")
 
         cutscene:textTagged("* Me.[wait:10]\nI'm there.\n[wait:10]Up here.", nil, "cat", whodis)
         Game.world.player:setFacing("up")
@@ -537,13 +537,13 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
         susie:alert()
         local whodis = {nametag = "???"}
         hero:setFacing("left")
-        cutscene:textTagged("* Hey,[wait:5] who are you?", nil, "hero")
+        cutscene:textTagged("* Hey,[wait:5] who are you?", "neutral_closed_b", "hero")
         susie:setFacing("right")
         cutscene:textTagged("* Woah.", "surprise", "susie", whodis)
         susie:walkTo(230, 820, 0.75, "right")
         cutscene:wait(0.75)
         cutscene:textTagged("* Are you like,[wait:5] another person?", "surprise_smile", "susie", whodis)
-        cutscene:textTagged("* Uh,[wait:5] I guess?", nil, "hero")
+        cutscene:textTagged("* Uh,[wait:5] I guess?", "neutral_closed", "hero")
         susie:setSprite("exasperated_right")
         cutscene:textTagged("* Thank GOD.", "teeth_b", "susie", whodis)
         cutscene:textTagged("* There's nothing but rocks and that stupid cat here! [wait:1][react:1]", "teeth", "susie",
@@ -560,7 +560,7 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
                               { "You're very [color:yellow]rude[color:rest].", "right", "bottom", "neutral", "cat" }
                           }, nametag = "???"
                       })
-        cutscene:textTagged("* Yeah.", nil, "hero")
+        cutscene:textTagged("* Yeah.", "neutral_closed", "hero")
         cutscene:textTagged("* Well,[wait:5] the name's Susie!", "sincere_smile", "susie")
         cutscene:hideNametag()
 
@@ -596,7 +596,7 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
         cutscene:textTagged("* After all,[wait:5] I AM a Delta Warrior.", "smile")
         cutscene:setSpeaker("hero")
         get_bus:pause()
-        cutscene:textTagged("* I have literally never heard of you in my life.")
+        cutscene:textTagged("* I have literally never heard of you in my life.", "annoyed_b")
         susie:resetSprite()
         cutscene:setSpeaker("susie")
         cutscene:textTagged("* Oh.", "shock")
@@ -606,20 +606,20 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
         susie:resetSprite()
         cutscene:textTagged("* What's YOUR name?", "neutral")
         cutscene:setSpeaker("hero")
-        cutscene:textTagged("* It's Hero.")
+        cutscene:textTagged("* It's Hero.", "neutral_closed")
         cutscene:setSpeaker("susie")
         cutscene:textTagged("* Hero?", "surprise")
         cutscene:textTagged("* Dude,[wait:5] that is the most cliche name I have ever heard!", "sincere_smile")
         cutscene:textTagged("* Uh,[wait:5] no offense.", "shock_nervous")
         cutscene:setSpeaker("hero")
-        cutscene:textTagged("* ... Right.")
-        cutscene:textTagged("* Wait a second...")
-        cutscene:textTagged("* I'm actually looking for a Delta Warrior.")
+        cutscene:textTagged("* ... Right.", "really")
+        cutscene:textTagged("* Wait a second...", "neutral_closed")
+        cutscene:textTagged("* I'm actually looking for a Delta Warrior.", "neutral_closed_b")
         cutscene:setSpeaker("susie")
         cutscene:textTagged("* Oh,[wait:5] you lookin' for a fight?", "teeth_smile")
         cutscene:setSpeaker("hero")
-        cutscene:textTagged("* Uh,[wait:5] hopefully not.")
-        cutscene:textTagged("* So basically...")
+        cutscene:textTagged("* Uh,[wait:5] hopefully not.", "shocked")
+        cutscene:textTagged("* So basically...", "neutral_closed_b")
         cutscene:hideNametag()
 
         get_bus:fade(0, 1)
@@ -638,9 +638,9 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
 
         cutscene:wait(cutscene:fadeIn(1))
         cutscene:textTagged("* Oh damn.", "shock", "susie")
-        cutscene:textTagged("* Yeah.", nil, "hero")
+        cutscene:textTagged("* Yeah.", "neutral_closed", "hero")
         if Game:getFlag("cliffside_askedDeltaWarrior") == "susie" then
-            cutscene:textTagged("* Plus you look just like the person who I was told did all this.", nil, "hero")
+            cutscene:textTagged("* Plus you look just like the person who I was told did all this.", "really", "hero")
         end
         cutscene:textTagged("* Uhh,[wait:5] guess I'm not opening any more Dark Fountains then.", "shock_nervous", "susie")
         susie:setSprite("exasperated_right")
@@ -657,22 +657,22 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
         susie:setFacing("right")
         cutscene:textTagged("* That's just lame.", "annoyed")
         cutscene:setSpeaker("hero")
-        cutscene:textTagged("* Well,[wait:5] that's settled then.")
-        cutscene:textTagged("* We'll go seal this fountain and the world is saved.")
-        cutscene:textTagged("* Y'know unless anyone else decides to open up fountains but uh...")
-        cutscene:textTagged("* I'm sure it'll be fine.")
+        cutscene:textTagged("* Well,[wait:5] that's settled then.", "smug_b")
+        cutscene:textTagged("* We'll go seal this fountain and the world is saved.", "smug")
+        cutscene:textTagged("* Y'know unless anyone else decides to open up fountains but uh...", "shocked")
+        cutscene:textTagged("* I'm sure it'll be fine.", "happy")
         cutscene:showNametag("Susie")
         cutscene:textTagged("* Uhh,[wait:5] where even IS the Dark Fountain?", "nervous_side", "susie")
         cutscene:showNametag("Hero")
-        cutscene:textTagged("* That...[wait:5] is something I don't know.", nil, "hero")
+        cutscene:textTagged("* That...[wait:5] is something I don't know.", "annoyed", "hero")
         cutscene:showNametag("Susie")
         susie:setSprite("exasperated_right")
         cutscene:textTagged("* Oh great,[wait:5] don't tell me we're stuck here!", "teeth", "susie")
         susie:resetSprite()
         cutscene:showNametag("Hero")
-        cutscene:textTagged("* Hey,[wait:2] I'm sure there's a way out of here.", nil, "hero")
+        cutscene:textTagged("* Hey,[wait:2] I'm sure there's a way out of here.", "neutral_closed_b", "hero")
         susie:setFacing("left")
-        cutscene:textTagged("* We just gotta keep going forward.", nil, "hero")
+        cutscene:textTagged("* We just gotta keep going forward.", "happy", "hero")
         cutscene:showNametag("Susie")
         susie:setFacing("right")
         cutscene:textTagged("* Yeah,[wait:5] you're right.", "small_smile", "susie")

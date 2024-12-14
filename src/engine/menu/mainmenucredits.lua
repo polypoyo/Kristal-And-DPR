@@ -126,7 +126,7 @@ function MainMenuCredits:init(menu)
                 "Silvaz",
                 "Tick358",
                 "ArleePuncher",
-                "",
+                "Tkcool",
                 "",
                 "",
             }
