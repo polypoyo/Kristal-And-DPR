@@ -5,7 +5,8 @@ local function getBind(name)
     return Input.getText(name) .. " "
 end
 
-return {
+---@type table<string, fun(cutscene:WorldCutscene, event: Event|NPC)>
+local cliffside = {
     ---@param cutscene WorldCutscene
     intro = function (cutscene, event)
         Kristal.hideBorder(0)
@@ -705,10 +706,52 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
         Game.world.music:resume()
     end,
     worse_vents = function (cutscene, event)
-
+        cutscene:detachFollowers()
+        local walktime,waittime = 0.2, 0.2
         local data = event.data.properties
-        local chara = Game.world.player
-        Assets.playSound("jump")
-        cutscene:wait(cutscene:jumpTo(chara, data.marker, 1, 0.5, "jump_ball", "land"))
+        local party = Utils.merge({Game.world.player}, Game.world.followers)
+        local waiters = {}
+        local impactfuse = {}
+        local tx,ty = cutscene.world.map:getMarker(data.marker)
+        local center_x = event.x + (event.width/2)
+        local center_y = event.y + (event.height/2)
+        Game.world.timer:script(function (wait)
+            for i, chara in pairs(party) do
+                local waiter = (cutscene:walkTo(chara, center_x, center_y, walktime))
+                repeat wait(1/30) until waiter()
+                Assets.playSound("jump")
+                local sx,sy = chara:getPosition()
+                local distance = Utils.dist(sx,sy,tx,ty)
+                table.insert(waiters, cutscene:jumpTo(chara, tx, ty, 20, distance * 0.003, "jump_ball", "landed"))
+                wait(waittime)
+                for j, nextchara in ipairs(party) do
+                    if j <= i then goto continue end
+                    if j >= #party then goto continue end
+                    cutscene:walkTo(party[j+1], party[j].x, party[j].y, walktime)
+                    ::continue::
+                end
+            end
+        end)
+        cutscene:wait(function ()
+            for i,v in ipairs(waiters) do
+                if not v() then
+                    return false
+                elseif not impactfuse[i] then
+                    if i == 1 then
+                        cutscene:enableMovement()
+                    else
+                        party[i]:interpolateHistory()
+                        party[i]:updateIndex()
+                        party[i]:returnToFollowing()
+                    end
+                    impactfuse[i] = true
+                    Assets.playSound("impact", 0.7)
+                end
+            end
+            return #waiters == #party
+        end)
+        cutscene:interpolateFollowers()
+        cutscene:attachFollowers()
     end,
 }
+return cliffside
