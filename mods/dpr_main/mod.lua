@@ -38,6 +38,25 @@ function Mod:postInit(new_file)
     end
 end
 
+function Mod:postUpdate()
+    if Game.save_name == "MERG" then
+        for _, party in ipairs(Game.party) do
+            if party.health > 1 then
+                party.health = 1
+            end
+            if party.stats.health ~= 1 then
+                party.stats.health = 1
+            end
+        end
+        if Game.battle then
+            Game.battle:targetAll()
+            for _,enemy in ipairs(Game.battle:getActiveEnemies()) do
+                enemy.current_target = "ALL"
+            end
+        end
+    end
+end
+
 function Mod:addGlobalEXP(exp)
     Game:setFlag("library_experience", Utils.clamp(Game:getFlag("library_experience", 0) + exp, 0, 99999))
 
