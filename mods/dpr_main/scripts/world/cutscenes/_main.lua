@@ -211,7 +211,7 @@ return {
 
         cutscene:wait(1.75)
 
-        local background = GonerBackground(nil, nil, "AUDIO_DONKEY_b", true, world_music)
+        local background = GonerBackground(nil, nil, "AUDIO_EXPERIMENT", true, world_music)
         background.layer = WORLD_LAYERS["ui"]
         Game.world:addChild(background)
 
@@ -221,17 +221,23 @@ return {
         hero_sprite.parallax_x = 0
         hero_sprite.parallax_y = 0
         hero_sprite:setOrigin(0.5, 0.5)
-        hero_sprite:setScale(2.5)
+        hero_sprite:setScale(3)
         hero_sprite.layer = WORLD_LAYERS["below_textbox"]
         hero_sprite.alpha = 0
         hero_sprite.graphics.fade = 0.01
         hero_sprite.graphics.fade_to = 1
         Game.world:addChild(hero_sprite)
 
-        local chara_y = { 240 }
+        local chara_x = { 320 }
+        local chara_y = { 270 }
+        local siner = 0
 
         cutscene:during(function()
-            hero_sprite.y = chara_y[1] + math.sin(Kristal.getTime() * 2) * 6
+            siner = siner + DTMULT
+			
+		    local offset_x, offset_y = math.sin(siner / 24) * 2, math.sin(siner / 30) * 2
+            hero_sprite.x = chara_x[1] + offset_x * 6
+            hero_sprite.y = chara_y[1] + offset_y * 6
         end)
 
         gonerText("THIS[wait:40]\nIS YOUR VESSEL.[wait:20]")
