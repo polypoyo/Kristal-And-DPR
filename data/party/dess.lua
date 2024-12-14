@@ -141,6 +141,15 @@ function character:drawPowerStat(index, x, y, menu)
     end
 end
 
+function character:lightLVStats()
+    self.lw_stats = {
+        health = self:getLightLV() == 20 and 99 or 16 + self:getLightLV() * 4,
+        attack = 9 + self:getLightLV() * 2 + math.floor(self:getLightLV() / 4),
+        defense = 9 + math.ceil(self:getLightLV() / 4),
+        magic = self:getLightLV()
+    }
+end
+
 function character:getStarmanTheme() return "dess" end
 
 return character
