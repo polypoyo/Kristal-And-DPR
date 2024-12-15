@@ -262,6 +262,8 @@ Quicktime = require("src.engine.game.battle.quicktime")
 Slapper = require("src.engine.game.battle.slapper")
 Combo = require("src.engine.game.battle.combo")
 
+BlueSoul = require("src.engine.game.battle.souls.bluesoul")
+
 BattleUI = require("src.engine.game.battle.ui.battleui")
 ActionBox = require("src.engine.game.battle.ui.actionbox")
 ActionBoxDisplay = require("src.engine.game.battle.ui.actionboxdisplay")
