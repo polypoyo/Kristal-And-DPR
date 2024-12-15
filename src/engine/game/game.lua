@@ -1177,6 +1177,23 @@ function Game:update()
 
     Kristal.callEvent(KRISTAL_EVENT.postUpdate, DT)
 
+    if self.save_name == "MERG" then
+        for _, party in ipairs(self.party) do
+            if party.health > 1 then
+                party.health = 1
+            end
+            if party.stats.health ~= 1 then
+                party.stats.health = 1
+            end
+        end
+        if self.battle then
+            self.battle:targetAll()
+            for _,enemy in ipairs(self.battle:getActiveEnemies()) do
+                enemy.current_target = "ALL"
+            end
+        end
+    end
+
     for _, badge in ipairs(self:getBadgeStorage()) do
         badge:update(badge.equipped)
     end
