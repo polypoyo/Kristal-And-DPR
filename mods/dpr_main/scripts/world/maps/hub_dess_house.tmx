@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="16" height="14" tilewidth="40" tileheight="40" infinite="0" nextlayerid="5" nextobjectid="22">
+ <editorsettings>
+  <export target="hub_dess_house.lua" format="lua"/>
+ </editorsettings>
+ <properties>
+  <property name="border" value="mainhub"/>
+  <property name="music" value="mainhub"/>
+  <property name="name" value="Floor One - Dess's House"/>
+ </properties>
+ <tileset firstgid="1" source="../tilesets/main_area.tsx"/>
+ <layer id="1" name="tiles" width="16" height="14">
+  <data encoding="csv">
+0,53,55,66,67,67,67,67,67,67,67,53,54,54,54,54,
+0,66,68,79,80,80,80,80,80,80,80,66,67,53,54,54,
+0,79,81,79,80,80,80,80,80,80,80,79,80,66,67,67,
+0,79,81,92,93,93,93,93,93,93,93,79,80,79,80,80,
+0,92,94,4,2,2,2,2,2,2,5,92,93,79,80,80,
+0,4,2,15,15,15,15,15,15,15,15,2,5,92,93,93,
+0,14,15,15,15,15,15,15,15,15,15,15,15,2,2,2,
+0,14,15,15,15,15,15,15,15,15,15,15,15,15,15,15,
+0,14,15,15,15,15,15,15,15,15,15,15,15,28,28,28,
+0,14,15,15,15,15,15,15,15,15,15,15,16,0,0,0,
+0,27,28,15,15,15,15,15,15,15,15,28,29,0,0,0,
+0,0,0,27,28,28,28,28,28,28,29,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup color="#0000ff" id="3" name="collision">
+  <object id="2" x="520" y="200" width="120" height="40"/>
+  <object id="12" x="440" y="160" width="80" height="40"/>
+  <object id="13" x="40" y="160" width="80" height="40"/>
+  <object id="14" x="120" y="120" width="320" height="40"/>
+  <object id="15" x="0" y="200" width="40" height="240"/>
+  <object id="16" x="40" y="440" width="80" height="40"/>
+  <object id="19" x="120" y="480" width="320" height="40"/>
+  <object id="20" x="440" y="440" width="80" height="40"/>
+  <object id="21" x="520" y="360" width="120" height="80"/>
+ </objectgroup>
+ <objectgroup color="#ff00ff" id="2" name="objects">
+  <object id="1" name="transition" x="640" y="240" width="40" height="120">
+   <properties>
+    <property name="map" value="main_hub_south"/>
+    <property name="marker" value="east"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#aa00ff" id="4" name="markers">
+  <object id="9" name="entry" x="600" y="320">
+   <point/>
+  </object>
+  <object id="10" name="spawn" x="280" y="360">
+   <point/>
+  </object>
+ </objectgroup>
+</map>
