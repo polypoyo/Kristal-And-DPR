@@ -954,5 +954,82 @@ local hub = {
             end
         end
     end,
+
+    garbage = function(cutscene, event)
+        local texts = {}
+        local function genBigText(text, x, y, scale, goner, wait_time)
+            scale = scale or 2
+            wait_time = wait_time or 0.2
+
+            local text_o = Game.world:spawnObject(Text(text, x, y, 300, 500, { style = goner and "GONER" or "dark" }))
+            text_o:setScale(scale)
+            text_o.parallax_x = 0
+            text_o.parallax_y = 0
+            if goner then
+                text_o.alpha = 1
+            end
+            table.insert(texts, text_o)
+
+            cutscene:wait(wait_time)
+
+            return text_o
+        end
+        local function flashScreen()
+            local flash = Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
+            flash.layer = 100
+            flash.color = { 1, 1, 1 }
+            flash.alpha = 1
+            flash.parallax_x = 0
+            flash.parallax_y = 0
+            Game.world:addChild(flash)
+            Game.world.timer:tween(1.5, flash, { alpha = 0 }, "linear", function()
+                flash:remove()
+            end)
+        end
+        local function fadeOutBigText()
+            for _, v in ipairs(texts) do
+                Game.world.timer:tween(2, v, { alpha = 0 }, "linear", function()
+                    v:remove()
+                end)
+            end
+            cutscene:wait(2)
+        end
+
+        local garbage = cutscene:getCharacter("diamond_trash")
+
+        Game.world.music:pause()
+        local music_inst = Music()
+        cutscene:after(function() music_inst:remove() end)
+
+        if event.interact_count == 1 then
+            cutscene:showNametag("Trash Rudinn")
+            music_inst:play("voiceover/garbage", 1, 1, false)
+            cutscene:text("[noskip][voice:nil]* Hellooo...[wait:1.5]", nil, garbage, { auto = true })
+            cutscene:hideNametag()
+            genBigText("I'm", 240, 40)
+            genBigText("a", 360, 40, 2, false, 0.1)
+            genBigText("piece", 205, 110)
+            genBigText("of", 370, 110)
+            flashScreen()
+            genBigText("GARBAGE", 35, 160, 6, true, 2)
+            fadeOutBigText()
+        else
+            cutscene:showNametag("Trash Rudinn")
+            music_inst:play("voiceover/stillgarbage", 1, 1, false)
+            cutscene:text("[noskip][voice:nil]* Oh hi,[wait:1] thanks for checking in.[wait:2]\n* I'm...", nil, garbage, { auto = true })
+            cutscene:hideNametag()
+            genBigText("still", 210, 40)
+            genBigText("a", 380, 40, 2, false, 0.1)
+            genBigText("piece", 205, 110)
+            genBigText("of", 370, 110)
+            flashScreen()
+            genBigText("GARBAGE", 35, 160, 6, true, 2)
+            fadeOutBigText()
+        end
+
+        cutscene:wait(1)
+        cutscene:look("down")
+        Game.world.music:resume()
+    end,
 }
 return hub

@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 5,
-  nextobjectid = 22,
+  nextobjectid = 23,
   properties = {
     ["border"] = "mainhub",
     ["music"] = "mainhub",
@@ -220,6 +220,22 @@ return {
           properties = {
             ["map"] = "main_hub_south",
             ["marker"] = "east"
+          }
+        },
+        {
+          id = 22,
+          name = "npc",
+          class = "",
+          shape = "point",
+          x = 440,
+          y = 240,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["actor"] = "diamond_trash",
+            ["cutscene"] = "hub.garbage"
           }
         }
       }
