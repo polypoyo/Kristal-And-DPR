@@ -712,7 +712,7 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
         local party = Utils.merge({Game.world.player}, Game.world.followers)
         local waiters = {}
         local impactfuse = {}
-        local tx,ty = cutscene.world.map:getMarker(data.marker)
+        local tx,ty = cutscene.world.map:getMarker(data.target and data.target.id or data.marker)
         local center_x = event.x + (event.width/2)
         local center_y = event.y + (event.height/2)
         Game.world.timer:script(function (wait)
